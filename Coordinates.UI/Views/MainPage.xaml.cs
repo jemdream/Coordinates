@@ -1,9 +1,4 @@
-using System;
-using Coordinates.UI.ViewModels;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
 
 namespace Coordinates.UI.Views
 {

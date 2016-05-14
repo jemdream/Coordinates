@@ -2,10 +2,26 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
-                     RequestedTheme="Light">
+                     RequestedTheme="Light" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:serviceLocator="using:Coordinates.UI.Services.ServiceLocator"
+                     mc:Ignorable="d">
 
     <Application.Resources>
-        <ResourceDictionary Source="Styles\Custom.xaml" />
+        <ResourceDictionary>
+            <!-- Has to be MergedDictionaries to store multiple entries of type ResourceDictionary -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!-- x:Key ("Locator") is the key part here, 
+                    as it's an index in collection: 
+                    Application.Current.Resources[(x:Key)] -->
+                    <serviceLocator:ViewModelLocator x:Key="Locator"/>
+                </ResourceDictionary>
+                <ResourceDictionary Source="Styles\Custom.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 
 </common:BootStrapper>
+ 

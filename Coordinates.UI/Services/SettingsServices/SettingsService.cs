@@ -2,24 +2,19 @@ using System;
 using Template10.Common;
 using Template10.Utils;
 using Windows.UI.Xaml;
+using Template10.Services.SettingsService;
 
 namespace Coordinates.UI.Services.SettingsServices
 {
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
-        public static SettingsService Instance { get; }
-        static SettingsService()
-        {
-            // implement singleton pattern
-            Instance = Instance ?? new SettingsService();
-        }
+        private readonly ISettingsHelper _helper;
 
-        Template10.Services.SettingsService.ISettingsHelper _helper;
-        private SettingsService()
+        public SettingsService()
         {
-            _helper = new Template10.Services.SettingsService.SettingsHelper();
+            _helper = new SettingsHelper();
         }
-
+        
         public bool UseShellBackButton
         {
             get { return _helper.Read<bool>(nameof(UseShellBackButton), true); }

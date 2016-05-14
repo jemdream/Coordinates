@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Common;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using Coordinates.UI.ViewModels.Interfaces;
 
 namespace Coordinates.UI.ViewModels
 {
-    public class DetailPageViewModel : ViewModelBase
+    public class DetailPageViewModel : ViewModelBase, IDetailPageViewModel
     {
+        private string _value = "Default";
+
         public DetailPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -20,15 +19,28 @@ namespace Coordinates.UI.ViewModels
             }
         }
 
-        private string _Value = "Default";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+        public string Value { get { return _value; } set { Set(ref _value, value); } }
 
+        #region Navigation
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
-            Value = (suspensionState.ContainsKey(nameof(Value))) ? suspensionState[nameof(Value)]?.ToString() : parameter?.ToString();
+            string test;
+
+            const string t = nameof(Value);
+
+            if (suspensionState.ContainsKey(t))
+            {
+                test = suspensionState[t]?.ToString();
+            }
+            else
+            {
+                test = parameter?.ToString();
+            }
+
+            Value = test;
+
             await Task.CompletedTask;
         }
-
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
         {
             if (suspending)
@@ -37,12 +49,12 @@ namespace Coordinates.UI.ViewModels
             }
             await Task.CompletedTask;
         }
-
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
             args.Cancel = false;
             await Task.CompletedTask;
         }
+        #endregion
     }
 }
 

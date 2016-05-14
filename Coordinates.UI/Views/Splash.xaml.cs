@@ -10,25 +10,32 @@ namespace Coordinates.UI.Views
         public Splash(SplashScreen splashScreen)
         {
             InitializeComponent();
+
             Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
             Resize(splashScreen);
         }
 
+        /// <summary>
+        /// Callback function handling resizing of the window.
+        /// E.g. to resize controllers.
+        /// </summary>
+        /// <param name="splashScreen"></param>
         private void Resize(SplashScreen splashScreen)
         {
-            if (splashScreen.ImageLocation.Top == 0)
+            if (Math.Abs(splashScreen.ImageLocation.Top) < 0.001)
             {
-                splashImage.Visibility = Visibility.Collapsed;
+                SplashImage.Visibility = Visibility.Collapsed;
                 return;
             }
-            rootCanvas.Background = null;
-            splashImage.Visibility = Visibility.Visible;
 
-            splashImage.Height = splashScreen.ImageLocation.Height;
-            splashImage.Width = splashScreen.ImageLocation.Width;
-            splashImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
-            splashImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
-            ProgressTransform.TranslateY = splashImage.Height/2;
+            RootCanvas.Background = null;
+            SplashImage.Visibility = Visibility.Visible;
+
+            SplashImage.Height = splashScreen.ImageLocation.Height;
+            SplashImage.Width = splashScreen.ImageLocation.Width;
+            SplashImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
+            SplashImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
+            ProgressTransform.TranslateY = SplashImage.Height / 2;
             // some mocked code
         }
     }

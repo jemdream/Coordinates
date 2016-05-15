@@ -20,15 +20,15 @@ namespace Coordinates.UI.Services.ServiceLocator
 
             _myContainer = myContainer;
         }
-
-        //TODO 0 narson: consider moving the method below from App.xaml.cs (that is BootStrapper of our app) - which place is more appropriate
+        
         // private static IUnityContainer SetupContainer()
         
-        //TODO 1 narson: add missing viewmodels and services
         public IMainPageViewModel MainPageViewModel => _myContainer.Resolve<IMainPageViewModel>();
         public IDetailPageViewModel DetailPageViewModel => _myContainer.Resolve<IDetailPageViewModel>();
         public ISettingsPageViewModel SettingsPageViewModel => _myContainer.Resolve<ISettingsPageViewModel>();
         public ISettingsPartViewModel SettingsPartViewModel => _myContainer.Resolve<ISettingsPartViewModel>();
         public IAboutPartViewModel AboutPartViewModel => _myContainer.Resolve<IAboutPartViewModel>();
+        public ICodingPlaygroundViewModel CodingPlaygroundViewModel => _myContainer.Resolve<ICodingPlaygroundViewModel>();
+        
     }
 }

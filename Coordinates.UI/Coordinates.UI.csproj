@@ -104,7 +104,9 @@
     <Compile Include="Services\SettingsServices\ISettingsService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ViewModels\AboutPartViewModel.cs" />
+    <Compile Include="ViewModels\CodingPlaygroundViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAboutPartViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ICodingPlaygroundViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
@@ -115,6 +117,9 @@
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CodingPlayground.xaml.cs">
+      <DependentUpon>CodingPlayground.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
@@ -163,6 +168,10 @@
     <Page Include="Views\Busy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CodingPlayground.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DetailPage.xaml">
       <SubType>Designer</SubType>

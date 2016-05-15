@@ -43,6 +43,7 @@ namespace Coordinates.UI.ViewModels
         }
         #endregion
 
+        // TODO #commands
         // _ if _showBusyCommand is null, then create new delegatecommand, assign to _showBusyCommand and return it
         public ICommand ShowBusyCommand
             => _showBusyCommand ?? (_showBusyCommand = new DelegateCommand(async () =>

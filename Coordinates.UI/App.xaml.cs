@@ -91,6 +91,7 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
+            container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

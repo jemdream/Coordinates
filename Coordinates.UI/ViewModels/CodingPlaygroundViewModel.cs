@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Coordinates.Services;
 using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
@@ -11,6 +12,12 @@ namespace Coordinates.UI.ViewModels
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
         private ContentDialogResult _initialModalPick;
+
+        public CodingPlaygroundViewModel()
+        {
+            IConnectionService someConnectionService = new MockedConnectionService();
+            var test = someConnectionService.IsConnected;
+        }
 
         public string InitialModalPick => _initialModalPick.ToString();
 

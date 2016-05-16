@@ -56,8 +56,9 @@ namespace Coordinates.UI
                 if (view.TryEnterFullScreenMode())
                     ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            //view.ExitFullScreenMode();
-            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+            //comment out 2 lines below to run in fullscreen mode
+            view.ExitFullScreenMode();
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
             // The SizeChanged event will be raised when the exit from full-screen mode is complete.
 
             await Task.CompletedTask;

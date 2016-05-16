@@ -12,6 +12,10 @@ namespace Coordinates.UI.ViewModels
     public class MainPageViewModel : ViewModelBase, IMainPageViewModel
     {
         private string _value = "Gas";
+        private DelegateCommand _gotoDetailsPage;
+        private DelegateCommand _gotoSettingPage;
+        private DelegateCommand _gotoPrivacy;
+        private DelegateCommand _gotoAbout;
 
         public MainPageViewModel()
         {
@@ -19,17 +23,26 @@ namespace Coordinates.UI.ViewModels
             {
                 Value = "Designtime value";
             }
-
-            SetupCommands();
         }
 
         public string Value { get { return _value; } set { Set(ref _value, value); } }
 
-        // TODO #commands
-        public ICommand GotoDetailsPage { get; set; }
-        public ICommand GotoSettings { get; set; }
-        public ICommand GotoPrivacy { get; set; }
-        public ICommand GotoAbout { get; set; }
+        
+        public ICommand GotoDetailsPage =>
+            _gotoDetailsPage ?? (_gotoDetailsPage = new DelegateCommand(() =>
+                NavigationService.Navigate(typeof (Views.DetailPage), Value)));
+
+        public ICommand GotoSettings =>
+            _gotoSettingPage ?? (_gotoSettingPage = new DelegateCommand(() =>
+                NavigationService.Navigate(typeof (Views.SettingsPage), 0)));
+
+        public ICommand GotoPrivacy =>
+            _gotoPrivacy ?? (_gotoPrivacy = new DelegateCommand(() =>
+                NavigationService.Navigate(typeof (Views.SettingsPage), 1)));
+
+        public ICommand GotoAbout =>
+            _gotoAbout ?? (_gotoAbout = new DelegateCommand(() =>
+                NavigationService.Navigate(typeof (Views.SettingsPage), 2)));
 
         #region Navigation
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
@@ -53,14 +66,6 @@ namespace Coordinates.UI.ViewModels
             await Task.CompletedTask;
         }
         #endregion
-
-        private void SetupCommands()
-        {
-            GotoDetailsPage = new DelegateCommand(() => NavigationService.Navigate(typeof(Views.DetailPage), Value));
-            GotoSettings = new DelegateCommand(() => NavigationService.Navigate(typeof(Views.SettingsPage), 0));
-            GotoPrivacy = new DelegateCommand(() => NavigationService.Navigate(typeof(Views.SettingsPage), 1));
-            GotoAbout = new DelegateCommand(() => NavigationService.Navigate(typeof(Views.SettingsPage), 2));
-        }
     }
 }
 

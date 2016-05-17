@@ -31,7 +31,7 @@
                                Text="Coding Playground" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
- 
+
             <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MeasurementsPage">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"

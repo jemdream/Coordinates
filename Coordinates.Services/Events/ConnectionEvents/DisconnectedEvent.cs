@@ -1,6 +1,6 @@
 ﻿namespace Coordinates.Services.Args
 {
-    public class ConnectedArgs : ConnectionArgs
+    public class DisconnectedEvent : ConnectionEvent
     {
     }
 }

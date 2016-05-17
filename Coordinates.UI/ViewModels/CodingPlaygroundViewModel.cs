@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Services;
+using Coordinates.Services.Args;
 using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
@@ -12,19 +14,27 @@ namespace Coordinates.UI.ViewModels
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
         private ContentDialogResult _initialModalPick;
+        private readonly IConnectionService _someConnectionService;
+        private readonly ObservableCollection<ConnectionEvent> _connectionEvents;
 
         public CodingPlaygroundViewModel()
         {
-            IConnectionService someConnectionService = new MockedConnectionService();
-            var test = someConnectionService.IsConnected;
+            _someConnectionService = new MockedConnectionService();
+            _connectionEvents = new ObservableCollection<ConnectionEvent>();
+
+            _someConnectionService.ConnectionMessages
+                .Subscribe(message => _connectionEvents.Add(message));
+            
+            _someConnectionService.Connect();
         }
+
+        public IEnumerable<ConnectionEvent> ConnectionEvents => _connectionEvents;
 
         public string InitialModalPick => _initialModalPick.ToString();
 
         // _ minusem jest podawanie nazwy metody (przez behaviour) zamiast bindowania
         public void EnterTextBox(object textBoxContent, EventArgs ev)
         {
-            
         }
 
         #region Navigation

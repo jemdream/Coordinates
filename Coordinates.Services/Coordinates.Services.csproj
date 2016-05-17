@@ -107,10 +107,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Args\ConnectedArgs.cs" />
-    <Compile Include="Args\ConnectionArgs.cs" />
-    <Compile Include="Args\DisconnectedArgs.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Events\DiagnosticEvent.cs" />
+    <Compile Include="Events\ConnectionEvents\ConnectedEvent.cs" />
+    <Compile Include="Events\ConnectionEvents\ConnectionEvent.cs" />
+    <Compile Include="Events\ConnectionEvents\DisconnectedEvent.cs" />
     <Compile Include="IConnectionService.cs" />
     <Compile Include="MockedConnectionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

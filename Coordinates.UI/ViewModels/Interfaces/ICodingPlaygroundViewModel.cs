@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Coordinates.Services.Args;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
@@ -6,5 +8,6 @@ namespace Coordinates.UI.ViewModels.Interfaces
     {
         string InitialModalPick { get; }
         void EnterTextBox(object textBoxContent, EventArgs ev);
+        IEnumerable<ConnectionEvent> ConnectionEvents { get; }
     }
 }

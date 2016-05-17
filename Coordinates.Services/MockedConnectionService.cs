@@ -1,47 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Coordinates.Services.Args;
+using Coordinates.Services.Events.ConnectionEvents;
 
 namespace Coordinates.Services
 {
     public class MockedConnectionService : IConnectionService
     {
-        private bool _isConnected;
-        //private void Subject<ConnectionArgs> 
+        private readonly ReplaySubject<ConnectionEvent> _subject;
+        private ConnectionState _connectionState;
 
         public MockedConnectionService()
         {
-
-            IsConnected = true;
+            _subject = new ReplaySubject<ConnectionEvent>(int.MaxValue);
         }
 
-        public bool IsConnected
+        public ConnectionState ConnectionState
         {
-            get { return _isConnected; }
-            set
+            get { return _connectionState; }
+            private set
             {
-                
-                _isConnected = value;
+                _connectionState = value;
+                _subject.OnNext(new ConnectedEvent { Message = _connectionState.ToString(), TimeStamp = DateTime.UtcNow });
             }
         }
 
-        public IObservable<ConnectionArgs> ConnectionEvents { get; set; }
-        public IObservable<ConnectionArgs> Disconnected { get; set; }
-        public Task<bool> Connect()
-        {
+        public IObservable<ConnectionEvent> ConnectionMessages => _subject.AsObservable();
 
-            // ConnectionEvents
-            return Task.FromResult(true);
+        public IEnumerable<DiagnosticEvent> DiagnosticMessages { get; }
+
+        public async Task<bool> Connect()
+        {
+            Debug.WriteLine($"{nameof(Connect)} invoked");
+
+            ConnectionState = ConnectionState.Connecting;
+
+            await Task.Delay(2000);
+
+            ConnectionState = ConnectionState.Open;
+
+            return await Task.FromResult(true);
         }
 
-        public Task<bool> Disconnect()
+        public async Task<bool> Disconnect()
         {
-            return Task.FromResult(true);
+            Debug.WriteLine($"{nameof(Disconnect)} invoked");
+
+            ConnectionState = ConnectionState.Closed;
+
+            return await Task.FromResult(true);
         }
 
-        public void Dispose()
-        {
-
-        }
+        public void Dispose() { }
     }
 }

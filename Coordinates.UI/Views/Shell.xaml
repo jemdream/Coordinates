@@ -20,6 +20,18 @@
                                Text="Home" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
+
+            <!--  coding playground button  -->
+            <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
+                <StackPanel Orientation="Horizontal">
+                    <!-- Symbol icon reference: https://msdn.microsoft.com/pl-pl/library/windows/apps/dn252842 -->
+                    <SymbolIcon Width="48" Height="48"
+                                Symbol="Edit" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Coding Playground" />
+                </StackPanel>
+            </controls:HamburgerButtonInfo>
+            
         </controls:HamburgerMenu.PrimaryButtons>
 
         <controls:HamburgerMenu.SecondaryButtons>
@@ -33,7 +45,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Setting" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Settings nio" />
+                               Text="Settings" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
         </controls:HamburgerMenu.SecondaryButtons>

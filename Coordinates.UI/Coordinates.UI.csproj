@@ -109,12 +109,17 @@
     <Compile Include="ViewModels\Interfaces\ICodingPlaygroundViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IMeasurementsPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPartViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
+    <Compile Include="Views\MeasurementsPage.xaml.cs">
+      <DependentUpon>MeasurementsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>
@@ -164,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\MeasurementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Busy.xaml">
       <Generator>MSBuild:Compile</Generator>

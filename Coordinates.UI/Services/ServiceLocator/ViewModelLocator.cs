@@ -29,6 +29,8 @@ namespace Coordinates.UI.Services.ServiceLocator
         public ISettingsPartViewModel SettingsPartViewModel => _myContainer.Resolve<ISettingsPartViewModel>();
         public IAboutPartViewModel AboutPartViewModel => _myContainer.Resolve<IAboutPartViewModel>();
         public ICodingPlaygroundViewModel CodingPlaygroundViewModel => _myContainer.Resolve<ICodingPlaygroundViewModel>();
-        
+        public IMeasurementsPageViewModel MeasurementsPageViewModel
+            => _myContainer.Resolve<IMeasurementsPageViewModel>();
+
     }
 }

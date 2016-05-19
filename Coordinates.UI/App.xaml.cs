@@ -94,7 +94,6 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
-            container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

@@ -5,12 +5,9 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Template10.Behaviors"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:vm="using:Coordinates.UI.ViewModels"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}">
 
     <Page.DataContext>
         <Binding Path="MeasurementsPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
@@ -50,21 +47,51 @@
 
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Measurements">
-            
-            <!--<controls:PageHeader.SecondaryCommands>
-                <AppBarButton Command="{Binding GotoSettings}" Label="Settings" />
-                <AppBarButton Command="{Binding GotoPrivacy}" Label="Privacy" />
-                <AppBarButton Command="{Binding GotoAbout}" Label="About" />
-            </controls:PageHeader.SecondaryCommands>-->
-            
-        </controls:PageHeader>
+                             RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
 
-        <!--<controls:Resizer x:Name="ParameterResizer" Margin="16,16,16,0"
-                          RelativePanel.AlignLeftWithPanel="True"
-                          RelativePanel.Below="PageHeader">
+        <!--  content  -->
+        <Pivot x:Name="Pivot1" Grid.Row="1"
+               RelativePanel.AlignLeftWithPanel="True"
+               RelativePanel.AlignRightWithPanel="True"
+               RelativePanel.AlignBottomWithPanel="True"
+               RelativePanel.Below="PageHeader">
 
-        </controls:Resizer>-->
+            <!--  origin  -->
+            <PivotItem DataContext="{Binding CoordsOriginPartViewModel}" Header="Coordinates Origin">
+                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
+                              VerticalScrollBarVisibility="Auto">
+                    <RelativePanel HorizontalAlignment="Left">
+
+                        <!--  controls here  -->
+                        <ComboBox Name="ComboBox"
+                                  ItemsSource="{Binding MeasurementTypes}"
+                                  SelectedItem="{Binding SelectedMeasurementType}"
+                                  SelectedValuePath="ComboBoxOption"
+                                  DisplayMemberPath="MeasurementName"
+                                  Header="Measurement type"
+                                  PlaceholderText="Select measurement procedure"/>
+                    </RelativePanel>
+
+                </ScrollViewer>
+            </PivotItem>
+
+            <!--  computing  -->
+            <PivotItem DataContext="{Binding CoordsComputationPartViewModel}" Header="Computation"
+                       Padding="0">
+                <ScrollViewer Margin="0,12,-12,0" VerticalScrollBarVisibility="Auto">
+                    <RelativePanel HorizontalAlignment="Left">
+
+                        <!--  controls here  -->
+                        <TextBlock Margin="0,12,24,12" LineHeight="24"
+                               TextWrapping="Wrap">
+                            Also nothing... yet!
+                        </TextBlock>
+                    </RelativePanel>
+
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
 
     </RelativePanel>
 </Page>

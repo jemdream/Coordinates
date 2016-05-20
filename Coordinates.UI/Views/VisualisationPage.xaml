@@ -4,13 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Template10.Behaviors"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:converters="using:Template10.Converters"
+    xmlns:vm="using:Coordinates.UI.ViewModels"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
 
     <Page.DataContext>
         <Binding Path="VisualisationPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
@@ -48,16 +44,10 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
+        <!--  header  -->
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Visualisation">
-
-            <!--  secondary commands  -->
-            <!--<controls:PageHeader.SecondaryCommands>
-                <AppBarButton Command="{Binding SecretCommand}" Label="Secret"/>
-            </controls:PageHeader.SecondaryCommands>-->
-
-        </controls:PageHeader>
+                             RelativePanel.AlignTopWithPanel="True" Text="Visualisation"/>
 
     </RelativePanel>
 </Page>

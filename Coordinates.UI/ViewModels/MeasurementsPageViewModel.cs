@@ -11,10 +11,15 @@ namespace Coordinates.UI.ViewModels
 {
     public class MeasurementsPageViewModel : ViewModelBase, IMeasurementsPageViewModel
     {
-        public MeasurementsPageViewModel()
+        public MeasurementsPageViewModel(ICoordsOriginPartViewModel coordsOriginPartViewModel, ICoordsComputationPartViewModel coordsComputationPartViewModel)
         {
-            
+            CoordsOriginPartViewModel = coordsOriginPartViewModel;
+            CoordsComputationPartViewModel = coordsComputationPartViewModel;
         }
+
+        public ICoordsComputationPartViewModel CoordsComputationPartViewModel { get; }
+
+        public ICoordsOriginPartViewModel CoordsOriginPartViewModel { get; }
 
         #region Navigation
 

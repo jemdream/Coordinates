@@ -95,6 +95,8 @@ namespace Coordinates.UI
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
+            container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
+            container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

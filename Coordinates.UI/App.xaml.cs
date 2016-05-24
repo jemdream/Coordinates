@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ViewManagement;
+using Coordinates.Services;
+using Coordinates.Services.Connection;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -93,6 +95,7 @@ namespace Coordinates.UI
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
+            container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

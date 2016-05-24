@@ -1,8 +1,8 @@
-﻿using Coordinates.Services.Args;
+﻿using System.Data;
 
 namespace Coordinates.Services.Events.ConnectionEvents
 {
-    public class ConnectedEvent : ConnectionEvent
+    public class ConnectedEvent : ConnectionEvent<ConnectionState>
     {
     }
 }

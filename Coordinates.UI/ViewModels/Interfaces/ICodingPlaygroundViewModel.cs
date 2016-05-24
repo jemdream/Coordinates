@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Coordinates.Services.Args;
+using System.Data;
+using Windows.UI.Xaml.Controls;
+using Coordinates.Services.Events.ConnectionEvents;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface ICodingPlaygroundViewModel
     {
-        string InitialModalPick { get; }
+        ContentDialogResult ModalPick { get; }
         void EnterTextBox(object textBoxContent, EventArgs ev);
-        IEnumerable<ConnectionEvent> ConnectionEvents { get; }
+        IEnumerable<ConnectionEvent<ConnectionState>> ConnectionEvents { get; }
     }
 }

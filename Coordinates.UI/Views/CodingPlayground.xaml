@@ -17,7 +17,7 @@
     </Page.DataContext>
 
     <Page.Resources>
-        <converters:StringFormatConverter x:Key="DateStampConverter" Format="{}{0:s}"/>
+        <converters:StringFormatConverter x:Key="StringFormatConverter" Format="{}{0:s}"/>
     </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -69,7 +69,7 @@
 
             <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
-                     Text="{Binding InitialModalPick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ModalPick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      TextWrapping="Wrap">
                 <interactivity:Interaction.Behaviors>
                     <!--  enable submit on enter key  -->
@@ -84,7 +84,7 @@
             </TextBox>
 
         </controls:Resizer>
-        
+
         <TextBlock x:Name="StateTextBox" Margin="16,16,0,0"
                    RelativePanel.AlignLeftWith="ParameterResizer"
                    RelativePanel.Below="ParameterResizer"
@@ -94,7 +94,7 @@
                    RelativePanel.AlignLeftWith="StateTextBox"
                    RelativePanel.Below="StateTextBox"
                    Text="List of connection events from data service." />
-        
+
         <ListBox x:Name="ConnectionEventsList" HorizontalContentAlignment="Stretch" Margin="20"
                  ItemsSource="{Binding ConnectionEvents}" 
                  RelativePanel.AlignLeftWith="ConnectionEventsTextBox" RelativePanel.Below="ConnectionEventsTextBox">
@@ -106,14 +106,15 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding TimeStamp, Converter={StaticResource DateStampConverter}}" Margin="3" Grid.Column="0" />
-                        <TextBlock Text="{Binding Message}" Margin="3" Grid.Column="1" />
+                         <!-- \ is a special XAML sign to warn compiler that next sign is not keyword but regular ANSI sign -->
+                        <TextBlock Text="{Binding TimeStamp, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:s\}}" Margin="3" Grid.Column="0" />
+                        <TextBlock Text="{Binding Message, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\}}" Margin="3" Grid.Column="1" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        
+
 
     </RelativePanel>
 </Page>

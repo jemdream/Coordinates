@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Data;
+using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Coordinates.Services;
-using Coordinates.Services.Args;
+using Coordinates.Services.Connection;
+using Coordinates.Services.Events.ConnectionEvents;
 using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
@@ -13,54 +13,50 @@ namespace Coordinates.UI.ViewModels
 {
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
-        private ContentDialogResult _initialModalPick;
-        private readonly IConnectionService _someConnectionService;
-        private readonly ObservableCollection<ConnectionEvent> _connectionEvents;
+        private readonly IConnectionService _mockedConnectionService;
+        private readonly ObservableCollection<ConnectionEvent<ConnectionState>> _connectionEvents;
 
-        public CodingPlaygroundViewModel()
+        public CodingPlaygroundViewModel(IConnectionService mockedConnectionService)
         {
-            _someConnectionService = new MockedConnectionService();
-            _connectionEvents = new ObservableCollection<ConnectionEvent>();
+            _mockedConnectionService = mockedConnectionService;
 
-            _someConnectionService.ConnectionMessages
+            _connectionEvents = new ObservableCollection<ConnectionEvent<ConnectionState>>();
+            
+            _mockedConnectionService.ConnectionMessages
                 .Subscribe(message => _connectionEvents.Add(message));
             
-            _someConnectionService.Connect();
+            _mockedConnectionService.ConnectionMessages
+                .OfType<DisconnectedEvent>() // jak jest disconnected
+                .Subscribe(message =>
+                {
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Disconnected Event",
+                        Content = string.Format("[{0}]: {1}", message.TimeStamp, message.Message),
+                        PrimaryButtonText = "OK",
+                        SecondaryButtonText = "Reconnect"
+                    };
+
+                    ModalPick = dialog.ShowAsync().GetResults();
+
+                    if (ModalPick.Equals(ContentDialogResult.Secondary))
+                        _mockedConnectionService.Connect();
+                });
+
+            _mockedConnectionService.Connect();
         }
 
-        public IEnumerable<ConnectionEvent> ConnectionEvents => _connectionEvents;
+        public IEnumerable<ConnectionEvent<ConnectionState>> ConnectionEvents => _connectionEvents;
 
-        public string InitialModalPick => _initialModalPick.ToString();
+        public ContentDialogResult ModalPick { get; set; }
 
         // _ minusem jest podawanie nazwy metody (przez behaviour) zamiast bindowania
         public void EnterTextBox(object textBoxContent, EventArgs ev)
         {
+            // ignoring everything, simple trigger
         }
 
         #region Navigation
-        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
-        {
-            // _ how to show modal:
-            var dlg = new ContentDialog
-            {
-                Title = "Title",
-                Content = "Content",
-                PrimaryButtonText = "Apply",
-                SecondaryButtonText = "Cancel"
-            };
-
-            // _ when you pick primary or secondary button, the value is stored below
-            _initialModalPick = await dlg.ShowAsync();
-            RaisePropertyChanged(() => InitialModalPick);
-
-            #region Ignore
-            //let message = result match(
-            //    case Success < string > success: success.Result
-            //    case Failure err: err.Message
-            //    case *: "Unknown!"
-            //);
-            #endregion
-        }
         #endregion
     }
 }

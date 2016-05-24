@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Coordinates.Services.Args
+namespace Coordinates.Services.Events.ConnectionEvents
 {
-    public abstract class ConnectionEvent
+    public abstract class ConnectionEvent<TMessageType>  
     {
         public DateTime TimeStamp { get; set; }
-        public string Message { get; set; }
+        public TMessageType Message { get; set; }
     }
 }

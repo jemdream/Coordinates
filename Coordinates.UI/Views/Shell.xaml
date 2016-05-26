@@ -18,7 +18,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Home" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Home" />
+                               Text="Start" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
 
@@ -39,7 +39,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Calculator" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Measurements" />
+                               Text="Pomiary" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
 
@@ -49,7 +49,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Pictures" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Visualisation" />
+                               Text="Wizualizacja" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
 
@@ -67,7 +67,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Setting" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Settings" />
+                               Text="Ustawienia" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
         </controls:HamburgerMenu.SecondaryButtons>

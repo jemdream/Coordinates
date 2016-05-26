@@ -98,6 +98,7 @@
                         </RelativePanel>
 
                         <Button Name="NextButton" Content="Dalej"
+                                Click="NextButton_OnClick"
                                 RelativePanel.RightOf="ComboBox"
                                 RelativePanel.AlignBottomWith="ComboBox"
                                 Margin="12,0,0,0"/>
@@ -113,9 +114,73 @@
                     <RelativePanel HorizontalAlignment="Left">
 
                         <!--  controls here  -->
-                        <TextBlock Margin="0,12,24,12" LineHeight="24"
-                               TextWrapping="Wrap">
-                            Nothing here yet.
+                        <TextBlock Name="SelectedTypeTextBox"
+                                   Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap">
+                            <!--  change it to binding so it would switch automatically to selected measurement type  -->
+                            Wybrany pomiar
+                        </TextBlock>
+                        
+                        <TextBlock Name="InfoTextBlock"
+                                   RelativePanel.Below="SelectedTypeTextBox"
+                                   LineHeight="24" TextWrapping="Wrap">
+                            Wybierz minimum 5 punktów pomiarowych:
+                        </TextBlock>
+                        
+                        <TextBox Name="XCurrentTextBox" Text="0.000" Header="Oś X:"
+                                       Margin="0,10,0,0"
+                                 RelativePanel.Below="InfoTextBlock"/>
+                        <TextBox Name="YCurrentTextBox" Text="0.000" Header="Oś Y:"
+                                       Margin="0,10,0,0"
+                                       RelativePanel.Below="XCurrentTextBox"/>
+                        <TextBox Name="ZCurrentTextBox" Text="0.000" Header="Oś Z:"
+                                       Margin="0,10,0,0"
+                                       RelativePanel.Below="YCurrentTextBox"/>
+
+                        <TextBlock Name="XCurrentTextBlock"
+                                    RelativePanel.RightOf="XCurrentTextBox"
+                                    RelativePanel.AlignBottomWith="XCurrentTextBox"
+                                    Margin="10,0,0,0"/>
+                        <TextBlock Name="YCurrentTextBlock"
+                                    RelativePanel.RightOf="YCurrentTextBox"
+                                    RelativePanel.AlignBottomWith="YCurrentTextBox"
+                                    Margin="10,0,0,0"/>
+                        <TextBlock Name="ZCurrentTextBlock"
+                                    RelativePanel.RightOf="ZCurrentTextBox"
+                                    RelativePanel.AlignBottomWith="ZCurrentTextBox"
+                                    Margin="10,0,0,0"/>
+                        
+                        <Button Name="PickButton" Content="Wybierz aktualny pomiar"
+                                RelativePanel.RightOf="YCurrentTextBlock"
+                                RelativePanel.AlignVerticalCenterWith="YCurrentTextBox" Height="170" Width="200"/>
+                        
+                        <ListView Name="MeasurementListView"
+                                  BorderBrush="DodgerBlue"
+                                  BorderThickness="2"
+                                  SelectionMode="Single"
+                                  RelativePanel.Below="ZCurrentTextBlock"
+                                  Margin="0,10,0,0">
+                            <TextBlock>
+                                Przykładowy pomiar 0.000 0.000 0.000
+                            </TextBlock>
+                            <TextBlock>
+                                Przykładowy pomiar 0.001 0.001 0.001
+                            </TextBlock>
+                            <TextBlock>
+                                Przykładowy pomiar 0.002 0.002 0.002
+                            </TextBlock>
+                            <!-- find out how to make a dynamic listview with binding -->
+                            <!-- find out how to connect selected measurement with delete button -->
+                        </ListView>
+                        
+                        <Button Name="DeleteButton"
+                                Content="Usuń pomiar"
+                                RelativePanel.Below="MeasurementListView"
+                                RelativePanel.AlignRightWith="MeasurementListView"></Button>
+                        
+                        <TextBlock Name="RemainingTextBlock"
+                                   RelativePanel.Below="DeleteButton"
+                                   Margin="0,20,0,0" Foreground="Red">
+                            Pozostało x/5 punktów pomiarowych do wyboru
                         </TextBlock>
                     </RelativePanel>
 

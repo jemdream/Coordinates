@@ -11,18 +11,17 @@
     <controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
         <controls:HamburgerMenu.PrimaryButtons>
-            
-            <!--  Mainpage button  -->
+            <!--  mainpage button  -->
             <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Home" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Start" />
+                               Text="Home" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
 
-            <!--  Coding playground button  -->
+            <!--  coding playground button  -->
             <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
                 <StackPanel Orientation="Horizontal">
                     <!-- Symbol icon reference: https://msdn.microsoft.com/pl-pl/library/windows/apps/dn252842 -->
@@ -33,30 +32,18 @@
                 </StackPanel>
             </controls:HamburgerButtonInfo>
 
-            <!--  Measurement button  -->
             <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MeasurementsPage">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
-                                Symbol="Calculator" />
+                                Symbol="Home" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Pomiary" />
+                               Text="Measurements" />
+
                 </StackPanel>
             </controls:HamburgerButtonInfo>
-
-            <!--  Visualisation button  -->
-            <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Width="48" Height="48"
-                                Symbol="Pictures" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Wizualizacja" />
-                </StackPanel>
-            </controls:HamburgerButtonInfo>
-
         </controls:HamburgerMenu.PrimaryButtons>
 
         <controls:HamburgerMenu.SecondaryButtons>
-            
             <!--  settingspage button  -->
             <controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
                                           PageType="views:SettingsPage">
@@ -67,7 +54,7 @@
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Setting" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Ustawienia" />
+                               Text="Settings" />
                 </StackPanel>
             </controls:HamburgerButtonInfo>
         </controls:HamburgerMenu.SecondaryButtons>

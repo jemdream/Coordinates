@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Coordinates.UI.ViewModels"
     mc:Ignorable="d"
+    Name="Page"
     d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}">
 
     <Page.DataContext>
@@ -51,6 +52,7 @@
 
         <!--  content  -->
         <Pivot x:Name="Pivot1" Grid.Row="1"
+               SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged}"
                RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True"
                RelativePanel.AlignBottomWithPanel="True"
@@ -66,7 +68,6 @@
                         <ComboBox Name="ComboBox"
                                   ItemsSource="{Binding MeasurementTypes}"
                                   SelectedItem="{Binding SelectedMeasurementType}"
-                                  SelectedValuePath="ComboBoxOption"
                                   DisplayMemberPath="MeasurementName"
                                   Header="Typ pomiaru"
                                   PlaceholderText="Wybierz tryb pomiaru"/>
@@ -98,7 +99,7 @@
                         </RelativePanel>
 
                         <Button Name="NextButton" Content="Dalej"
-                                Click="NextButton_OnClick"
+                                Command="{Binding DataContext.GoToMeasurement, ElementName=Page}"
                                 RelativePanel.RightOf="ComboBox"
                                 RelativePanel.AlignBottomWith="ComboBox"
                                 Margin="12,0,0,0"/>

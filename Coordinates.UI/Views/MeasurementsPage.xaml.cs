@@ -11,10 +11,5 @@ namespace Coordinates.UI.Views
             InitializeComponent();
             //NavigationCacheMode = NavigationCacheMode.Disabled;
         }
-
-        private void NextButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Pivot1.SelectedIndex = 1;
-        }
     }
 }

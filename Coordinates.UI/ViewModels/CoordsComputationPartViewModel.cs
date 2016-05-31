@@ -1,33 +1,23 @@
-﻿using Coordinates.UI.Models;
-using Coordinates.UI.ViewModels.Interfaces;
+﻿using Coordinates.UI.ViewModels.Interfaces;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
     public class CoordsComputationPartViewModel : ViewModelBase, ICoordsComputationPartViewModel
     {
-        private string _xAxisCurrentValue = "0.000";
-        private string _yAxisCurrentValue = "0.000";
-        private string _zAxisCurrentValue = "0.000";
+        private double _xAxisCurrentValue;
+        private double _yAxisCurrentValue;
+        private double _zAxisCurrentValue;
+        private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
 
-        public CoordsComputationPartViewModel()
+        public IMeasurementTypeViewModel SelectedMeasurementTypeViewModel
         {
-            
+            get { return _selectedMeasurementTypeViewModel; }
+            set { Set(ref _selectedMeasurementTypeViewModel, value); }
         }
-
-        public MeasurementTypeModel SelectedMeasurementType { get; set; }
-
-        public string XAxisCurrentValue
-        {
-            get { return _xAxisCurrentValue; }
-        }
-        public string YAxisCurrentValue
-        {
-            get { return _yAxisCurrentValue; }
-        }
-        public string ZAxisCurrentValue
-        {
-            get { return _zAxisCurrentValue; }
-        }
+        public double XAxisCurrentValue { get { return _xAxisCurrentValue; } set { Set(ref _xAxisCurrentValue, value); } }
+        public double YAxisCurrentValue { get { return _yAxisCurrentValue; } set { Set(ref _yAxisCurrentValue, value); } }
+        public double ZAxisCurrentValue { get { return _zAxisCurrentValue; } set { Set(ref _zAxisCurrentValue, value); } }
     }
 }

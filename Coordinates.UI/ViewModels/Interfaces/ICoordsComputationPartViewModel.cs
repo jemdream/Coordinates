@@ -1,13 +1,12 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Coordinates.UI.Models;
+﻿using Coordinates.UI.ViewModels.MeasurementViewModels;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface ICoordsComputationPartViewModel
     {
-        MeasurementTypeModel SelectedMeasurementType { get; set; }
-        string XAxisCurrentValue { get; }
-        string YAxisCurrentValue { get; }
-        string ZAxisCurrentValue { get; }
+        IMeasurementTypeViewModel SelectedMeasurementTypeViewModel { get; set; }
+        double XAxisCurrentValue { get; }
+        double YAxisCurrentValue { get; }
+        double ZAxisCurrentValue { get; }
     }
 }

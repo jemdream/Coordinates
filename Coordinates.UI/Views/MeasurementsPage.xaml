@@ -6,9 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Coordinates.UI.ViewModels"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
     Name="Page"
     d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}">
+
+    <Page.Resources>
+        <converters:ValueWhenConverter x:Key="FalseIfNull" When="{x:Null}">
+            <converters:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
+    </Page.Resources>
 
     <Page.DataContext>
         <Binding Path="MeasurementsPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
@@ -57,7 +69,7 @@
                         <!--  controls here  -->
                         <ComboBox Name="ComboBox"
                                   ItemsSource="{Binding MeasurementTypes}"
-                                  SelectedItem="{Binding SelectedMeasurementType}"
+                                  SelectedItem="{Binding SelectedMeasurementTypeViewModel, Mode=TwoWay}"
                                   DisplayMemberPath="MeasurementName"
                                   Header="Typ pomiaru"
                                   PlaceholderText="Wybierz tryb pomiaru"/>
@@ -94,14 +106,13 @@
                 </ScrollViewer>
             </PivotItem>
             <!--  computing  -->
-
+            <!--IsEnabled="{Binding SelectedMeasurementTypeViewModel, Converter={StaticResource FalseIfNull}}"-->
             <PivotItem Name="ComputingPivotItem" DataContext="{Binding CoordsComputationPartViewModel}" Header="Pomiary i obliczenia"
                        Padding="0" TabIndex="1">
                 <ScrollViewer Margin="0,12,-12,0" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <!--  controls here  -->
-                        <TextBlock Name="SelectedTypeTextBox" Text="{Binding DataContext.SelectedMeasurementType.MeasurementName,
-                            UpdateSourceTrigger=PropertyChanged, ElementName=OriginPivotItem, Mode=TwoWay}"
+                        <TextBlock Name="SelectedTypeTextBox" Text="{Binding SelectedMeasurementTypeViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap"/>
                         <!--  change it to binding so it would switch automatically to selected measurement type  -->
                         <TextBlock Name="InfoTextBlock" Text="Wybierz minimum 5 punktów pomiarowych:"
@@ -165,3 +176,4 @@
         </Pivot>
     </RelativePanel>
 </Page>
+

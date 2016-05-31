@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Input;
-using Coordinates.UI.Models;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface ICoordsOriginPartViewModel
     {
-        ICollection<MeasurementTypeModel> MeasurementTypes { get; }
-        MeasurementTypeModel SelectedMeasurementType { get; }
+        ICollection<IMeasurementTypeViewModel> MeasurementTypes { get; }
+        IMeasurementTypeViewModel SelectedMeasurementTypeViewModel { get; set; }
     }
 }

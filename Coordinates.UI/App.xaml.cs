@@ -94,7 +94,11 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
+            container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
+            container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
+            container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
+            container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
             container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
 
             // Registering Views 

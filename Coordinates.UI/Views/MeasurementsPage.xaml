@@ -43,14 +43,14 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
         <!--  content  -->
-        <Pivot x:Name="Pivot1" Grid.Row="1"
-               SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged}"
+        <Pivot x:Name="Pivot" Grid.Row="1"
+               SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True"
                RelativePanel.AlignBottomWithPanel="True"
                RelativePanel.Below="PageHeader">
             <!--  origin  -->
-            <PivotItem Name="OriginPivotItem" DataContext="{Binding CoordsOriginPartViewModel}" Header="Początek układu współrzędnych">
+            <PivotItem Name="OriginPivotItem" DataContext="{Binding CoordsOriginPartViewModel}" Header="Początek układu współrzędnych" TabIndex="0">
                 <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel Name="MainRelativePanel" HorizontalAlignment="Left">
@@ -94,24 +94,26 @@
                 </ScrollViewer>
             </PivotItem>
             <!--  computing  -->
+
             <PivotItem Name="ComputingPivotItem" DataContext="{Binding CoordsComputationPartViewModel}" Header="Pomiary i obliczenia"
-                       Padding="0">
+                       Padding="0" TabIndex="1">
                 <ScrollViewer Margin="0,12,-12,0" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <!--  controls here  -->
-                        <TextBlock Name="SelectedTypeTextBox" Text="Wybrana metoda pomiaru"
+                        <TextBlock Name="SelectedTypeTextBox" Text="{Binding DataContext.SelectedMeasurementType.MeasurementName,
+                            UpdateSourceTrigger=PropertyChanged, ElementName=OriginPivotItem, Mode=TwoWay}"
                                    Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap"/>
                         <!--  change it to binding so it would switch automatically to selected measurement type  -->
                         <TextBlock Name="InfoTextBlock" Text="Wybierz minimum 5 punktów pomiarowych:"
                                    RelativePanel.Below="SelectedTypeTextBox"
                                    LineHeight="24" TextWrapping="Wrap"/>
-                        <TextBox Name="XCurrentTextBox" Text="0.000" Header="Oś X:"
+                        <TextBox Name="XCurrentTextBox" Text="{Binding XAxisCurrentValue}" Header="Oś X:"
                                        Margin="0,10,0,0"
                                  RelativePanel.Below="InfoTextBlock"/>
-                        <TextBox Name="YCurrentTextBox" Text="0.000" Header="Oś Y:"
+                        <TextBox Name="YCurrentTextBox" Text="{Binding YAxisCurrentValue}" Header="Oś Y:"
                                        Margin="0,10,0,0"
                                        RelativePanel.Below="XCurrentTextBox"/>
-                        <TextBox Name="ZCurrentTextBox" Text="0.000" Header="Oś Z:"
+                        <TextBox Name="ZCurrentTextBox" Text="{Binding ZAxisCurrentValue}" Header="Oś Z:"
                                        Margin="0,10,0,0"
                                        RelativePanel.Below="YCurrentTextBox"/>
                         <TextBlock Name="XCurrentTextBlock"

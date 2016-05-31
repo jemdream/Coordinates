@@ -12,8 +12,8 @@ namespace Coordinates.UI.ViewModels
 {
     public class MeasurementsPageViewModel : ViewModelBase, IMeasurementsPageViewModel
     {
+        private DelegateCommand _goToMeasurement;
         private int _selectedTabIndex;
-        public ICommand GoToMeasurement { get; set; }
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
@@ -24,20 +24,16 @@ namespace Coordinates.UI.ViewModels
         {
             CoordsOriginPartViewModel = coordsOriginPartViewModel;
             CoordsComputationPartViewModel = coordsComputationPartViewModel;
-
-            GoToMeasurement = new DelegateCommand(() =>
-            {
-                CoordsComputationPartViewModel.SelectedMeasurementType = CoordsOriginPartViewModel.SelectedMeasurementType;
-                SelectedTabIndex = 1;
-            });
         }
 
         public ICoordsComputationPartViewModel CoordsComputationPartViewModel { get; }
-
         public ICoordsOriginPartViewModel CoordsOriginPartViewModel { get; }
 
-        #region Navigation
+        public ICommand GoToMeasurement => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
+        {
+            CoordsComputationPartViewModel.SelectedMeasurementType = CoordsOriginPartViewModel.SelectedMeasurementType;
+            SelectedTabIndex = 1;
+        }));
 
-        #endregion
     }
 }

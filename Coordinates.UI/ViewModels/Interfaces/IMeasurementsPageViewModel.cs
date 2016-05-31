@@ -4,7 +4,7 @@ namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface IMeasurementsPageViewModel
     {
-        ICommand GoToMeasurement { get; set; }
+        ICommand GoToMeasurement { get; }
         ICoordsOriginPartViewModel CoordsOriginPartViewModel { get; }
         ICoordsComputationPartViewModel CoordsComputationPartViewModel { get; }
 

@@ -27,7 +27,7 @@ namespace Coordinates.UI.ViewModels
                 new MeasurementTypeModel() {MeasurementName = "Dowolny pomiar" }
             };
 
-            SelectedMeasurementType = MeasurementTypes.FirstOrDefault();
+            //SelectedMeasurementType = MeasurementTypes.FirstOrDefault();
 
         }
 

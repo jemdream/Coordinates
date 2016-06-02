@@ -62,14 +62,14 @@
         </sfchart:SfChart>
 
         <sfgrid:SfDataGrid Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding XYZPicked}" 
-                           RelativePanel.Below="XYChart" Margin="12,12,0,0">
+                           RelativePanel.Below="PageHeader" Margin="12,12,0,0" Height="300">
             <sfgrid:SfDataGrid.Columns>
-                <sfgrid:GridTextColumn MappingName="XPicked.NameX"/>
-                <sfgrid:GridTextColumn MappingName="YPicked.NameY"/>
-                <sfgrid:GridTextColumn MappingName="ZPicked.NameZ"/>
+                <sfgrid:GridTextColumn MappingName="XPicked.Name"/>
+                <sfgrid:GridTextColumn MappingName="YPicked.Name"/>
+                <sfgrid:GridTextColumn MappingName="ZPicked.Name"/>
             </sfgrid:SfDataGrid.Columns>
             <sfgrid:SfDataGrid.SortColumnDescriptions>
-                <sfgrid:SortColumnDescription ColumnName="XPicked.NameX"></sfgrid:SortColumnDescription>
+                <sfgrid:SortColumnDescription ColumnName="XPicked.Name"></sfgrid:SortColumnDescription>
             </sfgrid:SfDataGrid.SortColumnDescriptions>
         </sfgrid:SfDataGrid>
 

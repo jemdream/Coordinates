@@ -6,16 +6,13 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:vm="using:Coordinates.UI.ViewModels"
     xmlns:sfchart="using:Syncfusion.UI.Xaml.Charts"
-    xmlns:syncfusion="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.UWP"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
 
     <Page.DataContext>
         <Binding Path="VisualisationPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
-
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
         <!-- change properties for narrow view  -->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -45,24 +42,22 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
         <!--  header  -->
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Wizualizacja"/>
-
-        <sfchart:SfChart Name="XYChart" Header="Wykres x i y" RelativePanel.Below="PageHeader" Margin="12,12,0,0" Width="700" Height="300" FontSize="14">
+        <!-- data visualization -->
+        <sfchart:SfChart Name="TwoDimChart" Header="Dwuwymiarowy wykres pomiarów" RelativePanel.Below="PageHeader" Margin="12,12,0,0" Width="700" Height="300" FontSize="14">
             <sfchart:SfChart.PrimaryAxis>
-                <sfchart:NumericalAxis Header="x" FontSize="14"></sfchart:NumericalAxis>
+                <sfchart:NumericalAxis Header="X" FontSize="14"></sfchart:NumericalAxis>
             </sfchart:SfChart.PrimaryAxis>
             <sfchart:SfChart.SecondaryAxis>
-                <sfchart:NumericalAxis Header="y" FontSize="14"></sfchart:NumericalAxis>
+                <sfchart:NumericalAxis Header="Y" FontSize="14"></sfchart:NumericalAxis>
             </sfchart:SfChart.SecondaryAxis>
-            <sfchart:ScatterSeries ItemsSource="{Binding XYPicked}" XBindingPath="{Binding XPicked}" YBindingPath="{Binding YPicked}"/>
+            <sfchart:ScatterSeries ItemsSource="{Binding XYZPicked}" XBindingPath="{Binding XPicked}" YBindingPath="{Binding YPicked}"/>
         </sfchart:SfChart>
-
         <sfgrid:SfDataGrid Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding XYZPicked}" 
-                           RelativePanel.Below="XYChart" Margin="12,12,0,0" Height="300">
+                           RelativePanel.Below="TwoDimChart" Margin="12,12,0,0" Height="300">
             <sfgrid:SfDataGrid.Columns>
                 <sfgrid:GridTextColumn MappingName="XPicked.Name"/>
                 <sfgrid:GridTextColumn MappingName="YPicked.Name"/>
@@ -72,7 +67,6 @@
                 <sfgrid:SortColumnDescription ColumnName="XPicked.Name"></sfgrid:SortColumnDescription>
             </sfgrid:SfDataGrid.SortColumnDescriptions>
         </sfgrid:SfDataGrid>
-
     </RelativePanel>
 </Page>
 

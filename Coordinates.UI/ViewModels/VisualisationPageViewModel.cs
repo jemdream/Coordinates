@@ -5,9 +5,5 @@ namespace Coordinates.UI.ViewModels
 {
     public class VisualisationPageViewModel : ViewModelBase, IVisualisationPageViewModel
     {
-        public VisualisationPageViewModel()
-        {
-            
-        } 
     }
 }

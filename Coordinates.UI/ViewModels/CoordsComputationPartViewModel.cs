@@ -1,23 +1,33 @@
-﻿using Coordinates.UI.ViewModels.Interfaces;
-using Coordinates.UI.ViewModels.MeasurementViewModels;
+﻿using Coordinates.UI.Messages;
+using Coordinates.UI.Models;
+using Coordinates.UI.ViewModels.Interfaces;
+using Prism.Events;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
     public class CoordsComputationPartViewModel : ViewModelBase, ICoordsComputationPartViewModel
     {
-        private double _xAxisCurrentValue;
-        private double _yAxisCurrentValue;
-        private double _zAxisCurrentValue;
-        private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
+        private MeasurementSettingsModel _measurementSettings;
 
-        public IMeasurementTypeViewModel SelectedMeasurementTypeViewModel
+        public CoordsComputationPartViewModel(IEventAggregator eventAggregator)
         {
-            get { return _selectedMeasurementTypeViewModel; }
-            set { Set(ref _selectedMeasurementTypeViewModel, value); }
+            eventAggregator
+                .GetEvent<NewMeasurementMessage>()
+                .Subscribe(ChangeMeasurementType);
         }
-        public double XAxisCurrentValue { get { return _xAxisCurrentValue; } set { Set(ref _xAxisCurrentValue, value); } }
-        public double YAxisCurrentValue { get { return _yAxisCurrentValue; } set { Set(ref _yAxisCurrentValue, value); } }
-        public double ZAxisCurrentValue { get { return _zAxisCurrentValue; } set { Set(ref _zAxisCurrentValue, value); } }
+
+        // TODO: zrobic taska na zamiane przekazywania instancji VM na enuma, 
+        // TODO: a w View bedzie mapowanie po typie enuma i wyciagana nowa instancja z containera za kazdym razem jak odpalamy nowy measurement
+        private void ChangeMeasurementType(MeasurementSettingsModel settings)
+        {
+            MeasurementSettings = settings;
+        }
+
+        public MeasurementSettingsModel MeasurementSettings
+        {
+            get { return _measurementSettings; }
+            set { Set(ref _measurementSettings, value); }
+        }
     }
 }

@@ -98,6 +98,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExceptionMessages.cs" />
+    <Compile Include="Messages\NewMeasurementMessage.cs" />
+    <Compile Include="Models\Coordinates.cs" />
+    <Compile Include="Models\MeasurementSettingsModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -220,7 +223,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Views\MeasurementViews\" />
   </ItemGroup>
   <ItemGroup>

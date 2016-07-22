@@ -61,6 +61,19 @@
                RelativePanel.AlignRightWithPanel="True"
                RelativePanel.AlignBottomWithPanel="True"
                RelativePanel.Below="PageHeader">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState>
+                        <VisualState.StateTriggers>
+                            <!--VisualState to be triggered when window width is >=720 effective pixels.-->
+                            <AdaptiveTrigger MinWindowWidth="720" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="myPanel.Orientation" Value="Horizontal" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <!--  origin  -->
             <PivotItem Name="OriginPivotItem" DataContext="{Binding CoordsOriginPartViewModel}" Header="Początek układu współrzędnych" TabIndex="0">
                 <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left"
@@ -76,12 +89,14 @@
                         <RelativePanel Name="CoordsRelativePanel" HorizontalAlignment="Left"
                                        RelativePanel.Below="ComboBox" 
                                        Visibility="Visible">
-                            <TextBox Name="XAxisTextBox" Text="0.000" Header="Oś X:"
+                            <!--Słabo, że nie było tu bindingu-->
+                            <!--TODO: Ma być numeric i nie ma byc tekstu-->
+                            <TextBox Name="XAxisTextBox" Text="{Binding InitialCoordinates.X, Mode=TwoWay}" Header="Oś X:"
                                        Margin="0,10,0,0"/>
-                            <TextBox Name="YAxisTextBox" Text="0.000" Header="Oś Y:"
+                            <TextBox Name="YAxisTextBox" Text="{Binding InitialCoordinates.Y, Mode=TwoWay}" Header="Oś Y:"
                                        Margin="0,10,0,0"
                                        RelativePanel.Below="XAxisTextBox"/>
-                            <TextBox Name="ZAxisTextBox" Text="0.000" Header="Oś Z:"
+                            <TextBox Name="ZAxisTextBox" Text="{Binding InitialCoordinates.Z, Mode=TwoWay}" Header="Oś Z:"
                                        Margin="0,10,0,0"
                                        RelativePanel.Below="YAxisTextBox"/>
                             <Button Name="SetXButton" Content="Resetuj"
@@ -98,7 +113,7 @@
                                     Margin="10,0,0,0"/>
                         </RelativePanel>
                         <Button Name="NextButton" Content="Dalej"
-                                Command="{Binding DataContext.GoToMeasurement, ElementName=Page}"
+                                Command="{Binding GoToMeasurement}"
                                 RelativePanel.RightOf="ComboBox"
                                 RelativePanel.AlignBottomWith="ComboBox"
                                 Margin="12,0,0,0"/>
@@ -112,21 +127,17 @@
                 <ScrollViewer Margin="0,12,-12,0" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <!--  controls here  -->
-                        <TextBlock Name="SelectedTypeTextBox" Text="{Binding SelectedMeasurementTypeViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        <TextBlock Name="SelectedTypeTextBox" Text="{Binding MeasurementSettings.MeasurementType, Mode=TwoWay}"
                                    Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap"/>
                         <!--  change it to binding so it would switch automatically to selected measurement type  -->
                         <TextBlock Name="InfoTextBlock" Text="Wybierz minimum 5 punktów pomiarowych:"
-                                   RelativePanel.Below="SelectedTypeTextBox"
-                                   LineHeight="24" TextWrapping="Wrap"/>
-                        <TextBox Name="XCurrentTextBox" Text="{Binding XAxisCurrentValue}" Header="Oś X:"
-                                       Margin="0,10,0,0"
-                                 RelativePanel.Below="InfoTextBlock"/>
-                        <TextBox Name="YCurrentTextBox" Text="{Binding YAxisCurrentValue}" Header="Oś Y:"
-                                       Margin="0,10,0,0"
-                                       RelativePanel.Below="XCurrentTextBox"/>
-                        <TextBox Name="ZCurrentTextBox" Text="{Binding ZAxisCurrentValue}" Header="Oś Z:"
-                                       Margin="0,10,0,0"
-                                       RelativePanel.Below="YCurrentTextBox"/>
+                                   RelativePanel.Below="SelectedTypeTextBox" LineHeight="24" TextWrapping="Wrap"/>
+                        <TextBox Name="XCurrentTextBox" Text="{Binding MeasurementSettings.AxisBaseValuesModel.X}" Header="Oś X:"
+                                       Margin="0,10,0,0" RelativePanel.Below="InfoTextBlock"/>
+                        <TextBox Name="YCurrentTextBox" Text="{Binding MeasurementSettings.AxisBaseValuesModel.Y}" Header="Oś Y:"
+                                       Margin="0,10,0,0" RelativePanel.Below="XCurrentTextBox"/>
+                        <TextBox Name="ZCurrentTextBox" Text="{Binding MeasurementSettings.AxisBaseValuesModel.Z}" Header="Oś Z:"
+                                       Margin="0,10,0,0" RelativePanel.Below="YCurrentTextBox"/>
                         <TextBlock Name="XCurrentTextBlock"
                                     RelativePanel.RightOf="XCurrentTextBox"
                                     RelativePanel.AlignBottomWith="XCurrentTextBox"

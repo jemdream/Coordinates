@@ -11,6 +11,7 @@ using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
+using Prism.Events;
 using Template10.Services.NavigationService;
 
 namespace Coordinates.UI
@@ -100,6 +101,7 @@ namespace Coordinates.UI
             container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
             container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
             container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

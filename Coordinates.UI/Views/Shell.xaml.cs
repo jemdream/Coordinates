@@ -1,13 +1,13 @@
+using Windows.UI.Xaml;
 using Template10.Controls;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Controls;
+using Coordinates.UI.ViewModels;
 
 namespace Coordinates.UI.Views
 {
     public sealed partial class Shell : Page
     {
-        public static Shell Instance { get; set; }
-        public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
 
         public Shell()
         {
@@ -15,15 +15,25 @@ namespace Coordinates.UI.Views
             InitializeComponent();
         }
 
-        public Shell(INavigationService navigationService) : this()
+        public Shell(INavigationService navigationService, 
+            IConnectionSetupViewModel connectionSetupViewModel) : this()
         {
             SetNavigationService(navigationService);
+            ConnectionSetupViewModel = connectionSetupViewModel;
         }
+
+        public static Shell Instance { get; set; }
+        public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
+        public IConnectionSetupViewModel ConnectionSetupViewModel { get; set; }
 
         public void SetNavigationService(INavigationService navigationService)
         {
             MyHamburgerMenu.NavigationService = navigationService;
         }
+
+        private void ConnectionBar_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            (sender as CommandBar).DataContext = ConnectionSetupViewModel;
+        }
     }
 }
-

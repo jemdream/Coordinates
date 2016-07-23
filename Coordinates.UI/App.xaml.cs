@@ -88,6 +88,8 @@ namespace Coordinates.UI
 
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>();
@@ -100,8 +102,7 @@ namespace Coordinates.UI
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
             container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
             container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
-            container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));
@@ -121,4 +122,3 @@ namespace Coordinates.UI
         }
     }
 }
-

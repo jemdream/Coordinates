@@ -69,7 +69,7 @@
 
             <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
-                     Text="{Binding ModalPick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ModalPick, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\}}"
                      TextWrapping="Wrap">
                 <interactivity:Interaction.Behaviors>
                     <!--  enable submit on enter key  -->

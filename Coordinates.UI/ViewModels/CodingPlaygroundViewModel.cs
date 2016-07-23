@@ -14,41 +14,56 @@ namespace Coordinates.UI.ViewModels
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
         private readonly IConnectionService _mockedConnectionService;
-        private readonly ObservableCollection<ConnectionEvent<ConnectionState>> _connectionEvents;
+        private readonly ObservableCollection<DiagnosticEvent> _connectionEvents;
+        private ContentDialogResult _modalPick;
 
         public CodingPlaygroundViewModel(IConnectionService mockedConnectionService)
         {
             _mockedConnectionService = mockedConnectionService;
 
-            _connectionEvents = new ObservableCollection<ConnectionEvent<ConnectionState>>();
-            
-            _mockedConnectionService.ConnectionMessages
+            _connectionEvents = new ObservableCollection<DiagnosticEvent>();
+
+            _mockedConnectionService.DiagnosticEventsStream
                 .Subscribe(message => _connectionEvents.Add(message));
-            
-            _mockedConnectionService.ConnectionMessages
-                .OfType<DisconnectedEvent>() // jak jest disconnected
+
+            _mockedConnectionService.DiagnosticEventsStream
+                .Where(message =>
+                {
+                    var test = (ConnectionState)message.Message;
+
+                    return test.Equals(ConnectionState.Open);
+                })
                 .Subscribe(message =>
                 {
                     var dialog = new ContentDialog
                     {
-                        Title = "Disconnected Event",
+                        Title = "Connection opened.",
                         Content = string.Format("[{0}]: {1}", message.TimeStamp, message.Message),
                         PrimaryButtonText = "OK",
-                        SecondaryButtonText = "Reconnect"
+                        SecondaryButtonText = "Close Connection"
                     };
 
-                    ModalPick = dialog.ShowAsync().GetResults();
+                    dialog.Closed += (sender, args) =>
+                    {
+                        if (args.Result.Equals(ContentDialogResult.Secondary))
+                            _mockedConnectionService.Close();
 
-                    if (ModalPick.Equals(ContentDialogResult.Secondary))
-                        _mockedConnectionService.Connect();
+                        ModalPick = args.Result;
+                    };
+
+                    dialog.ShowAsync().GetResults();
                 });
 
-            _mockedConnectionService.Connect();
+            _mockedConnectionService.Open();
         }
 
-        public IEnumerable<ConnectionEvent<ConnectionState>> ConnectionEvents => _connectionEvents;
+        public IEnumerable<DiagnosticEvent> ConnectionEvents => _connectionEvents;
 
-        public ContentDialogResult ModalPick { get; set; }
+        public ContentDialogResult ModalPick
+        {
+            get { return _modalPick; }
+            set { Set(ref _modalPick, value); }
+        }
 
         // _ minusem jest podawanie nazwy metody (przez behaviour) zamiast bindowania
         public void EnterTextBox(object textBoxContent, EventArgs ev)

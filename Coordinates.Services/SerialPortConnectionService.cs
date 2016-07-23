@@ -10,19 +10,18 @@ namespace Coordinates.Services
             //var serialPort = new SerialDevice();
         }
 
-        protected override async Task<bool> OnConnectingAsync()
+        protected override async Task<bool> OnOpeningAsync()
         {
-            // source of mocked data; 
-            // TODO: create mocked source
-
             await Task.Delay(2000);
-            
+
             return true;
         }
 
-        protected override async Task<bool> OnDisconnectingAsync()
+        protected override async Task<bool> OnClosingAsync()
         {
-            return await Task.FromResult(true);
+            await Task.Delay(2000);
+
+            return true;
         }
     }
 }

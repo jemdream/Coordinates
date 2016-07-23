@@ -2,9 +2,9 @@
 
 namespace Coordinates.Services.Events.ConnectionEvents
 {
-    public abstract class ConnectionEvent<TMessageType>  
+    public class DiagnosticEvent
     {
         public DateTime TimeStamp { get; set; }
-        public TMessageType Message { get; set; }
+        public object Message { get; set; }
     }
 }

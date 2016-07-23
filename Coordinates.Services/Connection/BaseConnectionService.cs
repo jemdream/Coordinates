@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Coordinates.Services.Events;
 using Coordinates.Services.Events.ConnectionEvents;
 
 namespace Coordinates.Services.Connection
 {
     public abstract class BaseConnectionService : IConnectionService
     {
-        private readonly ReplaySubject<ConnectionEvent<ConnectionState>> _connectionMessagesSubject;
+        private readonly ReplaySubject<DiagnosticEvent> _connectionMessagesSubject;
         private ConnectionState _connectionState;
+        private readonly List<DiagnosticEvent> _diagnosticEvents;
 
         protected BaseConnectionService()
         {
-            _connectionMessagesSubject = new ReplaySubject<ConnectionEvent<ConnectionState>>(int.MaxValue);
+            _connectionMessagesSubject = new ReplaySubject<DiagnosticEvent>(int.MaxValue);
+            _diagnosticEvents = new List<DiagnosticEvent>();
+
+            _connectionMessagesSubject.Subscribe(_diagnosticEvents.Add);
         }
 
         public ConnectionState ConnectionState
@@ -30,51 +32,53 @@ namespace Coordinates.Services.Connection
             }
         }
 
-        public IObservable<ConnectionEvent<ConnectionState>> ConnectionMessages => _connectionMessagesSubject.AsObservable();
-        public IEnumerable<DiagnosticEvent> DiagnosticMessages { get; }
+        protected abstract Task<bool> OnOpeningAsync();
+        protected abstract Task<bool> OnClosingAsync();
 
-        protected abstract Task<bool> OnConnectingAsync();
-        protected abstract Task<bool> OnDisconnectingAsync();
+        public IEnumerable<DiagnosticEvent> DiagnosticEvents => _diagnosticEvents;
+        public IObservable<DiagnosticEvent> DiagnosticEventsStream => _connectionMessagesSubject.AsObservable();
 
-        public async Task<bool> Connect()
+        public async Task<ConnectionState> Open()
         {
-            if (!ConnectionState.Equals(ConnectionState.Closed))
-                return true;
+            if (ConnectionState.Equals(ConnectionState.Open))
+                return ConnectionState;
 
-            ConnectionState = ConnectionState.Connecting;
+            ConnectionState = ConnectionState.Opening;
 
-            var result = await OnConnectingAsync();
+            var result = await OnOpeningAsync();
+            
+            ConnectionState = result ? ConnectionState.Open : ConnectionState.Broken;
 
-            ConnectionState = ConnectionState.Open;
-
-            return result;
+            return ConnectionState;
         }
-
-        public async Task<bool> Disconnect()
+        public async Task<ConnectionState> Close()
         {
-            ConnectionState = ConnectionState.Closed;
+            if (ConnectionState.Equals(ConnectionState.Closed))
+                return ConnectionState;
 
-            var result = await OnDisconnectingAsync();
+            ConnectionState = ConnectionState.Closing;
 
-            return result;
+            var result = await OnClosingAsync();
+            
+            ConnectionState = result ? ConnectionState.Closed : ConnectionState.Broken;
+
+            return ConnectionState;
         }
 
         private void ConnectionStateChanged()
         {
-            // _ if disconnected then DisconnectedEvent(); else ConnectedEvent(); with message of type enum ConnectionState
-            var connectionEvent = ConnectionState.Equals(ConnectionState.Closed) || _connectionState.Equals(ConnectionState.Broken) ?
-                (ConnectionEvent<ConnectionState>)new DisconnectedEvent() : new ConnectedEvent();
-
-            connectionEvent.Message = ConnectionState;
-            connectionEvent.TimeStamp = DateTime.UtcNow;
+            var connectionEvent = new DiagnosticEvent
+            {
+                Message = ConnectionState,
+                TimeStamp = DateTime.UtcNow
+            };
 
             _connectionMessagesSubject.OnNext(connectionEvent);
         }
-
         public void Dispose()
         {
             if (!ConnectionState.Equals(ConnectionState.Closed))
-                Disconnect().RunSynchronously();
+                Close().RunSynchronously();
         }
     }
 }

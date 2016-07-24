@@ -5,9 +5,9 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Coordinates.Services.Events.ConnectionEvents;
 
-namespace Coordinates.Services.Connection
+namespace Coordinates.Services.Connections
 {
-    public abstract class BaseConnectionService : IConnectionService
+    public abstract class BaseConnectionService<T> : IConnectionService<T>
     {
         private readonly ReplaySubject<DiagnosticEvent> _connectionMessagesSubject;
         private ConnectionState _connectionState;
@@ -20,6 +20,8 @@ namespace Coordinates.Services.Connection
 
             _connectionMessagesSubject.Subscribe(_diagnosticEvents.Add);
         }
+
+        public abstract T ConnectionConfiguration { get; set; }
 
         public ConnectionState ConnectionState
         {

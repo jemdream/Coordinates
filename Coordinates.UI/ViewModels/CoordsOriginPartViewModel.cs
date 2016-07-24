@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
+using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
 using Coordinates.UI.Models;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -14,7 +15,7 @@ namespace Coordinates.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private ICommand _goToMeasurement;
         private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
-        private CoordinatesModel _initialCoordinates = new CoordinatesModel();
+        private GaugePosition _initialCoordinates = new GaugePosition();
 
         public CoordsOriginPartViewModel(IEventAggregator eventAggregator)
         {
@@ -38,7 +39,7 @@ namespace Coordinates.UI.ViewModels
             }
         }
 
-        public CoordinatesModel InitialCoordinates
+        public GaugePosition InitialCoordinates
         {
             get { return _initialCoordinates; }
             set { Set(ref _initialCoordinates, value); }
@@ -53,7 +54,7 @@ namespace Coordinates.UI.ViewModels
                     // TODO: Replace with enum
                     MeasurementType = SelectedMeasurementTypeViewModel,
                     // Rewriting values into new instance
-                    AxisBaseValuesModel = new CoordinatesModel
+                    AxisBaseValuesModel = new GaugePosition
                     {
                         X = InitialCoordinates.X,
                         Y = InitialCoordinates.Y,

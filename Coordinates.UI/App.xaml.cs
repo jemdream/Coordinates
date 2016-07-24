@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ViewManagement;
-using Coordinates.Services;
-using Coordinates.Services.Connection;
+using Coordinates.Services.Connections;
+using Coordinates.Services.Devices;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -88,7 +88,7 @@ namespace Coordinates.UI
 
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IConnectionService, SerialPortConnectionService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConnectionService<object>, MockConnectionService>(new ContainerControlledLifetimeManager()); // TODO replace
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             // Registering ViewModels

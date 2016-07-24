@@ -101,7 +101,6 @@
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
     <Compile Include="Messages\NewMeasurementMessage.cs" />
-    <Compile Include="Models\CoordinatesModel.cs" />
     <Compile Include="Models\MeasurementSettingsModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
@@ -228,6 +227,10 @@
     <Folder Include="Views\MeasurementViews\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
+      <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
+      <Name>Coordinates.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coordinates.Services\Coordinates.Services.csproj">
       <Project>{3ED45296-7B7B-412F-A718-42729E9F9066}</Project>
       <Name>Coordinates.Services</Name>

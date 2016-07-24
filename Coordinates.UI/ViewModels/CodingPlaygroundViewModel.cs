@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
-using Coordinates.Services.Connection;
+using Coordinates.Services.Connections;
 using Coordinates.Services.Events.ConnectionEvents;
 using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
@@ -13,11 +13,12 @@ namespace Coordinates.UI.ViewModels
 {
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
-        private readonly IConnectionService _mockedConnectionService;
+        // TODO: replace IConnectionService with other class
+        private readonly IConnectionService<object> _mockedConnectionService;
         private readonly ObservableCollection<DiagnosticEvent> _connectionEvents;
         private ContentDialogResult _modalPick;
 
-        public CodingPlaygroundViewModel(IConnectionService mockedConnectionService)
+        public CodingPlaygroundViewModel(IConnectionService<object> mockedConnectionService)
         {
             _mockedConnectionService = mockedConnectionService;
 

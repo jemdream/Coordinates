@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Coordinates.Services.Events.ConnectionEvents;
+using Coordinates.ExternalDevices.Events.ConnectionEvents;
 
-namespace Coordinates.Services.Connections
+namespace Coordinates.ExternalDevices.Connections
 {
     public abstract class BaseConnectionService<T> : IConnectionService<T>
     {
         private readonly ReplaySubject<DiagnosticEvent> _connectionMessagesSubject;
-        private ConnectionState _connectionState;
+        private ConnectionStatus _connectionStatus;
         private readonly List<DiagnosticEvent> _diagnosticEvents;
 
         protected BaseConnectionService()
@@ -23,13 +23,13 @@ namespace Coordinates.Services.Connections
 
         public abstract T ConnectionConfiguration { get; set; }
 
-        public ConnectionState ConnectionState
+        public ConnectionStatus ConnectionStatus
         {
-            get { return _connectionState; }
+            get { return _connectionStatus; }
             private set
             {
-                if (_connectionState == value) return;
-                _connectionState = value;
+                if (_connectionStatus == value) return;
+                _connectionStatus = value;
                 ConnectionStateChanged();
             }
         }
@@ -40,38 +40,40 @@ namespace Coordinates.Services.Connections
         public IEnumerable<DiagnosticEvent> DiagnosticEvents => _diagnosticEvents;
         public IObservable<DiagnosticEvent> DiagnosticEventsStream => _connectionMessagesSubject.AsObservable();
 
-        public async Task<ConnectionState> Open()
+        // TODO requires flag, so you can't hammer toggling (on/off/on/off)
+        public async Task<ConnectionStatus> Open()
         {
-            if (ConnectionState.Equals(ConnectionState.Open))
-                return ConnectionState;
+            if (ConnectionStatus.Equals(ConnectionStatus.Open))
+                return ConnectionStatus;
 
-            ConnectionState = ConnectionState.Opening;
+            ConnectionStatus = ConnectionStatus.Opening;
 
             var result = await OnOpeningAsync();
             
-            ConnectionState = result ? ConnectionState.Open : ConnectionState.Broken;
+            ConnectionStatus = result ? ConnectionStatus.Open : ConnectionStatus.Broken;
 
-            return ConnectionState;
+            return ConnectionStatus;
         }
-        public async Task<ConnectionState> Close()
-        {
-            if (ConnectionState.Equals(ConnectionState.Closed))
-                return ConnectionState;
 
-            ConnectionState = ConnectionState.Closing;
+        public async Task<ConnectionStatus> Close()
+        {
+            if (ConnectionStatus.Equals(ConnectionStatus.Closed))
+                return ConnectionStatus;
+
+            ConnectionStatus = ConnectionStatus.Closing;
 
             var result = await OnClosingAsync();
             
-            ConnectionState = result ? ConnectionState.Closed : ConnectionState.Broken;
+            ConnectionStatus = result ? ConnectionStatus.Closed : ConnectionStatus.Broken;
 
-            return ConnectionState;
+            return ConnectionStatus;
         }
 
         private void ConnectionStateChanged()
         {
             var connectionEvent = new DiagnosticEvent
             {
-                Message = ConnectionState,
+                Message = ConnectionStatus,
                 TimeStamp = DateTime.UtcNow
             };
 
@@ -79,7 +81,7 @@ namespace Coordinates.Services.Connections
         }
         public void Dispose()
         {
-            if (!ConnectionState.Equals(ConnectionState.Closed))
+            if (!ConnectionStatus.Equals(ConnectionStatus.Closed))
                 Close().RunSynchronously();
         }
     }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Coordinates.ExternalDevices.Connections;
 using Coordinates.Models.DTO;
-using Coordinates.Services.Connections;
 
-namespace Coordinates.Services.Devices
+namespace Coordinates.ExternalDevices.Devices
 {
     public class MockConnectionService : BaseConnectionService<object>, IDeviceService<GaugePosition, object>
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Devices.SerialCommunication;
+using Coordinates.ExternalDevices.Connections;
 using Coordinates.Models.DTO;
-using Coordinates.Services.Connections;
 
-namespace Coordinates.Services.Devices
+namespace Coordinates.ExternalDevices.Devices
 {
     public class SerialPortConnectionService : BaseConnectionService<SerialDevice>, IDeviceService<GaugePosition, SerialDevice> // IDataSource<GaugePosition>
     {

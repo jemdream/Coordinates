@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Coordinates.Services
+namespace Coordinates.ExternalDevices
 {
     [Flags]
-    public enum ConnectionState
+    public enum ConnectionStatus
     {
         Uninitialized,
         Open,

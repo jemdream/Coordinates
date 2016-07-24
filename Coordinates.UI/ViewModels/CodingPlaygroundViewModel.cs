@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Reactive.Linq;
 using Windows.UI.Xaml.Controls;
-using Coordinates.Services.Connections;
-using Coordinates.Services.Events.ConnectionEvents;
+using Coordinates.ExternalDevices;
+using Coordinates.ExternalDevices.Connections;
+using Coordinates.ExternalDevices.Events.ConnectionEvents;
 using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
@@ -30,9 +30,9 @@ namespace Coordinates.UI.ViewModels
             _mockedConnectionService.DiagnosticEventsStream
                 .Where(message =>
                 {
-                    var test = (ConnectionState)message.Message;
+                    var test = (ConnectionStatus)message.Message;
 
-                    return test.Equals(ConnectionState.Open);
+                    return test.Equals(ConnectionStatus.Open);
                 })
                 .Subscribe(message =>
                 {
@@ -49,7 +49,15 @@ namespace Coordinates.UI.ViewModels
                     dialog.ShowAsync().GetResults();
                 });
 
-            _mockedConnectionService.Open();
+            OpenConnection();
+        }
+
+        private void OpenConnection()
+        {
+            if (_mockedConnectionService.ConnectionStatus.Equals(ConnectionStatus.Open))
+                _mockedConnectionService.Close();
+            else
+                _mockedConnectionService.Open();
         }
 
         private void OnDialogOnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
@@ -74,6 +82,7 @@ namespace Coordinates.UI.ViewModels
         public void EnterTextBox(object textBoxContent, EventArgs ev)
         {
             // ignoring everything, simple trigger
+            OpenConnection();
         }
 
         #region Navigation

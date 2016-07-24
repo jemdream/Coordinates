@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3ED45296-7B7B-412F-A718-42729E9F9066}</ProjectGuid>
+    <ProjectGuid>{2A1B41E3-29BA-4CA3-BFBC-97F695695F29}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coordinates.Services</RootNamespace>
-    <AssemblyName>Coordinates.Services</AssemblyName>
+    <RootNamespace>Coordinates.Measurements</RootNamespace>
+    <AssemblyName>Coordinates.Measurements</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -109,15 +109,18 @@
   <ItemGroup>
     <Compile Include="Measurements\IMeasurementManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Coordinates.Services.rd.xml" />
+    <EmbeddedResource Include="Properties\Coordinates.Measurements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj">
+      <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
+      <Name>Coordinates.ExternalDevices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
       <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
       <Name>Coordinates.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

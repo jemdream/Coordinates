@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Coordinates.Services.Events.ConnectionEvents
+namespace Coordinates.ExternalDevices.Events.ConnectionEvents
 {
     public class DiagnosticEvent
     {

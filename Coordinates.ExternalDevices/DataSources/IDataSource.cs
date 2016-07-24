@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Coordinates.Services.DataSources
+namespace Coordinates.ExternalDevices.DataSources
 {
     public interface IDataSource<T> : IDisposable
     {

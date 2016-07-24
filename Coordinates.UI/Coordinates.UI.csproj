@@ -227,13 +227,13 @@
     <Folder Include="Views\MeasurementViews\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj">
+      <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
+      <Name>Coordinates.ExternalDevices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
       <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
       <Name>Coordinates.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Coordinates.Services\Coordinates.Services.csproj">
-      <Project>{3ED45296-7B7B-412F-A718-42729E9F9066}</Project>
-      <Name>Coordinates.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

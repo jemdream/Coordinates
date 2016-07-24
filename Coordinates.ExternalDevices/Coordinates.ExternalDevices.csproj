@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3ED45296-7B7B-412F-A718-42729E9F9066}</ProjectGuid>
+    <ProjectGuid>{C8D77F96-446D-455A-A9A1-5C858D69BF0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coordinates.Services</RootNamespace>
-    <AssemblyName>Coordinates.Services</AssemblyName>
+    <RootNamespace>Coordinates.ExternalDevices</RootNamespace>
+    <AssemblyName>Coordinates.ExternalDevices</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,9 +107,16 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Measurements\IMeasurementManager.cs" />
+    <Compile Include="ConnectionStatus.cs" />
+    <Compile Include="Connections\BaseConnectionService.cs" />
+    <Compile Include="Connections\IConnectionService.cs" />
+    <Compile Include="DataSources\IDataSource.cs" />
+    <Compile Include="Devices\IDeviceService.cs" />
+    <Compile Include="Devices\MockConnectionService.cs" />
+    <Compile Include="Devices\SerialPortConnectionService.cs" />
+    <Compile Include="Events\ConnectionEvents\DiagnosticEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Coordinates.Services.rd.xml" />
+    <EmbeddedResource Include="Properties\Coordinates.ExternalDevices.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
@@ -117,7 +124,6 @@
       <Name>Coordinates.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

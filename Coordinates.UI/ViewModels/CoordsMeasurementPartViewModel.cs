@@ -6,11 +6,11 @@ using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
-    public class CoordsComputationPartViewModel : ViewModelBase, ICoordsComputationPartViewModel
+    public class CoordsMeasurementPartViewModel : ViewModelBase, ICoordsMeasurementPartViewModel
     {
         private MeasurementSettingsModel _measurementSettings;
 
-        public CoordsComputationPartViewModel(IEventAggregator eventAggregator)
+        public CoordsMeasurementPartViewModel(IEventAggregator eventAggregator)
         {
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()

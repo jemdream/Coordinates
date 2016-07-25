@@ -100,8 +100,9 @@ namespace Coordinates.UI
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
-            container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
-            container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
+            container.RegisterType<ICoordsCalibrationPartViewModel, CoordsCalibrationPartViewModel>();
+            container.RegisterType<ICoordsMeasurementPartViewModel, CoordsMeasurementPartViewModel>();
+            container.RegisterType<ICoordsComputingPartViewModel, CoordsComputingPartViewModel>();
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
 
             // Registering Views 

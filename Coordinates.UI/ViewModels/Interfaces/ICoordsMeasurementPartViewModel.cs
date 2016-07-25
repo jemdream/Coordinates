@@ -2,7 +2,7 @@
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
-    public interface ICoordsComputationPartViewModel
+    public interface ICoordsMeasurementPartViewModel
     {
         MeasurementSettingsModel MeasurementSettings { get; set; }
     }

@@ -6,6 +6,9 @@ using Template10.Services.SettingsService;
 
 namespace Coordinates.UI.Services.SettingsServices
 {
+    /// <summary>
+    /// UI/UX Settings
+    /// </summary>
     public class SettingsService : ISettingsService
     {
         private readonly ISettingsHelper _helper;

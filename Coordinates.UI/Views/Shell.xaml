@@ -6,38 +6,102 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:Coordinates.UI.Views"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      mc:Ignorable="d">
-    
-    <controls:HamburgerMenu x:Name="MyHamburgerMenu">
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance views:Shell}">
 
-        <controls:HamburgerMenu.PrimaryButtons>
-            <!--  mainpage button  -->
-            <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Width="48" Height="48"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <controls:HamburgerMenu x:Name="MyHamburgerMenu">
+
+            <controls:HamburgerMenu.PrimaryButtons>
+
+                <!--  Mainpage button  -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
                                 Symbol="Home" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Home" />
-                </StackPanel>
-            </controls:HamburgerButtonInfo>
-        </controls:HamburgerMenu.PrimaryButtons>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Start" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
 
-        <controls:HamburgerMenu.SecondaryButtons>
-            <!--  settingspage button  -->
-            <controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
+                <!--  Coding playground button  -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Symbol icon reference: https://msdn.microsoft.com/pl-pl/library/windows/apps/dn252842 -->
+                        <SymbolIcon Width="48" Height="48"
+                                Symbol="Edit" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Coding Playground" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+                <!--  Measurement button  -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MeasurementsPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
+                                Symbol="Calculator" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Pomiary" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+                <!--  Visualisation button  -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
+                                Symbol="Pictures" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Wizualizacja" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+            </controls:HamburgerMenu.PrimaryButtons>
+
+            <controls:HamburgerMenu.SecondaryButtons>
+
+                <!--  settingspage button  -->
+                <controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
                                           PageType="views:SettingsPage">
-                <controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                    <SuppressNavigationTransitionInfo />
-                </controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Width="48" Height="48"
+                    <controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                        <SuppressNavigationTransitionInfo />
+                    </controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
                                 Symbol="Setting" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Settings nio" />
-                </StackPanel>
-            </controls:HamburgerButtonInfo>
-        </controls:HamburgerMenu.SecondaryButtons>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Ustawienia" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+            </controls:HamburgerMenu.SecondaryButtons>
 
-    </controls:HamburgerMenu>
+        </controls:HamburgerMenu>
 
+        <!--Connection Bar-->
+        <Grid Grid.Row="1">
+            <!--CommandBar DataContext binding does not work (UWP issue). It requires codebehind Loaded event callback. 
+            I placed the binding anyway, to prevent IDE from underlining and connect editor with datacontext. -->
+            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}">
+                <CommandBar.Content>
+                    <TextBlock Text="{Binding SomeTestBinding}"/>
+                </CommandBar.Content>
+                <AppBarSeparator/>
+                <AppBarToggleButton Icon="Shuffle" Label="Shuffle" Command="{Binding ShuffleCommand}"/>
+                <AppBarSeparator/>
+                <AppBarButton Icon="List" Label="Mode">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Top">
+                            <MenuFlyoutItem Text="Cho" />
+                            <MenuFlyoutItem Text="Na" />
+                            <MenuFlyoutItem Text="Solo" />
+                            <MenuFlyoutItem Text="Qtasiarzu" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+    </Grid>
 </Page>

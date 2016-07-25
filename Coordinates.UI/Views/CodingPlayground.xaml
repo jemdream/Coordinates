@@ -7,6 +7,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Template10.Behaviors"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -14,6 +15,10 @@
     <Page.DataContext>
         <Binding Path="CodingPlaygroundViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
+
+    <Page.Resources>
+        <converters:StringFormatConverter x:Key="StringFormatConverter" Format="{}{0:s}"/>
+    </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -64,7 +69,7 @@
 
             <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
-                     Text="{Binding InitialModalPick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ModalPick, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\}}"
                      TextWrapping="Wrap">
                 <interactivity:Interaction.Behaviors>
                     <!--  enable submit on enter key  -->
@@ -79,11 +84,37 @@
             </TextBox>
 
         </controls:Resizer>
-        
+
         <TextBlock x:Name="StateTextBox" Margin="16,16,0,0"
                    RelativePanel.AlignLeftWith="ParameterResizer"
                    RelativePanel.Below="ParameterResizer"
                    Text="Press enter on Text Box" />
+
+        <TextBlock x:Name="ConnectionEventsTextBox" Margin="16,16,0,0"
+                   RelativePanel.AlignLeftWith="StateTextBox"
+                   RelativePanel.Below="StateTextBox"
+                   Text="List of connection events from data service." />
+
+        <ListBox x:Name="ConnectionEventsList" HorizontalContentAlignment="Stretch" Margin="20"
+                 ItemsSource="{Binding ConnectionEvents}" 
+                 RelativePanel.AlignLeftWith="ConnectionEventsTextBox" RelativePanel.Below="ConnectionEventsTextBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                         <!-- \ is a special XAML sign to warn compiler that next sign is not keyword but regular ANSI sign -->
+                        <TextBlock Text="{Binding TimeStamp, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:s\}}" Margin="3" Grid.Column="0" />
+                        <TextBlock Text="{Binding Message, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\}}" Margin="3" Grid.Column="1" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
 
     </RelativePanel>
 </Page>

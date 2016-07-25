@@ -3,12 +3,15 @@ using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ViewManagement;
+using Coordinates.ExternalDevices.Connections;
+using Coordinates.ExternalDevices.Devices;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
+using Prism.Events;
 using Template10.Services.NavigationService;
 
 namespace Coordinates.UI
@@ -85,6 +88,8 @@ namespace Coordinates.UI
 
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConnectionService<object>, MockConnectionService>(new ContainerControlledLifetimeManager()); // TODO replace
+            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>();
@@ -92,7 +97,12 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
-            container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>();
+            container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
+            container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
+            container.RegisterType<ICoordsOriginPartViewModel, CoordsOriginPartViewModel>();
+            container.RegisterType<ICoordsComputationPartViewModel, CoordsComputationPartViewModel>();
+            container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));
@@ -112,4 +122,3 @@ namespace Coordinates.UI
         }
     }
 }
-

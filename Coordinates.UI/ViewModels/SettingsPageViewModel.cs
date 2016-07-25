@@ -15,4 +15,3 @@ namespace Coordinates.UI.ViewModels
         public IAboutPartViewModel AboutPartViewModel { get; }
     }
 }
-

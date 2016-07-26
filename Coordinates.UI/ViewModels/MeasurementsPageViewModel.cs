@@ -15,20 +15,20 @@ namespace Coordinates.UI.ViewModels
             set { Set(ref _selectedTabIndex, value); }
         }
 
-        public MeasurementsPageViewModel(ICoordsOriginPartViewModel coordsOriginPartViewModel,
-            ICoordsComputationPartViewModel coordsComputationPartViewModel, IEventAggregator eventAggregator)
+        public MeasurementsPageViewModel(ICoordsCalibrationPartViewModel coordsCalibrationPartViewModel,
+            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator)
         {
             // Ignore parameter, just invoke index change
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()
                 .Subscribe(_ => NavigateToComputation());
             
-            CoordsOriginPartViewModel = coordsOriginPartViewModel;
-            CoordsComputationPartViewModel = coordsComputationPartViewModel;
+            CoordsCalibrationPartViewModel = coordsCalibrationPartViewModel;
+            CoordsMeasurementPartViewModel = coordsMeasurementPartViewModel;
         }
 
-        public ICoordsComputationPartViewModel CoordsComputationPartViewModel { get; }
-        public ICoordsOriginPartViewModel CoordsOriginPartViewModel { get; }
+        public ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel { get; }
+        public ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel { get; }
         private void NavigateToComputation() => SelectedTabIndex = 1;
     }
 }

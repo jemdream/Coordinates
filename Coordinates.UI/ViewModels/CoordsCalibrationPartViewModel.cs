@@ -10,14 +10,14 @@ using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
-    public class CoordsOriginPartViewModel : ViewModelBase, ICoordsOriginPartViewModel
+    public class CoordsCalibrationPartViewModel : ViewModelBase, ICoordsCalibrationPartViewModel
     {
         private readonly IEventAggregator _eventAggregator;
         private ICommand _goToMeasurement;
         private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
         private GaugePosition _initialCoordinates = new GaugePosition();
 
-        public CoordsOriginPartViewModel(IEventAggregator eventAggregator)
+        public CoordsCalibrationPartViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             MeasurementTypes = new List<IMeasurementTypeViewModel>

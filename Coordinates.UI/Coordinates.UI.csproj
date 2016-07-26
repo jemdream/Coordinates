@@ -99,8 +99,10 @@
     </Compile>
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
+    <Compile Include="ViewModels\CoordsComputingPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
     <Compile Include="Messages\NewMeasurementMessage.cs" />
+    <Compile Include="ViewModels\Interfaces\ICoordsComputingPartViewModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,15 +112,15 @@
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ViewModels\AboutPartViewModel.cs" />
     <Compile Include="ViewModels\CodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\CoordsComputationPartViewModel.cs" />
-    <Compile Include="ViewModels\CoordsOriginPartViewModel.cs" />
+    <Compile Include="ViewModels\CoordsMeasurementPartViewModel.cs" />
+    <Compile Include="ViewModels\CoordsCalibrationPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAboutPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ICoordsComputationPartViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ICoordsMeasurementPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMeasurementsPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ICoordsOriginPartViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ICoordsCalibrationPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVisualisationPageViewModel.cs" />

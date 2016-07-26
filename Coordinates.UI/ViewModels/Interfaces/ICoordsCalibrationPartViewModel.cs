@@ -5,7 +5,7 @@ using Coordinates.UI.ViewModels.MeasurementViewModels;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
-    public interface ICoordsOriginPartViewModel
+    public interface ICoordsCalibrationPartViewModel
     {
         GaugePosition InitialCoordinates { get; set; }
         ICommand GoToMeasurement { get; }

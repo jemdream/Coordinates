@@ -1,4 +1,4 @@
-﻿using Coordinates.UI.Models;
+﻿using Coordinates.Measurements.Models;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {

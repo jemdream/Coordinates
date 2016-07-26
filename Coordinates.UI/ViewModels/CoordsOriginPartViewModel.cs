@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
+using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
-using Coordinates.UI.Models;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
@@ -51,8 +51,8 @@ namespace Coordinates.UI.ViewModels
                 .GetEvent<NewMeasurementMessage>()
                 .Publish(new MeasurementSettingsModel
                 {
-                    // TODO: Replace with enum
-                    MeasurementType = SelectedMeasurementTypeViewModel,
+                    // TODO: Replace with enum / [Service Project]
+                    //MeasurementType = SelectedMeasurementTypeViewModel,
                     // Rewriting values into new instance
                     AxisBaseValuesModel = new GaugePosition
                     {

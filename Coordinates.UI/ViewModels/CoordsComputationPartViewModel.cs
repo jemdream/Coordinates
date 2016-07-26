@@ -1,5 +1,5 @@
-﻿using Coordinates.UI.Messages;
-using Coordinates.UI.Models;
+﻿using Coordinates.Measurements.Models;
+using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
 using Template10.Mvvm;

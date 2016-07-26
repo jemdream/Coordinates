@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using Windows.Devices.SerialCommunication;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.Models.DTO;
+using GaugePositionDTO = Coordinates.ExternalDevices.Models.GaugePositionDTO;
 
 namespace Coordinates.ExternalDevices.Devices
 {
-    public class SerialPortConnectionService : BaseConnectionService<SerialDevice>, IDeviceService<GaugePosition, SerialDevice> // IDataSource<GaugePosition>
+    public class SerialPortConnectionService : BaseConnectionService<SerialDevice>, IDeviceService<GaugePositionDTO, SerialDevice> // IDataSource<GaugePositionDTO>
     {
         public SerialPortConnectionService()
         {
@@ -26,6 +27,6 @@ namespace Coordinates.ExternalDevices.Devices
             throw new NotImplementedException();
         }
 
-        public IObservable<GaugePosition> DataStream { get; set; }
+        public IObservable<GaugePositionDTO> DataStream { get; set; }
     }
 }

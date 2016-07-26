@@ -88,7 +88,8 @@ namespace Coordinates.UI
 
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IConnectionService<object>, MockConnectionService>(new ContainerControlledLifetimeManager()); // TODO replace
+            // TODO EXTERNALS
+            container.RegisterType<IConnectionService<object>, MockConnectionService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             // Registering ViewModels

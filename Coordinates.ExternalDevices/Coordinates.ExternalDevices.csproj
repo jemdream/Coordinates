@@ -115,6 +115,7 @@
     <Compile Include="Devices\MockConnectionService.cs" />
     <Compile Include="Devices\SerialPortConnectionService.cs" />
     <Compile Include="Events\ConnectionEvents\DiagnosticEvent.cs" />
+    <Compile Include="Models\GaugePositionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Coordinates.ExternalDevices.rd.xml" />
   </ItemGroup>

@@ -70,6 +70,7 @@ namespace Coordinates.UI.ViewModels
             sender.Closed -= OnDialogOnClosed;
         }
 
+        // TODO EXTERNALS
         public IEnumerable<DiagnosticEvent> ConnectionEvents => _connectionEvents;
 
         public ContentDialogResult ModalPick

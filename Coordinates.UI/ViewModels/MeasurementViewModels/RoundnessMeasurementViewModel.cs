@@ -1,6 +1,4 @@
-﻿using Coordinates.UI.ViewModels.Interfaces;
-
-namespace Coordinates.UI.ViewModels.MeasurementViewModels
+﻿namespace Coordinates.UI.ViewModels.MeasurementViewModels
 {
     public class RoundnessMeasurementViewModel : IMeasurementTypeViewModel
     {

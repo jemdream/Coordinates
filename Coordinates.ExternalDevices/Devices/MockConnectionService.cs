@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.Models.DTO;
+using GaugePositionDTO = Coordinates.ExternalDevices.Models.GaugePositionDTO;
 
 namespace Coordinates.ExternalDevices.Devices
 {
-    public class MockConnectionService : BaseConnectionService<object>, IDeviceService<GaugePosition, object>
+    public class MockConnectionService : BaseConnectionService<object>, IDeviceService<GaugePositionDTO, object>
     {
         public MockConnectionService()
         {
@@ -28,6 +29,6 @@ namespace Coordinates.ExternalDevices.Devices
             return true;
         }
 
-        public IObservable<GaugePosition> DataStream { get; set; }
+        public IObservable<GaugePositionDTO> DataStream { get; set; }
     }
 }

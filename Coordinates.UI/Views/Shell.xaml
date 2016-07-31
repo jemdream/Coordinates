@@ -86,18 +86,15 @@
             I placed the binding anyway, to prevent IDE from underlining and connect editor with datacontext. -->
             <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}">
                 <CommandBar.Content>
-                    <TextBlock Text="{Binding SomeTestBinding}"/>
+                    <TextBlock Text="{Binding ConnectionStatus}"/>
                 </CommandBar.Content>
                 <AppBarSeparator/>
-                <AppBarToggleButton Icon="Shuffle" Label="Shuffle" Command="{Binding ShuffleCommand}"/>
                 <AppBarSeparator/>
                 <AppBarButton Icon="List" Label="Mode">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Cho" />
-                            <MenuFlyoutItem Text="Na" />
-                            <MenuFlyoutItem Text="Solo" />
-                            <MenuFlyoutItem Text="Qtasiarzu" />
+                            <MenuFlyoutItem Text="Connect" Command="{Binding ConnectCommand}"/>
+                            <MenuFlyoutItem Text="Disconnect" Command="{Binding DisconnectCommand}"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>

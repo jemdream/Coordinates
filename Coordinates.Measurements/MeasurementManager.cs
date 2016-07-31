@@ -34,7 +34,8 @@ namespace Coordinates.Measurements
 
         public IEnumerable<GaugePosition> GaugePositions => _gaugePositions;
         public IEnumerable<ContactPosition> ContactPositions => _contactPositions;
-        public IObserver<ContactPosition> SelectedPositions => _selectedPositionsSubject.AsObserver();
+        public IList<ContactPosition> SelectedPositions { get; set; }
+
         public IEnumerable<IMeasurement> AvailableMeasurements { get; private set; }
 
         public IMeasurement SelectedMeasurement
@@ -45,7 +46,7 @@ namespace Coordinates.Measurements
 
         private void SetupMeasurement(IMeasurement value)
         {
-            // TODO probably delete all 
+            // TODO probably reset everything, wipe selection etc. (ask Yes/No on UI site) 
             _selectedMeasurement = value;
         }
 

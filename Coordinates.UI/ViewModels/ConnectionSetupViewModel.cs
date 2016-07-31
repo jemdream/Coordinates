@@ -1,25 +1,41 @@
+using System;
 using System.Windows.Input;
+using Coordinates.ExternalDevices;
+using Coordinates.ExternalDevices.Connections;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
     public class ConnectionSetupViewModel : ViewModelBase, IConnectionSetupViewModel
     {
-        private string _someTestBinding;
-        private ICommand _shuffleCommand;
+        private readonly IConnectionService _connectionService;
 
-        public ConnectionSetupViewModel()
+        private ICommand _connectCommand;
+        private ICommand _disconnectCommand;
+        private ConnectionStatus _connectionStatus;
+
+        public ConnectionSetupViewModel(IConnectionService connectionService)
         {
+            _connectionService = connectionService;
+
+            _connectionService.DiagnosticEventsStream
+                .Subscribe(dE => { ConnectionStatus = (ConnectionStatus)dE.Message; });
         }
 
-        public ICommand ShuffleCommand => _shuffleCommand ?? (_shuffleCommand = new DelegateCommand(() =>
+        public ICommand ConnectCommand => _connectCommand ?? (_connectCommand = new DelegateCommand(async () =>
         {
-            SomeTestBinding = "Magic Shuffle Invoked.";
+            await _connectionService.Open();
         }));
-        public string SomeTestBinding
+
+        public ICommand DisconnectCommand => _disconnectCommand ?? (_disconnectCommand = new DelegateCommand(async () =>
         {
-            get { return _someTestBinding; }
-            set { Set(ref _someTestBinding, value); }
+            await _connectionService.Close();
+        }));
+
+        public ConnectionStatus ConnectionStatus
+        {
+            get { return _connectionStatus; }
+            set { Set(ref _connectionStatus, value); }
         }
     }
 }

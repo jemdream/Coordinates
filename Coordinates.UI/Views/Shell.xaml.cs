@@ -15,8 +15,7 @@ namespace Coordinates.UI.Views
             InitializeComponent();
         }
 
-        public Shell(INavigationService navigationService, 
-            IConnectionSetupViewModel connectionSetupViewModel) : this()
+        public Shell(INavigationService navigationService, IConnectionSetupViewModel connectionSetupViewModel) : this()
         {
             SetNavigationService(navigationService);
             ConnectionSetupViewModel = connectionSetupViewModel;

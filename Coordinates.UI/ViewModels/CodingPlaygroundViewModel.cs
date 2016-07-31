@@ -13,21 +13,20 @@ namespace Coordinates.UI.ViewModels
 {
     public class CodingPlaygroundViewModel : ViewModelBase, ICodingPlaygroundViewModel
     {
-        // TODO: replace IConnectionService with other class
-        private readonly IConnectionService<object> _mockedConnectionService;
+        private readonly IConnectionService _connectionService;
         private readonly ObservableCollection<DiagnosticEvent> _connectionEvents;
         private ContentDialogResult _modalPick;
 
-        public CodingPlaygroundViewModel(IConnectionService<object> mockedConnectionService)
+        public CodingPlaygroundViewModel(IConnectionService connectionService)
         {
-            _mockedConnectionService = mockedConnectionService;
+            _connectionService = connectionService;
 
             _connectionEvents = new ObservableCollection<DiagnosticEvent>();
 
-            _mockedConnectionService.DiagnosticEventsStream
+            _connectionService.DiagnosticEventsStream
                 .Subscribe(message => _connectionEvents.Add(message));
 
-            _mockedConnectionService.DiagnosticEventsStream
+            _connectionService.DiagnosticEventsStream
                 .Where(message =>
                 {
                     var test = (ConnectionStatus)message.Message;
@@ -54,16 +53,16 @@ namespace Coordinates.UI.ViewModels
 
         private void OpenConnection()
         {
-            if (_mockedConnectionService.ConnectionStatus.Equals(ConnectionStatus.Open))
-                _mockedConnectionService.Close();
+            if (_connectionService.ConnectionStatus.Equals(ConnectionStatus.Open))
+                _connectionService.Close();
             else
-                _mockedConnectionService.Open();
+                _connectionService.Open();
         }
 
         private void OnDialogOnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             if (args.Result.Equals(ContentDialogResult.Secondary))
-                _mockedConnectionService.Close();
+                _connectionService.Close();
 
             ModalPick = args.Result;
 

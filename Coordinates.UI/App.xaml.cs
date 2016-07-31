@@ -4,7 +4,9 @@ using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
+using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
+using Coordinates.ExternalDevices.Models;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -88,9 +90,11 @@ namespace Coordinates.UI
 
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
-            // TODO EXTERNALS
-            container.RegisterType<IConnectionService<object>, MockConnectionService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+
+            // TODO: modify projects so IDeviceService is unreachable in UI: provide IDeviceManager, where IDeviceService implementations should be internal
+            container.RegisterType<IConnectionService, MockDeviceService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IDataSource<GaugePositionDTO>, MockDeviceService>(new ContainerControlledLifetimeManager()); 
 
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>();

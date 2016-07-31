@@ -47,12 +47,14 @@ namespace Coordinates.UI.ViewModels
 
         public ICommand GoToMeasurement => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
         {
+            // setup service values
+            // change view
             _eventAggregator
                 .GetEvent<NewMeasurementMessage>()
                 .Publish(new MeasurementSettingsModel
                 {
                     // TODO: Replace with enum / [Service Project]
-                    //MeasurementType = SelectedMeasurementTypeViewModel,
+                    // MeasurementType = SelectedMeasurementTypeViewModel,
                     // Rewriting values into new instance
                     AxisBaseValuesModel = new GaugePosition
                     {

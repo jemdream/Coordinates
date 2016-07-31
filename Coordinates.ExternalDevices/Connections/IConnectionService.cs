@@ -4,11 +4,13 @@ using Coordinates.ExternalDevices.Events.ConnectionEvents;
 
 namespace Coordinates.ExternalDevices.Connections
 {
-    public interface IConnectionService<T> : IDisposable
+    public interface IConnectionService : IDisposable
     {
-        T ConnectionConfiguration { get; set; }
+        IConnection ConnectionConfiguration { get; }
+
         ConnectionStatus ConnectionStatus { get; }
         IObservable<DiagnosticEvent> DiagnosticEventsStream { get; }
+
         Task<ConnectionStatus> Open();
         Task<ConnectionStatus> Close();
     }

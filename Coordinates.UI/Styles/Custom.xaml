@@ -4,7 +4,7 @@
 
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="NormalMinWidth">521</x:Double>
-    <x:Double x:Key="WideMinWidth">1000</x:Double>
+    <x:Double x:Key="WideMinWidth">1200</x:Double>
 
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
@@ -36,19 +36,6 @@
             <Style TargetType="controls:Resizer">
                 <Setter Property="GrabberBrush" Value="{ThemeResource CustomColorBrush}" />
                 <Setter Property="GrabberVisibility" Value="Visible" />
-            </Style>
-
-            <Style TargetType="Button">
-                <Setter Property="Background" Value="{ThemeResource CustomColor}"></Setter>
-                <Setter Property="FontSize" Value="60"/>
-            </Style>
-
-            <Style TargetType="PivotItem">
-                <Setter Property="FontSize" Value="60"/>
-            </Style>
-
-            <Style TargetType="RadioButton">
-                <Setter Property="FontSize" Value="60" />
             </Style>
 
         </ResourceDictionary>
@@ -109,5 +96,3 @@
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
-
-

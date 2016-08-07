@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Coordinates.Measurements.Types;
-using Coordinates.Models;
 using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
     public interface IMeasurementManager
     {
-        IEnumerable<IMeasurementMethod> AvailableMeasurements { get; }
+        IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; set; }
-        IObservable<GaugePosition> GaugePositionSource { get; }
-        IObservable<ContactPosition> ContactPositionsSource { get; }
+        IObservable<Position> PositionSource { get; }
         ObservableCollection<ContactPosition> SelectedPositions { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Coordinates.Models.DTO
 {
-    public class GaugePosition : Position
+    public class ContactPosition : Position
     {
     }
 }

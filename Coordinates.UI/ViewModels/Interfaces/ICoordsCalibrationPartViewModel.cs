@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
+using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
-using Coordinates.UI.ViewModels.MeasurementViewModels;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface ICoordsCalibrationPartViewModel
     {
-        GaugePosition InitialCoordinates { get; set; }
+        Position CurrentGaugePosition { get; }
+        Position InitialGaugePosition { get; }
         ICommand GoToMeasurement { get; }
-        ICollection<IMeasurementTypeViewModel> MeasurementTypes { get; }
-        IMeasurementTypeViewModel SelectedMeasurementTypeViewModel { get; set; }
+        ICommand SetupInitialCoordinates { get; }
+        IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
+        IMeasurementMethod SelectedMeasurementMethod { get; set; }
     }
 }

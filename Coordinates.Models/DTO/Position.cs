@@ -1,6 +1,6 @@
-﻿namespace Coordinates.Models
+﻿namespace Coordinates.Models.DTO
 {
-    public class ContactPosition
+    public abstract class Position
     {
         public double X { get; set; }
         public double Z { get; set; }

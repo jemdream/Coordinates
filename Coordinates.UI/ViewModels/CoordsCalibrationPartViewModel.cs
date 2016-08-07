@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Models;
+using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
-using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
 using Template10.Mvvm;
 
@@ -15,40 +18,58 @@ namespace Coordinates.UI.ViewModels
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IMeasurementManager _measurementManager;
+
         private ICommand _goToMeasurement;
-        private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
-        private GaugePosition _initialCoordinates = new GaugePosition();
+        private ICommand _setupInitialCoordinates;
+
+        private Position _currentGaugePosition = new GaugePosition();
+        private Position _initialGaugePosition = new GaugePosition();
+
+        private IMeasurementMethod _selectedMeasurementMethod;
 
         public CoordsCalibrationPartViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
         {
             _eventAggregator = eventAggregator;
             _measurementManager = measurementManager;
-            // TODO map MeasurementMethod from measurementmanager into V-VM
-            MeasurementTypes = new List<IMeasurementTypeViewModel>
-            {
-                new FlatnessMeasurementViewModel(),
-                new RoundnessMeasurementViewModel()
-            };
+
+            SetupMeasurementManager();
         }
 
-        public ICollection<IMeasurementTypeViewModel> MeasurementTypes { get; set; }
-
-        public IMeasurementTypeViewModel SelectedMeasurementTypeViewModel
+        private void SetupMeasurementManager()
         {
-            get { return _selectedMeasurementTypeViewModel; }
+            AvailableMeasurementMethods = _measurementManager.AvailableMeasurementMethods;
+
+            _measurementManager.PositionSource
+                .Subscribe(pos =>
+                {
+                    CurrentGaugePosition = pos;
+                });
+        }
+        
+        public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; set; }
+        public IMeasurementMethod SelectedMeasurementMethod
+        {
+            get { return _selectedMeasurementMethod; }
             set
             {
-                if (Set(ref _selectedMeasurementTypeViewModel, value))
-                    ((DelegateCommand) GoToMeasurement).RaiseCanExecuteChanged();
+                if (Set(ref _selectedMeasurementMethod, value))
+                    ((DelegateCommand)GoToMeasurement).RaiseCanExecuteChanged();
             }
         }
-
-        public GaugePosition InitialCoordinates
+        
+        public Position CurrentGaugePosition
         {
-            get { return _initialCoordinates; }
-            set { Set(ref _initialCoordinates, value); }
+            get { return _currentGaugePosition; }
+            private set { Set(ref _currentGaugePosition, value); }
         }
 
+        public Position InitialGaugePosition
+        {
+            get { return _initialGaugePosition; }
+            private set { Set(ref _initialGaugePosition, value); }
+        }
+
+        // TODO to be completely refactored
         public ICommand GoToMeasurement => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
         {
             // setup service values
@@ -58,15 +79,27 @@ namespace Coordinates.UI.ViewModels
                 .Publish(new MeasurementSettingsModel
                 {
                     // TODO: Replace with enum / [Service Project]
-                    // MeasurementType = SelectedMeasurementTypeViewModel,
+                    // MeasurementType = SelectedMeasurementMethod,
                     // Rewriting values into new instance
                     AxisBaseValuesModel = new GaugePosition
                     {
-                        X = InitialCoordinates.X,
-                        Y = InitialCoordinates.Y,
-                        Z = InitialCoordinates.Z,
+                        X = InitialGaugePosition.X,
+                        Y = InitialGaugePosition.Y,
+                        Z = InitialGaugePosition.Z,
                     }
                 });
-        }, () => SelectedMeasurementTypeViewModel != null));
+        }, () => SelectedMeasurementMethod != null));
+        
+        public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
+        {
+            // TODO setup initials, pass them to manager
+        }, () => SelectedMeasurementMethod != null));
+
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        {
+            SelectedMeasurementMethod = _measurementManager.SelectedMeasurementMethod;
+
+            return base.OnNavigatedToAsync(parameter, mode, state);
+        }
     }
 }

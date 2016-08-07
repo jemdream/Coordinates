@@ -74,6 +74,8 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
+            
+            
             <!--  Calibration  -->
             <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracja" TabIndex="0">
                 <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left"
@@ -88,15 +90,51 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
+                        <!--Wybór rodzaju pomiaru-->
                         <ComboBox Name="ComboBox"
-                                  ItemsSource="{Binding MeasurementTypes}"
-                                  SelectedItem="{Binding SelectedMeasurementTypeViewModel, Mode=TwoWay}"
-                                  DisplayMemberPath="MeasurementName"
+                                  ItemsSource="{Binding AvailableMeasurementMethods}"
+                                  SelectedItem="{Binding SelectedMeasurementMethod, Mode=TwoWay}"
                                   Header="Typ pomiaru"
                                   PlaceholderText="Wybierz tryb pomiaru"
                                   Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
+                        
+                        <!--Pozycja początkowa-->
                         <StackPanel Name="CoordsRelativePanel" HorizontalAlignment="Center"
                                     Grid.Column="1" Grid.Row="0">
+                            
+                            <TextBlock Text="Pozycja początkowa"/>
+                            <Grid Name="CoordsInitialGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
+                                    <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
+                                    <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
+                                    <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
+                                    <TextBlock Text="{Binding InitialGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
+                                    <TextBlock Text="{Binding InitialGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
+                                    <TextBlock Text="{Binding InitialGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
+                            </Grid>
+                            
                             <TextBlock Text="Aktualne położenie sensora"/>
                             <Grid Name="CoordsResetGrid">
                                 <Grid.ColumnDefinitions>
@@ -109,8 +147,6 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <!--Słabo, że nie było tu bindingu-->
-                                <!--TODO: Ma być numeric i nie ma byc tekstu-->
                                 <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
                                     <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -121,17 +157,18 @@
                                     <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding InitialCoordinates.X, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding InitialCoordinates.Y, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
-                                    <TextBlock Text="{Binding InitialCoordinates.Z, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrentGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <Button Name="ZeroButton" Command="{Binding ZeroCoords}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
+                                <!--<Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>-->
                             </Grid>
                         </StackPanel>
+                        
                         <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -155,11 +192,15 @@
                                 </Button.Flyout>
                             </Button>
                             <Button Name="CalibrationNextButton" Content="Dalej" HorizontalAlignment="Center" Grid.Column="2"
-                        		Command="{Binding DataContext.GoToMeasurement, ElementName=Page}" />
+                        		Command="{Binding DataContext.CoordsCalibrationPartViewModel.GoToMeasurement, ElementName=Page}" />
                         </Grid>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
+            
+            
+            
+            
             <!--  Measurement  -->
             <!--IsEnabled="{Binding SelectedMeasurementTypeViewModel, Converter={StaticResource FalseIfNull}}"-->
             <PivotItem Name="MeasurementPivotItem" DataContext="{Binding CoordsMeasurementPartViewModel}" Header="Pomiar"

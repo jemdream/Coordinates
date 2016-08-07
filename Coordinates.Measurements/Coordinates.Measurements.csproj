@@ -111,9 +111,9 @@
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Models\MeasurementSettingsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\FlatnessMeasurement.cs" />
-    <Compile Include="Types\IMeasurement.cs" />
-    <Compile Include="Types\RoundnessMeasurement.cs" />
+    <Compile Include="Types\FlatnessMeasurementMethod.cs" />
+    <Compile Include="Types\IMeasurementMethod.cs" />
+    <Compile Include="Types\RoundnessMeasurementMethod.cs" />
     <EmbeddedResource Include="Properties\Coordinates.Measurements.rd.xml" />
   </ItemGroup>
   <ItemGroup>

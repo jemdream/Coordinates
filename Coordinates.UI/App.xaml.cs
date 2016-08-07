@@ -7,6 +7,7 @@ using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
 using Coordinates.ExternalDevices.Models;
+using Coordinates.Measurements;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -94,7 +95,8 @@ namespace Coordinates.UI
 
             // TODO: modify projects so IDeviceService is unreachable in UI: provide IDeviceManager, where IDeviceService implementations should be internal
             container.RegisterType<IConnectionService, MockDeviceService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IDataSource<GaugePositionDTO>, MockDeviceService>(new ContainerControlledLifetimeManager()); 
+            container.RegisterType<IDataSource<GaugePositionDTO>, MockDeviceService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementManager, MeasurementManager>(new ContainerControlledLifetimeManager());
 
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>();

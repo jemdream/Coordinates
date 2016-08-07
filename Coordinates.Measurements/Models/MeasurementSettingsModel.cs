@@ -5,7 +5,7 @@ namespace Coordinates.Measurements.Models
 {
     public class MeasurementSettingsModel
     {
-        public IMeasurement MeasurementType { get; set; }
+        public IMeasurementMethod MeasurementMethodType { get; set; }
         public GaugePosition AxisBaseValuesModel { get; set; }
     }
 }

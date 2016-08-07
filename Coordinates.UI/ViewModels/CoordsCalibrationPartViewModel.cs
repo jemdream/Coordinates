@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
+using Coordinates.Measurements;
 using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
@@ -13,13 +14,16 @@ namespace Coordinates.UI.ViewModels
     public class CoordsCalibrationPartViewModel : ViewModelBase, ICoordsCalibrationPartViewModel
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMeasurementManager _measurementManager;
         private ICommand _goToMeasurement;
         private IMeasurementTypeViewModel _selectedMeasurementTypeViewModel;
         private GaugePosition _initialCoordinates = new GaugePosition();
 
-        public CoordsCalibrationPartViewModel(IEventAggregator eventAggregator)
+        public CoordsCalibrationPartViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
         {
             _eventAggregator = eventAggregator;
+            _measurementManager = measurementManager;
+            // TODO map MeasurementMethod from measurementmanager into V-VM
             MeasurementTypes = new List<IMeasurementTypeViewModel>
             {
                 new FlatnessMeasurementViewModel(),

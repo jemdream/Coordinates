@@ -3,8 +3,8 @@
                     xmlns:controls="using:Template10.Controls">
 
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
-    <x:Double x:Key="NormalMinWidth">521</x:Double>
-    <x:Double x:Key="WideMinWidth">1200</x:Double>
+    <x:Double x:Key="NormalMinWidth">500</x:Double>
+    <x:Double x:Key="WideMinWidth">700</x:Double>
 
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>

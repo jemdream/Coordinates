@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -11,8 +12,7 @@ namespace Coordinates.ExternalDevices.Devices
     {
         private readonly MockConnectionConfiguration _connectionConfiguration;
         private readonly Subject<GaugePositionDTO> _mockSource;
-        private readonly Random _randomGenerator = new Random();
-        private IDisposable _mockingDataSource;
+        private CompositeDisposable _mockingDataSource = new CompositeDisposable();
 
         public MockDeviceService(Subject<GaugePositionDTO> mockSource)
         {
@@ -23,24 +23,41 @@ namespace Coordinates.ExternalDevices.Devices
 
         public void StartTimerOnUiThread()
         {
-            _mockingDataSource = Observable
-                .Interval(TimeSpan.FromSeconds(1))
-                .Subscribe(x => { _mockSource.OnNext(GenerateNextPosition()); });
+            _mockingDataSource = new CompositeDisposable
+            {
+                Observable
+                    .Interval(TimeSpan.FromMilliseconds(20))
+                    .Subscribe(x => { _mockSource.OnNext(GenerateNextPosition()); }),
+                Observable
+                    .Interval(TimeSpan.FromMilliseconds(1000))
+                    .Subscribe(x => { _mockSource.OnNext(new GaugePositionDTO {Contact = true}); })
+            };
         }
 
+        private readonly Random _randomGenerator = new Random();
+        private readonly double[] _steps = new double[3];
+        private bool _sign;
         private GaugePositionDTO GenerateNextPosition()
         {
-            var contact = _randomGenerator.Next(100);
-            var x = _randomGenerator.NextDouble();
-            var y = _randomGenerator.NextDouble();
-            var z = _randomGenerator.NextDouble();
+            var contact = _randomGenerator.Next(100) < 50;
+
+            // Triangle signal
+            var x = _steps[0];
+            var y = _steps[1];
+            var z = _steps[2];
+
+            if (!_sign) for (var i = 0; i < 3; i++) { _steps[i] = _steps[i] + 0.01; }
+            else for (var i = 0; i < 3; i++) { _steps[i] = _steps[i] - 0.01; }
+
+            if (Math.Abs(_steps[0]) < 0.01 || Math.Abs(_steps[0]) > 0.99) _sign = !_sign;
+            // ------
 
             return new GaugePositionDTO
             {
-                Contact = contact < 50,
-                X = x * 100,
-                Y = y * 100,
-                Z = z * 100
+                Contact = contact,
+                X = x,
+                Y = y,
+                Z = z
             };
         }
 
@@ -48,7 +65,7 @@ namespace Coordinates.ExternalDevices.Devices
 
         protected override async Task<bool> OnOpeningAsync()
         {
-            await Task.Delay(2000);
+            await Task.Delay(750);
             StartTimerOnUiThread();
 
             return await Task.FromResult(true);
@@ -56,7 +73,7 @@ namespace Coordinates.ExternalDevices.Devices
 
         protected override async Task<bool> OnClosingAsync()
         {
-            await Task.Delay(2000);
+            await Task.Delay(750);
             _mockingDataSource.Dispose();
 
             return await Task.FromResult(true);

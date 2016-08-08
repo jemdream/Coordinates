@@ -6,23 +6,12 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Models;
+using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
-    public class ObservableList<T> : List<T>
-    {
-        private readonly ReplaySubject<T> _onAddSubject = new ReplaySubject<T>();
-        public IObservable<T> OnAddObservable => _onAddSubject.AsObservable();
-
-        public new void Add(T obj)
-        {
-            _onAddSubject.OnNext(obj);
-            base.Add(obj);
-        }
-    }
-
     public class MeasurementManager : IMeasurementManager
     {
         private ObservableList<GaugePosition> _rawGaugePositions = new ObservableList<GaugePosition>();
@@ -65,7 +54,6 @@ namespace Coordinates.Measurements
         }
 
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
-
         public ObservableCollection<ContactPosition> SelectedPositions { get; set; } = new ObservableCollection<ContactPosition>();
         public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; private set; }
         public IMeasurementMethod SelectedMeasurementMethod
@@ -92,7 +80,6 @@ namespace Coordinates.Measurements
             _rawContactPositions.OnAddObservable
                 .Subscribe(_positionSource);
         }
-
         private void InstantiateMeasurements()
         {
             // TODO COULD HAVE: can use reflections and iterate by classes in namespace Coordinates.Measurements.Types

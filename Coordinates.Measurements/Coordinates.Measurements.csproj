@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ObservableList.cs" />
     <Compile Include="IMeasurementManager.cs" />
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Models\MeasurementSettingsModel.cs" />

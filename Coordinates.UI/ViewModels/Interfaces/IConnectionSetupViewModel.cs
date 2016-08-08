@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using Coordinates.ExternalDevices;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.UI.ViewModels
 {
@@ -8,5 +9,6 @@ namespace Coordinates.UI.ViewModels
         ICommand ConnectCommand { get; }
         ICommand DisconnectCommand { get; }
         ConnectionStatus ConnectionStatus { get; set; }
+        Position Position { get; }
     }
 }

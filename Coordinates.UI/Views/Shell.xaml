@@ -5,10 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:Coordinates.UI.Views"
+      xmlns:converters="using:Coordinates.UI.Helpers.Converters"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance views:Shell}">
 
+    <Page.Resources>
+        <converters:ConnectionStatusToBackground x:Name="ConnectionStatusToBackground"/>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -84,11 +89,35 @@
         <Grid Grid.Row="1">
             <!--CommandBar DataContext binding does not work (UWP issue). It requires codebehind Loaded event callback. 
             I placed the binding anyway, to prevent IDE from underlining and connect editor with datacontext. -->
-            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}">
+            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}"
+                        Background="{Binding ConnectionStatus, Converter={StaticResource ConnectionStatusToBackground}}" HorizontalContentAlignment="Stretch">
                 <CommandBar.Content>
-                    <TextBlock Text="{Binding ConnectionStatus}"/>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="2*" MinWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Text="{Binding ConnectionStatus}"/>
+                        <AppBarSeparator Grid.Column="2"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Position.X}"/>
+                        <AppBarSeparator Grid.Column="4" />
+                        <TextBlock Grid.Column="5" Text="{Binding Position.Y}"/>
+                        <AppBarSeparator Grid.Column="6"/>
+                        <TextBlock Grid.Column="7" Text="{Binding Position.Z}"/>
+                    </Grid>
                 </CommandBar.Content>
-                <AppBarSeparator/>
                 <AppBarSeparator/>
                 <AppBarButton Icon="List" Label="Mode">
                     <AppBarButton.Flyout>

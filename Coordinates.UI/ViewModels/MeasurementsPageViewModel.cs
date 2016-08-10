@@ -1,4 +1,6 @@
-﻿using Coordinates.UI.ViewModels.Interfaces;
+﻿using Coordinates.ExternalDevices.Connections;
+using Coordinates.ExternalDevices.Devices;
+using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 using Coordinates.UI.Messages;
 using Prism.Events;
@@ -16,16 +18,22 @@ namespace Coordinates.UI.ViewModels
         }
 
         public MeasurementsPageViewModel(ICoordsCalibrationPartViewModel coordsCalibrationPartViewModel,
-            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator)
+            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator,
+            IConnectionService mockConnectionService // TODO DELETE AFTER DEV
+            )
         {
             // Ignore parameter, just invoke index change
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()
                 .Subscribe(_ => NavigateToComputation());
-            
+
+            MockingDataService = (MockDeviceService) mockConnectionService; // TODO DELETE AFTER DEV
+
             CoordsCalibrationPartViewModel = coordsCalibrationPartViewModel;
             CoordsMeasurementPartViewModel = coordsMeasurementPartViewModel;
         }
+
+        public MockDeviceService MockingDataService { get; set; } // TODO DELETE AFTER DEV
 
         public ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel { get; }
         public ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel { get; }

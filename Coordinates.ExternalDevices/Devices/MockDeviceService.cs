@@ -25,13 +25,28 @@ namespace Coordinates.ExternalDevices.Devices
         {
             _mockingDataSource = new CompositeDisposable
             {
-                Observable
-                    .Interval(TimeSpan.FromMilliseconds(350))
-                    .Subscribe(x => { _mockSource.OnNext(GenerateNextPosition()); }),
-                Observable
-                    .Interval(TimeSpan.FromMilliseconds(1000))
-                    .Subscribe(x => { _mockSource.OnNext(new GaugePositionDTO {Contact = true}); })
+                //Observable
+                //    .Interval(TimeSpan.FromMilliseconds(350))
+                //    .Subscribe(x => { _mockSource.OnNext(GenerateNextPosition()); }),
+                //Observable
+                //    .Interval(TimeSpan.FromMilliseconds(1000))
+                //    .Subscribe(x => { _mockSource.OnNext(new GaugePositionDTO {Contact = true}); })
             };
+        }
+
+        public string X { get; set; }
+        public string Y { get; set; }
+        public string Z { get; set; }
+        public bool Contact { get; set; }
+
+        public void PushMockedValues()
+        {
+            double x, y, z;
+            double.TryParse(X, out x);
+            double.TryParse(Y, out y);
+            double.TryParse(Z, out z);
+
+            _mockSource.OnNext(new GaugePositionDTO { X = x, Y = y, Z = z, Contact = Contact });
         }
 
         private readonly Random _randomGenerator = new Random();

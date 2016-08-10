@@ -17,17 +17,19 @@ namespace Coordinates.UI.ViewModels
         private ICommand _disconnectCommand;
         private ConnectionStatus _connectionStatus;
         private Position _position = new GaugePosition();
+        private object _bColor;
 
         public ConnectionSetupViewModel(IConnectionService connectionService, IMeasurementManager measurementManager)
         {
             _connectionService = connectionService;
             _measurementManager = measurementManager;
+
             _measurementManager.PositionSource
                 .Subscribe(pos => { Position = pos; });
 
             _connectionService.DiagnosticEventsStream
                 .Subscribe(dE => { ConnectionStatus = (ConnectionStatus)dE.Message; });
-        }
+        } 
 
         public ICommand ConnectCommand => _connectCommand ?? (_connectCommand = new DelegateCommand(async () =>
         {

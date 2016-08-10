@@ -97,6 +97,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />

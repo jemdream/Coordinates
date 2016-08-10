@@ -9,9 +9,11 @@
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
     <Color x:Key="SystemAccentColor">SteelBlue</Color>
-
+    
+    <SolidColorBrush x:Key="GaugeContactBarColorBrush" Color="LightGreen" />
+    
     <ResourceDictionary.ThemeDictionaries>
-
+        
         <ResourceDictionary x:Key="Light">
 
             <SolidColorBrush x:Key="CustomColorBrush" Color="{ThemeResource CustomColor}" />
@@ -41,7 +43,7 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Default">
-
+            
             <SolidColorBrush x:Key="CustomColorBrush" Color="{ThemeResource CustomColor}" />
             <SolidColorBrush x:Key="ContrastColorBrush" Color="{ThemeResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource CustomColor}" />
@@ -69,7 +71,7 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
-
+            
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
 

@@ -39,6 +39,7 @@ namespace Coordinates.Measurements
             InstantiateMeasurements();
         }
 
+        // TODO validate the code, not yet tested
         private void WatchSelectedPositionsChanged()
         {
             var test = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(

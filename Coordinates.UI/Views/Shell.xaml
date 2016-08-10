@@ -11,7 +11,7 @@
       d:DataContext="{d:DesignInstance views:Shell}">
 
     <Page.Resources>
-        <converters:ConnectionStatusToBackground x:Name="ConnectionStatusToBackground"/>
+        <converters:PositionTypeToBackground x:Name="PositionTypeToBackground"/>
     </Page.Resources>
     
     <Grid>
@@ -89,8 +89,8 @@
         <Grid Grid.Row="1">
             <!--CommandBar DataContext binding does not work (UWP issue). It requires codebehind Loaded event callback. 
             I placed the binding anyway, to prevent IDE from underlining and connect editor with datacontext. -->
-            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}"
-                        Background="{Binding ConnectionStatus, Converter={StaticResource ConnectionStatusToBackground}}" HorizontalContentAlignment="Stretch">
+            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}" 
+                         HorizontalContentAlignment="Stretch" Background="{Binding Position, Converter={StaticResource PositionTypeToBackground}}">
                 <CommandBar.Content>
                     <Grid>
                         <Grid.Resources>

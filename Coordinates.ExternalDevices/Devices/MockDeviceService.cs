@@ -26,7 +26,7 @@ namespace Coordinates.ExternalDevices.Devices
             _mockingDataSource = new CompositeDisposable
             {
                 Observable
-                    .Interval(TimeSpan.FromMilliseconds(20))
+                    .Interval(TimeSpan.FromMilliseconds(350))
                     .Subscribe(x => { _mockSource.OnNext(GenerateNextPosition()); }),
                 Observable
                     .Interval(TimeSpan.FromMilliseconds(1000))

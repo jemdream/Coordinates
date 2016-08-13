@@ -22,6 +22,6 @@ namespace Coordinates.Measurements
 
 
         // New measurement instance
-        bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position initialGaugePosition);
+        bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition);
     }
 }

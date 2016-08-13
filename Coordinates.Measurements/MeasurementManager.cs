@@ -20,10 +20,12 @@ namespace Coordinates.Measurements
         {
             // Store from datasource
             measurementDataSource.DataStream
+                .Select(CompensatePosition)
                 .Subscribe(pos => RawGaugePositions.Add(new GaugePosition(pos.X, pos.Y, pos.Z)));
 
             measurementDataSource.DataStream
                 .Where(pos => pos.Contact)
+                .Select(CompensatePosition)
                 .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
 
             // Initialize 
@@ -31,20 +33,33 @@ namespace Coordinates.Measurements
             InstantiateMeasurements();
         }
 
+        private GaugePositionDTO CompensatePosition(GaugePositionDTO position)
+        {
+            return new GaugePositionDTO
+            (
+                position.X - CompensationPosition.X,
+                position.Y - CompensationPosition.Y,
+                position.Z - CompensationPosition.Z
+            );
+        }
+
         // Positions (Gauge / Contact)
+        public Position CompensationPosition { get; private set; } = new GaugePosition();
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
         public ObservableCollectionRx<ContactPosition> SelectedPositions { get; private set; }
         public ObservableCollectionRx<GaugePosition> RawGaugePositions { get; private set; }
         public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
 
-        public bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position initialGaugePosition)
+        public bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition)
         {
             // TODO probably reset everything, wipe selection etc. (ask Yes/No on UI site) 
+            // TODO remember that VM should be aware of PositionSource/ContactPositionsSource change
+            
+            // TODO compensation should be summed I think instead of inserting
+            CompensationPosition = compensationPosition;
             SelectedMeasurementMethod = selectedMeasurementMethod;
 
-            // TODO remember that VM should be aware of PositionSource/ContactPositionsSource change
             ResetAllCollections();
-
             return true;
         }
 

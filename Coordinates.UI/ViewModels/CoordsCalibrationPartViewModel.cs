@@ -79,7 +79,7 @@ namespace Coordinates.UI.ViewModels
 
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
         {
-            _initialGaugePosition = _currentGaugePosition;
+            InitialGaugePosition = _currentGaugePosition;
         }, () => _currentGaugePosition != null));
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)

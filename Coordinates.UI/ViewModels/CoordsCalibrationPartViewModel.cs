@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
-using Coordinates.Measurements.Models;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
@@ -40,12 +40,9 @@ namespace Coordinates.UI.ViewModels
             AvailableMeasurementMethods = _measurementManager.AvailableMeasurementMethods;
 
             _measurementManager.PositionSource
-                .Subscribe(pos =>
-                {
-                    CurrentGaugePosition = pos;
-                });
+                .Subscribe(pos => CurrentGaugePosition = pos);
         }
-        
+
         public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; set; }
         public IMeasurementMethod SelectedMeasurementMethod
         {
@@ -56,7 +53,7 @@ namespace Coordinates.UI.ViewModels
                     ((DelegateCommand)GoToMeasurement).RaiseCanExecuteChanged();
             }
         }
-        
+
         public Position CurrentGaugePosition
         {
             get { return _currentGaugePosition; }
@@ -69,35 +66,25 @@ namespace Coordinates.UI.ViewModels
             private set { Set(ref _initialGaugePosition, value); }
         }
 
-        // TODO to be completely refactored
         public ICommand GoToMeasurement => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
         {
-            // setup service values
-            // change view
+            // TODO Check for dirty and prompt if so
+            _measurementManager.SetupNewMeasurement(SelectedMeasurementMethod, InitialGaugePosition);
+
             _eventAggregator
                 .GetEvent<NewMeasurementMessage>()
-                .Publish(new MeasurementSettingsModel
-                {
-                    // TODO: Replace with enum / [Service Project]
-                    // MeasurementType = SelectedMeasurementMethod,
-                    // Rewriting values into new instance
-                    AxisBaseValuesModel = new GaugePosition
-                    {
-                        X = InitialGaugePosition.X,
-                        Y = InitialGaugePosition.Y,
-                        Z = InitialGaugePosition.Z,
-                    }
-                });
+                .Publish(Unit.Default); // Unit.Default is just an object - no data. just to publish something. a good practice.
+
         }, () => SelectedMeasurementMethod != null));
-        
+
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
         {
-            // TODO setup initials, pass them to manager
-        }, () => SelectedMeasurementMethod != null));
+            _initialGaugePosition = _currentGaugePosition;
+        }, () => _currentGaugePosition != null));
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            SelectedMeasurementMethod = _measurementManager.SelectedMeasurementMethod;
+            SelectedMeasurementMethod = _measurementManager.SelectedMeasurementMethod; 
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

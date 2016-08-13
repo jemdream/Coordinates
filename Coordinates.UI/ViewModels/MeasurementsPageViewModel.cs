@@ -19,15 +19,14 @@ namespace Coordinates.UI.ViewModels
 
         public MeasurementsPageViewModel(ICoordsCalibrationPartViewModel coordsCalibrationPartViewModel,
             ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator,
-            IConnectionService mockConnectionService // TODO DELETE AFTER DEV
-            )
+            IConnectionService mockConnectionService/* TODO DELETE AFTER DEV */)
         {
             // Ignore parameter, just invoke index change
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()
                 .Subscribe(_ => NavigateToComputation());
 
-            MockingDataService = (MockDeviceService) mockConnectionService; // TODO DELETE AFTER DEV
+            MockingDataService = (MockDeviceService)mockConnectionService; // TODO DELETE AFTER DEV
 
             CoordsCalibrationPartViewModel = coordsCalibrationPartViewModel;
             CoordsMeasurementPartViewModel = coordsMeasurementPartViewModel;

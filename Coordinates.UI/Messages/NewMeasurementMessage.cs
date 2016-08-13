@@ -1,9 +1,9 @@
-﻿using Coordinates.Measurements.Models;
+﻿using System.Reactive;
 using Prism.Events;
 
 namespace Coordinates.UI.Messages
 {
-    public class NewMeasurementMessage : PubSubEvent<MeasurementSettingsModel>
+    public class NewMeasurementMessage : PubSubEvent<Unit>
     {
     }
 }

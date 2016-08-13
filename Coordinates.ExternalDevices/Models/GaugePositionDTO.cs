@@ -2,9 +2,17 @@
 {
     public class GaugePositionDTO
     {
-        public double X { get; set; }
-        public double Z { get; set; }
-        public double Y { get; set; }
-        public bool Contact { get; set; }
+        public GaugePositionDTO(double x, double y, double z, bool contact = false)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            Contact = contact;
+        }
+
+        public double X { get; }
+        public double Z { get; }
+        public double Y { get; }
+        public bool Contact { get; }
     }
 }

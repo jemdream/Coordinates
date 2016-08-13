@@ -9,7 +9,8 @@
     xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
     Name="Page"
-    d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}">
+    d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}"
+    Padding="20">
 
     <Page.Resources>
         <converters:ValueWhenConverter x:Key="FalseIfNull" When="{x:Null}">
@@ -54,13 +55,14 @@
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
-        <!--  content  -->
-        <Pivot x:Name="Pivot" Grid.Row="1"
-               SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               RelativePanel.AlignLeftWithPanel="True"
+        
+        <!--  Content  -->
+        <!--IsHitTestVisible="False"-->
+        <Pivot x:Name="Pivot" Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+               ManipulationMode="None" RelativePanel.Below="PageHeader" SelectionChanged="Pivot_OnSelectionChanged">
+            <!--RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True"
-               RelativePanel.AlignBottomWithPanel="True"
-               RelativePanel.Below="PageHeader">
+               RelativePanel.AlignBottomWithPanel="True"-->
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
                     <VisualState>
@@ -76,9 +78,9 @@
             </VisualStateManager.VisualStateGroups>
 
             <!--  Calibration  -->
-            <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracja" TabIndex="0">
-                <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left"
-                              VerticalScrollBarVisibility="Auto">
+            <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracjaa" TabIndex="0">
+                
+                <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <Grid Name="OriginGrid" Margin="0,5,10,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -200,8 +202,7 @@
 
             <!--  Measurement  -->
             <!--IsEnabled="{Binding SelectedMeasurementTypeViewModel, Converter={StaticResource FalseIfNull}}"-->
-            <PivotItem Name="MeasurementPivotItem" DataContext="{Binding CoordsMeasurementPartViewModel}" Header="Pomiar"
-                       Padding="0" TabIndex="1">
+            <PivotItem Name="MeasurementPivotItem" DataContext="{Binding CoordsMeasurementPartViewModel}" Header="Pomiar" Padding="0" TabIndex="1">
                 <ScrollViewer Margin="10,12,-12,0" VerticalScrollBarVisibility="Auto">
                     <Grid Name="MeasurementGrid" Margin="0,5,10,5">
                         <Grid.ColumnDefinitions>
@@ -216,8 +217,7 @@
                         <StackPanel Name="GatheredMeasurementsStackPanel" HorizontalAlignment="Center"
                                        Visibility="Visible" Grid.Column="0" Grid.Row="0">
                             <TextBlock Text="Tabela zebranych pomiarów"/>
-                            <ListBox Name="GatheredMeasurementsList" HorizontalAlignment="Stretch"
-                                     ItemsSource="{Binding Coords}">
+                            <ListBox Name="GatheredMeasurementsList" HorizontalAlignment="Stretch" >
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Name="GatheredMeasurementsGrid">
@@ -246,8 +246,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <!--Command="{Binding DataContext.GoBackToCalibration, ElementName=Page}"-->
                             <Button Name="MeasurementAbortButton" Content="Anuluj" HorizontalAlignment="Center" Grid.Column="0"
-                                    Command="{Binding DataContext.GoBackToCalibration, ElementName=Page}" Background="Crimson"/>
+                                     Background="Crimson"/>
                             <Button Name="MeasurementInstruction" Content="Info" HorizontalAlignment="Center" Grid.Column="1" Background="GhostWhite" >
                                 <Button.Flyout>
                                     <Flyout>
@@ -267,8 +268,9 @@
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>
+                            <!--Command="{Binding DataContext.GoToComputing, ElementName=Page}"-->
                             <Button Name="MeasurementNextButton" Content="Dalej" HorizontalAlignment="Center"
-                                    Command="{Binding DataContext.GoToComputing, ElementName=Page}"
+                                    
                                     Grid.Column="2"/>
                         </Grid>
                     </Grid>

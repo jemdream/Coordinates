@@ -46,7 +46,7 @@ namespace Coordinates.ExternalDevices.Devices
             double.TryParse(Y, out y);
             double.TryParse(Z, out z);
 
-            _mockSource.OnNext(new GaugePositionDTO { X = x, Y = y, Z = z, Contact = Contact });
+            _mockSource.OnNext(new GaugePositionDTO(x, y, z, Contact));
         }
 
         private readonly Random _randomGenerator = new Random();
@@ -67,13 +67,7 @@ namespace Coordinates.ExternalDevices.Devices
             if (Math.Abs(_steps[0]) < 0.01 || Math.Abs(_steps[0]) > 0.99) _sign = !_sign;
             // ------
 
-            return new GaugePositionDTO
-            {
-                Contact = contact,
-                X = x,
-                Y = y,
-                Z = z
-            };
+            return new GaugePositionDTO(x, y, z, contact);
         }
 
         public override IConnection ConnectionConfiguration => _connectionConfiguration;

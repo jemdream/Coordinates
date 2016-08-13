@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
@@ -12,78 +10,65 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
+    // todo store all measurements here, public the lists, on _positionSource notifypropertychanged on ui, maybe use ObservableCollection
+    // todo store all selected ms here
     public class MeasurementManager : IMeasurementManager
     {
-        private ObservableList<GaugePosition> _rawGaugePositions = new ObservableList<GaugePosition>();
-        private ObservableList<ContactPosition> _rawContactPositions = new ObservableList<ContactPosition>();
-
-        private IMeasurementMethod _selectedMeasurementMethod;
         private readonly Subject<Position> _positionSource = new Subject<Position>();
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
-            _rawGaugePositions.OnAddObservable
-                .Subscribe(_positionSource);
-
-            _rawContactPositions.OnAddObservable
-                .Subscribe(_positionSource);
-
+            // Store from datasource
             measurementDataSource.DataStream
-                .Subscribe(pos => _rawGaugePositions.Add(new GaugePosition { X = pos.X, Y = pos.Y, Z = pos.Z }));
+                .Subscribe(pos => RawGaugePositions.Add(new GaugePosition(pos.X, pos.Y, pos.Z)));
 
             measurementDataSource.DataStream
                 .Where(pos => pos.Contact)
-                .Subscribe(pos => _rawContactPositions.Add(new ContactPosition { X = pos.X, Y = pos.Y, Z = pos.Z }));
+                .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
 
-            WatchSelectedPositionsChanged();
+            // Initialize 
+            ResetAllCollections();
             InstantiateMeasurements();
         }
 
-        // TODO validate the code, not yet tested
-        private void WatchSelectedPositionsChanged()
-        {
-            var test = Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
-                h => SelectedPositions.CollectionChanged += h,
-                h => SelectedPositions.CollectionChanged -= h);
-
-            test.Where(ev => ev.EventArgs.Action != NotifyCollectionChangedAction.Replace)
-                .Subscribe(_ =>
-                {
-                    // TODO 01-08-2016 maybe execute and return result
-                    SelectedMeasurementMethod.CanExecute();
-                });
-        }
-
+        // Positions (Gauge / Contact)
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
-        public ObservableCollection<ContactPosition> SelectedPositions { get; set; } = new ObservableCollection<ContactPosition>();
-        public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; private set; }
-        public IMeasurementMethod SelectedMeasurementMethod
-        {
-            get { return _selectedMeasurementMethod; }
-            set { SetupSelectedMeasurementMethod(value); }
-        }
+        public ObservableCollectionRx<ContactPosition> SelectedPositions { get; private set; }
+        public ObservableCollectionRx<GaugePosition> RawGaugePositions { get; private set; }
+        public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
 
-        private void SetupSelectedMeasurementMethod(IMeasurementMethod value)
+        public bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position initialGaugePosition)
         {
             // TODO probably reset everything, wipe selection etc. (ask Yes/No on UI site) 
-            _selectedMeasurementMethod = value;
-            SelectedPositions.Clear();
+            SelectedMeasurementMethod = selectedMeasurementMethod;
 
             // TODO remember that VM should be aware of PositionSource/ContactPositionsSource change
-            _rawGaugePositions = new ObservableList<GaugePosition>();
+            ResetAllCollections();
 
-            _rawContactPositions = new ObservableList<ContactPosition>();
-            
-            //TODO code duplication
-            _rawGaugePositions.OnAddObservable
-               .Subscribe(_positionSource);
-
-            _rawContactPositions.OnAddObservable
-                .Subscribe(_positionSource);
+            return true;
         }
+
+        private void ResetAllCollections()
+        {
+            RawGaugePositions = new ObservableCollectionRx<GaugePosition>();
+            RawContactPositions = new ObservableCollectionRx<ContactPosition>();
+            SelectedPositions = new ObservableCollectionRx<ContactPosition>();
+
+            SelectedPositions.SelectedPositionsCollectionChanged
+                .Subscribe(x => { SelectedMeasurementMethod.CanExecute(); });
+            RawGaugePositions.OnAddObservable
+                .Subscribe(x => _positionSource.OnNext(x));
+            RawContactPositions.OnAddObservable
+                .Subscribe(x => _positionSource.OnNext(x));
+        }
+
+        // Measurement Methods (flatness etc.)
+        public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; private set; }
+        public IMeasurementMethod SelectedMeasurementMethod { get; private set; }
+
         private void InstantiateMeasurements()
         {
-            // TODO COULD HAVE: can use reflections and iterate by classes in namespace Coordinates.Measurements.Types
+            // Could have: instead use reflections and iterate by classes in namespace Coordinates.Measurements.Types
             AvailableMeasurementMethods = new List<IMeasurementMethod>
             {
                 new RoundnessMeasurementMethod(),

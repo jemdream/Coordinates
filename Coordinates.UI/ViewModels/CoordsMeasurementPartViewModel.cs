@@ -1,4 +1,4 @@
-﻿using Coordinates.Measurements.Models;
+﻿using Coordinates.Measurements;
 using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
@@ -8,26 +8,20 @@ namespace Coordinates.UI.ViewModels
 {
     public class CoordsMeasurementPartViewModel : ViewModelBase, ICoordsMeasurementPartViewModel
     {
-        private MeasurementSettingsModel _measurementSettings;
+        private readonly IMeasurementManager _measurementManager;
 
-        public CoordsMeasurementPartViewModel(IEventAggregator eventAggregator)
+        public CoordsMeasurementPartViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
         {
+            _measurementManager = measurementManager;
+
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()
-                .Subscribe(ChangeMeasurementType);
+                .Subscribe(_ => InitializeNewMeasurement());
         }
 
-        // TODO: zrobic taska na zamiane przekazywania instancji VM na enuma, 
-        // TODO: a w View bedzie mapowanie po typie enuma i wyciagana nowa instancja z containera za kazdym razem jak odpalamy nowy measurement
-        private void ChangeMeasurementType(MeasurementSettingsModel settings)
+        private void InitializeNewMeasurement()
         {
-            MeasurementSettings = settings;
-        }
-
-        public MeasurementSettingsModel MeasurementSettings
-        {
-            get { return _measurementSettings; }
-            set { Set(ref _measurementSettings, value); }
+            
         }
     }
 }

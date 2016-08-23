@@ -7,7 +7,7 @@ namespace Coordinates.UI.ViewModels.Interfaces
     {
         ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel { get; }
         ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel { get; }
-        MockDeviceService MockingDataService { get; set; } // TODO DELETE AFTER DEV
+        //MockDeviceService MockingDataService { get; set; } // TODO MOCK CONNECTION
         int SelectedTabIndex { get; set; }
     }
 }

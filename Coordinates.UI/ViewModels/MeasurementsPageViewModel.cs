@@ -18,21 +18,21 @@ namespace Coordinates.UI.ViewModels
         }
 
         public MeasurementsPageViewModel(ICoordsCalibrationPartViewModel coordsCalibrationPartViewModel,
-            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator,
-            IConnectionService mockConnectionService/* TODO DELETE AFTER DEV */)
+            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator)
+            //, IConnectionService mockConnectionService/* TODO MOCK CONNECTION */)
         {
             // Ignore parameter, just invoke index change
             eventAggregator
                 .GetEvent<NewMeasurementMessage>()
                 .Subscribe(_ => NavigateToComputation());
 
-            MockingDataService = (MockDeviceService)mockConnectionService; // TODO DELETE AFTER DEV
+            //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
 
             CoordsCalibrationPartViewModel = coordsCalibrationPartViewModel;
             CoordsMeasurementPartViewModel = coordsMeasurementPartViewModel;
         }
 
-        public MockDeviceService MockingDataService { get; set; } // TODO DELETE AFTER DEV
+        //public MockDeviceService MockingDataService { get; set; } // TODO MOCK CONNECTION
 
         public ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel { get; }
         public ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel { get; }

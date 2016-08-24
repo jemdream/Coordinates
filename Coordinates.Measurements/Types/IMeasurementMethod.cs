@@ -3,6 +3,6 @@
     public interface IMeasurementMethod
     {
         bool CanExecute();
-        object Execute(); // todo params?
+        object Execute(); // TODO MeasurementCalculations
     }
 }

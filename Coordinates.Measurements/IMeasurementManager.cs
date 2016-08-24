@@ -19,8 +19,7 @@ namespace Coordinates.Measurements
         IObservable<Position> PositionSource { get; }
         ObservableCollectionRx<GaugePosition> RawGaugePositions { get; }
         ObservableCollectionRx<ContactPosition> RawContactPositions { get; }
-
-
+        
         // New measurement instance
         bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition);
     }

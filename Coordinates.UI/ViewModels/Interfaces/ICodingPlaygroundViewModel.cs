@@ -9,7 +9,6 @@ namespace Coordinates.UI.ViewModels.Interfaces
     {
         ContentDialogResult ModalPick { get; set; }
         void EnterTextBox(object textBoxContent, EventArgs ev);
-        // TODO EXTERNALS
         IEnumerable<DiagnosticEvent> ConnectionEvents { get; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Windows.Input;
-using Coordinates.ExternalDevices.Devices;
-
-namespace Coordinates.UI.ViewModels.Interfaces
+﻿namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface IMeasurementsPageViewModel
     {

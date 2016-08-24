@@ -116,6 +116,7 @@
     <Compile Include="Devices\MockDeviceService.cs" />
     <Compile Include="Devices\SerialDeviceService.cs" />
     <Compile Include="Events\ConnectionEvents\DiagnosticEvent.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="Models\GaugePositionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

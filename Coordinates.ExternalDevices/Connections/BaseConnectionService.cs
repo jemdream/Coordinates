@@ -63,7 +63,7 @@ namespace Coordinates.ExternalDevices.Connections
             ConnectionStatus = ConnectionStatus.Closing;
 
             var result = await OnClosingAsync();
-            
+
             ConnectionStatus = result ? ConnectionStatus.Closed : ConnectionStatus.Broken;
 
             return ConnectionStatus;

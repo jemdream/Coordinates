@@ -9,7 +9,7 @@ namespace Coordinates.UI.ViewModels.Interfaces
     {
         Position CurrentGaugePosition { get; }
         Position InitialGaugePosition { get; }
-        ICommand GoToMeasurement { get; }
+        ICommand GoNextCommand { get; }
         ICommand SetupInitialCoordinates { get; }
         IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; set; }

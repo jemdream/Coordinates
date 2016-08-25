@@ -64,6 +64,28 @@
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
+                <!-- TODO Group it and put in ButtonType="Literal" and text="Instrukcje" -->
+
+                <!-- Maszyna -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
+                                Symbol="Library" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Maszyna" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+                <!-- Metrologia -->
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48"
+                                Symbol="Library" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Metrologia" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
             </controls:HamburgerMenu.PrimaryButtons>
 
             <controls:HamburgerMenu.SecondaryButtons>

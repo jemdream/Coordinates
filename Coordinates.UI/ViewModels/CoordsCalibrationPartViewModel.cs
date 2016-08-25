@@ -14,7 +14,13 @@ using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
-    public class CoordsCalibrationPartViewModel : ViewModelBase, ICoordsCalibrationPartViewModel
+    public abstract class MeasurementViewModelBase : ViewModelBase
+    {
+        public abstract ICommand GoBackCommand { get; }
+        public abstract ICommand GoNextCommand { get; }
+    }
+
+    public class CoordsCalibrationPartViewModel : MeasurementViewModelBase, ICoordsCalibrationPartViewModel
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IMeasurementManager _measurementManager;
@@ -44,13 +50,14 @@ namespace Coordinates.UI.ViewModels
         }
 
         public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; set; }
+
         public IMeasurementMethod SelectedMeasurementMethod
         {
             get { return _selectedMeasurementMethod; }
             set
             {
                 if (Set(ref _selectedMeasurementMethod, value))
-                    ((DelegateCommand)GoToMeasurement).RaiseCanExecuteChanged();
+                    ((DelegateCommand) GoNextCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -66,14 +73,16 @@ namespace Coordinates.UI.ViewModels
             private set { Set(ref _initialGaugePosition, value); }
         }
 
-        public ICommand GoToMeasurement => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
+        public override ICommand GoBackCommand { get; } = new DelegateCommand(() => { }, () => false);
+        
+        public override ICommand GoNextCommand => _goToMeasurement ?? (_goToMeasurement = new DelegateCommand(() =>
         {
             // TODO Check for dirty and prompt if so
             _measurementManager.SetupNewMeasurement(SelectedMeasurementMethod, InitialGaugePosition);
 
             _eventAggregator
-                .GetEvent<NewMeasurementMessage>()
-                .Publish(Unit.Default); // Unit.Default is just an object - no data. just to publish something. a good practice.
+                .GetEvent<GoNextMeasurementMsg>()
+                .Publish(typeof(ICoordsCalibrationPartViewModel)); // Unit.Default is just an object - no data. just to publish something. a good practice.
 
         }, () => SelectedMeasurementMethod != null));
 

@@ -10,6 +10,8 @@
     mc:Ignorable="d"
     Name="Page"
     d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}"
+    d:DesignWidth="1000"
+    d:DesignHeight="500"
     Padding="20">
 
     <Page.Resources>
@@ -52,17 +54,22 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <RelativePanel.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="25"/>
+            </Style>
+        </RelativePanel.Resources>
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
-        
-        <!--  Content  -->
+        <Button x:Name="BackButton" VerticalAlignment="Center" 
+                RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" 
+                Content="-"/>
+            <!--  Content  -->
         <!--IsHitTestVisible="False"-->
-        <Pivot x:Name="Pivot" Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               ManipulationMode="None" RelativePanel.Below="PageHeader" SelectionChanged="Pivot_OnSelectionChanged">
-            <!--RelativePanel.AlignLeftWithPanel="True"
-               RelativePanel.AlignRightWithPanel="True"
-               RelativePanel.AlignBottomWithPanel="True"-->
+        <Pivot x:Name="Pivot" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+               ManipulationMode="None" RelativePanel.Below="PageHeader" RelativePanel.RightOf="BackButton"  SelectionChanged="Pivot_OnSelectionChanged" 
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.LeftOf="NextButton">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
                     <VisualState>
@@ -78,7 +85,7 @@
             </VisualStateManager.VisualStateGroups>
 
             <!--  Calibration  -->
-            <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracjaa" TabIndex="0">
+            <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracja" TabIndex="0">
                 
                 <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <Grid Name="OriginGrid" Margin="0,5,10,5">
@@ -193,7 +200,7 @@
                                 </Button.Flyout>
                             </Button>
                             <Button Name="CalibrationNextButton" Content="Dalej" HorizontalAlignment="Center" Grid.Column="2"
-                        		Command="{Binding DataContext.CoordsCalibrationPartViewModel.GoToMeasurement, ElementName=Page}" />
+                        		Command="{Binding DataContext.CoordsCalibrationPartViewModel.GoNextCommand, ElementName=Page}" />
                         </Grid>
                     </Grid>
                 </ScrollViewer>
@@ -381,6 +388,10 @@
             </PivotItem>
 
         </Pivot>
+        
+        <Button x:Name="NextButton" VerticalAlignment="Center" 
+                RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" 
+                Content="-" RelativePanel.AlignRightWithPanel="True"/>
     </RelativePanel>
 </Page>
 

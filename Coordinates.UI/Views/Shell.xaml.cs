@@ -34,5 +34,13 @@ namespace Coordinates.UI.Views
         {
             (sender as CommandBar).DataContext = ConnectionSetupViewModel;
         }
+
+        private void Instrukcje_Tapped(object sender, RoutedEventArgs e)
+        {
+            var isMaszynaButtonVisible = MaszynaButton.Visibility == Visibility.Visible;
+            
+            MaszynaButton.Visibility = MetrologiaButton.Visibility =
+                isMaszynaButtonVisible ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

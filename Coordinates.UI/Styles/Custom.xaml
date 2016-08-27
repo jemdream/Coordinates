@@ -9,8 +9,8 @@
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
     <Color x:Key="SystemAccentColor">SteelBlue</Color>
-    
-    <SolidColorBrush x:Key="GaugeContactBarColorBrush" Color="LightGreen" />
+
+    <SolidColorBrush x:Key="GaugeContactBarColorBrush" Color="YellowGreen" />
     
     <ResourceDictionary.ThemeDictionaries>
         

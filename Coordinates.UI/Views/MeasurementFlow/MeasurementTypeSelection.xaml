@@ -1,0 +1,58 @@
+﻿<UserControl
+    x:Class="Coordinates.UI.Views.MeasurementFlow.MeasurementTypeSelection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance measurementFlow:IMeasurementTypeSelectionViewModel}">
+
+    <PivotItem Name="CalibrationPivotItem" Header="Kalibracja" TabIndex="0">
+
+        <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
+            <Grid Name="OriginGrid" Margin="0,5,10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--Wybór rodzaju pomiaru-->
+                <ComboBox Name="ComboBox"
+                        ItemsSource="{Binding AvailableMeasurementMethods}"
+                        SelectedItem="{Binding SelectedMeasurementMethod, Mode=TwoWay}"
+                        Header="Typ pomiaru"
+                        PlaceholderText="Wybierz tryb pomiaru"
+                        Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
+
+                <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="CalibrationInstruction" Content="Info" HorizontalAlignment="Center" Background="GhostWhite">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+                                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                                        <Setter Property="IsTabStop" Value="True"/>
+                                        <Setter Property="TabNavigation" Value="Cycle"/>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."/>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </PivotItem>
+</UserControl>

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.Devices;
-using Coordinates.UI.ViewModels.Interfaces;
-using Template10.Mvvm;
 using Coordinates.UI.Messages;
+using Coordinates.UI.ViewModels.Interfaces;
+using Coordinates.UI.ViewModels.MeasurementFlow;
+using Template10.Mvvm;
 using Prism.Events;
 
 namespace Coordinates.UI.ViewModels
@@ -12,57 +11,47 @@ namespace Coordinates.UI.ViewModels
     {
         private int _selectedTabIndex;
 
-        public IEventAggregator EventAggregator { get; private set; }
+        public MeasurementsPageViewModel(
+            IMeasurementCalculationsViewModel measurementCalculationsViewModel,
+            IMeasurementCalibrationViewModel measurementCalibrationViewModel,
+            IMeasurementProcessViewModel measurementProcessViewModel,
+            IMeasurementSelectionViewModel measurementSelectionViewModel,
+            IMeasurementTypeSelectionViewModel measurementTypeSelectionViewModel,
+            IEventAggregator eventAggregator)
+        //, IConnectionService mockConnectionService/* TODO MOCK CONNECTION */)
+        {
+            EventAggregator = eventAggregator;
+
+            MeasurementFlowViewModels = new List<IMeasurementViewModelBase>
+            {
+                 measurementTypeSelectionViewModel,
+                 measurementCalibrationViewModel,
+                 measurementProcessViewModel,
+                 measurementSelectionViewModel,
+                 measurementCalculationsViewModel
+            };
+
+            // Listening to navigation requests from MeasurementFlowViewModels elements
+            EventAggregator
+                .GetEvent<GoBackMeasurementMsg>()
+                .Subscribe(sender => { if (FindIndex(sender) >= 0) SelectedTabIndex--; });
+
+            EventAggregator
+                .GetEvent<GoNextMeasurementMsg>()
+                .Subscribe(sender => { if (FindIndex(sender) < MeasurementFlowViewModels.Count) SelectedTabIndex++; });
+
+            //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
+        }
+
+        private int FindIndex(System.Type sender) => MeasurementFlowViewModels.FindIndex(x => x.GetType() == sender);
+
+        public IEventAggregator EventAggregator { get; }
+        public List<IMeasurementViewModelBase> MeasurementFlowViewModels { get; }
 
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
             set { Set(ref _selectedTabIndex, value); }
         }
-
-        public MeasurementsPageViewModel(ICoordsCalibrationPartViewModel coordsCalibrationPartViewModel,
-            ICoordsMeasurementPartViewModel coordsMeasurementPartViewModel, IEventAggregator eventAggregator)
-        //, IConnectionService mockConnectionService/* TODO MOCK CONNECTION */)
-        {
-            EventAggregator = eventAggregator;
-
-            // Ignore parameter, just invoke index change
-            EventAggregator
-                .GetEvent<GoBackMeasurementMsg>()
-                .Subscribe(sender =>
-                {
-                    var index = _measurementViewModelBaseOrder.IndexOf(sender);
-                    if (index >= 0) SelectedTabIndex--;
-                });
-
-            EventAggregator
-                .GetEvent<GoNextMeasurementMsg>()
-                .Subscribe(sender =>
-                {
-                    var index = _measurementViewModelBaseOrder.IndexOf(sender);
-                    if (index < _measurementViewModelBaseOrder.Count) SelectedTabIndex++;
-                });
-
-            _measurementViewModelBaseOrder = new List<System.Type>
-            {
-                typeof(ICoordsCalibrationPartViewModel),
-                typeof(ICoordsMeasurementPartViewModel)
-            };
-
-            //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
-
-            CoordsCalibrationPartViewModel = coordsCalibrationPartViewModel;
-            CoordsMeasurementPartViewModel = coordsMeasurementPartViewModel;
-        }
-        
-        //public MockDeviceService MockingDataService { get; set; } // TODO MOCK CONNECTION
-
-        // TODO NAVIGATION in pivot selected item bind to viewmodel and introduce datatemplates; now mocked order
-        private readonly List<System.Type> _measurementViewModelBaseOrder;
-
-        public ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel { get; }
-        public ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel { get; }
-
-        //private void NavigateToComputation() => SelectedTabIndex = 1;
     }
 }

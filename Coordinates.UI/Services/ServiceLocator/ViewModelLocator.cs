@@ -30,8 +30,6 @@ namespace Coordinates.UI.Services.ServiceLocator
         public ICodingPlaygroundViewModel CodingPlaygroundViewModel => _myContainer.Resolve<ICodingPlaygroundViewModel>();
         public IMeasurementsPageViewModel MeasurementsPageViewModel => _myContainer.Resolve<IMeasurementsPageViewModel>();
         public IVisualisationPageViewModel VisualisationPageViewModel => _myContainer.Resolve<IVisualisationPageViewModel>();
-        public ICoordsCalibrationPartViewModel CoordsCalibrationPartViewModel => _myContainer.Resolve<ICoordsCalibrationPartViewModel>();
-        public ICoordsMeasurementPartViewModel CoordsMeasurementPartViewModel => _myContainer.Resolve<ICoordsMeasurementPartViewModel>();
         public IConnectionSetupViewModel ConnectionSetupViewModel => _myContainer.Resolve<IConnectionSetupViewModel>();
     }
 }

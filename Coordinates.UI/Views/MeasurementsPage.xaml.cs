@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.ExternalDevices.Devices;
-using Coordinates.UI.ViewModels;
+using Coordinates.UI.ViewModels.MeasurementFlow;
 
 namespace Coordinates.UI.Views
 {
@@ -25,12 +25,10 @@ namespace Coordinates.UI.Views
         /// </summary>
         private void Pivot_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var newViewModel = (e.AddedItems.FirstOrDefault() as PivotItem)?.DataContext as MeasurementViewModelBase;
-            var oldViewModel = (e.RemovedItems.FirstOrDefault() as PivotItem)?.DataContext as MeasurementViewModelBase;
+            var newViewModel = e.AddedItems.FirstOrDefault() as MeasurementViewModelBase;
+            var oldViewModel = e.RemovedItems.FirstOrDefault() as MeasurementViewModelBase;
             
-            //BackButton.IsEnabled = Pivot.SelectedIndex > 0;
             BackButton.Command = newViewModel?.GoBackCommand;
-            //NextButton.IsEnabled = Pivot.SelectedIndex < Pivot.Items?.Count - 1;
             NextButton.Command = newViewModel?.GoNextCommand;
 
             newViewModel?.OnNavigatedToAsync(null, NavigationMode.Refresh, null);

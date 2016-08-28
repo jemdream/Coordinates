@@ -11,20 +11,17 @@ namespace Coordinates.UI.ViewModels
     public class ConnectionSetupViewModel : ViewModelBase, IConnectionSetupViewModel
     {
         private readonly IConnectionService _connectionService;
-        private readonly IMeasurementManager _measurementManager;
+        private ConnectionStatus _connectionStatus;
+        private Position _position = new GaugePosition();
 
         private ICommand _connectCommand;
         private ICommand _disconnectCommand;
-        private ConnectionStatus _connectionStatus;
-        private Position _position = new GaugePosition();
-        private object _bColor;
 
         public ConnectionSetupViewModel(IConnectionService connectionService, IMeasurementManager measurementManager)
         {
             _connectionService = connectionService;
-            _measurementManager = measurementManager;
 
-            _measurementManager.PositionSource
+            measurementManager.PositionSource
                 .Subscribe(pos => { Position = pos; });
 
             _connectionService.DiagnosticEventsStream

@@ -7,6 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Coordinates.UI.ViewModels"
     xmlns:converters="using:Template10.Converters"
+    xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
+    xmlns:measurementFlow="using:Coordinates.UI.Views.MeasurementFlow"
+    xmlns:measurementFlowViewModel="using:Coordinates.UI.ViewModels.MeasurementFlow"
+    xmlns:interfaces="using:Coordinates.UI.ViewModels.Interfaces"
     mc:Ignorable="d"
     Name="Page"
     d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}"
@@ -23,6 +27,35 @@
                 <x:Boolean>True</x:Boolean>
             </converters:ValueWhenConverter.Otherwise>
         </converters:ValueWhenConverter>
+
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementTypeSelectionViewModel" x:Key="TypeSelectionDataTemplate">
+            <measurementFlow:MeasurementTypeSelection/>
+        </DataTemplate>
+
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementCalibrationViewModel" x:Key="CalibrationDataTemplate">
+            <measurementFlow:MeasurementCalibration/>
+        </DataTemplate>
+
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementProcessViewModel" x:Key="ProcessDataTemplate">
+            <measurementFlow:MeasurementProcess/>
+        </DataTemplate>
+
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementSelectionViewModel" x:Key="SelectionDataTemplate">
+            <measurementFlow:MeasurementSelection/>
+        </DataTemplate>
+
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementCalculationsViewModel" x:Key="CalculationsDataTemplate">
+            <measurementFlow:MeasurementCalculations/>
+        </DataTemplate>
+
+        <dataTemplateSelectors:CoordsViewModelBaseSelector 
+                    x:Key="CoordsViewModelBaseSelector" 
+                    TypeSelectionDataTemplate="{StaticResource TypeSelectionDataTemplate}"
+                    CalibrationDataTemplate="{StaticResource CalibrationDataTemplate}"
+                    ProcessDataTemplate="{StaticResource ProcessDataTemplate}"
+                    SelectionDataTemplate="{StaticResource SelectionDataTemplate}"
+                    CalculationsDataTemplate="{StaticResource CalculationsDataTemplate}" />
+
     </Page.Resources>
 
     <Page.DataContext>
@@ -65,16 +98,15 @@
         <Button x:Name="BackButton" VerticalAlignment="Center" 
                 RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" 
                 Content="-"/>
-            <!--  Content  -->
-        <!--IsHitTestVisible="False"-->
-        <Pivot x:Name="Pivot" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               ManipulationMode="None" RelativePanel.Below="PageHeader" RelativePanel.RightOf="BackButton"  SelectionChanged="Pivot_OnSelectionChanged" 
-               RelativePanel.AlignBottomWithPanel="True" RelativePanel.LeftOf="NextButton">
+
+        <!--  Content  -->
+        <Pivot x:Name="Pivot" ItemsSource="{Binding MeasurementFlowViewModels}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+               ManipulationMode="None" RelativePanel.Below="PageHeader" RelativePanel.RightOf="BackButton" ItemTemplateSelector="{StaticResource CoordsViewModelBaseSelector}"
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.LeftOf="NextButton" SelectionChanged="Pivot_OnSelectionChanged">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
                     <VisualState>
                         <VisualState.StateTriggers>
-                            <!--VisualState to be triggered when window width is >=720 effective pixels.-->
                             <AdaptiveTrigger MinWindowWidth="720" />
                         </VisualState.StateTriggers>
                         <VisualState.Setters>
@@ -84,314 +116,16 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <!--  Calibration  -->
-            <PivotItem Name="CalibrationPivotItem" DataContext="{Binding CoordsCalibrationPartViewModel}" Header="Kalibracja" TabIndex="0">
-                
-                <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
-                    <Grid Name="OriginGrid" Margin="0,5,10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="5*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <!--Wybór rodzaju pomiaru-->
-                        <ComboBox Name="ComboBox"
-                                  ItemsSource="{Binding AvailableMeasurementMethods}"
-                                  SelectedItem="{Binding SelectedMeasurementMethod, Mode=TwoWay}"
-                                  Header="Typ pomiaru"
-                                  PlaceholderText="Wybierz tryb pomiaru"
-                                  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"/>
-
-                        <!--Pozycja początkowa-->
-                        <StackPanel Name="CoordsRelativePanel" HorizontalAlignment="Center"
-                                    Grid.Column="1" Grid.Row="0">
-
-                            <TextBlock Text="Pozycja początkowa"/>
-                            <Grid Name="CoordsInitialGrid">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
-                                    <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
-                                    <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
-                                    <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding InitialGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding InitialGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
-                                    <TextBlock Text="{Binding InitialGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
-                            </Grid>
-
-                            <TextBlock Text="Aktualne położenie sensora"/>
-                            <Grid Name="CoordsResetGrid">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
-                                    <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
-                                    <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
-                                    <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding CurrentGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
-                                    <TextBlock Text="{Binding CurrentGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
-                                    <TextBlock Text="{Binding CurrentGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <!--<Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>-->
-                            </Grid>
-                        </StackPanel>
-
-                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Name="CalibrationInstruction" Content="Info" HorizontalAlignment="Center" Grid.Column="1" Background="GhostWhite">
-                                <Button.Flyout>
-                                    <Flyout>
-                                        <Flyout.FlyoutPresenterStyle>
-                                            <Style TargetType="FlyoutPresenter">
-                                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-                                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                                                <Setter Property="IsTabStop" Value="True"/>
-                                                <Setter Property="TabNavigation" Value="Cycle"/>
-                                            </Style>
-                                        </Flyout.FlyoutPresenterStyle>
-                                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                                   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."/>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                            <Button Name="CalibrationNextButton" Content="Dalej" HorizontalAlignment="Center" Grid.Column="2"
-                        		Command="{Binding DataContext.CoordsCalibrationPartViewModel.GoNextCommand, ElementName=Page}" />
-                        </Grid>
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-
-
-            <!--  Measurement  -->
-            <!--IsEnabled="{Binding SelectedMeasurementTypeViewModel, Converter={StaticResource FalseIfNull}}"-->
-            <PivotItem Name="MeasurementPivotItem" DataContext="{Binding CoordsMeasurementPartViewModel}" Header="Pomiar" Padding="0" TabIndex="1">
-                <ScrollViewer Margin="10,12,-12,0" VerticalScrollBarVisibility="Auto">
-                    <Grid Name="MeasurementGrid" Margin="0,5,10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="5*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Name="GatheredMeasurementsStackPanel" HorizontalAlignment="Center"
-                                       Visibility="Visible" Grid.Column="0" Grid.Row="0">
-                            <TextBlock Text="Tabela zebranych pomiarów"/>
-                            <ListBox Name="GatheredMeasurementsList" HorizontalAlignment="Stretch" >
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Name="GatheredMeasurementsGrid">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="x" Grid.Column="0" Grid.Row="0"/>
-                                            <TextBlock Text="y" Grid.Column="1" Grid.Row="0"/>
-                                            <TextBlock Text="y" Grid.Column="2" Grid.Row="0"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
-                        <StackPanel Name="MinPointsStackPanel" HorizontalAlignment="Center"
-                                       Visibility="Visible" Grid.Column="1" Grid.Row="0">
-                            <!--<TextBlock Text="{Binding MinPointsRequired}" Visibility="Visible" Foreground="{Binding MinPointsColor}" />
-                            <TextBlock Text="{Binding MeasurementsSelected}" Visibility="{Binding IsSelectedTextBlockVisible}"/>-->
-                            <TextBlock Text="Tutaj będzie zapisane ile pomiarów jeszcze trzeba zebrac itd." TextWrapping="Wrap"></TextBlock>
-                        </StackPanel>
-                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--Command="{Binding DataContext.GoBackToCalibration, ElementName=Page}"-->
-                            <Button Name="MeasurementAbortButton" Content="Anuluj" HorizontalAlignment="Center" Grid.Column="0"
-                                     Background="Crimson"/>
-                            <Button Name="MeasurementInstruction" Content="Info" HorizontalAlignment="Center" Grid.Column="1" Background="GhostWhite" >
-                                <Button.Flyout>
-                                    <Flyout>
-                                        <Flyout.FlyoutPresenterStyle>
-                                            <Style TargetType="FlyoutPresenter">
-                                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-                                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                                                <Setter Property="IsTabStop" Value="True"/>
-                                                <Setter Property="TabNavigation" Value="Cycle"/>
-                                            </Style>
-                                        </Flyout.FlyoutPresenterStyle>
-                                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Aktywacja procedury pomiarowej rozpoczyna się w momencie styku sensora z mierzonym elementem. Minimalna liczba punktów pomiarowych to 5.
-                                                   Pomiary zbierane są automatycznie. Aby uniknąć błędów pomiaru nie należy zmieniać położenia jednej z trzech osi. W momencie rozpoczęcia pomiaru pojawi się okno z wyborem osi.
-                                                   Raz wybrana oś nie może zostać zmieniona podczas jednej serii pomiarowej. Aby zmienić oś, należy nacisnąć przycisk Anuluj pomiary i rozpocząć ponownie kalibrację.
-                                                   Po zgromadzeniu wystarczającej liczby punktów pomiarowych, należy podwójnie nacisnąć LPM na wiersz w tabeli, a stanie się on wybranym punktem pomiarowym (tło o kolorze zielonym).
-                                                   Gdy zostanie wybrana odpowiednia liczba pomiarów, będzie można przejść do następnego kroku za pomocą przycisku Dalej."/>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                            <!--Command="{Binding DataContext.GoToComputing, ElementName=Page}"-->
-                            <Button Name="MeasurementNextButton" Content="Dalej" HorizontalAlignment="Center"
-                                    
-                                    Grid.Column="2"/>
-                        </Grid>
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-
-
-            <!--  Computing  -->
-            <PivotItem Name="ComputingPivotItem"  Header="Obliczenia" DataContext="{Binding CoordsComputingPartViewModel}"
-                       Padding="0" TabIndex="2">
-                <ScrollViewer Margin="0,12,-12,0" VerticalScrollBarVisibility="Auto">
-                    <Grid Name="ComputingGrid" Margin="0,5,10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="5*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Name="SelectedMeasurementsStackPanel" HorizontalAlignment="Center"
-                                       Visibility="Visible" Grid.Column="0" Grid.Row="0">
-                            <TextBlock Text="Tabela wybranych pomiarów"/>
-                            <ListBox Name="SelectedMeasurementsList" HorizontalAlignment="Stretch"
-                                     ItemsSource="{Binding Coords}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Name="GatheredMeasurementsGrid">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="x" Grid.Column="0" Grid.Row="0"/>
-                                            <TextBlock Text="y" Grid.Column="1" Grid.Row="0"/>
-                                            <TextBlock Text="y" Grid.Column="2" Grid.Row="0"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
-                        <StackPanel Name="ComputingStackPanel" HorizontalAlignment="Center"
-                                       Visibility="Visible" Grid.Column="1" Grid.Row="0">
-                            <TextBlock Text="Środek otworu znajduje się w punkcie:" Visibility="Visible" TextWrapping="Wrap"/>
-                            <TextBlock Text="Z:" Visibility="Visible" />
-                            <TextBlock Text="Y:" Visibility="Visible" />
-                            <TextBlock Text="Z:" Visibility="Visible" />
-                            <TextBlock Text="[INNE OBLICZENIA]" Visibility="Visible" Margin="0,12,0,0"/>
-                        </StackPanel>
-                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Name="ComputingAbortButton" Content="Anuluj" HorizontalAlignment="Center" Grid.Column="0"
-                                    Command="{Binding DataContext.GoBackToMeasurement, ElementName=Page}" Background="Crimson"/>
-                            <Button Name="ComputingInstruction" Content="Info" HorizontalAlignment="Center" Grid.Column="1" Background="GhostWhite" >
-                                <Button.Flyout>
-                                    <Flyout>
-                                        <Flyout.FlyoutPresenterStyle>
-                                            <Style TargetType="FlyoutPresenter">
-                                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-                                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                                                <Setter Property="IsTabStop" Value="True"/>
-                                                <Setter Property="TabNavigation" Value="Cycle"/>
-                                            </Style>
-                                        </Flyout.FlyoutPresenterStyle>
-                                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="W tabeli znajdują się wybrane w poprzednim kroku pomiary. 
-                                                   Zaprezentowane są wyniki obliczeń oraz współrzędne środka otworu. Aby zobaczyć reprezentację graficzną pomiarów należy nacisnąć przycisk Dalej. Można powrócić do tego okna naciskając przycisk Wróć lub wybierając Pomiary z menu po lewej stronie. 
-                                                   Możliwy jest również powrót i modyfikacja danych z zakładki Pomiar, przez naciśnięcie nazwy zakładki na górze ekranu."/>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                            <Button Name="ComputingNextButton" Content="Dalej" HorizontalAlignment="Center"
-                                    Command="{Binding DataContext.GoToComputing, ElementName=Page}" Grid.Column="2"/>
-                        </Grid>
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-
-            <!--  MOCKING DATA  -->
-            <!--TODO DELETE AFTER DEV-->
-            <PivotItem Name="MockingDataPivotItem" DataContext="{Binding MockingDataService}" Header="Mocking Data" TabIndex="3">
-                <Grid Name="MockingDataGrid" Margin="0,5,10,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="50"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="X"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Y"/>
-                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Z"/>
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="Checked"/>
-                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding X, Mode=TwoWay}"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Y, Mode=TwoWay}"/>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Z, Mode=TwoWay}"/>
-                    <CheckBox Grid.Column="3" Grid.Row="1" IsChecked="{Binding Contact, Mode=TwoWay}"/>
-                    <Button Grid.Column="0" Grid.ColumnSpan="4" Content="Push Measurement" Grid.Row="2" Click="ButtonBase_OnClick"/>
-                </Grid>
-            </PivotItem>
-
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="interfaces:IMeasurementViewModelBase">
+                    <TextBlock Text="{Binding Title}"/>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
         </Pivot>
-        
-        <Button x:Name="NextButton" VerticalAlignment="Center" 
-                RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" 
-                Content="-" RelativePanel.AlignRightWithPanel="True"/>
+
+        <Button x:Name="NextButton" VerticalAlignment="Center" RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" 
+                RelativePanel.AlignBottomWithPanel="True" Content="-" RelativePanel.AlignRightWithPanel="True"/>
+
     </RelativePanel>
 </Page>
 

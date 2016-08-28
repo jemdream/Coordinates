@@ -2,7 +2,6 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
@@ -11,6 +10,7 @@ using Coordinates.Measurements;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
+using Coordinates.UI.ViewModels.MeasurementFlow;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
@@ -55,17 +55,6 @@ namespace Coordinates.UI
                     ModalContent = _myContainer.Resolve<Busy>()
                 };
             }
-
-            //// Entering fullscreen mode
-            //var view = ApplicationView.GetForCurrentView();
-            //if (!ApplicationView.GetForCurrentView().IsFullScreenMode)
-            //    if (view.TryEnterFullScreenMode())
-            //        ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-
-            ////comment out 2 lines below to run in fullscreen mode
-            //view.ExitFullScreenMode();
-            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
-            //// The SizeChanged event will be raised when the exit from full-screen mode is complete.
 
             await Task.CompletedTask;
         }
@@ -112,10 +101,14 @@ namespace Coordinates.UI
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
-            container.RegisterType<ICoordsCalibrationPartViewModel, CoordsCalibrationPartViewModel>();
-            container.RegisterType<ICoordsMeasurementPartViewModel, CoordsMeasurementPartViewModel>();
-            container.RegisterType<ICoordsComputingPartViewModel, CoordsComputingPartViewModel>();
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
+
+            // Register Measurement Flow ViewModels
+            container.RegisterType<IMeasurementCalculationsViewModel, MeasurementCalculationsViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementCalibrationViewModel, MeasurementCalibrationViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementProcessViewModel, MeasurementProcessViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementSelectionViewModel, MeasurementSelectionViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementTypeSelectionViewModel, MeasurementTypeSelectionViewModel>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

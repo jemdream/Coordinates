@@ -11,7 +11,8 @@ namespace Coordinates.Measurements
         // Measurement methods/types
         IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; }
-        
+        bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod);
+
         // Selected positions for measurement
         ObservableCollectionRx<ContactPosition> SelectedPositions { get; }
         
@@ -19,8 +20,6 @@ namespace Coordinates.Measurements
         IObservable<Position> PositionSource { get; }
         ObservableCollectionRx<GaugePosition> RawGaugePositions { get; }
         ObservableCollectionRx<ContactPosition> RawContactPositions { get; }
-        
-        // New measurement instance
-        bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition);
+        bool SetupCalibration(Position compensationPosition);
     }
 }

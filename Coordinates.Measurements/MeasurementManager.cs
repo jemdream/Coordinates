@@ -46,36 +46,23 @@ namespace Coordinates.Measurements
         // Positions (Gauge / Contact)
         public Position CompensationPosition { get; private set; } = new GaugePosition();
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
+        public bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod)
+        {
+            SelectedMeasurementMethod = selectedMeasurementMethod;
+            ResetAllCollections();
+            return true;
+        }
+
         public ObservableCollectionRx<ContactPosition> SelectedPositions { get; private set; }
         public ObservableCollectionRx<GaugePosition> RawGaugePositions { get; private set; }
         public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
-
-        public bool SetupCompensationPosition(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition)
+        public bool SetupCalibration(Position compensationPosition)
         {
-            // TODO probably reset everything, wipe selection etc. (ask Yes/No on UI site) 
-            // TODO remember that VM should be aware of PositionSource/ContactPositionsSource change
-
-            // TODO compensation should be summed I think instead of inserting
             CompensationPosition = compensationPosition;
-            SelectedMeasurementMethod = selectedMeasurementMethod;
-
             ResetAllCollections();
             return true;
         }
-
-        public bool SetupNewMeasurement(IMeasurementMethod selectedMeasurementMethod, Position compensationPosition)
-        {
-            // TODO probably reset everything, wipe selection etc. (ask Yes/No on UI site) 
-            // TODO remember that VM should be aware of PositionSource/ContactPositionsSource change
-            
-            // TODO compensation should be summed I think instead of inserting
-            CompensationPosition = compensationPosition;
-            SelectedMeasurementMethod = selectedMeasurementMethod;
-
-            ResetAllCollections();
-            return true;
-        }
-
+          
         private void ResetAllCollections()
         {
             RawGaugePositions = new ObservableCollectionRx<GaugePosition>();

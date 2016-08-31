@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Types;
-using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
-using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
@@ -19,19 +16,11 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementTypeSelectionViewModel : MeasurementViewModelBase, IMeasurementTypeSelectionViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IMeasurementManager _measurementManager;
-
-        private DelegateCommand _goBackCommand;
-        private DelegateCommand _goNextCommand;
         private IMeasurementMethod _selectedMeasurementMethod;
 
-        public MeasurementTypeSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
+        public MeasurementTypeSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator, measurementManager)
         {
-            _eventAggregator = eventAggregator;
-            _measurementManager = measurementManager;
-
-            AvailableMeasurementMethods = _measurementManager.AvailableMeasurementMethods;
+            AvailableMeasurementMethods = MeasurementManager.AvailableMeasurementMethods;
         }
 
         public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
@@ -42,28 +31,20 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             set
             {
                 Set(ref _selectedMeasurementMethod, value);
-                _goNextCommand.RaiseCanExecuteChanged();
+                UpdateCommands();
             }
         }
 
         public override string Title { get; } = "Tryb";
-        public override ICommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new DelegateCommand(() =>
-        {
-        }, () => false));
-        public override ICommand GoNextCommand => _goNextCommand ?? (_goNextCommand = new DelegateCommand(() =>
-        {
-            _measurementManager.SetupMeasurementMethod(SelectedMeasurementMethod);
-
-            _eventAggregator
-                .GetEvent<GoNextMeasurementMsg>()
-                .Publish(GetType());
-
-        }, () => SelectedMeasurementMethod != null));
         
+        // Measurement process navigation
+        protected override void OnNext() => MeasurementManager.SetupMeasurementMethod(SelectedMeasurementMethod);
+        protected override bool CanOnNext() => SelectedMeasurementMethod != null;
+        protected override bool CanOnPrevious() => false;
+
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            SelectedMeasurementMethod = _measurementManager.SelectedMeasurementMethod;
-
+            SelectedMeasurementMethod = MeasurementManager.SelectedMeasurementMethod;
             return base.OnNavigatedToAsync(parameter, mode, state);
         }
     }

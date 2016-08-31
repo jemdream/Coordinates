@@ -34,11 +34,11 @@ namespace Coordinates.UI.ViewModels
             // Listening to navigation requests from MeasurementFlowViewModels elements
             EventAggregator
                 .GetEvent<GoBackMeasurementMsg>()
-                .Subscribe(sender => { if (FindIndex(sender) >= 0) SelectedTabIndex--; });
+                .Subscribe(sender => { if (FindIndex(sender) > 0) SelectedTabIndex--; });
 
             EventAggregator
                 .GetEvent<GoNextMeasurementMsg>()
-                .Subscribe(sender => { if (FindIndex(sender) < MeasurementFlowViewModels.Count) SelectedTabIndex++; });
+                .Subscribe(sender => { if (FindIndex(sender) < MeasurementFlowViewModels.Count - 1) SelectedTabIndex++; });
 
             //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
         }

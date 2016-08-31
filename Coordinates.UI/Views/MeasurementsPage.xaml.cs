@@ -28,9 +28,11 @@ namespace Coordinates.UI.Views
             var newViewModel = e.AddedItems.FirstOrDefault() as MeasurementViewModelBase;
             var oldViewModel = e.RemovedItems.FirstOrDefault() as MeasurementViewModelBase;
             
+            // Update commands
             BackButton.Command = newViewModel?.GoBackCommand;
             NextButton.Command = newViewModel?.GoNextCommand;
 
+            // Invoke navigation 
             newViewModel?.OnNavigatedToAsync(null, NavigationMode.Refresh, null);
             oldViewModel?.OnNavigatedFromAsync(null, false);
         }

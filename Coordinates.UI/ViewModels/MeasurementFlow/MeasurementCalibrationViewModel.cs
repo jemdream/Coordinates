@@ -17,24 +17,17 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementCalibrationViewModel : MeasurementViewModelBase, IMeasurementCalibrationViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IMeasurementManager _measurementManager;
-
-        private DelegateCommand _goBackCommand;
-        private DelegateCommand _goNextCommand;
-
         private ICommand _setupInitialCoordinates;
 
         private Position _currentGaugePosition = new GaugePosition();
         private Position _initialGaugePosition = new GaugePosition();
 
-        public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
+        public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) 
+            : base(eventAggregator, measurementManager)
         {
-            _eventAggregator = eventAggregator;
-            _measurementManager = measurementManager;
-
             SetupMeasurementManager();
         }
+        public override string Title { get; } = "Kalibracja";
 
         public Position CurrentGaugePosition
         {
@@ -48,14 +41,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             private set { Set(ref _initialGaugePosition, value); }
         }
 
-        public override string Title { get; } = "Kalibracja";
-        public override ICommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new DelegateCommand(() =>
-        {
-        }, () => true));
-        public override ICommand GoNextCommand => _goNextCommand ?? (_goNextCommand = new DelegateCommand(() =>
-        {
-            _measurementManager.SetupCalibration(InitialGaugePosition);
-        }, () => true));
+        protected override void OnNext() => MeasurementManager.SetupCalibration(InitialGaugePosition);
 
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
         {
@@ -64,7 +50,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         private void SetupMeasurementManager()
         {
-            _measurementManager.PositionSource
+            MeasurementManager.PositionSource
                 .Subscribe(pos => CurrentGaugePosition = pos);
         }
     }

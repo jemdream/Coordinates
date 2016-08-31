@@ -11,7 +11,6 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     public interface IMeasurementCalibrationViewModel : IMeasurementViewModelBase
     {
         Position CurrentGaugePosition { get; }
-        Position InitialGaugePosition { get; }
         ICommand SetupInitialCoordinates { get; }
     }
 
@@ -34,18 +33,10 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             get { return _currentGaugePosition; }
             private set { Set(ref _currentGaugePosition, value); }
         }
-
-        public Position InitialGaugePosition
-        {
-            get { return _initialGaugePosition; }
-            private set { Set(ref _initialGaugePosition, value); }
-        }
-
-        protected override void OnNext() => MeasurementManager.SetupCalibration(InitialGaugePosition);
-
+        
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
         {
-            InitialGaugePosition = _currentGaugePosition;
+            MeasurementManager.SetupCalibration();
         }, () => _currentGaugePosition != null));
 
         private void SetupMeasurementManager()

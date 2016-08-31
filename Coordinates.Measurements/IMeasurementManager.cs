@@ -20,6 +20,6 @@ namespace Coordinates.Measurements
         IObservable<Position> PositionSource { get; }
         ObservableCollectionRx<GaugePosition> RawGaugePositions { get; }
         ObservableCollectionRx<ContactPosition> RawContactPositions { get; }
-        bool SetupCalibration(Position compensationPosition);
+        bool SetupCalibration();
     }
 }

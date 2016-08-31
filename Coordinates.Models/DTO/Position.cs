@@ -4,6 +4,8 @@ namespace Coordinates.Models.DTO
 {
     public abstract class Position
     {
+        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+
         public double X { get; }
         public double Z { get; }
         public double Y { get; }

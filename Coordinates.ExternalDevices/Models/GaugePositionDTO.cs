@@ -14,5 +14,7 @@
         public double Z { get; }
         public double Y { get; }
         public bool Contact { get; }
+
+        public static GaugePositionDTO Default => new GaugePositionDTO(0, 0, 0);
     }
 }

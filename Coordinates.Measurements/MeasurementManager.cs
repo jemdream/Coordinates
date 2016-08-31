@@ -15,6 +15,7 @@ namespace Coordinates.Measurements
     public class MeasurementManager : IMeasurementManager
     {
         private readonly Subject<Position> _positionSource = new Subject<Position>();
+        private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
@@ -27,42 +28,44 @@ namespace Coordinates.Measurements
                 .Where(pos => pos.Contact)
                 .Select(CompensatePosition)
                 .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
+            
+            // Store raw format data
+            measurementDataSource.DataStream
+                .Subscribe(lastRaw => _lastRawPosition = lastRaw);
 
             // Initialize 
             ResetAllCollections();
             InstantiateMeasurements();
         }
-
-        private GaugePositionDTO CompensatePosition(GaugePositionDTO position)
+        
+        private GaugePositionDTO CompensatePosition(GaugePositionDTO compensation)
         {
-            return new GaugePositionDTO
-            (
-                position.X - CompensationPosition.X,
-                position.Y - CompensationPosition.Y,
-                position.Z - CompensationPosition.Z
-            );
+            return new GaugePositionDTO(compensation.X - _compensationPosition.X, compensation.Y - _compensationPosition.Y, compensation.Z - _compensationPosition.Z);
         }
 
         // Positions (Gauge / Contact)
-        public Position CompensationPosition { get; private set; } = new GaugePosition();
+        private GaugePositionDTO _compensationPosition = GaugePositionDTO.Default;
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
         public bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod)
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
             ResetAllCollections();
+
             return true;
         }
 
         public ObservableCollectionRx<ContactPosition> SelectedPositions { get; private set; }
         public ObservableCollectionRx<GaugePosition> RawGaugePositions { get; private set; }
         public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
-        public bool SetupCalibration(Position compensationPosition)
+        public bool SetupCalibration()
         {
-            CompensationPosition = compensationPosition;
+            _positionSource.OnNext(GaugePosition.Default);
+            _compensationPosition = _lastRawPosition;
             ResetAllCollections();
+
             return true;
         }
-          
+
         private void ResetAllCollections()
         {
             RawGaugePositions = new ObservableCollectionRx<GaugePosition>();

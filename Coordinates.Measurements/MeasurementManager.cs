@@ -28,7 +28,7 @@ namespace Coordinates.Measurements
                 .Where(pos => pos.Contact)
                 .Select(CompensatePosition)
                 .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
-            
+
             // Store raw format data
             measurementDataSource.DataStream
                 .Subscribe(lastRaw => _lastRawPosition = lastRaw);
@@ -37,7 +37,7 @@ namespace Coordinates.Measurements
             ResetAllCollections();
             InstantiateMeasurements();
         }
-        
+
         private GaugePositionDTO CompensatePosition(GaugePositionDTO compensation)
         {
             return new GaugePositionDTO(compensation.X - _compensationPosition.X, compensation.Y - _compensationPosition.Y, compensation.Z - _compensationPosition.Z);
@@ -59,7 +59,7 @@ namespace Coordinates.Measurements
         public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
         public bool SetupCalibration()
         {
-            _positionSource.OnNext(GaugePosition.Default);
+            _positionSource.OnNext(_compensationPosition.Contact ? (Position)ContactPosition.Default : GaugePosition.Default);
             _compensationPosition = _lastRawPosition;
             ResetAllCollections();
 

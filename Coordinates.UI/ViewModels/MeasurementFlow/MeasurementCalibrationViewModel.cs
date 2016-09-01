@@ -19,7 +19,6 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         private ICommand _setupInitialCoordinates;
 
         private Position _currentGaugePosition = new GaugePosition();
-        private Position _initialGaugePosition = new GaugePosition();
 
         public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) 
             : base(eventAggregator, measurementManager)

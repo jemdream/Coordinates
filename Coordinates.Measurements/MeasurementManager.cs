@@ -54,16 +54,30 @@ namespace Coordinates.Measurements
             return true;
         }
 
+        // When user backs in progress, wipe not to mess the data
+        public bool ResetMeasurementData()
+        {
+            PushZeroPosition();
+            ResetAllCollections();
+
+            return true;
+        }
+
         public ObservableCollectionRx<ContactPosition> SelectedPositions { get; private set; }
         public ObservableCollectionRx<GaugePosition> RawGaugePositions { get; private set; }
         public ObservableCollectionRx<ContactPosition> RawContactPositions { get; private set; }
         public bool SetupCalibration()
         {
-            _positionSource.OnNext(_compensationPosition.Contact ? (Position)ContactPosition.Default : GaugePosition.Default);
+            PushZeroPosition();
             _compensationPosition = _lastRawPosition;
             ResetAllCollections();
 
             return true;
+        }
+
+        private void PushZeroPosition()
+        {
+            _positionSource.OnNext(_compensationPosition.Contact ? (Position) ContactPosition.Default : GaugePosition.Default);
         }
 
         private void ResetAllCollections()

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Coordinates.Measurements;
 using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -12,8 +13,8 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         protected readonly IEventAggregator EventAggregator;
         protected IMeasurementManager MeasurementManager;
 
-        private DelegateCommand _goBackCommand;
-        private DelegateCommand _goNextCommand;
+        private AwaitableDelegateCommand _goBackCommand;
+        private AwaitableDelegateCommand _goNextCommand;
 
         protected MeasurementViewModelBase(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
         {
@@ -23,10 +24,10 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public abstract string Title { get; }
 
-        protected virtual void OnPrevious() { }
+        protected virtual Task<bool> OnPrevious() => Task.FromResult(true);
         protected virtual bool CanOnPrevious() => true;
 
-        protected virtual void OnNext() { }
+        protected virtual Task<bool> OnNext() => Task.FromResult(true);
         protected virtual bool CanOnNext() => true;
 
         protected void UpdateCommands()
@@ -35,22 +36,20 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             _goNextCommand.RaiseCanExecuteChanged();
         }
 
-        public ICommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new DelegateCommand(() =>
+        public ICommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new AwaitableDelegateCommand(async x =>
         {
-            OnPrevious();
+            if (await OnPrevious())
+                EventAggregator
+                    .GetEvent<GoBackMeasurementMsg>()
+                    .Publish(GetType());
+        }, x => CanOnPrevious()));
 
-            EventAggregator
-                .GetEvent<GoBackMeasurementMsg>()
-                .Publish(GetType());
-        }, CanOnPrevious));
-
-        public ICommand GoNextCommand => _goNextCommand ?? (_goNextCommand = new DelegateCommand(() =>
+        public ICommand GoNextCommand => _goNextCommand ?? (_goNextCommand = new AwaitableDelegateCommand(async x =>
         {
-            OnNext();
-
-            EventAggregator
-                .GetEvent<GoNextMeasurementMsg>()
-                .Publish(GetType());
-        }, CanOnNext));
+            if (await OnNext())
+                EventAggregator
+                    .GetEvent<GoNextMeasurementMsg>()
+                    .Publish(GetType());
+        }, x => CanOnNext()));
     }
 }

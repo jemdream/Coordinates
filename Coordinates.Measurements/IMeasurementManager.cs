@@ -12,6 +12,7 @@ namespace Coordinates.Measurements
         IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; }
         bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod);
+        bool ResetMeasurementData();
 
         // Selected positions for measurement
         ObservableCollectionRx<ContactPosition> SelectedPositions { get; }

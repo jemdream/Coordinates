@@ -36,9 +36,9 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         }
 
         public override string Title { get; } = "Tryb";
-        
+
         // Measurement process navigation
-        protected override void OnNext() => MeasurementManager.SetupMeasurementMethod(SelectedMeasurementMethod);
+        protected override async Task<bool> OnNext() => await Task.FromResult(MeasurementManager.SetupMeasurementMethod(SelectedMeasurementMethod));
         protected override bool CanOnNext() => SelectedMeasurementMethod != null;
         protected override bool CanOnPrevious() => false;
 

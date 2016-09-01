@@ -10,7 +10,7 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementTypeSelectionViewModel}">
 
-    <PivotItem Name="CalibrationPivotItem" Header="Kalibracja" TabIndex="0">
+    <Grid Name="CalibrationPivotItem">
 
         <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
             <Grid Name="OriginGrid" Margin="0,5,10,5">
@@ -54,5 +54,5 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
-    </PivotItem>
+    </Grid>
 </UserControl>

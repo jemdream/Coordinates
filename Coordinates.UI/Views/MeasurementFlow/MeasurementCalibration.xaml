@@ -10,43 +10,39 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementCalibrationViewModel}">
 
-    <Grid Name="CalibrationPivotItem">
-        <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
-            <!--Pozycja początkowa-->
-            <StackPanel Name="CoordsRelativePanel" HorizontalAlignment="Center">
-                <TextBlock Text="Aktualna pozycja"/>
-                <Grid Name="CoordsInitialGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
-                        <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
-                        <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
-                        <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
-                        <TextBlock Text="{Binding CurrentGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
-                        <TextBlock Text="{Binding CurrentGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
-                        <TextBlock Text="{Binding CurrentGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+    <!--Pozycja początkowa-->
+    <StackPanel Name="CoordsRelativePanel"  HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Aktualna pozycja"/>
+        <Grid Name="CoordsInitialGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
+                <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
+                <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
+                <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
+                <TextBlock Text="{Binding CurrentGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
+                <TextBlock Text="{Binding CurrentGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
+                <TextBlock Text="{Binding CurrentGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
+        </Grid>
+    </StackPanel>
 </UserControl>

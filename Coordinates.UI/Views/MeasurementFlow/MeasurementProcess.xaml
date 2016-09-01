@@ -10,9 +10,7 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
 
-    <Grid Name="CalibrationPivotItem">
-        <ScrollViewer Name="ScrollViewer" Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
-            <TextBox Text="Process"/>
-        </ScrollViewer>
+    <Grid Name="CalibrationPivotItem" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox Text="Kalibracja"/>
     </Grid>
 </UserControl>

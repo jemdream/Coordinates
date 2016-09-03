@@ -61,6 +61,7 @@
     <Page.DataContext>
         <Binding Path="MeasurementsPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
+    
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -87,17 +88,13 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <RelativePanel.Resources>
-            <Style TargetType="Button">
-                <Setter Property="Margin" Value="25"/>
-            </Style>
-        </RelativePanel.Resources>
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
-        <Button x:Name="BackButton" VerticalAlignment="Center" 
-                RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" 
-                Content="-"/>
+
+        <Button x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Style="{StaticResource NavigationButton}">
+            <SymbolIcon Symbol="Back"/>
+        </Button>
 
         <!--  Content  -->
         <Pivot x:Name="Pivot" ItemsSource="{Binding MeasurementFlowViewModels}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -123,8 +120,9 @@
             </Pivot.HeaderTemplate>
         </Pivot>
 
-        <Button x:Name="NextButton" VerticalAlignment="Center" RelativePanel.Below="PageHeader" RelativePanel.AlignVerticalCenterWithPanel="True" 
-                RelativePanel.AlignBottomWithPanel="True" Content="-" RelativePanel.AlignRightWithPanel="True"/>
+        <Button x:Name="NextButton" RelativePanel.AlignRightWithPanel="True" Style="{StaticResource NavigationButton}">
+            <SymbolIcon Symbol="Forward"/>
+        </Button>
 
     </RelativePanel>
 </Page>

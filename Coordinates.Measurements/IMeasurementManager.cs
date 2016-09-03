@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Coordinates.ExternalDevices.Models;
+using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
-using Coordinates.Measurements.Helpers;
 
 namespace Coordinates.Measurements
 {
@@ -15,12 +16,13 @@ namespace Coordinates.Measurements
         bool ResetMeasurementData();
 
         // Selected positions for measurement
-        ObservableCollectionRx<ContactPosition> SelectedPositions { get; }
+        ObservableList<ContactPosition> SelectedPositions { get; }
         
         // Positions
         IObservable<Position> PositionSource { get; }
-        ObservableCollectionRx<GaugePosition> RawGaugePositions { get; }
-        ObservableCollectionRx<ContactPosition> RawContactPositions { get; }
+        ObservableList<GaugePosition> RawGaugePositions { get; }
+        ObservableList<ContactPosition> RawContactPositions { get; }
+        GaugePositionDTO CompensationPosition { get; }
         bool SetupCalibration();
     }
 }

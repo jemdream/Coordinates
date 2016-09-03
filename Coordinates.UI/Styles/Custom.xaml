@@ -11,6 +11,7 @@
     <Color x:Key="SystemAccentColor">SteelBlue</Color>
 
     <SolidColorBrush x:Key="GaugeContactBarColorBrush" Color="YellowGreen" />
+    <SolidColorBrush x:Key="MouseHoverNavigationBrush" Color="{ThemeResource SystemChromeMediumColor}" /> 
     
     <ResourceDictionary.ThemeDictionaries>
         

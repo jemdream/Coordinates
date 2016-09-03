@@ -19,6 +19,7 @@
                     <serviceLocator:ViewModelLocator x:Key="Locator"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="Styles\Custom.xaml"/>
+                <ResourceDictionary Source="Styles\CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

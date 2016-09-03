@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ObservableCollectionRx.cs" />
+    <Compile Include="Helpers\ObservableList.cs" />
     <Compile Include="IMeasurementManager.cs" />
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

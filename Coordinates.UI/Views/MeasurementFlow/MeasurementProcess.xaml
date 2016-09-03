@@ -5,12 +5,60 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
+    xmlns:dto="using:Coordinates.Models.DTO"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
 
-    <Grid Name="CalibrationPivotItem" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox Text="Kalibracja"/>
+    <!--<Grid Name="CalibrationPivotItem" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListView ItemsSource="{Binding ContactPositions}"></ListView>
+    </Grid>-->
+
+    <UserControl.Resources>
+        <!-- When using x:Bind, you need to set x:DataType -->
+        <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="{x:Bind X}" 
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="12"/>
+                <TextBlock  Grid.Column="1"
+                            Text="{x:Bind Y}" 
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="12"/>
+                <TextBlock  Grid.Column="2"
+                            Text="{x:Bind Z}" 
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="12"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView ItemsSource="{Binding ContactPositions}"
+                  ItemTemplate="{StaticResource ContactListViewTemplate}"
+                  SelectionChanged="Selector_OnSelectionChanged"
+                  Loaded="FrameworkElement_OnLoaded"
+                  SelectionMode="Multiple"
+                  ShowsScrollingPlaceholders="True"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2">
+        </ListView>
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@ namespace Coordinates.Models.DTO
     public abstract class Position
     {
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+        private readonly int _id;
 
         public double X { get; }
         public double Z { get; }
@@ -17,24 +18,32 @@ namespace Coordinates.Models.DTO
             X = x;
             Y = y;
             Z = z;
+            _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    var objAsPosition = obj as Position;
+        public override bool Equals(object obj)
+        {
+            //var objAsPosition = obj as Position;
 
-        //    if (objAsPosition == null)
-        //        return false;
+            //if (objAsPosition == null)
+            //    return false;
 
-        //    return
-        //        (Math.Abs(X - objAsPosition.X) < double.Epsilon) &&
-        //        (Math.Abs(Y - objAsPosition.Y) < double.Epsilon) &&
-        //        (Math.Abs(Z - objAsPosition.Z) < double.Epsilon);
-        //}
+            //return
+            //    (Math.Abs(X - objAsPosition.X) < double.Epsilon) &&
+            //    (Math.Abs(Y - objAsPosition.Y) < double.Epsilon) &&
+            //    (Math.Abs(Z - objAsPosition.Z) < double.Epsilon);
 
-        //public override int GetHashCode()
-        //{
-        //    return Convert.ToInt32(X * Y * Z);
-        //}
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var fooItem = obj as Position;
+
+            return fooItem != null && fooItem._id == _id;
+        }
+
+        public override int GetHashCode()
+        {
+            return _id;
+        }
     }
 }

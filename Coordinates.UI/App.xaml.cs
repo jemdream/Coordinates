@@ -98,9 +98,9 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
-            container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>();
+            container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>();
+            container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
 
             // Register Measurement Flow ViewModels

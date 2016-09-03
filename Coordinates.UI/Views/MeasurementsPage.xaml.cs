@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.ExternalDevices.Devices;
+using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.MeasurementFlow;
 
 namespace Coordinates.UI.Views

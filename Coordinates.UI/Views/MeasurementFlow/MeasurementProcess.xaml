@@ -6,14 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
     xmlns:dto="using:Coordinates.Models.DTO"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
-
-    <!--<Grid Name="CalibrationPivotItem" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ListView ItemsSource="{Binding ContactPositions}"></ListView>
-    </Grid>-->
 
     <UserControl.Resources>
         <!-- When using x:Bind, you need to set x:DataType -->
@@ -41,24 +38,27 @@
                             Margin="12"/>
             </Grid>
         </DataTemplate>
+
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/> <!--Format="{}{0:s}"-->
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <ListView ItemsSource="{Binding ContactPositions}"
                   ItemTemplate="{StaticResource ContactListViewTemplate}"
-                  SelectionChanged="Selector_OnSelectionChanged"
-                  Loaded="FrameworkElement_OnLoaded"
-                  SelectionMode="Multiple"
-                  ShowsScrollingPlaceholders="True"
-                  Grid.Row="1"
-                  Grid.ColumnSpan="2">
+                  SelectionMode="None"
+                  ShowsScrollingPlaceholders="True">
         </ListView>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="{Binding LeftMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Margin="12"/>
+            <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Margin="12"/>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

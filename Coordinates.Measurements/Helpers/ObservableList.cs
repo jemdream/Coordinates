@@ -24,5 +24,12 @@ namespace Coordinates.Measurements.Helpers
             _onRemoveSubject.OnNext(obj);
             base.Remove(obj);
         }
+
+        public new void Clear()
+        {
+            foreach (var obj in this)
+                _onRemoveSubject.OnNext(obj);
+            base.Clear();
+        }
     }
 }

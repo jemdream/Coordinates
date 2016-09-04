@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Coordinates.Measurements;
 using Coordinates.Models.DTO;
@@ -16,11 +17,11 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementCalibrationViewModel : MeasurementViewModelBase, IMeasurementCalibrationViewModel
     {
-        private ICommand _setupInitialCoordinates;
+        private AwaitableDelegateCommand _setupInitialCoordinates;
 
         private Position _currentGaugePosition = new GaugePosition();
 
-        public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) 
+        public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
             : base(eventAggregator, measurementManager)
         {
             SetupMeasurementManager();
@@ -32,11 +33,11 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             get { return _currentGaugePosition; }
             private set { Set(ref _currentGaugePosition, value); }
         }
-        
-        public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new DelegateCommand(() =>
+
+        public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new AwaitableDelegateCommand(async x =>
         {
-            MeasurementManager.SetupCalibration();
-        }, () => _currentGaugePosition != null));
+            await Task.Run(() => MeasurementManager.SetupCalibration());
+        }, x => _currentGaugePosition != null));
 
         private void SetupMeasurementManager()
         {

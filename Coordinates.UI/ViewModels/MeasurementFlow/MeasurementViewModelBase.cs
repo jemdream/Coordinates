@@ -32,8 +32,8 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         protected void UpdateCommands()
         {
-            _goBackCommand.RaiseCanExecuteChanged();
-            _goNextCommand.RaiseCanExecuteChanged();
+            ((AwaitableDelegateCommand)GoBackCommand).RaiseCanExecuteChanged();
+            ((AwaitableDelegateCommand)GoNextCommand).RaiseCanExecuteChanged();
         }
 
         public ICommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new AwaitableDelegateCommand(async x =>

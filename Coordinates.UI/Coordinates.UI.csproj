@@ -100,6 +100,7 @@
     <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
+    <Compile Include="Helpers\ScrollToBottomBehavior.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />

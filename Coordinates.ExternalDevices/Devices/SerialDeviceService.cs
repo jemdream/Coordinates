@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -145,14 +146,14 @@ namespace Coordinates.ExternalDevices.Devices
                 while (true)
                 {
                     if (_readCancellationToken.IsCancellationRequested) break;
-
+                    var swRa = Stopwatch.StartNew();
                     // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
                     _dataReaderObject.InputStreamOptions = InputStreamOptions.None;
 
                     // Create a task object to wait for data on the serialPort.InputStream
                     var bufferString = await ReadBuffer(ReadFrameLength);
-
-                    await ProcessBuffer(bufferString);
+                    swRa.Stop();
+                    await ProcessBuffer(bufferString, swRa);
                 }
             }
             catch (Exception ex)
@@ -173,16 +174,18 @@ namespace Coordinates.ExternalDevices.Devices
 
             return Encoding.ASCII.GetString(bufferArray);
         }
-
-        private async Task ProcessBuffer(string bufferString)
+        
+        private async Task ProcessBuffer(string bufferString, Stopwatch swRa)
         {
+            var sw = Stopwatch.StartNew();
+            sw.Start();
             // Validate if any change
             if (!string.IsNullOrEmpty(_previousBufferString) && bufferString.Equals(_previousBufferString))
                 return;
-
+            
             // Validate if matches
             var match = MatchStmFrame(bufferString);
-
+            
             // If not matching, try to manipulate 'out of phase' frame 
             // (np. jak jest przesunięty X na 5 miejsce, to usun poczatek, dograj koniec i zachowaj normalny tryb dalej)
             if (!match.Success || !ValidateFrame(match.Groups[1]))
@@ -228,6 +231,7 @@ namespace Coordinates.ExternalDevices.Devices
                 return;
 
             _previousBufferString = bufferString;
+            sw.Stop();
             _dataSourceSubject.OnNext(new GaugePositionDTO(x, y, z, gaugeInt != 0));
         }
     }

@@ -110,7 +110,6 @@
     <Compile Include="ConnectionStatus.cs" />
     <Compile Include="Connections\BaseConnectionService.cs" />
     <Compile Include="Connections\IConnectionService.cs" />
-    <Compile Include="Connections\MockConnectionConfiguration.cs" />
     <Compile Include="DataSources\IDataSource.cs" />
     <Compile Include="Devices\IDeviceService.cs" />
     <Compile Include="Devices\MockDeviceService.cs" />

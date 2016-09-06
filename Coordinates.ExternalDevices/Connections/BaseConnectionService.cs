@@ -22,7 +22,7 @@ namespace Coordinates.ExternalDevices.Connections
             _diagnosticEventsSubject.Subscribe(_diagnosticEvents.Add);
         }
 
-        public abstract IConnection ConnectionConfiguration { get; }
+        public virtual IConnection ConnectionConfiguration { get; }
 
         public ConnectionStatus ConnectionStatus
         {

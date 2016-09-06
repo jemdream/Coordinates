@@ -10,14 +10,12 @@ namespace Coordinates.ExternalDevices.Devices
 {
     public class MockDeviceService : BaseConnectionService, IDeviceService<GaugePositionDTO>
     {
-        private readonly MockConnectionConfiguration _connectionConfiguration;
         private readonly Subject<GaugePositionDTO> _mockSource;
         private CompositeDisposable _mockingDataSource = new CompositeDisposable();
 
         public MockDeviceService(Subject<GaugePositionDTO> mockSource)
         {
             _mockSource = mockSource;
-            _connectionConfiguration = new MockConnectionConfiguration();
             DataStream = _mockSource.AsObservable();
         }
 
@@ -69,9 +67,7 @@ namespace Coordinates.ExternalDevices.Devices
 
             return new GaugePositionDTO(x, y, z, contact);
         }
-
-        public override IConnection ConnectionConfiguration => _connectionConfiguration;
-
+        
         protected override async Task<bool> OnOpeningAsync()
         {
             await Task.Delay(750);

@@ -10,8 +10,8 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
-    // todo store all measurements here, public the lists, on _positionSource notifypropertychanged on ui, maybe use ObservableCollection
-    // todo store all selected ms here
+    // TODO [MultiMeasure]: - List<IMeasurementMethod> with measurements-each having own RawGaugePositions/RawContactPositions/SelectedPositions
+
     public class MeasurementManager : IMeasurementManager
     {
         private readonly Subject<Position> _positionSource = new Subject<Position>();
@@ -22,19 +22,25 @@ namespace Coordinates.Measurements
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
             // Storing data from DataSource
+            // TODO [MultiMeasure]
             measurementDataSource.DataStream
                 .Select(CompensatePosition)
                 .Subscribe(pos => RawGaugePositions.Add(new GaugePosition(pos.X, pos.Y, pos.Z)));
+
+            // TODO [MultiMeasure]
             measurementDataSource.DataStream
                 .Where(pos => pos.Contact)
                 .Select(CompensatePosition)
                 .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
+
             measurementDataSource.DataStream // Raw last position
                 .Subscribe(lastRaw => _lastRawPosition = lastRaw);
 
             // After position is stored, bubble it
+            // TODO OVER-ENGINEERING, add simple pushing just like upper
             RawGaugePositions.OnAdd
                 .Subscribe(x => _positionSource.OnNext(x));
+
             RawContactPositions.OnAdd
                 .Subscribe(x => _positionSource.OnNext(x));
 
@@ -42,6 +48,7 @@ namespace Coordinates.Measurements
             SelectedPositions.OnAdd
                 .Where(_ => SelectedMeasurementMethod != null)
                 .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
+
             SelectedPositions.OnRemove
                 .Where(_ => SelectedMeasurementMethod != null)
                 .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
@@ -98,6 +105,7 @@ namespace Coordinates.Measurements
             _positionSource.OnNext(CompensationPosition.Contact ? (Position)ContactPosition.Default : GaugePosition.Default);
         }
 
+        // TODO [MultiMeasure] Foreach on all or rather delete elements from list
         private void ResetAllCollections()
         {
             RawGaugePositions.Clear();

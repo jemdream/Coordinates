@@ -19,6 +19,11 @@ namespace Coordinates.UI.Views.MeasurementFlow
         // TODO temporary solution - create "Attached Property" for control and place this functionality there
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            RefreshSelectedItems(sender, e);
+        }
+
+        private static void RefreshSelectedItems(object sender, SelectionChangedEventArgs e)
+        {
             var added = e.AddedItems
                 .Select(x => x as ContactPosition)
                 .ToList();
@@ -27,8 +32,8 @@ namespace Coordinates.UI.Views.MeasurementFlow
                 .Select(x => x as ContactPosition)
                 .ToList();
 
-            var listView = (ListView)sender;
-            var selectedPositionsVm = ((MeasurementSelectionCalculationViewModel)listView.DataContext).SelectedPositions;
+            var listView = (ListView) sender;
+            var selectedPositionsVm = ((MeasurementSelectionCalculationViewModel) listView.DataContext).SelectedPositions;
 
             added
                 .Where(position => !selectedPositionsVm.Contains(position))

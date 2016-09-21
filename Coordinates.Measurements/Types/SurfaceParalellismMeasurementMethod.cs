@@ -5,9 +5,9 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
-    public class FlatnessMeasurementMethod : IMeasurementMethod
+    public class SurfaceParalellismMeasurementMethod : IMeasurementMethod
     {
-        public int[] RequiredMeasurementCount { get; } = { 5 };
+        public int[] RequiredMeasurementCount { get; } = { 5, 5 };
 
         public bool CanExecute()
         {
@@ -25,7 +25,7 @@ namespace Coordinates.Measurements.Types
 
         public override string ToString()
         {
-            return "Płaskość";
+            return "Płaszczyzny - równoległość";
         }
     }
 }

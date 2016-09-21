@@ -23,6 +23,7 @@ namespace Coordinates.Measurements
         {
             // Storing data from DataSource
             // TODO [MultiMeasure]
+            // TODO pass (pos) to SelectedMeasurement
             measurementDataSource.DataStream
                 .Select(CompensatePosition)
                 .Subscribe(pos => RawGaugePositions.Add(new GaugePosition(pos.X, pos.Y, pos.Z)));
@@ -122,8 +123,10 @@ namespace Coordinates.Measurements
             // Could have: instead use reflections and iterate by classes in namespace Coordinates.Measurements.Types
             AvailableMeasurementMethods = new List<IMeasurementMethod>
             {
-                new RoundnessMeasurementMethod(),
-                new FlatnessMeasurementMethod()
+                new OneHoleMeasurementMethod(),
+                new TwoHolesMeasurementMethod(),
+                new SurfacePerpendicularityMeasurementMethod(),
+                new SurfaceParalellismMeasurementMethod()
             };
         }
     }

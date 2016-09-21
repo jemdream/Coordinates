@@ -5,7 +5,7 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
-    public class RoundnessMeasurementMethod : IMeasurementMethod
+    public class OneHoleMeasurementMethod : IMeasurementMethod
     {
         public int[] RequiredMeasurementCount { get; } = { 5 };
 
@@ -25,7 +25,7 @@ namespace Coordinates.Measurements.Types
 
         public override string ToString()
         {
-            return "Okrągłość";
+            return "Jeden otwór";
         }
     }
 }

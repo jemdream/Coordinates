@@ -148,9 +148,6 @@
     <Compile Include="Views\MeasurementFlow\MeasurementProcess.xaml.cs">
       <DependentUpon>MeasurementProcess.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MeasurementFlow\MeasurementSelection.xaml.cs">
-      <DependentUpon>MeasurementSelection.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MeasurementFlow\MeasurementTypeSelection.xaml.cs">
       <DependentUpon>MeasurementTypeSelection.xaml</DependentUpon>
     </Compile>
@@ -224,10 +221,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MeasurementFlow\MeasurementProcess.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MeasurementFlow\MeasurementSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

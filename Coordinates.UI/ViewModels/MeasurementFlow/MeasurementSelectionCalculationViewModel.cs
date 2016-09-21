@@ -15,8 +15,8 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
     public interface IMeasurementSelectionCalculationViewModel : IMeasurementViewModelBase
     {
-        ObservableCollection<ContactPosition> ContactPositions { get; }
-        ObservableList<ContactPosition> SelectedPositions { get; }
+        ObservableCollection<Position> ContactPositions { get; }
+        ObservableList<Position> SelectedPositions { get; }
         int RequiredMeasurementCount { get; }
         int LeftMeasurementCount { get; }
     }
@@ -51,8 +51,8 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         }
         public override string Title { get; } = "Wybór pomiarów i obliczenia";
 
-        public ObservableCollection<ContactPosition> ContactPositions { get; } = new ObservableCollection<ContactPosition>();
-        public ObservableList<ContactPosition> SelectedPositions { get; }
+        public ObservableCollection<Position> ContactPositions { get; } = new ObservableCollection<Position>();
+        public ObservableList<Position> SelectedPositions { get; }
 
         public int LeftMeasurementCount => SelectedPositions.Count;
 

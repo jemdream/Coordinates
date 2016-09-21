@@ -12,8 +12,8 @@ namespace Coordinates.Measurements.Types
         object Execute(IEnumerable<Point> measurements); // TODO MeasurementCalculations
         
         // Selected positions for measurement
-        ObservableList<ContactPosition> SelectedPositions { get; }
-        ObservableList<GaugePosition> RawGaugePositions { get; }
-        ObservableList<ContactPosition> RawContactPositions { get; }
+        ObservableList<Position> SelectedPositions { get; }
+        ObservableList<Position> RawGaugePositions { get; }
+        ObservableList<Position> RawContactPositions { get; }
     }
 }

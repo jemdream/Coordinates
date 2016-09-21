@@ -16,12 +16,12 @@ namespace Coordinates.Measurements
         bool ResetMeasurementData();
 
         // Selected positions for measurement
-        ObservableList<ContactPosition> SelectedPositions { get; }
+        ObservableList<Position> SelectedPositions { get; }
         
         // Positions
         IObservable<Position> PositionSource { get; }
-        ObservableList<GaugePosition> RawGaugePositions { get; }
-        ObservableList<ContactPosition> RawContactPositions { get; }
+        ObservableList<Position> RawGaugePositions { get; }
+        ObservableList<Position> RawContactPositions { get; }
         GaugePositionDTO CompensationPosition { get; }
         bool SetupCalibration();
     }

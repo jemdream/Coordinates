@@ -2,7 +2,7 @@
 
 namespace Coordinates.Models.DTO
 {
-    public abstract class Position
+    public class Position
     {
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
         private readonly int _id;
@@ -10,16 +10,20 @@ namespace Coordinates.Models.DTO
         public double X { get; }
         public double Z { get; }
         public double Y { get; }
+        public bool Contact { get; }
 
-        protected Position() : this(0.0, 0.0, 0.0) { }
+        public Position() : this(0.0, 0.0, 0.0, false) { }
 
-        protected Position(double x, double y, double z)
+        public Position(double x, double y, double z, bool contact)
         {
             X = x;
             Y = y;
             Z = z;
+            Contact = contact;
             _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
+
+        public static Position Default => new Position();
 
         public override bool Equals(object obj)
         {

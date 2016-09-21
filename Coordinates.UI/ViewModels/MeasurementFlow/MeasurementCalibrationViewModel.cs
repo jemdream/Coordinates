@@ -19,7 +19,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     {
         private AwaitableDelegateCommand _setupInitialCoordinates;
 
-        private Position _currentGaugePosition = new GaugePosition();
+        private Position _currentGaugePosition = new Position();
 
         public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
             : base(eventAggregator, measurementManager)

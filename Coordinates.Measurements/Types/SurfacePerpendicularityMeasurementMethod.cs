@@ -19,9 +19,9 @@ namespace Coordinates.Measurements.Types
             throw new System.NotImplementedException();
         }
 
-        public ObservableList<ContactPosition> SelectedPositions { get; }
-        public ObservableList<GaugePosition> RawGaugePositions { get; }
-        public ObservableList<ContactPosition> RawContactPositions { get; }
+        public ObservableList<Position> SelectedPositions { get; }
+        public ObservableList<Position> RawGaugePositions { get; }
+        public ObservableList<Position> RawContactPositions { get; }
 
         public override string ToString()
         {

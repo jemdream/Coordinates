@@ -15,14 +15,15 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
     public interface IMeasurementProcessViewModel : IMeasurementViewModelBase
     {
-        ObservableCollection<ContactPosition> ContactPositions { get; }
+        ObservableCollection<Position> ContactPositions { get; }
         int RequiredMeasurementCount { get; }
         int LeftMeasurementCount { get; }
 
     }
+    // TODO M delete all those subscriptions and fields, and just have IMeasurementMethod here. bind from XAML to model
     public class MeasurementProcessViewModel : MeasurementViewModelBase, IMeasurementProcessViewModel
     {
-        private ObservableCollection<ContactPosition> _contactPositions;
+        private ObservableCollection<Position> _contactPositions;
         private int _requiredMeasurementCount;
 
         public MeasurementProcessViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
@@ -46,11 +47,11 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
                     ModelsUpdated();
                 });
 
-            ContactPositions = new ObservableCollection<ContactPosition>(MeasurementManager.RawContactPositions);
+            ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
         }
         public override string Title { get; } = "Pomiar";
 
-        public ObservableCollection<ContactPosition> ContactPositions
+        public ObservableCollection<Position> ContactPositions
         {
             get { return _contactPositions; }
             private set { Set(ref _contactPositions, value); }
@@ -84,7 +85,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             if (returnConfirmed)
             {
                 MeasurementManager.ResetMeasurementData();
-                ContactPositions = new ObservableCollection<ContactPosition>(MeasurementManager.RawContactPositions);
+                ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
             }
 
             return returnConfirmed;

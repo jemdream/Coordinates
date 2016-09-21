@@ -14,7 +14,11 @@ namespace Coordinates.UI.Helpers.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value is ContactPosition ? _contact : _noContact;
+            var position = value as Position;
+
+            if (position == null) return _noContact;
+
+            return position.Contact ? _contact : _noContact;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

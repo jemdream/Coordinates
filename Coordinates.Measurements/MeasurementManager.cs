@@ -21,35 +21,34 @@ namespace Coordinates.Measurements
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
-            // Storing data from DataSource
-            // TODO [MultiMeasure]
-            // TODO pass (pos) to SelectedMeasurement
+            // Store raw position
             measurementDataSource.DataStream
-                .Select(CompensatePosition)
-                .Subscribe(pos => RawGaugePositions.Add(new GaugePosition(pos.X, pos.Y, pos.Z)));
-
-            // TODO [MultiMeasure]
-            measurementDataSource.DataStream
-                .Where(pos => pos.Contact)
-                .Select(CompensatePosition)
-                .Subscribe(pos => RawContactPositions.Add(new ContactPosition(pos.X, pos.Y, pos.Z)));
-
-            measurementDataSource.DataStream // Raw last position
                 .Subscribe(lastRaw => _lastRawPosition = lastRaw);
 
+            // Compensating and mapping
+            var compensatedPositions = measurementDataSource.DataStream
+                .Select(CompensatePosition)
+                .Select(pos => new Position(pos.X, pos.Y, pos.Z, pos.Contact));
+
+            // Storing all points
+            compensatedPositions
+                .Subscribe(pos => RawGaugePositions.Add(pos));
+
+            // Storing contact points
+            // TODO [MultiMeasure] move out
+            compensatedPositions
+                .Where(pos => pos.Contact)
+                .Subscribe(pos => RawContactPositions.Add(pos));
+            
             // After position is stored, bubble it
-            // TODO OVER-ENGINEERING, add simple pushing just like upper
-            RawGaugePositions.OnAdd
+            compensatedPositions
                 .Subscribe(x => _positionSource.OnNext(x));
 
-            RawContactPositions.OnAdd
-                .Subscribe(x => _positionSource.OnNext(x));
-
+            // TODO [MultiMeasure] move out
             // Selected positions change
             SelectedPositions.OnAdd
                 .Where(_ => SelectedMeasurementMethod != null)
                 .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
-
             SelectedPositions.OnRemove
                 .Where(_ => SelectedMeasurementMethod != null)
                 .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
@@ -63,7 +62,7 @@ namespace Coordinates.Measurements
         /// Compensates position value with CompensationPosition
         /// </summary>
         private GaugePositionDTO CompensatePosition(GaugePositionDTO position) =>
-            new GaugePositionDTO(position.X - CompensationPosition.X, position.Y - CompensationPosition.Y, position.Z - CompensationPosition.Z);
+            new GaugePositionDTO(position.X - CompensationPosition.X, position.Y - CompensationPosition.Y, position.Z - CompensationPosition.Z, position.Contact);
 
         // Positions (Gauge / Contact)
 
@@ -84,9 +83,9 @@ namespace Coordinates.Measurements
             return true;
         }
 
-        public ObservableList<ContactPosition> SelectedPositions { get; } = new ObservableList<ContactPosition>();
-        public ObservableList<GaugePosition> RawGaugePositions { get; } = new ObservableList<GaugePosition>();
-        public ObservableList<ContactPosition> RawContactPositions { get; } = new ObservableList<ContactPosition>();
+        public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();// TODO [MultiMeasure] move out
+        public ObservableList<Position> RawGaugePositions { get; } = new ObservableList<Position>();
+        public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();// TODO [MultiMeasure] move out
 
         /// <summary>
         /// Saves latest position as CompensationPosition, that will affect next measurements. Wipes the data afterwards.
@@ -101,10 +100,7 @@ namespace Coordinates.Measurements
             return true;
         }
 
-        private void PushZeroPosition()
-        {
-            _positionSource.OnNext(CompensationPosition.Contact ? (Position)ContactPosition.Default : GaugePosition.Default);
-        }
+        private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
 
         // TODO [MultiMeasure] Foreach on all or rather delete elements from list
         private void ResetAllCollections()

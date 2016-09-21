@@ -25,11 +25,11 @@ namespace Coordinates.UI.Views.MeasurementFlow
         private static void RefreshSelectedItems(object sender, SelectionChangedEventArgs e)
         {
             var added = e.AddedItems
-                .Select(x => x as ContactPosition)
+                .Select(x => x as Position)
                 .ToList();
 
             var removed = e.RemovedItems
-                .Select(x => x as ContactPosition)
+                .Select(x => x as Position)
                 .ToList();
 
             var listView = (ListView) sender;

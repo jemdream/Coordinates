@@ -12,7 +12,7 @@ namespace Coordinates.UI.ViewModels
     {
         private readonly IConnectionService _connectionService;
         private ConnectionStatus _connectionStatus;
-        private Position _position = new GaugePosition();
+        private Position _position = new Position();
 
         private ICommand _connectCommand;
         private ICommand _disconnectCommand;

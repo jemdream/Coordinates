@@ -110,11 +110,10 @@
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
     <Compile Include="Messages\GoNextMeasurementMsg.cs" />
     <Compile Include="ViewModels\Interfaces\IMeasurementViewModelBase.cs" />
-    <Compile Include="ViewModels\MeasurementFlow\MeasurementTypeSelectionViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementFlow\MeasurementSelectionViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementElementSelectionViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementSelectionCalculationViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementCalibrationViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementFlow\MeasurementCalculationsViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementViewModelBase.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
     <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
@@ -140,8 +139,8 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />
-    <Compile Include="Views\MeasurementFlow\MeasurementCalculations.xaml.cs">
-      <DependentUpon>MeasurementCalculations.xaml</DependentUpon>
+    <Compile Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml.cs">
+      <DependentUpon>MeasurementSelectionCalculation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MeasurementFlow\MeasurementCalibration.xaml.cs">
       <DependentUpon>MeasurementCalibration.xaml</DependentUpon>
@@ -216,7 +215,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\MeasurementFlow\MeasurementCalculations.xaml">
+    <Page Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,17 +8,17 @@ using Prism.Events;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
-    public interface IMeasurementTypeSelectionViewModel : IMeasurementViewModelBase
+    public interface IMeasurementElementSelectionViewModel : IMeasurementViewModelBase
     {
         IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; set; }
     }
 
-    public class MeasurementTypeSelectionViewModel : MeasurementViewModelBase, IMeasurementTypeSelectionViewModel
+    public class MeasurementElementSelectionViewModel : MeasurementViewModelBase, IMeasurementElementSelectionViewModel
     {
         private IMeasurementMethod _selectedMeasurementMethod;
 
-        public MeasurementTypeSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator, measurementManager)
+        public MeasurementElementSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator, measurementManager)
         {
             AvailableMeasurementMethods = MeasurementManager.AvailableMeasurementMethods;
         }
@@ -35,7 +35,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             }
         }
 
-        public override string Title { get; } = "Tryb";
+        public override string Title { get; } = "Element";
 
         // Measurement process navigation
         protected override async Task<bool> OnNext() => await Task.FromResult(MeasurementManager.SetupMeasurementMethod(SelectedMeasurementMethod));

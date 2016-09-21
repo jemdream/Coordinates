@@ -13,18 +13,18 @@ using Prism.Events;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
-    public interface IMeasurementSelectionViewModel : IMeasurementViewModelBase
+    public interface IMeasurementSelectionCalculationViewModel : IMeasurementViewModelBase
     {
         ObservableCollection<ContactPosition> ContactPositions { get; }
         ObservableList<ContactPosition> SelectedPositions { get; }
         int RequiredMeasurementCount { get; }
         int LeftMeasurementCount { get; }
     }
-    public class MeasurementSelectionViewModel : MeasurementViewModelBase, IMeasurementSelectionViewModel
+    public class MeasurementSelectionCalculationViewModel : MeasurementViewModelBase, IMeasurementSelectionCalculationViewModel
     {
         private int _requiredMeasurementCount;
 
-        public MeasurementSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
+        public MeasurementSelectionCalculationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
             : base(eventAggregator, measurementManager)
         {
             measurementManager.RawContactPositions
@@ -49,7 +49,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(_ => ModelsUpdated());
         }
-        public override string Title { get; } = "Wybór pomiarów";
+        public override string Title { get; } = "Wybór pomiarów i obliczenia";
 
         public ObservableCollection<ContactPosition> ContactPositions { get; } = new ObservableCollection<ContactPosition>();
         public ObservableList<ContactPosition> SelectedPositions { get; }
@@ -62,11 +62,10 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             private set { Set(ref _requiredMeasurementCount, value); }
         }
 
-        protected override bool CanOnNext()
-        {
-            return SelectedPositions.Count >= MeasurementManager.SelectedMeasurementMethod?.RequiredMeasurementCount[0];
-        }
-
+        protected override bool CanOnNext() => false;
+        
+        //return SelectedPositions.Count >= MeasurementManager.SelectedMeasurementMethod?.RequiredMeasurementCount[0];
+        
         private void ModelsUpdated()
         {
             UpdateCommands();

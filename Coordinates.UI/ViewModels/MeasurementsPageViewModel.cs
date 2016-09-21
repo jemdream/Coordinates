@@ -12,11 +12,10 @@ namespace Coordinates.UI.ViewModels
         private int _selectedTabIndex;
 
         public MeasurementsPageViewModel(
-            IMeasurementCalculationsViewModel measurementCalculationsViewModel,
             IMeasurementCalibrationViewModel measurementCalibrationViewModel,
             IMeasurementProcessViewModel measurementProcessViewModel,
-            IMeasurementSelectionViewModel measurementSelectionViewModel,
-            IMeasurementTypeSelectionViewModel measurementTypeSelectionViewModel,
+            IMeasurementSelectionCalculationViewModel measurementSelectionCalculationViewModel,
+            IMeasurementElementSelectionViewModel measurementElementSelectionViewModel,
             IEventAggregator eventAggregator)
         //, IConnectionService mockConnectionService/* TODO MOCK CONNECTION */)
         {
@@ -24,11 +23,10 @@ namespace Coordinates.UI.ViewModels
 
             MeasurementFlowViewModels = new List<IMeasurementViewModelBase>
             {
-                 measurementTypeSelectionViewModel,
+                 measurementElementSelectionViewModel,
                  measurementCalibrationViewModel,
                  measurementProcessViewModel,
-                 measurementSelectionViewModel,
-                 measurementCalculationsViewModel
+                 measurementSelectionCalculationViewModel
             };
 
             // Listening to navigation requests from MeasurementFlowViewModels elements

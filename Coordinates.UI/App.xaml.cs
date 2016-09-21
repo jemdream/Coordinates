@@ -104,11 +104,10 @@ namespace Coordinates.UI
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
 
             // Register Measurement Flow ViewModels
-            container.RegisterType<IMeasurementCalculationsViewModel, MeasurementCalculationsViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementSelectionCalculationViewModel, MeasurementSelectionCalculationViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMeasurementCalibrationViewModel, MeasurementCalibrationViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMeasurementProcessViewModel, MeasurementProcessViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IMeasurementSelectionViewModel, MeasurementSelectionViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IMeasurementTypeSelectionViewModel, MeasurementTypeSelectionViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementElementSelectionViewModel, MeasurementElementSelectionViewModel>(new ContainerControlledLifetimeManager());
 
             // Registering Views 
             container.RegisterType(typeof(Shell));

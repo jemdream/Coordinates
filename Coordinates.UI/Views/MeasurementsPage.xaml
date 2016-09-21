@@ -28,7 +28,7 @@
             </converters:ValueWhenConverter.Otherwise>
         </converters:ValueWhenConverter>
 
-        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementTypeSelectionViewModel" x:Key="TypeSelectionDataTemplate">
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementElementSelectionViewModel" x:Key="TypeSelectionDataTemplate">
             <measurementFlow:MeasurementTypeSelection/>
         </DataTemplate>
 
@@ -40,21 +40,16 @@
             <measurementFlow:MeasurementProcess/>
         </DataTemplate>
 
-        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementSelectionViewModel" x:Key="SelectionDataTemplate">
-            <measurementFlow:MeasurementSelection/>
-        </DataTemplate>
-
-        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementCalculationsViewModel" x:Key="CalculationsDataTemplate">
-            <measurementFlow:MeasurementCalculations/>
+        <DataTemplate x:DataType="measurementFlowViewModel:MeasurementSelectionCalculationViewModel" x:Key="SelectionCalculationDataTemplate">
+            <measurementFlow:MeasurementSelectionCalculation/>
         </DataTemplate>
 
         <dataTemplateSelectors:CoordsViewModelBaseSelector 
                     x:Key="CoordsViewModelBaseSelector" 
-                    TypeSelectionDataTemplate="{StaticResource TypeSelectionDataTemplate}"
+                    ElementSelectionDataTemplate="{StaticResource TypeSelectionDataTemplate}"
                     CalibrationDataTemplate="{StaticResource CalibrationDataTemplate}"
                     ProcessDataTemplate="{StaticResource ProcessDataTemplate}"
-                    SelectionDataTemplate="{StaticResource SelectionDataTemplate}"
-                    CalculationsDataTemplate="{StaticResource CalculationsDataTemplate}" />
+                    SelectionCalculationDataTemplate="{StaticResource SelectionCalculationDataTemplate}"/>
 
     </Page.Resources>
 

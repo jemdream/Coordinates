@@ -10,13 +10,12 @@ using Template10.Utils;
 
 namespace Coordinates.UI.Views.MeasurementFlow
 {
-    public sealed partial class MeasurementSelection : UserControl
+    public sealed partial class MeasurementSelectionCalculation : UserControl
     {
-        public MeasurementSelection()
+        public MeasurementSelectionCalculation()
         {
             this.InitializeComponent();
         }
-
         // TODO temporary solution - create "Attached Property" for control and place this functionality there
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

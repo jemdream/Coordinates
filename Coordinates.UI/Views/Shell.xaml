@@ -39,7 +39,8 @@
         <controls:HamburgerMenu x:Name="MyHamburgerMenu"
                                 NavButtonCheckedBackground="SteelBlue"
                                 NavButtonCheckedForeground="White"
-                                NavButtonCheckedIndicatorBrush="Transparent">
+                                NavButtonCheckedIndicatorBrush="Transparent"
+                                Loaded="MyHamburgerMenu_OnLoaded">
 
             <controls:HamburgerMenu.PrimaryButtons>
 
@@ -66,7 +67,7 @@
                 </controls:HamburgerButtonInfo>
 
                 <!--  Measurement button  -->
-                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MeasurementsPage">
+                <controls:HamburgerButtonInfo x:Name="MeasurementsButton" ClearHistory="True" PageType="views:MeasurementsPage">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Calculator" />
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Pomiary" />

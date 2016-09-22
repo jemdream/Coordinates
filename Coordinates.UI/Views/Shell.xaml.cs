@@ -42,5 +42,10 @@ namespace Coordinates.UI.Views
             MaszynaButton.Visibility = MetrologiaButton.Visibility =
                 isMaszynaButtonVisible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        private void MyHamburgerMenu_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            MyHamburgerMenu.NavigationService.Navigate(typeof(MeasurementsPage));
+        }
     }
 }

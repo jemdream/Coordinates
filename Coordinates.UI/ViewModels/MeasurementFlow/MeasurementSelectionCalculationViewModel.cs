@@ -39,19 +39,18 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
             SelectedPositions = measurementManager.SelectedPositions;
 
+            // On add and on remove, update controls
             SelectedPositions
                 .OnAdd
+                .Concat(SelectedPositions.OnRemove)
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(_ => ModelsUpdated());
 
-            SelectedPositions
-                .OnRemove
-                .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(_ => ModelsUpdated());
+            ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
         }
         public override string Title { get; } = "Wybór pomiarów i obliczenia";
 
-        public ObservableCollection<Position> ContactPositions { get; } = new ObservableCollection<Position>();
+        public ObservableCollection<Position> ContactPositions { get; }
         public ObservableList<Position> SelectedPositions { get; }
 
         public int LeftMeasurementCount => SelectedPositions.Count;

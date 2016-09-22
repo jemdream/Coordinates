@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Windows.Foundation;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Models.DTO;
 
@@ -14,11 +13,11 @@ namespace Coordinates.Measurements.Types
             return true;
         }
 
-        public object Execute(IEnumerable<Point> measurements)
+        public object Execute(IEnumerable<Position> measurements)
         {
             throw new System.NotImplementedException();
         }
-
+        
         public ObservableList<Position> SelectedPositions { get; }
         public ObservableList<Position> RawGaugePositions { get; }
         public ObservableList<Position> RawContactPositions { get; }

@@ -26,6 +26,8 @@ namespace Coordinates.UI.ViewModels
 
             _connectionService.DiagnosticEventsStream
                 .Subscribe(dE => { ConnectionStatus = (ConnectionStatus)dE.Message; });
+
+            ConnectCommand.Execute(null);
         } 
 
         public ICommand ConnectCommand => _connectCommand ?? (_connectCommand = new DelegateCommand(async () =>

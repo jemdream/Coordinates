@@ -16,13 +16,9 @@ namespace Coordinates.UI.Views.MeasurementFlow
         {
             this.InitializeComponent();
         }
+
         // TODO temporary solution - create "Attached Property" for control and place this functionality there
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RefreshSelectedItems(sender, e);
-        }
-
-        private static void RefreshSelectedItems(object sender, SelectionChangedEventArgs e)
         {
             var added = e.AddedItems
                 .Select(x => x as Position)
@@ -32,8 +28,10 @@ namespace Coordinates.UI.Views.MeasurementFlow
                 .Select(x => x as Position)
                 .ToList();
 
-            var listView = (ListView) sender;
-            var selectedPositionsVm = ((MeasurementSelectionCalculationViewModel) listView.DataContext).SelectedPositions;
+            var listView = (ListView)sender;
+
+            // TODO or instead - tweak here
+            var selectedPositionsVm = ((MeasurementSelectionCalculationViewModel)listView.DataContext).SelectedPositions;
 
             added
                 .Where(position => !selectedPositionsVm.Contains(position))
@@ -43,13 +41,14 @@ namespace Coordinates.UI.Views.MeasurementFlow
                 .Where(position => selectedPositionsVm.Contains(position))
                 .ForEach(position => selectedPositionsVm.Remove(position));
         }
-
+        
         // Refreshing selected elements
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
             var listView = (ListView)sender;
             var selectedPositionsVm = ((MeasurementSelectionCalculationViewModel)listView.DataContext).SelectedPositions;
 
+            // TODO or instead - tweak here
             // Get elements from UI, match with VM items, get the indexes, and select with SelectRange
             if (listView.Items.Any())
                 listView.Items

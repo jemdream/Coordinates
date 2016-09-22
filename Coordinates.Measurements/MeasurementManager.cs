@@ -14,7 +14,7 @@ namespace Coordinates.Measurements
 
     public class MeasurementManager : IMeasurementManager
     {
-        private readonly Subject<Position> _positionSource = new Subject<Position>();
+        private readonly ReplaySubject<Position> _positionSource = new ReplaySubject<Position>(1);
 
         private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
         public GaugePositionDTO CompensationPosition { get; private set; } = GaugePositionDTO.Default;

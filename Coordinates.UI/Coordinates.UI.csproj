@@ -115,8 +115,6 @@
     <Compile Include="ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementCalibrationViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementViewModelBase.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServiceLocator\IViewModelLocator.cs" />
     <Compile Include="Services\ServiceLocator\ViewModelLocator.cs" />
@@ -135,7 +133,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MeasurementsPageViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\RoundnessMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />

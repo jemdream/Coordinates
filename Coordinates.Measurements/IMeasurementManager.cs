@@ -12,12 +12,13 @@ namespace Coordinates.Measurements
         // Measurement methods/types
         IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; }
+
         bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod);
         bool ResetMeasurementData();
 
         // Selected positions for measurement
         ObservableList<Position> SelectedPositions { get; }
-        
+
         // Positions
         IObservable<Position> PositionSource { get; }
         ObservableList<Position> RawGaugePositions { get; }

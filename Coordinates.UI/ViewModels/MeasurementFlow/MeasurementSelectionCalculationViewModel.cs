@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Coordinates.Measurements;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Models.DTO;
 using Coordinates.UI.ViewModels.Interfaces;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
@@ -22,11 +24,14 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     }
     public class MeasurementSelectionCalculationViewModel : MeasurementViewModelBase, IMeasurementSelectionCalculationViewModel
     {
+        private readonly IMeasurementMethodViewModel _measurementMethodViewModel;
         private int _requiredMeasurementCount;
 
-        public MeasurementSelectionCalculationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
-            : base(eventAggregator, measurementManager)
+        public MeasurementSelectionCalculationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager,
+            IMeasurementMethodViewModel measurementMethodViewModel) : base(eventAggregator, measurementManager)
         {
+            _measurementMethodViewModel = measurementMethodViewModel;
+
             measurementManager.RawContactPositions
                 .OnAdd
                 .ObserveOn(SynchronizationContext.Current)
@@ -73,7 +78,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            RequiredMeasurementCount = MeasurementManager.SelectedMeasurementMethod.RequiredMeasurementCount[0];
+            RequiredMeasurementCount = MeasurementManager.SelectedMeasurementMethod.Elements.FirstOrDefault().RequiredMeasurementCount;
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

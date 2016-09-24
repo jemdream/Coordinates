@@ -1,26 +1,23 @@
 ﻿using System.Collections.Generic;
-using Coordinates.Measurements.Helpers;
-using Coordinates.Models.DTO;
+using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
 {
     public class TwoHolesMeasurementMethod : IMeasurementMethod
     {
-        public int[] RequiredMeasurementCount { get; } = { 5 };
+        private readonly List<Hole> _elements = new List<Hole> { new Hole(), new Hole() };
+        public IEnumerable<IElement> Elements => _elements;
+        public IElement ActiveElement { get; }
 
-        public bool CanExecute()
+        public bool CanCalculate()
         {
             return true;
         }
 
-        public object Execute(IEnumerable<Position> measurements)
+        public object Calculate()
         {
             throw new System.NotImplementedException();
         }
-
-        public ObservableList<Position> SelectedPositions { get; }
-        public ObservableList<Position> RawGaugePositions { get; }
-        public ObservableList<Position> RawContactPositions { get; }
 
         public override string ToString()
         {

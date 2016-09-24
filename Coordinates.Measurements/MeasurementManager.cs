@@ -33,6 +33,10 @@ namespace Coordinates.Measurements
             // Storing all points
             compensatedPositions
                 .Subscribe(pos => RawGaugePositions.Add(pos));
+            
+            // After position is stored, bubble it
+            compensatedPositions
+                .Subscribe(x => _positionSource.OnNext(x));
 
             // Storing contact points
             // TODO [MultiMeasure] move out
@@ -40,18 +44,14 @@ namespace Coordinates.Measurements
                 .Where(pos => pos.Contact)
                 .Subscribe(pos => RawContactPositions.Add(pos));
             
-            // After position is stored, bubble it
-            compensatedPositions
-                .Subscribe(x => _positionSource.OnNext(x));
-
             // TODO [MultiMeasure] move out
             // Selected positions change
             SelectedPositions.OnAdd
                 .Where(_ => SelectedMeasurementMethod != null)
-                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
+                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
             SelectedPositions.OnRemove
                 .Where(_ => SelectedMeasurementMethod != null)
-                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanExecute(); });
+                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
 
             // Initialize 
             ResetAllCollections();

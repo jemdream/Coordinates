@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -67,7 +68,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         protected override bool CanOnNext()
         {
-            return ContactPositions.Count >= MeasurementManager.SelectedMeasurementMethod?.RequiredMeasurementCount[0];
+            return ContactPositions.Count >= MeasurementManager.SelectedMeasurementMethod.Elements.FirstOrDefault().RequiredMeasurementCount;
         }
 
         protected override async Task<bool> OnPrevious()
@@ -98,7 +99,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            RequiredMeasurementCount = MeasurementManager.SelectedMeasurementMethod.RequiredMeasurementCount[0];
+            RequiredMeasurementCount = MeasurementManager.SelectedMeasurementMethod.Elements.FirstOrDefault().RequiredMeasurementCount;
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

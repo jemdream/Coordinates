@@ -1,26 +1,23 @@
 ﻿using System.Collections.Generic;
-using Coordinates.Measurements.Helpers;
-using Coordinates.Models.DTO;
+using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
 {
     public class SurfacePerpendicularityMeasurementMethod : IMeasurementMethod
     {
-        public int[] RequiredMeasurementCount { get; } = { 5 };
+        private readonly List<Surface> _elements = new List<Surface> { new Surface(), new Surface() };
+        public IEnumerable<IElement> Elements => _elements;
+        public IElement ActiveElement { get; }
 
-        public bool CanExecute()
+        public bool CanCalculate()
         {
             return true;
         }
 
-        public object Execute(IEnumerable<Position> measurements)
+        public object Calculate()
         {
             throw new System.NotImplementedException();
         }
-
-        public ObservableList<Position> SelectedPositions { get; }
-        public ObservableList<Position> RawGaugePositions { get; }
-        public ObservableList<Position> RawContactPositions { get; }
 
         public override string ToString()
         {

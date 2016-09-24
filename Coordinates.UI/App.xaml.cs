@@ -11,6 +11,7 @@ using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementFlow;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
@@ -98,10 +99,13 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
+
+            // Menu 
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeasurementMethodViewModel, MeasurementMethodViewModel>(new ContainerControlledLifetimeManager());
 
             // Register Measurement Flow ViewModels
             container.RegisterType<IMeasurementSelectionCalculationViewModel, MeasurementSelectionCalculationViewModel>(new ContainerControlledLifetimeManager());

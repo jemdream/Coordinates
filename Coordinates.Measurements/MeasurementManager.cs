@@ -51,6 +51,7 @@ namespace Coordinates.Measurements
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
             //_measurementSource.OnNext();
+            /* TODO create factory */
             /* TODO here to set up MeasurementSource and push it */
             Wipe();
             return true;

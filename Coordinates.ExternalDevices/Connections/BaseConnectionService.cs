@@ -39,8 +39,7 @@ namespace Coordinates.ExternalDevices.Connections
         protected abstract Task<bool> OnClosingAsync();
 
         public IObservable<DiagnosticEvent> DiagnosticEventsStream => _diagnosticEventsSubject.AsObservable();
-
-        // TODO requires flag, so you can't hammer toggling (on/off/on/off)
+        
         public async Task<ConnectionStatus> Open()
         {
             if (ConnectionStatus.Equals(ConnectionStatus.Open))

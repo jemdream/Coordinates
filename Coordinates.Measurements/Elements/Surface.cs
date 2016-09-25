@@ -1,4 +1,4 @@
-﻿using Coordinates.Measurements.Helpers;
+﻿using System.Collections.Generic;
 using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Elements
@@ -17,7 +17,7 @@ namespace Coordinates.Measurements.Elements
             throw new System.NotImplementedException();
         }
 
-        public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();
-        public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();
+        public IList<Position> SelectedPositions { get; } = new List<Position>();
+        public IList<Position> Positions { get; } = new List<Position>();
     }
 }

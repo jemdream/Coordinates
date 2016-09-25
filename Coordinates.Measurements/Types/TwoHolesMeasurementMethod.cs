@@ -6,6 +6,12 @@ namespace Coordinates.Measurements.Types
     public class TwoHolesMeasurementMethod : IMeasurementMethod
     {
         private readonly List<Hole> _elements = new List<Hole> { new Hole(), new Hole() };
+
+        public TwoHolesMeasurementMethod()
+        {
+            ActiveElement = _elements[0];
+        }
+
         public IEnumerable<IElement> Elements => _elements;
         public IElement ActiveElement { get; }
 
@@ -18,10 +24,10 @@ namespace Coordinates.Measurements.Types
         {
             throw new System.NotImplementedException();
         }
-
-        public override string ToString()
-        {
-            return "Dwa otwory";
-        }
+        public static string Title = "Dwa otwory";
+        //public override string ToString()
+        //{
+        //    return "Dwa otwory";
+        //}
     }
 }

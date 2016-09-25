@@ -11,15 +11,18 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     public abstract class MeasurementViewModelBase : ViewModelBase, IMeasurementViewModelBase
     {
         protected readonly IEventAggregator EventAggregator;
-        protected IMeasurementManager MeasurementManager;
+        // TODO [MultiMeasure] move out
+        //protected IMeasurementManager MeasurementManager;
 
         private AwaitableDelegateCommand _goBackCommand;
         private AwaitableDelegateCommand _goNextCommand;
 
-        protected MeasurementViewModelBase(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
+        // TODO [MultiMeasure] move out
+        protected MeasurementViewModelBase(IEventAggregator eventAggregator)//, IMeasurementManager measurementManager)
         {
             EventAggregator = eventAggregator;
-            MeasurementManager = measurementManager;
+            // TODO [MultiMeasure] move out
+            //MeasurementManager = measurementManager;
         }
 
         public abstract string Title { get; }
@@ -30,7 +33,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         protected virtual Task<bool> OnNext() => Task.FromResult(true);
         protected virtual bool CanOnNext() => true;
 
-        protected void UpdateCommands()
+        protected void UpdateNavigationCommands()
         {
             ((AwaitableDelegateCommand)GoBackCommand).RaiseCanExecuteChanged();
             ((AwaitableDelegateCommand)GoNextCommand).RaiseCanExecuteChanged();

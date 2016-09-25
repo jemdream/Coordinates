@@ -17,15 +17,18 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementCalibrationViewModel : MeasurementViewModelBase, IMeasurementCalibrationViewModel
     {
+        private readonly IMeasurementManager _measurementManager;
         private AwaitableDelegateCommand _setupInitialCoordinates;
 
         private Position _currentGaugePosition = new Position();
 
         public MeasurementCalibrationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
-            : base(eventAggregator, measurementManager)
+            : base(eventAggregator)
         {
+            _measurementManager = measurementManager;
             SetupMeasurementManager();
         }
+
         public override string Title { get; } = "Kalibracja";
 
         public Position CurrentGaugePosition
@@ -36,12 +39,12 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new AwaitableDelegateCommand(async x =>
         {
-            await Task.Run(() => MeasurementManager.SetupCalibration());
+            await Task.Run(() => _measurementManager.SetupCalibration());
         }, x => _currentGaugePosition != null));
 
         private void SetupMeasurementManager()
         {
-            MeasurementManager.PositionSource
+            _measurementManager.PositionSource
                 .Subscribe(pos => CurrentGaugePosition = pos);
         }
     }

@@ -6,6 +6,12 @@ namespace Coordinates.Measurements.Types
     public class SurfacePerpendicularityMeasurementMethod : IMeasurementMethod
     {
         private readonly List<Surface> _elements = new List<Surface> { new Surface(), new Surface() };
+
+        public SurfacePerpendicularityMeasurementMethod()
+        {
+            ActiveElement = _elements[0];
+        }
+
         public IEnumerable<IElement> Elements => _elements;
         public IElement ActiveElement { get; }
 
@@ -18,10 +24,10 @@ namespace Coordinates.Measurements.Types
         {
             throw new System.NotImplementedException();
         }
-
-        public override string ToString()
-        {
-            return "Płaszczyzny - prostopadłość";
-        }
+        public static string Title = "Płaszczyzny - prostopadłość";
+        //public override string ToString()
+        //{
+        //    return "Płaszczyzny - prostopadłość";
+        //}
     }
 }

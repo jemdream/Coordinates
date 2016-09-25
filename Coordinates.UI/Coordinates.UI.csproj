@@ -101,6 +101,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Converters\TypeToStringConverter.cs" />
     <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />

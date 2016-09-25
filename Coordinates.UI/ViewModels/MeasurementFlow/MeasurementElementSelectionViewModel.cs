@@ -16,11 +16,13 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementElementSelectionViewModel : MeasurementViewModelBase, IMeasurementElementSelectionViewModel
     {
+        private readonly IMeasurementManager _measurementManager;
         private IMeasurementMethod _selectedMeasurementMethod;
 
-        public MeasurementElementSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator, measurementManager)
+        public MeasurementElementSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator)
         {
-            AvailableMeasurementMethods = MeasurementManager.AvailableMeasurementMethods;
+            _measurementManager = measurementManager;
+            AvailableMeasurementMethods = _measurementManager.AvailableMeasurementMethods;
         }
 
         public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
@@ -31,20 +33,20 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             set
             {
                 Set(ref _selectedMeasurementMethod, value);
-                UpdateCommands();
+                UpdateNavigationCommands();
             }
         }
 
         public override string Title { get; } = "Element";
 
         // Measurement process navigation
-        protected override async Task<bool> OnNext() => await Task.FromResult(MeasurementManager.SetupMeasurementMethod(SelectedMeasurementMethod));
+        protected override async Task<bool> OnNext() => await Task.FromResult(_measurementManager.SetupMeasurementMethod(SelectedMeasurementMethod));
         protected override bool CanOnNext() => SelectedMeasurementMethod != null;
         protected override bool CanOnPrevious() => false;
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            SelectedMeasurementMethod = MeasurementManager.SelectedMeasurementMethod;
+            SelectedMeasurementMethod = _measurementManager.SelectedMeasurementMethod;
             return base.OnNavigatedToAsync(parameter, mode, state);
         }
     }

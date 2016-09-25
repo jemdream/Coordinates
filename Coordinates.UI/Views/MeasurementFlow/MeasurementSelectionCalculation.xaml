@@ -63,7 +63,7 @@
                   ShowsScrollingPlaceholders="True">
             </ListView>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Text="{Binding LeftMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
+                <TextBlock Text="{Binding MeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
                     Style="{ThemeResource BodyTextBlockStyle}"
                     Margin="12"/>
                 <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"

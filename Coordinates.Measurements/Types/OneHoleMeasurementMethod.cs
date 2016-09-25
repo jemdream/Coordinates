@@ -13,7 +13,7 @@ namespace Coordinates.Measurements.Types
         }
 
         public IEnumerable<IElement> Elements => _elements;
-        public IElement ActiveElement { get; }// = _elements[0];
+        public IElement ActiveElement { get; }
 
         public bool CanCalculate()
         {
@@ -25,9 +25,10 @@ namespace Coordinates.Measurements.Types
             throw new System.NotImplementedException();
         }
 
-        public override string ToString()
-        {
-            return "Jeden otwór";
-        }
+        public static string Title = "Jeden otwór";
+        //public override string ToString()
+        //{
+        //    return "Jeden otwór";
+        //}
     }
 }

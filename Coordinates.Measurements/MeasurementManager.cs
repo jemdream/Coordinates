@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
@@ -33,25 +34,25 @@ namespace Coordinates.Measurements
             // Storing all points
             compensatedPositions
                 .Subscribe(pos => RawGaugePositions.Add(pos));
-            
+
             // After position is stored, bubble it
             compensatedPositions
                 .Subscribe(x => _positionSource.OnNext(x));
 
-            // Storing contact points
             // TODO [MultiMeasure] move out
-            compensatedPositions
-                .Where(pos => pos.Contact)
-                .Subscribe(pos => RawContactPositions.Add(pos));
-            
+            // Storing contact points
+            //compensatedPositions
+            //    .Where(pos => pos.Contact)
+            //    .Subscribe(pos => RawContactPositions.Add(pos));
+
             // TODO [MultiMeasure] move out
             // Selected positions change
-            SelectedPositions.OnAdd
-                .Where(_ => SelectedMeasurementMethod != null)
-                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
-            SelectedPositions.OnRemove
-                .Where(_ => SelectedMeasurementMethod != null)
-                .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+            //SelectedPositions.OnAdd
+            //    .Where(_ => SelectedMeasurementMethod != null)
+            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+            //SelectedPositions.OnRemove
+            //    .Where(_ => SelectedMeasurementMethod != null)
+            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
 
             // Initialize 
             ResetAllCollections();
@@ -83,9 +84,11 @@ namespace Coordinates.Measurements
             return true;
         }
 
-        public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();// TODO [MultiMeasure] move out
+        // TODO [MultiMeasure] move out
+        //public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();
         public ObservableList<Position> RawGaugePositions { get; } = new ObservableList<Position>();
-        public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();// TODO [MultiMeasure] move out
+        // TODO [MultiMeasure] move out
+        //public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();
 
         /// <summary>
         /// Saves latest position as CompensationPosition, that will affect next measurements. Wipes the data afterwards.
@@ -106,24 +109,27 @@ namespace Coordinates.Measurements
         private void ResetAllCollections()
         {
             RawGaugePositions.Clear();
-            RawContactPositions.Clear();
-            SelectedPositions.Clear();
+            // TODO [MultiMeasure] move out
+            //RawContactPositions.Clear();
+            //SelectedPositions.Clear();
         }
 
         // Measurement Methods (flatness etc.)
-        public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; private set; }
+        public IEnumerable<KeyValuePair<string, Type>> AvailableMeasurementMethods { get; private set; }
         public IMeasurementMethod SelectedMeasurementMethod { get; private set; }
+
+        public Dictionary<string, Type> MeasurementMapping { get; } = new Dictionary<string, Type>
+        {
+            {"Jeden otwór",  typeof(OneHoleMeasurementMethod)},
+            {"Dwa otwory",  typeof(TwoHolesMeasurementMethod)},
+            {"Płaszczyzny - prostopadłość",  typeof(SurfacePerpendicularityMeasurementMethod)},
+            {"Płaszczyzny - równoległość",  typeof(SurfaceParalellismMeasurementMethod)}
+        };
 
         private void InstantiateMeasurements()
         {
             // Could have: instead use reflections and iterate by classes in namespace Coordinates.Measurements.Types
-            AvailableMeasurementMethods = new List<IMeasurementMethod>
-            {
-                new OneHoleMeasurementMethod(),
-                new TwoHolesMeasurementMethod(),
-                new SurfacePerpendicularityMeasurementMethod(),
-                new SurfaceParalellismMeasurementMethod()
-            };
+            AvailableMeasurementMethods = MeasurementMapping;
         }
     }
 }

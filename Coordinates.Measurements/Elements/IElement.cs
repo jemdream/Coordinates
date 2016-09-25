@@ -1,4 +1,5 @@
-﻿using Coordinates.Measurements.Helpers;
+﻿using System.Collections.Generic;
+using Coordinates.Measurements.Helpers;
 using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Elements
@@ -10,7 +11,7 @@ namespace Coordinates.Measurements.Elements
         bool CanCalculate();
         object Calculate();
 
-        ObservableList<Position> SelectedPositions { get; }
-        ObservableList<Position> RawContactPositions { get; }
+        IList<Position> SelectedPositions { get; }
+        IList<Position> Positions { get; }
     }
 }

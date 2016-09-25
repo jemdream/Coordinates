@@ -10,20 +10,18 @@ namespace Coordinates.Measurements
     public interface IMeasurementManager
     {
         // Measurement methods/types
-        IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
+        IEnumerable<KeyValuePair<string, Type>> AvailableMeasurementMethods { get; }
         IMeasurementMethod SelectedMeasurementMethod { get; }
 
         bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod);
         bool ResetMeasurementData();
 
-        // Selected positions for measurement
-        ObservableList<Position> SelectedPositions { get; }
 
         // Positions
         IObservable<Position> PositionSource { get; }
         ObservableList<Position> RawGaugePositions { get; }
-        ObservableList<Position> RawContactPositions { get; }
         GaugePositionDTO CompensationPosition { get; }
+
         bool SetupCalibration();
     }
 }

@@ -10,14 +10,14 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
     public interface IMeasurementElementSelectionViewModel : IMeasurementViewModelBase
     {
-        IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
-        IMeasurementMethod SelectedMeasurementMethod { get; set; }
+        IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; }
+        MeasurementMethodEnum? SelectedMeasurementMethod { get; set; }
     }
 
     public class MeasurementElementSelectionViewModel : MeasurementViewModelBase, IMeasurementElementSelectionViewModel
     {
         private readonly IMeasurementManager _measurementManager;
-        private IMeasurementMethod _selectedMeasurementMethod;
+        private MeasurementMethodEnum? _selectedMeasurementMethod;
 
         public MeasurementElementSelectionViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager) : base(eventAggregator)
         {
@@ -25,9 +25,11 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             AvailableMeasurementMethods = _measurementManager.AvailableMeasurementMethods;
         }
 
-        public IEnumerable<IMeasurementMethod> AvailableMeasurementMethods { get; }
+        public override string Title { get; } = "Element";
 
-        public IMeasurementMethod SelectedMeasurementMethod
+        public IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; }
+
+        public MeasurementMethodEnum? SelectedMeasurementMethod
         {
             get { return _selectedMeasurementMethod; }
             set
@@ -37,10 +39,12 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             }
         }
 
-        public override string Title { get; } = "Element";
-
         // Measurement process navigation
-        protected override async Task<bool> OnNext() => await Task.FromResult(_measurementManager.SetupMeasurementMethod(SelectedMeasurementMethod));
+        protected override async Task<bool> OnNext()
+        {
+            return await Task.FromResult(_measurementManager.SetupMeasurementMethod(SelectedMeasurementMethod ?? 0));
+        }
+
         protected override bool CanOnNext() => SelectedMeasurementMethod != null;
         protected override bool CanOnPrevious() => false;
 

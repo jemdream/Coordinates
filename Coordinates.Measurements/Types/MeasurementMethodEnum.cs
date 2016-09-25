@@ -1,14 +1,19 @@
-﻿using System.Reflection;
-using System.ComponentModel;
+﻿using Coordinates.Models.Helpers;
 
 namespace Coordinates.Measurements.Types
 {
     public enum MeasurementMethodEnum
     {
-        [Description("Płaszczyzny - równoległoś")]
+        [Description("Jeden otwór")]
         OneHoleMeasurementMethod,
+
+        [Description("Dwa otwory")]
+        TwoHolesMeasurementMethod,
+
+        [Description("Płaszczyzny - prostopadłość")]
         SurfaceParalellismMeasurementMethod,
-        SurfacePerpendicularityMeasurementMethod,
-        TwoHolesMeasurementMethod
+
+        [Description("Płaszczyzny - równoległość")]
+        SurfacePerpendicularityMeasurementMethod
     }
 }

@@ -39,7 +39,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public ICommand SetupInitialCoordinates => _setupInitialCoordinates ?? (_setupInitialCoordinates = new AwaitableDelegateCommand(async x =>
         {
-            await Task.Run(() => _measurementManager.SetupCalibration());
+            await Task.Run(() => _measurementManager.Calibrate());
         }, x => _currentGaugePosition != null));
 
         private void SetupMeasurementManager()

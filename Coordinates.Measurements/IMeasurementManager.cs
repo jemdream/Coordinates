@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
@@ -10,18 +9,17 @@ namespace Coordinates.Measurements
     public interface IMeasurementManager
     {
         // Measurement methods/types
-        IEnumerable<KeyValuePair<string, Type>> AvailableMeasurementMethods { get; }
-        IMeasurementMethod SelectedMeasurementMethod { get; }
+        IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; }
+        MeasurementMethodEnum? SelectedMeasurementMethod { get; }
+        IObservable<IMeasurementMethod> MeasurementSource { get; }
 
-        bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod);
+        bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod);
         bool ResetMeasurementData();
-
-
+        
         // Positions
         IObservable<Position> PositionSource { get; }
-        ObservableList<Position> RawGaugePositions { get; }
-        GaugePositionDTO CompensationPosition { get; }
+        ObservableList<Position> PositionBuffer { get; }
 
-        bool SetupCalibration();
+        bool Calibrate();
     }
 }

@@ -11,14 +11,15 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
-    // TODO [MultiMeasure]: - List<IMeasurementMethod> with measurements-each having own RawGaugePositions/RawContactPositions/SelectedPositions
+    // TODO [MultiMeasure]: - List<IMeasurementMethod> with measurements-each having own PositionBuffer/RawContactPositions/SelectedPositions
 
     public class MeasurementManager : IMeasurementManager
     {
         private readonly ReplaySubject<Position> _positionSource = new ReplaySubject<Position>(1);
+        private readonly ReplaySubject<IMeasurementMethod> _measurementSource = new ReplaySubject<IMeasurementMethod>(1);
 
         private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
-        public GaugePositionDTO CompensationPosition { get; private set; } = GaugePositionDTO.Default;
+        private GaugePositionDTO _compensationPosition = GaugePositionDTO.Default;
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
@@ -33,7 +34,7 @@ namespace Coordinates.Measurements
 
             // Storing all points
             compensatedPositions
-                .Subscribe(pos => RawGaugePositions.Add(pos));
+                .Subscribe(pos => PositionBuffer.Add(pos));
 
             // After position is stored, bubble it
             compensatedPositions
@@ -55,23 +56,19 @@ namespace Coordinates.Measurements
             //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
 
             // Initialize 
-            ResetAllCollections();
-            InstantiateMeasurements();
+            Wipe();
+            AvailableMeasurementMethods = Enum.GetValues(typeof(MeasurementMethodEnum)).Cast<MeasurementMethodEnum>();
         }
 
-        /// <summary>
-        /// Compensates position value with CompensationPosition
-        /// </summary>
-        private GaugePositionDTO CompensatePosition(GaugePositionDTO position) =>
-            new GaugePositionDTO(position.X - CompensationPosition.X, position.Y - CompensationPosition.Y, position.Z - CompensationPosition.Z, position.Contact);
+        public IObservable<IMeasurementMethod> MeasurementSource => _measurementSource.AsObservable();
 
         // Positions (Gauge / Contact)
-
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
-        public bool SetupMeasurementMethod(IMeasurementMethod selectedMeasurementMethod)
+        public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
-            ResetAllCollections();
+            // todo here to set up MeasurementSource
+            Wipe();
             return true;
         }
 
@@ -80,13 +77,13 @@ namespace Coordinates.Measurements
         /// </summary>
         public bool ResetMeasurementData()
         {
-            ResetAllCollections();
+            Wipe();
             return true;
         }
 
         // TODO [MultiMeasure] move out
         //public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();
-        public ObservableList<Position> RawGaugePositions { get; } = new ObservableList<Position>();
+        public ObservableList<Position> PositionBuffer { get; } = new ObservableList<Position>();
         // TODO [MultiMeasure] move out
         //public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();
 
@@ -94,11 +91,11 @@ namespace Coordinates.Measurements
         /// Saves latest position as CompensationPosition, that will affect next measurements. Wipes the data afterwards.
         /// </summary>
         /// <returns></returns>
-        public bool SetupCalibration()
+        public bool Calibrate()
         {
             PushZeroPosition();
-            CompensationPosition = _lastRawPosition;
-            ResetAllCollections();
+            _compensationPosition = _lastRawPosition;
+            Wipe();
 
             return true;
         }
@@ -106,30 +103,22 @@ namespace Coordinates.Measurements
         private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
 
         // TODO [MultiMeasure] Foreach on all or rather delete elements from list
-        private void ResetAllCollections()
+        private void Wipe()
         {
-            RawGaugePositions.Clear();
+            PositionBuffer.Clear();
             // TODO [MultiMeasure] move out
             //RawContactPositions.Clear();
             //SelectedPositions.Clear();
         }
 
-        // Measurement Methods (flatness etc.)
-        public IEnumerable<KeyValuePair<string, Type>> AvailableMeasurementMethods { get; private set; }
-        public IMeasurementMethod SelectedMeasurementMethod { get; private set; }
+        /// <summary>
+        /// Compensates position value with CompensationPosition
+        /// </summary>
+        private GaugePositionDTO CompensatePosition(GaugePositionDTO position) =>
+            new GaugePositionDTO(position.X - _compensationPosition.X, position.Y - _compensationPosition.Y, position.Z - _compensationPosition.Z, position.Contact);
 
-        public Dictionary<string, Type> MeasurementMapping { get; } = new Dictionary<string, Type>
-        {
-            {"Jeden otwór",  typeof(OneHoleMeasurementMethod)},
-            {"Dwa otwory",  typeof(TwoHolesMeasurementMethod)},
-            {"Płaszczyzny - prostopadłość",  typeof(SurfacePerpendicularityMeasurementMethod)},
-            {"Płaszczyzny - równoległość",  typeof(SurfaceParalellismMeasurementMethod)}
-        };
-
-        private void InstantiateMeasurements()
-        {
-            // Could have: instead use reflections and iterate by classes in namespace Coordinates.Measurements.Types
-            AvailableMeasurementMethods = MeasurementMapping;
-        }
+        // Measurement (flatness etc.)
+        public IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; private set; }
+        public MeasurementMethodEnum? SelectedMeasurementMethod { get; private set; }
     }
 }

@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\Position.cs" />
+    <Compile Include="Helpers\DescriptionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Coordinates.Models.rd.xml" />
   </ItemGroup>

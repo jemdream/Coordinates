@@ -1,86 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
-using Coordinates.Models.DTO;
 using Coordinates.UI.ViewModels.Interfaces;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
+using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
     public interface IMeasurementProcessViewModel : IMeasurementViewModelBase
     {
-        // TODO [MultiMeasure] move out
-        //ObservableCollection<Position> ContactPositions { get; }
-        int RequiredMeasurementCount { get; }
-        int LeftMeasurementCount { get; }
+        IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
+        ICommand NextElementCommand { get; }
     }
 
-    // TODO M delete all those subscriptions and fields, and just have IMeasurementMethod here. bind from XAML to model
     public class MeasurementProcessViewModel : MeasurementViewModelBase, IMeasurementProcessViewModel
     {
         private readonly IMeasurementManager _measurementManager;
+        private AwaitableDelegateCommand _nextElementCommand;
 
-        // TODO [MultiMeasure] move out
-        //private ObservableCollection<Position> _contactPositions;
-        private int _requiredMeasurementCount;
-
-        public MeasurementProcessViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager)
+        public MeasurementProcessViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager,
+            IMeasurementMethodViewModel measurementMethodViewModel)
             : base(eventAggregator)
         {
+            MeasurementMethodViewModel = measurementMethodViewModel;
             _measurementManager = measurementManager;
 
-            // TODO [MultiMeasure] move out
-            //measurementManager.RawContactPositions
-            //    .OnAdd
-            //    .ObserveOn(SynchronizationContext.Current)
-            //    .Subscribe(position =>
-            //    {
-            //        ContactPositions.Insert(0, position);
-            //        ModelsUpdated();
-            //    });
-
-            // TODO [MultiMeasure] move out
-            //measurementManager.RawContactPositions
-            //    .OnRemove
-            //    .ObserveOn(SynchronizationContext.Current)
-            //    .Subscribe(position =>
-            //    {
-            //        ContactPositions.Remove(position);
-            //        ModelsUpdated();
-            //    });
-
-            // TODO [MultiMeasure] move out
-            //ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
+            // Update all UI elements
+            _measurementManager.MeasurementSource
+                .Subscribe(_ => UpdateNavigationCommands());
         }
 
         public override string Title { get; } = "Pomiar";
 
-        //public ObservableCollection<Position> ContactPositions
-        //{
-        //    get { return _contactPositions; }
-        //    private set { Set(ref _contactPositions, value); }
-        //}
+        public IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
 
-        public int RequiredMeasurementCount
+        public ICommand NextElementCommand => _nextElementCommand ?? (_nextElementCommand = new AwaitableDelegateCommand(async x =>
         {
-            get { return _requiredMeasurementCount; }
-            private set { Set(ref _requiredMeasurementCount, value); }
-        }
-
-        public int LeftMeasurementCount => 0; // TODO [MultiMeasure] move out//ContactPositions.Count;
+            /* TODO M invoke proceeding to next measurement from MeasurementMethodViewModel */
+            await Task.CompletedTask;
+        }, x => true /* TODO M place validation here basing on MeasurementMethodViewModel */));
 
         protected override bool CanOnNext()
         {
+            /* TODO M place validation here basing on MeasurementMethodViewModel */
             return true;
-            // TODO [MultiMeasure] move out
-            //ContactPositions.Count >= MeasurementManager.SelectedMeasurementMethod.Elements.FirstOrDefault().RequiredMeasurementCount;
         }
 
         protected override async Task<bool> OnPrevious()
@@ -98,22 +66,14 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             if (returnConfirmed)
             {
                 _measurementManager.ResetMeasurementData();
-                // TODO [MultiMeasure] move out
-                //ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
             }
 
             return returnConfirmed;
         }
-        private void ModelsUpdated()
-        {
-            UpdateNavigationCommands();
-            RaisePropertyChanged(() => LeftMeasurementCount);
-        }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            // TODO [MultiMeasure] move out
-            RequiredMeasurementCount = 0; //MeasurementManager.SelectedMeasurementMethod.Elements.FirstOrDefault().RequiredMeasurementCount;
+            UpdateNavigationCommands();
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

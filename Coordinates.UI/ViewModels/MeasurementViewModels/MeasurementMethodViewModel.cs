@@ -1,5 +1,6 @@
 ﻿using System;
 using Coordinates.Measurements;
+using Coordinates.Measurements.Types;
 
 namespace Coordinates.UI.ViewModels.MeasurementViewModels
 {
@@ -12,12 +13,16 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         private readonly IMeasurementManager _measurementManager;
 
+        private IMeasurementMethod _measurementMethod;
+
         public MeasurementMethodViewModel(IMeasurementManager measurementManager)
         {
             _measurementManager = measurementManager;
-            _measurementManager.MeasurementSource
-                .Subscribe(_ => { });
 
+            _measurementManager.MeasurementSource
+                .Subscribe(InitializeMeasurement);
+
+            // todo this is from selectionmv \/
             //measurementManager.RawContactPositions
             //    .OnAdd
             //    .ObserveOn(SynchronizationContext.Current)
@@ -38,12 +43,32 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             //    .Subscribe(_ => ModelsUpdated());
 
             //ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
+            
+            // todo this is from manager \/
+            // Storing contact points
+            //compensatedPositions
+            //    .Where(pos => pos.Contact)
+            //    .Subscribe(pos => RawContactPositions.Add(pos));
+            
+            // Selected positions change
+            //SelectedPositions.OnAdd
+            //    .Where(_ => SelectedMeasurementMethod != null)
+            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+            //SelectedPositions.OnRemove
+            //    .Where(_ => SelectedMeasurementMethod != null)
+            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+
         }
 
         public bool IncrementElement()
         {
             /* TODO take actual measurement model and subscribe (???) */
             return true;
+        }
+
+        private void InitializeMeasurement(IMeasurementMethod measurementMethod)
+        {
+            _measurementMethod = measurementMethod;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Coordinates.Measurements.Types
     {
         private readonly List<Surface> _elements = new List<Surface> { new Surface(), new Surface() };
 
-        public SurfacePerpendicularityMeasurementMethod()
+        internal SurfacePerpendicularityMeasurementMethod()
         {
             ActiveElement = _elements[0];
         }
@@ -24,10 +24,7 @@ namespace Coordinates.Measurements.Types
         {
             throw new System.NotImplementedException();
         }
-        public static string Title = "Płaszczyzny - prostopadłość";
-        //public override string ToString()
-        //{
-        //    return "Płaszczyzny - prostopadłość";
-        //}
+
+        public override string ToString() { return "Płaszczyzny - prostopadłość"; }
     }
 }

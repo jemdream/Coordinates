@@ -11,8 +11,6 @@ using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements
 {
-    // TODO [MultiMeasure]: - List<IMeasurementMethod> with measurements-each having own PositionBuffer/RawContactPositions/SelectedPositions
-
     public class MeasurementManager : IMeasurementManager
     {
         private readonly ReplaySubject<Position> _positionSource = new ReplaySubject<Position>(1);
@@ -36,24 +34,9 @@ namespace Coordinates.Measurements
             compensatedPositions
                 .Subscribe(pos => PositionBuffer.Add(pos));
 
-            // After position is stored, bubble it
+            // Bubbling compensated position
             compensatedPositions
-                .Subscribe(x => _positionSource.OnNext(x));
-
-            // TODO [MultiMeasure] move out
-            // Storing contact points
-            //compensatedPositions
-            //    .Where(pos => pos.Contact)
-            //    .Subscribe(pos => RawContactPositions.Add(pos));
-
-            // TODO [MultiMeasure] move out
-            // Selected positions change
-            //SelectedPositions.OnAdd
-            //    .Where(_ => SelectedMeasurementMethod != null)
-            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
-            //SelectedPositions.OnRemove
-            //    .Where(_ => SelectedMeasurementMethod != null)
-            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+                .Subscribe(pos => _positionSource.OnNext(pos));
 
             // Initialize 
             Wipe();
@@ -67,7 +50,8 @@ namespace Coordinates.Measurements
         public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
-            // todo here to set up MeasurementSource
+            //_measurementSource.OnNext();
+            /* TODO here to set up MeasurementSource and push it */
             Wipe();
             return true;
         }
@@ -80,12 +64,8 @@ namespace Coordinates.Measurements
             Wipe();
             return true;
         }
-
-        // TODO [MultiMeasure] move out
-        //public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();
+        
         public ObservableList<Position> PositionBuffer { get; } = new ObservableList<Position>();
-        // TODO [MultiMeasure] move out
-        //public ObservableList<Position> RawContactPositions { get; } = new ObservableList<Position>();
 
         /// <summary>
         /// Saves latest position as CompensationPosition, that will affect next measurements. Wipes the data afterwards.
@@ -101,14 +81,11 @@ namespace Coordinates.Measurements
         }
 
         private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
-
-        // TODO [MultiMeasure] Foreach on all or rather delete elements from list
+        
         private void Wipe()
         {
+            // TODO [MultiMeasure] Foreach on all or rather delete elements from list
             PositionBuffer.Clear();
-            // TODO [MultiMeasure] move out
-            //RawContactPositions.Clear();
-            //SelectedPositions.Clear();
         }
 
         /// <summary>

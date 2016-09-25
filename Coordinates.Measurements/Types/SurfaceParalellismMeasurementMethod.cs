@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
 using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
@@ -9,7 +7,7 @@ namespace Coordinates.Measurements.Types
     {
         private readonly List<Surface> _elements = new List<Surface> { new Surface(), new Surface() };
 
-        public SurfaceParalellismMeasurementMethod()
+        internal SurfaceParalellismMeasurementMethod()
         {
             ActiveElement = _elements[0];
         }
@@ -26,10 +24,7 @@ namespace Coordinates.Measurements.Types
         {
             throw new System.NotImplementedException();
         }
-        public static string Title = "Płaszczyzny - równoległość";
-        //public override string ToString()
-        //{
-        //    return "Płaszczyzny - równoległość";
-        //}
+
+        public override string ToString() { return "Płaszczyzny - równoległość"; }
     }
 }

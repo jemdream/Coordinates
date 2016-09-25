@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using Coordinates.Measurements;
 using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
@@ -11,18 +10,13 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     public abstract class MeasurementViewModelBase : ViewModelBase, IMeasurementViewModelBase
     {
         protected readonly IEventAggregator EventAggregator;
-        // TODO [MultiMeasure] move out
-        //protected IMeasurementManager MeasurementManager;
 
         private AwaitableDelegateCommand _goBackCommand;
         private AwaitableDelegateCommand _goNextCommand;
 
-        // TODO [MultiMeasure] move out
-        protected MeasurementViewModelBase(IEventAggregator eventAggregator)//, IMeasurementManager measurementManager)
+        protected MeasurementViewModelBase(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
-            // TODO [MultiMeasure] move out
-            //MeasurementManager = measurementManager;
         }
 
         public abstract string Title { get; }

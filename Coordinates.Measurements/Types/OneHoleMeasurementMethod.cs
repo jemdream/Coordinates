@@ -7,7 +7,7 @@ namespace Coordinates.Measurements.Types
     {
         private readonly List<Hole> _elements = new List<Hole> { new Hole() };
 
-        public OneHoleMeasurementMethod()
+        internal OneHoleMeasurementMethod()
         {
             ActiveElement = _elements[0];
         }
@@ -24,11 +24,7 @@ namespace Coordinates.Measurements.Types
         {
             throw new System.NotImplementedException();
         }
-
-        public static string Title = "Jeden otwór";
-        //public override string ToString()
-        //{
-        //    return "Jeden otwór";
-        //}
+        
+        public override string ToString() { return "Jeden otwór"; }
     }
 }

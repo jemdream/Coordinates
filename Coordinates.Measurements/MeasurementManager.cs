@@ -15,6 +15,7 @@ namespace Coordinates.Measurements
     {
         private readonly ReplaySubject<Position> _positionSource = new ReplaySubject<Position>(1);
         private readonly ReplaySubject<IMeasurementMethod> _measurementSource = new ReplaySubject<IMeasurementMethod>(1);
+        private readonly MeasurementMethodFactory _measurementMethodFactory = new MeasurementMethodFactory();
 
         private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
         private GaugePositionDTO _compensationPosition = GaugePositionDTO.Default;
@@ -50,9 +51,8 @@ namespace Coordinates.Measurements
         public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
-            //_measurementSource.OnNext();
-            /* TODO create factory */
-            /* TODO here to set up MeasurementSource and push it */
+            _measurementSource.OnNext(_measurementMethodFactory.GetMeasurementMethod(selectedMeasurementMethod));
+            
             Wipe();
             return true;
         }
@@ -65,7 +65,7 @@ namespace Coordinates.Measurements
             Wipe();
             return true;
         }
-        
+
         public ObservableList<Position> PositionBuffer { get; } = new ObservableList<Position>();
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Coordinates.Measurements
         }
 
         private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
-        
+
         private void Wipe()
         {
             // TODO [MultiMeasure] Foreach on all or rather delete elements from list

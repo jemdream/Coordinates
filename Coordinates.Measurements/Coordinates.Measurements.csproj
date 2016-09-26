@@ -118,6 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\IMeasurementMethod.cs" />
     <Compile Include="Types\MeasurementMethodEnum.cs" />
+    <Compile Include="Types\MeasurementMethodFactory.cs" />
     <Compile Include="Types\SurfaceParalellismMeasurementMethod.cs" />
     <Compile Include="Types\SurfacePerpendicularityMeasurementMethod.cs" />
     <Compile Include="Types\TwoHolesMeasurementMethod.cs" />

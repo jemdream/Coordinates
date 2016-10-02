@@ -1,26 +1,21 @@
-﻿using System.Collections.Generic;
-using Coordinates.Measurements.Elements;
+﻿using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
 {
-    public class SurfaceParalellismMeasurementMethod : IMeasurementMethod
+    public class SurfaceParalellismMeasurementMethod : BaseMeasurementMethod
     {
-        private readonly List<Surface> _elements = new List<Surface> { new Surface(), new Surface() };
-
-        internal SurfaceParalellismMeasurementMethod()
+        public SurfaceParalellismMeasurementMethod()
         {
-            ActiveElement = _elements[0];
+            BaseElements.AddLast(new Surface());
+            BaseElements.AddLast(new Surface());
         }
 
-        public IEnumerable<IElement> Elements => _elements;
-        public IElement ActiveElement { get; }
-
-        public bool CanCalculate()
+        public override bool CanCalculate()
         {
             return true;
         }
 
-        public object Calculate()
+        public override object Calculate()
         {
             throw new System.NotImplementedException();
         }

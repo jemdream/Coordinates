@@ -1,30 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
 {
-    public class OneHoleMeasurementMethod : IMeasurementMethod
+    public class OneHoleMeasurementMethod : BaseMeasurementMethod
     {
-        private readonly List<Hole> _elements = new List<Hole> { new Hole() };
-
-        internal OneHoleMeasurementMethod()
+        public OneHoleMeasurementMethod()
         {
-            ActiveElement = _elements[0];
+            BaseElements.AddLast(new Hole());
         }
-
-        public IEnumerable<IElement> Elements => _elements;
-        public IElement ActiveElement { get; }
-
-        public bool CanCalculate()
+       
+        public override bool CanCalculate()
         {
             return true;
         }
 
-        public object Calculate()
+        public override object Calculate()
         {
             throw new System.NotImplementedException();
         }
-        
+
         public override string ToString() { return "Jeden otwór"; }
     }
 }

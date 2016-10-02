@@ -5,60 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
-    xmlns:dto="using:Coordinates.Models.DTO"
-    xmlns:converters="using:Template10.Converters"
+    xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
-
-    <UserControl.Resources>
-        <!-- When using x:Bind, you need to set x:DataType -->
-        <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0"
-                           Text="{x:Bind X}" 
-                           Style="{ThemeResource BaseTextBlockStyle}"
-                           Margin="12"/>
-                <TextBlock  Grid.Column="1"
-                            Text="{x:Bind Y}" 
-                            Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="12"/>
-                <TextBlock  Grid.Column="2"
-                            Text="{x:Bind Z}" 
-                            Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="12"/>
-            </Grid>
-        </DataTemplate>
-
-        <converters:StringFormatConverter x:Key="StringFormatConverter"/> <!--Format="{}{0:s}"-->
-    </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding ContactPositions}"
-                  ItemTemplate="{StaticResource ContactListViewTemplate}"
-                  SelectionMode="None"
-                  ShowsScrollingPlaceholders="True">
-        </ListView>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="{Binding LeftMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-                    Margin="12"/>
-            <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-                    Margin="12"/>
-        </StackPanel>
-        
-    </Grid>
+    <StackPanel Orientation="Horizontal">
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.MeasurementMethod.Elements[0]}"/>
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.MeasurementMethod.Elements[1]}"/>
+    </StackPanel>
 </UserControl>

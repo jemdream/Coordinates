@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Models;
+using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
@@ -30,15 +31,16 @@ namespace Coordinates.Measurements
             var compensatedPositions = measurementDataSource.DataStream
                 .Select(CompensatePosition)
                 .Select(pos => new Position(pos.X, pos.Y, pos.Z, pos.Contact));
-
-            // Storing all points
+            
             compensatedPositions
-                .Subscribe(pos => PositionBuffer.Add(pos));
-
-            // Bubbling compensated position
-            compensatedPositions
-                .Subscribe(pos => _positionSource.OnNext(pos));
-
+                .Subscribe(pos =>
+                {
+                    // Storing all points
+                    PositionBuffer.Add(pos);
+                    // Bubbling compensated position
+                    _positionSource.OnNext(pos);
+                });
+            
             // Initialize 
             Wipe();
             AvailableMeasurementMethods = Enum.GetValues(typeof(MeasurementMethodEnum)).Cast<MeasurementMethodEnum>();
@@ -47,6 +49,13 @@ namespace Coordinates.Measurements
         public IObservable<IMeasurementMethod> MeasurementSource => _measurementSource.AsObservable();
 
         // Positions (Gauge / Contact)
+        public bool SubscribeToDataSource(IElement element)
+        {
+            var sub0 = _positionSource.Subscribe(element.Positions.Add);
+            
+            return true;
+        }
+
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
         public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
@@ -80,7 +89,7 @@ namespace Coordinates.Measurements
 
             return true;
         }
-
+        
         private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
 
         private void Wipe()

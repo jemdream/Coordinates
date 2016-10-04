@@ -11,7 +11,7 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
     <StackPanel Orientation="Horizontal">
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.MeasurementMethod.Elements[0]}"/>
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.MeasurementMethod.Elements[1]}"/>
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"/>
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"/>
     </StackPanel>
 </UserControl>

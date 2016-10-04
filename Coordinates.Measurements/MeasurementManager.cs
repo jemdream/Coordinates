@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Models;
-using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
@@ -31,7 +30,7 @@ namespace Coordinates.Measurements
             var compensatedPositions = measurementDataSource.DataStream
                 .Select(CompensatePosition)
                 .Select(pos => new Position(pos.X, pos.Y, pos.Z, pos.Contact));
-            
+
             compensatedPositions
                 .Subscribe(pos =>
                 {
@@ -40,28 +39,33 @@ namespace Coordinates.Measurements
                     // Bubbling compensated position
                     _positionSource.OnNext(pos);
                 });
-            
+
             // Initialize 
             Wipe();
             AvailableMeasurementMethods = Enum.GetValues(typeof(MeasurementMethodEnum)).Cast<MeasurementMethodEnum>();
         }
 
+        // Measurement
+        public IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; }
+        public MeasurementMethodEnum? SelectedMeasurementMethod { get; private set; }
         public IObservable<IMeasurementMethod> MeasurementSource => _measurementSource.AsObservable();
 
-        // Positions (Gauge / Contact)
-        public bool SubscribeToDataSource(IElement element)
-        {
-            var sub0 = _positionSource.Subscribe(element.Positions.Add);
-            
-            return true;
-        }
-
+        // Positions
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
+        public ObservableList<Position> PositionBuffer { get; } = new ObservableList<Position>();
+
+        /// <summary>
+        /// Sets up 
+        /// </summary>
+        /// <param name="selectedMeasurementMethod"></param>
+        /// <returns></returns>
         public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
             SelectedMeasurementMethod = selectedMeasurementMethod;
-            _measurementSource.OnNext(_measurementMethodFactory.GetMeasurementMethod(selectedMeasurementMethod));
-            
+
+            var method = _measurementMethodFactory.GetMeasurementMethod(selectedMeasurementMethod);
+            _measurementSource.OnNext(method);
+
             Wipe();
             return true;
         }
@@ -75,8 +79,6 @@ namespace Coordinates.Measurements
             return true;
         }
 
-        public ObservableList<Position> PositionBuffer { get; } = new ObservableList<Position>();
-
         /// <summary>
         /// Saves latest position as CompensationPosition, that will affect next measurements. Wipes the data afterwards.
         /// </summary>
@@ -89,7 +91,7 @@ namespace Coordinates.Measurements
 
             return true;
         }
-        
+
         private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
 
         private void Wipe()
@@ -103,9 +105,5 @@ namespace Coordinates.Measurements
         /// </summary>
         private GaugePositionDTO CompensatePosition(GaugePositionDTO position) =>
             new GaugePositionDTO(position.X - _compensationPosition.X, position.Y - _compensationPosition.Y, position.Z - _compensationPosition.Z, position.Contact);
-
-        // Measurement (flatness etc.)
-        public IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; private set; }
-        public MeasurementMethodEnum? SelectedMeasurementMethod { get; private set; }
     }
 }

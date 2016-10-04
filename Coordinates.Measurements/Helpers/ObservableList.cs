@@ -16,20 +16,20 @@ namespace Coordinates.Measurements.Helpers
         // Hiding parent methods
         public new void Add(T obj)
         {
-            _onAddSubject.OnNext(obj);
             base.Add(obj);
+            _onAddSubject.OnNext(obj);
         }
         public new void Remove(T obj)
         {
-            _onRemoveSubject.OnNext(obj);
             base.Remove(obj);
+            _onRemoveSubject.OnNext(obj);
         }
 
         public new void Clear()
         {
+            base.Clear();
             foreach (var obj in this)
                 _onRemoveSubject.OnNext(obj);
-            base.Clear();
         }
     }
 }

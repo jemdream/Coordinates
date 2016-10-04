@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Types;
 using Template10.Mvvm;
@@ -25,6 +28,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             _measurementManager.MeasurementSource
                 .Subscribe(InitializeMeasurement);
             
+            #region trash
             // todo this is from selectionmv \/
             //measurementManager.RawContactPositions
             //    .OnAdd
@@ -60,6 +64,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             //SelectedPositions.OnRemove
             //    .Where(_ => SelectedMeasurementMethod != null)
             //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
+            #endregion
         }
 
         public IMeasurementMethod MeasurementMethod
@@ -75,22 +80,40 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         }
 
         private readonly object _lock = new object();
-
+        private CompositeDisposable _actualElementDisposables;
+        
         private void InitializeMeasurement(IMeasurementMethod measurementMethod)
         {
             lock (_lock)
             {
-                // TODO i think this should be deleted
-                //ElementsViewModels = MeasurementMethod.Elements
-                //    .Select(el => new ElementViewModel(el));
-
-                // Select element and subscribe it to datasource
-                var element = measurementMethod.ActivateNext();
-                _measurementManager.SubscribeToDataSource(element);
-
+                // Wrapping in VM
+                ElementsViewModels = measurementMethod.Elements
+                    .Select((el, i) => new ElementViewModel(el))
+                    .ToArray();
+                
+                // Select next element and manage subscriptions 
+                SetNextElement(measurementMethod);
+                
                 // Expose measurement method
                 MeasurementMethod = measurementMethod;
             }
+        }
+
+        private void SetNextElement(IMeasurementMethod measurementMethod)
+        {
+            if (_actualElementDisposables != null && !_actualElementDisposables.IsDisposed)
+                _actualElementDisposables.Dispose();
+
+            _actualElementDisposables = new CompositeDisposable();
+
+            var element = measurementMethod.ActivateNextElement();
+
+            var subscriptionToData = _measurementManager.PositionSource
+                .Where(position => position.Contact)
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(position => element.Positions.Add(position));
+
+            _actualElementDisposables.Add(subscriptionToData);
         }
     }
 }

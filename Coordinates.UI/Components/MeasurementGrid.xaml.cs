@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Coordinates.Measurements.Elements;
 using Coordinates.Models.DTO;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Microsoft.Practices.ObjectBuilder2;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -29,9 +30,8 @@ namespace Coordinates.UI.Components
                 .ToList();
 
             var listView = (ListView)sender;
-
-            // TODO or instead - tweak here
-            var selectedPositionsVm = ((IElement)listView.DataContext).SelectedPositions;
+            
+            var selectedPositionsVm = ((IElementViewModel)listView.DataContext).SelectedPositions;
 
             added
                 .Where(position => !selectedPositionsVm.Contains(position))
@@ -46,7 +46,7 @@ namespace Coordinates.UI.Components
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
             var listView = (ListView)sender;
-            var vm = (IElement)listView.DataContext;
+            var vm = (IElementViewModel)listView.DataContext;
 
             if (vm == null) return;
 

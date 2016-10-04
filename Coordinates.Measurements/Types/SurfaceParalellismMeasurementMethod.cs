@@ -6,8 +6,8 @@ namespace Coordinates.Measurements.Types
     {
         public SurfaceParalellismMeasurementMethod()
         {
-            BaseElements.AddLast(new Surface());
-            BaseElements.AddLast(new Surface());
+            BaseElements.Add(new Surface());
+            BaseElements.Add(new Surface());
         }
 
         public override bool CanCalculate()

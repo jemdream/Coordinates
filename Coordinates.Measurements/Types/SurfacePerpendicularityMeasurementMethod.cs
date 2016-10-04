@@ -6,8 +6,8 @@ namespace Coordinates.Measurements.Types
     {
         public SurfacePerpendicularityMeasurementMethod()
         {
-            BaseElements.AddLast(new Surface());
-            BaseElements.AddLast(new Surface());
+            BaseElements.Add(new Surface());
+            BaseElements.Add(new Surface());
         }
 
         public override bool CanCalculate()

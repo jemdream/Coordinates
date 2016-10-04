@@ -6,8 +6,8 @@ namespace Coordinates.Measurements.Types
     {
         public TwoHolesMeasurementMethod()
         {
-            BaseElements.AddLast(new Hole());
-            BaseElements.AddLast(new Hole());
+            BaseElements.Add(new Hole());
+            BaseElements.Add(new Hole());
         }
 
         public override bool CanCalculate()

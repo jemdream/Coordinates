@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
-using Coordinates.Models.DTO;
-
-namespace Coordinates.Measurements.Elements
+﻿namespace Coordinates.Measurements.Elements
 {
-    public class Hole : IElement
+    public class Hole : BaseElement
     {
-        public int RequiredMeasurementCount { get; } = 5;
+        public override int RequiredMeasurementCount { get; } = 5;
 
-        public bool CanCalculate()
+        public override bool CanCalculate()
         {
             throw new System.NotImplementedException();
         }
 
-        public object Calculate()
+        public override object Calculate()
         {
             throw new System.NotImplementedException();
         }
-
-        public IList<Position> SelectedPositions { get; } = new List<Position>();
-        public IList<Position> Positions { get; } = new List<Position>();
     }
 }

@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using System.Threading;
 using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Helpers;
 using Coordinates.Models.DTO;
+using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels.MeasurementViewModels
 {
@@ -11,25 +16,42 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         bool CanCalculate();
         object Calculate();
 
-        IList<Position> SelectedPositions { get; }
-        IList<Position> Positions { get; }
+        IElement Element { get; }
+
+        ObservableList<Position> SelectedPositions { get; }
+        ObservableCollection<Position> Positions { get; }
     }
 
-    public class ElementViewModel : IElementViewModel
+    public class ElementViewModel : ViewModelBase, IElementViewModel
     {
-        private readonly IElement _element;
-
         public ElementViewModel(IElement element)
         {
-            _element = element;
+            Element = element;
+
+            Positions = new ObservableCollection<Position>();
+
+            Element.Positions.OnAdd
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(pos => Positions.Insert(0, pos));
+
+            Element.Positions.OnRemove
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(pos => Positions.Remove(pos));
+
+            Element.SelectedPositions.OnAdd
+                .Subscribe(pos => { });
+
+            Element.SelectedPositions.OnRemove
+                .Subscribe(pos => { });
         }
+        
+        public IElement Element { get; }
 
-        public int RequiredMeasurementCount { get; }
-        public bool CanCalculate() => _element.CanCalculate();
+        public int RequiredMeasurementCount => Element.RequiredMeasurementCount;
+        public bool CanCalculate() => Element.CanCalculate();
+        public object Calculate() => Element.Calculate();
 
-        public object Calculate() => _element.Calculate();
-
-        public IList<Position> SelectedPositions { get; }
-        public IList<Position> Positions { get; }
+        public ObservableList<Position> SelectedPositions => Element.SelectedPositions;
+        public ObservableCollection<Position> Positions { get; }
     }
 }

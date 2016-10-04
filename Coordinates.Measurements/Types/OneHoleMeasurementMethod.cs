@@ -1,5 +1,4 @@
-﻿using System.Reactive.Disposables;
-using Coordinates.Measurements.Elements;
+﻿using Coordinates.Measurements.Elements;
 
 namespace Coordinates.Measurements.Types
 {
@@ -7,7 +6,7 @@ namespace Coordinates.Measurements.Types
     {
         public OneHoleMeasurementMethod()
         {
-            BaseElements.AddLast(new Hole());
+            BaseElements.Add(new Hole());
         }
        
         public override bool CanCalculate()

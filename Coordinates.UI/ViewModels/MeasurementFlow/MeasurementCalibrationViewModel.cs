@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Models.DTO;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -43,5 +45,18 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         {
             await Task.Run(() => _measurementManager.Calibrate());
         }, x => _currentGaugePosition != null));
+
+        protected override async Task<bool> OnPrevious()
+        {
+            _measurementManager.ResetMeasurementData();
+            return await Task.FromResult(true);
+        }
+
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        {
+            if(_measurementManager.SelectedMeasurementMethod == null) GoBackCommand.Execute(null);
+
+            return base.OnNavigatedToAsync(parameter, mode, state);
+        }
     }
 }

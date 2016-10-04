@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
-using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
@@ -15,6 +13,7 @@ namespace Coordinates.Measurements.Types
 
         public IElement ActivateNextElement()
         {
+            // TODO ONLY CHANGE SELECTION (will be subscribed - not here)
             if (ActiveElement == null)
                 ActiveElement = Elements.First();
             //else Elements.

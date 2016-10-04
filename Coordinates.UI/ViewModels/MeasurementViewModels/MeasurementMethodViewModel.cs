@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using Coordinates.Measurements;
@@ -80,7 +79,6 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         }
 
         private readonly object _lock = new object();
-        private CompositeDisposable _actualElementDisposables;
         
         private void InitializeMeasurement(IMeasurementMethod measurementMethod)
         {
@@ -101,10 +99,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
         private void SetNextElement(IMeasurementMethod measurementMethod)
         {
-            if (_actualElementDisposables != null && !_actualElementDisposables.IsDisposed)
-                _actualElementDisposables.Dispose();
-
-            _actualElementDisposables = new CompositeDisposable();
+            measurementMethod.Subscriptions.Clear();
 
             var element = measurementMethod.ActivateNextElement();
 
@@ -113,7 +108,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(position => element.Positions.Add(position));
 
-            _actualElementDisposables.Add(subscriptionToData);
+            measurementMethod.Subscriptions.Add(subscriptionToData);
         }
     }
 }

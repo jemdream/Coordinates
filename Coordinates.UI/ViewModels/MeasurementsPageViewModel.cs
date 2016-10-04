@@ -49,7 +49,11 @@ namespace Coordinates.UI.ViewModels
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set { Set(ref _selectedTabIndex, value); }
+            set
+            {
+                Set(ref _selectedTabIndex, value);
+                RaisePropertyChanged();
+            }
         }
     }
 }

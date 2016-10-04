@@ -19,6 +19,7 @@ namespace Coordinates.Measurements
 
         private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
         private GaugePositionDTO _compensationPosition = GaugePositionDTO.Default;
+        private IMeasurementMethod _selectedMeasurementMethod;
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
@@ -41,7 +42,6 @@ namespace Coordinates.Measurements
                 });
 
             // Initialize 
-            Wipe();
             AvailableMeasurementMethods = Enum.GetValues(typeof(MeasurementMethodEnum)).Cast<MeasurementMethodEnum>();
         }
 
@@ -61,12 +61,13 @@ namespace Coordinates.Measurements
         /// <returns></returns>
         public bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod)
         {
+            PositionBuffer.Clear();
+
+            _selectedMeasurementMethod?.Subscriptions.Clear();
             SelectedMeasurementMethod = selectedMeasurementMethod;
+            _selectedMeasurementMethod = _measurementMethodFactory.GetMeasurementMethod(selectedMeasurementMethod);
+            _measurementSource.OnNext(_selectedMeasurementMethod);
 
-            var method = _measurementMethodFactory.GetMeasurementMethod(selectedMeasurementMethod);
-            _measurementSource.OnNext(method);
-
-            Wipe();
             return true;
         }
 
@@ -75,7 +76,12 @@ namespace Coordinates.Measurements
         /// </summary>
         public bool ResetMeasurementData()
         {
-            Wipe();
+            PositionBuffer.Clear();
+
+            SelectedMeasurementMethod = null;
+            _selectedMeasurementMethod?.Subscriptions.Clear();
+            _selectedMeasurementMethod = null;
+
             return true;
         }
 
@@ -85,21 +91,13 @@ namespace Coordinates.Measurements
         /// <returns></returns>
         public bool Calibrate()
         {
-            PushZeroPosition();
+            _positionSource.OnNext(Position.Default);
             _compensationPosition = _lastRawPosition;
-            Wipe();
+            PositionBuffer.Clear();
 
             return true;
         }
-
-        private void PushZeroPosition() => _positionSource.OnNext(Position.Default);
-
-        private void Wipe()
-        {
-            // TODO [MultiMeasure] Foreach on all or rather delete elements from list
-            PositionBuffer.Clear();
-        }
-
+        
         /// <summary>
         /// Compensates position value with CompensationPosition
         /// </summary>

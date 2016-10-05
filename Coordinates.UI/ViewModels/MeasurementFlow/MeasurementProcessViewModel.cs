@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
@@ -31,8 +32,12 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             _measurementManager = measurementManager;
 
             // Update all UI elements
-            _measurementManager.MeasurementSource
-                .Subscribe(_ => UpdateNavigationCommands());
+            _measurementManager.PositionSource
+                .Subscribe(_ =>
+                {
+                    (NextElementCommand as AwaitableDelegateCommand)?.RaiseCanExecuteChanged();
+                    UpdateNavigationCommands();
+                });
         }
 
         public override string Title { get; } = "Pomiar";
@@ -41,9 +46,15 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public ICommand NextElementCommand => _nextElementCommand ?? (_nextElementCommand = new AwaitableDelegateCommand(async x =>
         {
-            /* TODO M invoke proceeding to next measurement from MeasurementMethodViewModel */
+
+            MeasurementMethodViewModel.SetNextElement();
             await Task.CompletedTask;
-        }, x => true /* TODO M place validation here basing on MeasurementMethodViewModel */));
+            (NextElementCommand as AwaitableDelegateCommand)?.RaiseCanExecuteChanged();
+        }, x =>
+        {
+            var mm = MeasurementMethodViewModel.MeasurementMethod;
+            return (mm.ActiveElement.Positions.Count >= mm.ActiveElement.RequiredMeasurementCount) && mm.IsNextElementAvailable;
+        }));
 
         protected override bool CanOnNext()
         {
@@ -63,10 +74,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
             var returnConfirmed = (await dialog.ShowAsync()).Equals(ContentDialogResult.Primary);
 
-            if (returnConfirmed)
-            {
-                _measurementManager.ResetMeasurementData();
-            }
+            if (returnConfirmed) _measurementManager.ResetMeasurementData();
 
             return returnConfirmed;
         }

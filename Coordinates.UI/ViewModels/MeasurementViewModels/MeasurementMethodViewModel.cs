@@ -13,6 +13,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         IMeasurementMethod MeasurementMethod { get; }
         IEnumerable<IElementViewModel> ElementsViewModels { get; }
+        void SetNextElement();
     }
 
     public class MeasurementMethodViewModel : ViewModelBase, IMeasurementMethodViewModel
@@ -26,7 +27,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             _measurementManager = measurementManager;
             _measurementManager.MeasurementSource
                 .Subscribe(InitializeMeasurement);
-            
+
             #region trash
             // todo this is from selectionmv \/
             //measurementManager.RawContactPositions
@@ -80,21 +81,10 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
         private readonly object _lock = new object();
         
-        private void InitializeMeasurement(IMeasurementMethod measurementMethod)
+        public void SetNextElement()
         {
-            lock (_lock)
-            {
-                // Wrapping in VM
-                ElementsViewModels = measurementMethod.Elements
-                    .Select((el, i) => new ElementViewModel(el))
-                    .ToArray();
-                
-                // Select next element and manage subscriptions 
-                SetNextElement(measurementMethod);
-                
-                // Expose measurement method
-                MeasurementMethod = measurementMethod;
-            }
+            if (_measurementMethod != null)
+                SetNextElement(_measurementMethod);
         }
 
         private void SetNextElement(IMeasurementMethod measurementMethod)
@@ -109,6 +99,23 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .Subscribe(position => element.Positions.Add(position));
 
             measurementMethod.Subscriptions.Add(subscriptionToData);
+        }
+
+        private void InitializeMeasurement(IMeasurementMethod measurementMethod)
+        {
+            lock (_lock)
+            {
+                // Wrapping in VM
+                ElementsViewModels = measurementMethod.Elements
+                    .Select((el, i) => new ElementViewModel(el))
+                    .ToArray();
+
+                // Select next element and manage subscriptions 
+                SetNextElement(measurementMethod);
+
+                // Expose measurement method
+                MeasurementMethod = measurementMethod;
+            }
         }
     }
 }

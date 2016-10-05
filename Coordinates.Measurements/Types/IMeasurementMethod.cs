@@ -9,6 +9,7 @@ namespace Coordinates.Measurements.Types
         IEnumerable<IElement> Elements { get; }
         IElement ActiveElement { get; }
         IElement ActivateNextElement();
+        bool IsNextElementAvailable { get; }
         bool CanCalculate();
         object Calculate();
         CompositeDisposable Subscriptions { get; }

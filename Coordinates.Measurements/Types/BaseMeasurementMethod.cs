@@ -13,13 +13,25 @@ namespace Coordinates.Measurements.Types
 
         public IElement ActivateNextElement()
         {
-            // TODO ONLY CHANGE SELECTION (will be subscribed - not here)
+            // TODO temporary solution for 2 member measurements
             if (ActiveElement == null)
-                ActiveElement = Elements.First();
-            //else Elements.
+                ActiveElement = BaseElements.First();
+            else
+                ActiveElement = BaseElements[1];
+
             return ActiveElement;
         }
-        
+
+        public bool IsNextElementAvailable
+        {
+            get
+            {
+                if (ActiveElement == null) return false;
+
+                return ActiveElement != BaseElements[1];
+            }
+        }
+
         public virtual bool CanCalculate() => true;
         public virtual object Calculate() => null;
 

@@ -12,6 +12,7 @@
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
     <StackPanel Orientation="Horizontal">
         <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="Dalej" Command="{Binding NextElementCommand}"/>
         <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"/>
     </StackPanel>
 </UserControl>

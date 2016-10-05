@@ -14,12 +14,9 @@ namespace Coordinates.Measurements.Types
         public IElement ActivateNextElement()
         {
             // TODO temporary solution for 2 member measurements
-            if (ActiveElement == null)
-                ActiveElement = BaseElements.First();
-            else
-                ActiveElement = BaseElements[1];
-
-            return ActiveElement;
+            return ActiveElement = (ActiveElement == null) ?
+                BaseElements.First() :
+                BaseElements[1];
         }
 
         public bool IsNextElementAvailable

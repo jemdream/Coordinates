@@ -7,10 +7,15 @@
     xmlns:dto="using:Coordinates.Models.DTO"
     xmlns:converters="using:Template10.Converters"
     xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    xmlns:converters1="using:Coordinates.UI.Helpers.Converters"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Cimbalino.Toolkit.Behaviors"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
+    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}"
+    Margin="50" x:Name="MeasurementGridUserControl">
+    <!--x:Name="MeasurementGrid"-->
 
     <UserControl.Resources>
         <!-- When using x:Bind, you need to set x:DataType -->
@@ -39,8 +44,8 @@
             </Grid>
         </DataTemplate>
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-        <converters:StringFormatConverter x:Key="EnumerableCountConverter"/>
-        <!--Format="{}{0:s}"-->
+        <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
+        <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -52,16 +57,22 @@
                   ItemTemplate="{StaticResource ContactListViewTemplate}"
                   SelectionChanged="Selector_OnSelectionChanged"
                   Loaded="FrameworkElement_OnLoaded"
-                  SelectionMode="Multiple"
+                  SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}"
                   ShowsScrollingPlaceholders="True">
         </ListView>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="{Binding Positions.Count, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-                    Margin="12"/>
+            <!--Text="{Binding Positions.Count, UpdateSourceTrigger=PropertyChanged}"-->
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Margin="12">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">
+                            <behaviors:MultiBindingItem Value="{Binding IsSelectable, ElementName=MeasurementGridUserControl}" />
+                            <behaviors:MultiBindingItem Value="{Binding Positions.Count}" />
+                            <behaviors:MultiBindingItem Value="{Binding SelectedPositions.Count}" />
+                        </behaviors:MultiBindingBehavior>   
+                    </interactivity:Interaction.Behaviors>
+            </TextBlock>
             <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-                    Margin="12"/>
+                    Style="{ThemeResource BodyTextBlockStyle}" Margin="12"/>
         </StackPanel>
     </Grid>
 </UserControl>

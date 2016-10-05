@@ -10,9 +10,9 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
-    <StackPanel Orientation="Horizontal">
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
         <Button Content="Dalej" Command="{Binding NextElementCommand}"/>
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"/>
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
     </StackPanel>
 </UserControl>

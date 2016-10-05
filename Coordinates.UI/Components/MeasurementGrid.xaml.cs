@@ -2,7 +2,6 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
-using Coordinates.Measurements.Elements;
 using Coordinates.Models.DTO;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Microsoft.Practices.ObjectBuilder2;
@@ -13,6 +12,22 @@ namespace Coordinates.UI.Components
 {
     public sealed partial class MeasurementGrid : UserControl
     {
+        #region Dependency Properties
+        public bool IsSelectable
+        {
+            get { return (bool)GetValue(IsSelectableProperty); }
+            set
+            {
+                SetValue(IsSelectableProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty IsSelectableProperty =
+          DependencyProperty.Register("IsSelectable", typeof(bool), typeof(MeasurementGrid), new PropertyMetadata(null, OnIsSelectableChanged));
+
+        private static void OnIsSelectableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) { }
+        #endregion
+
         public MeasurementGrid()
         {
             InitializeComponent();
@@ -30,7 +45,7 @@ namespace Coordinates.UI.Components
                 .ToList();
 
             var listView = (ListView)sender;
-            
+
             var selectedPositionsVm = ((IElementViewModel)listView.DataContext).SelectedPositions;
 
             added

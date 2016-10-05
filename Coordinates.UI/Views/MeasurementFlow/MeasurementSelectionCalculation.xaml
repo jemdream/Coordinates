@@ -5,9 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
+    xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementSelectionCalculationViewModel}">
-    
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
+        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
+    </StackPanel>
 </UserControl>

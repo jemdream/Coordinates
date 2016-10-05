@@ -39,12 +39,12 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .Subscribe(pos => Positions.Remove(pos));
 
             Element.SelectedPositions.OnAdd
-                .Subscribe(pos => { });
+                .Subscribe(pos => RaisePropertyChanged(() => SelectedPositions));
 
             Element.SelectedPositions.OnRemove
-                .Subscribe(pos => { });
+                .Subscribe(pos => RaisePropertyChanged(() => SelectedPositions));
         }
-        
+
         public IElement Element { get; }
 
         public int RequiredMeasurementCount => Element.RequiredMeasurementCount;

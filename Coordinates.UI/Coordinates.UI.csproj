@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />
+    <Compile Include="Helpers\Converters\EqualityConverter.cs" />
     <Compile Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml.cs">
       <DependentUpon>MeasurementSelectionCalculation.xaml</DependentUpon>
     </Compile>

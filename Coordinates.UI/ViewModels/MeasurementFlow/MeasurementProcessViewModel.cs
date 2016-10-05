@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
@@ -17,13 +16,14 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     {
         IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
         ICommand NextElementCommand { get; }
+        bool ViewHack { get; }
     }
 
     public class MeasurementProcessViewModel : MeasurementViewModelBase, IMeasurementProcessViewModel
     {
         private readonly IMeasurementManager _measurementManager;
         private AwaitableDelegateCommand _nextElementCommand;
-
+        
         public MeasurementProcessViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager,
             IMeasurementMethodViewModel measurementMethodViewModel)
             : base(eventAggregator)
@@ -42,14 +42,20 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public override string Title { get; } = "Pomiar";
 
+        private bool _viewHack;
+        public bool ViewHack { get { return _viewHack; } set { Set(ref _viewHack, value); } }
+
         public IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
 
         public ICommand NextElementCommand => _nextElementCommand ?? (_nextElementCommand = new AwaitableDelegateCommand(async x =>
         {
-
             MeasurementMethodViewModel.SetNextElement();
-            await Task.CompletedTask;
+            
             (NextElementCommand as AwaitableDelegateCommand)?.RaiseCanExecuteChanged();
+
+            await Task.CompletedTask;
+
+            ViewHack = !ViewHack;
         }, x =>
         {
             var mm = MeasurementMethodViewModel.MeasurementMethod;

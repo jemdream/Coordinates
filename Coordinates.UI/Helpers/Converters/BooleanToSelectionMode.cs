@@ -12,7 +12,8 @@ namespace Coordinates.UI.Helpers.Converters
 
             if (boolean == null) return null;
 
-            return (bool)boolean ? ListViewSelectionMode.Multiple : ListViewSelectionMode.None;
+            if ((bool) boolean) return ListViewSelectionMode.Multiple;
+            return ListViewSelectionMode.None;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

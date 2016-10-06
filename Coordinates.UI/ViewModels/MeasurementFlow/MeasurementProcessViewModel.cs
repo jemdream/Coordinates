@@ -88,6 +88,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             UpdateNavigationCommands();
+            ViewHack = !ViewHack;
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

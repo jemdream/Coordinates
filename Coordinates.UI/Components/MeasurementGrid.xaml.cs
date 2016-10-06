@@ -33,7 +33,6 @@ namespace Coordinates.UI.Components
             InitializeComponent();
         }
 
-        // TODO temporary solution - create "Attached Property" for control and place this functionality there
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var added = e.AddedItems
@@ -57,7 +56,6 @@ namespace Coordinates.UI.Components
                 .ForEach(position => selectedPositionsVm.Remove(position));
         }
 
-        // Refreshing selected elements
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
             var listView = (ListView)sender;
@@ -66,15 +64,18 @@ namespace Coordinates.UI.Components
             if (vm == null) return;
 
             var selectedPositionsVm = vm.SelectedPositions;
+            
+            if (!IsSelectable || !listView.Items.Any()) return;
 
-            // TODO or instead - tweak here
+            // workaround for not updating bindings before this callback is invoked
+            listView.SelectionMode = ListViewSelectionMode.Multiple;
+
             // Get elements from UI, match with VM items, get the indexes, and select with SelectRange
-            if (listView.Items.Any())
-                listView.Items
-                    .Select((n, i) => new { Value = n, Index = i })
-                    .Where(vi => selectedPositionsVm.Contains(vi.Value))
-                    .Select(vi => vi.Index)
-                    .ForEach(index => listView.SelectRange(new ItemIndexRange(index, 1)));
+            listView.Items
+                .Select((n, i) => new {Value = n, Index = i})
+                .Where(vi => selectedPositionsVm.Contains(vi.Value))
+                .Select(vi => vi.Index)
+                .ForEach(index => listView.SelectRange(new ItemIndexRange(index, 1)));
         }
     }
 }

@@ -61,7 +61,6 @@
                   ShowsScrollingPlaceholders="True">
         </ListView>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <!--Text="{Binding Positions.Count, UpdateSourceTrigger=PropertyChanged}"-->
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Margin="12">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">

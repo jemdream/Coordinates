@@ -1,6 +1,6 @@
 ﻿namespace Coordinates.Measurements.Elements
 {
-    public enum SurfaceEnum
+    public enum PlaneEnum
     {
         XY,
         YZ,

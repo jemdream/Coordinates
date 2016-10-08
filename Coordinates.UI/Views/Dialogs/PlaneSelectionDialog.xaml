@@ -23,7 +23,7 @@
         <!--Wybór rodzaju pomiaru-->
         <ComboBox HorizontalAlignment="Center" Margin="25"
             ItemsSource="{Binding MeasurementMethodViewModel.SurfaceEnums}"
-            SelectedItem="{Binding MeasurementMethodViewModel.MeasurementMethod.Surface, Mode=TwoWay}"
+            SelectedItem="{Binding MeasurementMethodViewModel.MeasurementMethod.Plane, Mode=TwoWay}"
             Header="W której płaszczyźnie wykonujesz pomiar?:">
             <ComboBox.ItemTemplate>
                 <DataTemplate x:Name="DataTemplate">

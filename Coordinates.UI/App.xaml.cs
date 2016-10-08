@@ -8,6 +8,7 @@ using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
 using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements;
+using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Services.ServiceLocator;
@@ -32,12 +33,29 @@ namespace Coordinates.UI
 
         public App()
         {
+            MeasurementDevelopment();
+
+            InitializeComponent();
+            _myContainer = SetupContainer();
+            SplashFactory = (e) => new Splash(e);
+
+            // SettingsService setup
+            var settings = _myContainer.Resolve<SettingsService>();
+            RequestedTheme = settings.AppTheme;
+            CacheMaxDuration = settings.CacheMaxDuration;
+            ShowShellBackButton = settings.UseShellBackButton;
+        }
+
+        private static void MeasurementDevelopment()
+        {
             // ca³y pomiar
             var measurements = new TwoHolesMeasurementMethod();
 
             #region First Element
 
             var firstElement = measurements.ActivateNextElement();
+            firstElement.Plane = PlaneEnum.YZ;
+
             var mockoweZaznaczoneDaneFirstElement = new[]
             {
                 new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
@@ -52,10 +70,14 @@ namespace Coordinates.UI
             var calculateFirstElement = firstElement.Calculate();
 
             Debugger.Break();
+
             #endregion
 
             #region Second Element
+
             var secondElement = measurements.ActivateNextElement();
+            secondElement.Plane = PlaneEnum.YZ;
+
             var mockoweZaznaczoneDaneSecondElement = new[]
             {
                 new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
@@ -70,6 +92,7 @@ namespace Coordinates.UI
             var calculateSecondElement = firstElement.Calculate();
 
             Debugger.Break();
+
             #endregion
 
             var canCalculate = measurements.CanCalculate();
@@ -77,16 +100,6 @@ namespace Coordinates.UI
 
             Debugger.Break();
             // TODO TERMINATE
-
-            InitializeComponent();
-            _myContainer = SetupContainer();
-            SplashFactory = (e) => new Splash(e);
-
-            // SettingsService setup
-            var settings = _myContainer.Resolve<SettingsService>();
-            RequestedTheme = settings.AppTheme;
-            CacheMaxDuration = settings.CacheMaxDuration;
-            ShowShellBackButton = settings.UseShellBackButton;
         }
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)

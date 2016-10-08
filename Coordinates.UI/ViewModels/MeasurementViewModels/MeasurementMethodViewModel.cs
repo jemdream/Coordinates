@@ -15,7 +15,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         IMeasurementMethod MeasurementMethod { get; }
         IEnumerable<IElementViewModel> ElementsViewModels { get; }
         void SetNextElement();
-        IEnumerable<SurfaceEnum> SurfaceEnums { get; }
+        IEnumerable<PlaneEnum> SurfaceEnums { get; }
     }
 
     public class MeasurementMethodViewModel : ViewModelBase, IMeasurementMethodViewModel
@@ -31,7 +31,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .Subscribe(InitializeMeasurement);
         }
 
-        public IEnumerable<SurfaceEnum> SurfaceEnums => Enum.GetValues(typeof(SurfaceEnum)).Cast<SurfaceEnum>();
+        public IEnumerable<PlaneEnum> SurfaceEnums => Enum.GetValues(typeof(PlaneEnum)).Cast<PlaneEnum>();
 
         public IMeasurementMethod MeasurementMethod
         {

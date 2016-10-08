@@ -6,6 +6,7 @@ namespace Coordinates.Measurements.Elements
     public interface IElement
     {
         int RequiredMeasurementCount { get; }
+        PlaneEnum? Plane { get; set; }
 
         bool CanCalculate();
         object Calculate();

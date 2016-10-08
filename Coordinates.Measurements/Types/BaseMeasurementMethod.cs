@@ -10,7 +10,7 @@ namespace Coordinates.Measurements.Types
         protected List<IElement> BaseElements = new List<IElement>();
         public IEnumerable<IElement> Elements => BaseElements;
         public virtual IElement ActiveElement { get; private set; }
-        public SurfaceEnum Surface { get; set; }
+        public PlaneEnum Plane { get; set; }
 
         public IElement ActivateNextElement()
         {

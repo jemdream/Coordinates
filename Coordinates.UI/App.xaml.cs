@@ -33,8 +33,6 @@ namespace Coordinates.UI
 
         public App()
         {
-            MeasurementDevelopment();
-
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);
@@ -45,63 +43,7 @@ namespace Coordinates.UI
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
         }
-
-        private static void MeasurementDevelopment()
-        {
-            // ca³y pomiar
-            var measurements = new TwoHolesMeasurementMethod();
-
-            #region First Element
-
-            var firstElement = measurements.ActivateNextElement();
-            firstElement.Plane = PlaneEnum.YZ;
-
-            var mockoweZaznaczoneDaneFirstElement = new[]
-            {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
-            };
-
-            foreach (var position in mockoweZaznaczoneDaneFirstElement)
-                firstElement.SelectedPositions.Add(position);
-
-            var canCalculateFirstElement = firstElement.CanCalculate();
-            var calculateFirstElement = firstElement.Calculate();
-
-            Debugger.Break();
-
-            #endregion
-
-            #region Second Element
-
-            var secondElement = measurements.ActivateNextElement();
-            secondElement.Plane = PlaneEnum.YZ;
-
-            var mockoweZaznaczoneDaneSecondElement = new[]
-            {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
-            };
-
-            foreach (var position in mockoweZaznaczoneDaneSecondElement)
-                firstElement.SelectedPositions.Add(position);
-
-            var canCalculateSecondElement = firstElement.CanCalculate();
-            var calculateSecondElement = firstElement.Calculate();
-
-            Debugger.Break();
-
-            #endregion
-
-            var canCalculate = measurements.CanCalculate();
-            var calculate = measurements.Calculate();
-
-            Debugger.Break();
-            // TODO TERMINATE
-        }
-
+        
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             if (!(Window.Current.Content is ModalDialog))

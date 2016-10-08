@@ -8,7 +8,7 @@ namespace Coordinates.Measurements.Types
         {
             BaseElements.Add(new Hole());
         }
-       
+
         public override bool CanCalculate()
         {
             return true;
@@ -16,7 +16,11 @@ namespace Coordinates.Measurements.Types
 
         public override object Calculate()
         {
-            throw new System.NotImplementedException();
+            var firstElement = BaseElements[0];
+
+            return !firstElement.CanCalculate() ?
+                null :
+                firstElement.Calculate();
         }
 
         public override string ToString() { return "Jeden otwór"; }

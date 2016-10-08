@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
@@ -7,6 +8,8 @@ using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
 using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements;
+using Coordinates.Measurements.Types;
+using Coordinates.Models.DTO;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -29,6 +32,52 @@ namespace Coordinates.UI
 
         public App()
         {
+            // ca³y pomiar
+            var measurements = new TwoHolesMeasurementMethod();
+
+            #region First Element
+
+            var firstElement = measurements.ActivateNextElement();
+            var mockoweZaznaczoneDaneFirstElement = new[]
+            {
+                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
+                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
+                new Position(0.0, 0.8, 0.3, true)
+            };
+
+            foreach (var position in mockoweZaznaczoneDaneFirstElement)
+                firstElement.SelectedPositions.Add(position);
+
+            var canCalculateFirstElement = firstElement.CanCalculate();
+            var calculateFirstElement = firstElement.Calculate();
+
+            Debugger.Break();
+            #endregion
+
+            #region Second Element
+            var secondElement = measurements.ActivateNextElement();
+            var mockoweZaznaczoneDaneSecondElement = new[]
+            {
+                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
+                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
+                new Position(0.0, 0.8, 0.3, true)
+            };
+
+            foreach (var position in mockoweZaznaczoneDaneSecondElement)
+                firstElement.SelectedPositions.Add(position);
+
+            var canCalculateSecondElement = firstElement.CanCalculate();
+            var calculateSecondElement = firstElement.Calculate();
+
+            Debugger.Break();
+            #endregion
+
+            var canCalculate = measurements.CanCalculate();
+            var calculate = measurements.Calculate();
+
+            Debugger.Break();
+            // TODO TERMINATE
+
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);

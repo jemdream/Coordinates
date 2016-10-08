@@ -8,7 +8,7 @@
 
         public override bool CanCalculate()
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         public override object Calculate()
@@ -17,7 +17,7 @@
             {
             }
 
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

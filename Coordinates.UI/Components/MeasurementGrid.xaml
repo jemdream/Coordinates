@@ -15,7 +15,6 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}"
     Margin="50" x:Name="MeasurementGridUserControl">
-    <!--x:Name="MeasurementGrid"-->
 
     <UserControl.Resources>
         <!-- When using x:Bind, you need to set x:DataType -->

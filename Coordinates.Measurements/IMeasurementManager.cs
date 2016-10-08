@@ -13,6 +13,7 @@ namespace Coordinates.Measurements
         MeasurementMethodEnum? SelectedMeasurementMethod { get; }
         IObservable<IMeasurementMethod> MeasurementSource { get; }
 
+        bool GatherData { get; set; }
         bool SetupMeasurementMethod(MeasurementMethodEnum selectedMeasurementMethod);
         bool ResetMeasurementData();
 

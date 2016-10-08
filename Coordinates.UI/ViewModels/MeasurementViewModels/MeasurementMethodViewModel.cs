@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using Coordinates.Measurements;
+using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Types;
 using Template10.Mvvm;
 
@@ -14,6 +15,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         IMeasurementMethod MeasurementMethod { get; }
         IEnumerable<IElementViewModel> ElementsViewModels { get; }
         void SetNextElement();
+        IEnumerable<SurfaceEnum> SurfaceEnums { get; }
     }
 
     public class MeasurementMethodViewModel : ViewModelBase, IMeasurementMethodViewModel
@@ -27,45 +29,9 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             _measurementManager = measurementManager;
             _measurementManager.MeasurementSource
                 .Subscribe(InitializeMeasurement);
-
-            #region trash
-            // todo this is from selectionmv \/
-            //measurementManager.RawContactPositions
-            //    .OnAdd
-            //    .ObserveOn(SynchronizationContext.Current)
-            //    .Subscribe(position => ContactPositions.Insert(0, position));
-
-            //measurementManager.RawContactPositions
-            //    .OnRemove
-            //    .ObserveOn(SynchronizationContext.Current)
-            //    .Subscribe(position => ContactPositions.Remove(position));
-
-            //SelectedPositions = measurementManager.SelectedPositions;
-
-            // On add and on remove, update controls
-            //SelectedPositions
-            //    .OnAdd
-            //    .Concat(SelectedPositions.OnRemove)
-            //    .ObserveOn(SynchronizationContext.Current)
-            //    .Subscribe(_ => ModelsUpdated());
-
-            //ContactPositions = new ObservableCollection<Position>(MeasurementManager.RawContactPositions);
-
-            // todo this is from manager \/
-            // Storing contact points
-            //compensatedPositions
-            //    .Where(pos => pos.Contact)
-            //    .Subscribe(pos => RawContactPositions.Add(pos));
-
-            // Selected positions change
-            //SelectedPositions.OnAdd
-            //    .Where(_ => SelectedMeasurementMethod != null)
-            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
-            //SelectedPositions.OnRemove
-            //    .Where(_ => SelectedMeasurementMethod != null)
-            //    .Subscribe(_ => { var test = SelectedMeasurementMethod.CanCalculate(); });
-            #endregion
         }
+
+        public IEnumerable<SurfaceEnum> SurfaceEnums => Enum.GetValues(typeof(SurfaceEnum)).Cast<SurfaceEnum>();
 
         public IMeasurementMethod MeasurementMethod
         {
@@ -80,7 +46,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         }
 
         private readonly object _lock = new object();
-        
+
         public void SetNextElement()
         {
             if (_measurementMethod != null)
@@ -94,6 +60,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             var element = measurementMethod.ActivateNextElement();
 
             var subscriptionToData = _measurementManager.PositionSource
+                .Where(_ => _measurementManager.GatherData)
                 .Where(position => position.Contact)
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(position => element.Positions.Add(position));

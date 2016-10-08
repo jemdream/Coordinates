@@ -1,10 +1,6 @@
 ﻿using System.Linq;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Coordinates.ExternalDevices.Devices;
-using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.MeasurementFlow;
 
 namespace Coordinates.UI.Views
@@ -14,14 +10,8 @@ namespace Coordinates.UI.Views
         public MeasurementsPage()
         {
             InitializeComponent();
-            //NavigationCacheMode = NavigationCacheMode.Disabled;
         }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            ((MockDeviceService)((Button)sender).DataContext).PushMockedValues();
-        }
-
+        
         /// <summary>
         /// Supporting ViewModelBase.OnNavigated for Pivot Items
         /// </summary>
@@ -35,7 +25,7 @@ namespace Coordinates.UI.Views
             NextButton.Command = newViewModel?.GoNextCommand;
 
             // Invoke navigation 
-            newViewModel?.OnNavigatedToAsync(null, NavigationMode.Refresh, null);
+            newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
             oldViewModel?.OnNavigatedFromAsync(null, false);
         }
     }

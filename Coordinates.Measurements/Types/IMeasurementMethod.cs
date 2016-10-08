@@ -9,6 +9,7 @@ namespace Coordinates.Measurements.Types
         IEnumerable<IElement> Elements { get; }
         IElement ActiveElement { get; }
         IElement ActivateNextElement();
+        SurfaceEnum Surface { get; set; }
         bool IsNextElementAvailable { get; }
         bool CanCalculate();
         object Calculate();

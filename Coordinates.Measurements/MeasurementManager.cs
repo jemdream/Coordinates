@@ -49,6 +49,7 @@ namespace Coordinates.Measurements
         public IEnumerable<MeasurementMethodEnum> AvailableMeasurementMethods { get; }
         public MeasurementMethodEnum? SelectedMeasurementMethod { get; private set; }
         public IObservable<IMeasurementMethod> MeasurementSource => _measurementSource.AsObservable();
+        public bool GatherData { get; set; }
 
         // Positions
         public IObservable<Position> PositionSource => _positionSource.AsObservable();
@@ -76,8 +77,10 @@ namespace Coordinates.Measurements
         /// </summary>
         public bool ResetMeasurementData()
         {
-            PositionBuffer.Clear();
+            GatherData = false;
 
+            PositionBuffer.Clear();
+            
             SelectedMeasurementMethod = null;
             _selectedMeasurementMethod?.Subscriptions.Clear();
             _selectedMeasurementMethod = null;

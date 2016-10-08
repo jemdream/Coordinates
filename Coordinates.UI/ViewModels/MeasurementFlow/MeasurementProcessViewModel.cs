@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
@@ -7,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
+using Coordinates.UI.Views.Dialogs;
 using Prism.Events;
 using Template10.Mvvm;
 
@@ -23,7 +25,10 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
     {
         private readonly IMeasurementManager _measurementManager;
         private AwaitableDelegateCommand _nextElementCommand;
-        
+
+        private bool _viewHack;
+        private bool _showModal;
+
         public MeasurementProcessViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager,
             IMeasurementMethodViewModel measurementMethodViewModel)
             : base(eventAggregator)
@@ -39,22 +44,18 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
                     UpdateNavigationCommands();
                 });
         }
-
+        
         public override string Title { get; } = "Pomiar";
-
-        private bool _viewHack;
         public bool ViewHack { get { return _viewHack; } set { Set(ref _viewHack, value); } }
+        public bool ShowModal { get { return _showModal; } set { Set(ref _showModal, value); } }
 
         public IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
 
         public ICommand NextElementCommand => _nextElementCommand ?? (_nextElementCommand = new AwaitableDelegateCommand(async x =>
         {
-            MeasurementMethodViewModel.SetNextElement();
-            
-            (NextElementCommand as AwaitableDelegateCommand)?.RaiseCanExecuteChanged();
-
             await Task.CompletedTask;
-
+            MeasurementMethodViewModel.SetNextElement();
+            (NextElementCommand as AwaitableDelegateCommand)?.RaiseCanExecuteChanged();
             ViewHack = !ViewHack;
         }, x =>
         {
@@ -66,6 +67,13 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         {
             /* TODO M place validation here basing on MeasurementMethodViewModel */
             return true;
+        }
+
+        protected override Task<bool> OnNext()
+        {
+            // TODO HERE TO UNHIGHLIGHT THE DATAGRID
+            _measurementManager.GatherData = false;
+            return base.OnNext();
         }
 
         protected override async Task<bool> OnPrevious()
@@ -85,12 +93,23 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
             return returnConfirmed;
         }
 
-        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             UpdateNavigationCommands();
-            ViewHack = !ViewHack;
 
-            return base.OnNavigatedToAsync(parameter, mode, state);
+            ShowModal = !ShowModal;
+
+            if (parameter is MeasurementCalibrationViewModel)
+            {
+                // TODO condition - if measurement requires surface selection
+                var contentDialog = new PlaneSelectionDialog(this);
+                await contentDialog.ShowAsync();
+                contentDialog.Hide();
+
+                _measurementManager.GatherData = true;
+            }
+
+            ViewHack = !ViewHack;
         }
     }
 }

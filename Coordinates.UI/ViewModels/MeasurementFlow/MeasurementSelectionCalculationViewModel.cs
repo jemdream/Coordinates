@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Coordinates.Measurements;
+using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
@@ -14,9 +18,12 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
     public class MeasurementSelectionCalculationViewModel : MeasurementViewModelBase, IMeasurementSelectionCalculationViewModel
     {
-        public MeasurementSelectionCalculationViewModel(IEventAggregator eventAggregator,
+        private readonly IMeasurementManager _measurementManager;
+
+        public MeasurementSelectionCalculationViewModel(IEventAggregator eventAggregator, IMeasurementManager measurementManager,
             IMeasurementMethodViewModel measurementMethodViewModel) : base(eventAggregator)
         {
+            _measurementManager = measurementManager;
             MeasurementMethodViewModel = measurementMethodViewModel;
         }
 
@@ -25,7 +32,30 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         public IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
 
         protected override bool CanOnNext() => false;
-        
+
+        protected override async Task<bool> OnPrevious()
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Uwaga",
+                Content = "Wszystkie pomiary zostaną usunięte.",
+                PrimaryButtonText = "OK",
+                SecondaryButtonText = "Anuluj"
+            };
+
+            var returnConfirmed = (await dialog.ShowAsync()).Equals(ContentDialogResult.Primary);
+
+            if (returnConfirmed)
+            {
+                _measurementManager.ResetMeasurementData();
+                EventAggregator
+                        .GetEvent<ResetMeasurement>()
+                        .Publish(null);
+            }
+
+            return false;
+        }
+
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             UpdateNavigationCommands();

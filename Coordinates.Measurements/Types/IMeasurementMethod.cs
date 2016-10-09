@@ -9,7 +9,8 @@ namespace Coordinates.Measurements.Types
         IEnumerable<IElement> Elements { get; }
         IElement ActiveElement { get; }
         IElement ActivateNextElement();
-        PlaneEnum Plane { get; set; }
+
+        bool SetupPlane(PlaneEnum? plane);
         bool IsNextElementAvailable { get; }
         bool CanCalculate();
         object Calculate();

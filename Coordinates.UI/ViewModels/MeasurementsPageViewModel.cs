@@ -38,6 +38,10 @@ namespace Coordinates.UI.ViewModels
                 .GetEvent<GoNextMeasurementMsg>()
                 .Subscribe(sender => { if (FindIndex(sender) < MeasurementFlowViewModels.Count - 1) SelectedTabIndex++; });
 
+            EventAggregator
+                .GetEvent<ResetMeasurement>()
+                .Subscribe(sender => { SelectedTabIndex = 0; });
+
             //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
         }
 

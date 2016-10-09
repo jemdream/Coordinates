@@ -49,17 +49,22 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding Positions}"
+        <!--, Converter={StaticResource StringFormatConverter}, ConverterParameter=Płaszczyzna: \{0:d\}}"-->
+        <TextBlock Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged}"
+                   Style="{ThemeResource BodyTextBlockStyle}"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding Positions}"
                   ItemTemplate="{StaticResource ContactListViewTemplate}"
                   SelectionChanged="Selector_OnSelectionChanged"
                   Loaded="FrameworkElement_OnLoaded"
                   SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}"
                   ShowsScrollingPlaceholders="True">
         </ListView>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Margin="12">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">

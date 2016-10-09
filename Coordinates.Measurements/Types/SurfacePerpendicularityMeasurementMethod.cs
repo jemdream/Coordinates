@@ -10,6 +10,13 @@ namespace Coordinates.Measurements.Types
             BaseElements.Add(new Surface());
         }
 
+        public override bool SetupPlane(PlaneEnum? plane)
+        {
+            if (ActiveElement == null) return false;
+            ActiveElement.Plane = plane;
+            return true;
+        }
+
         public override bool CanCalculate()
         {
             return true;

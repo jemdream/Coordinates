@@ -9,4 +9,7 @@ namespace Coordinates.UI.Messages
     public class GoNextMeasurementMsg : PubSubEvent<Type>
     {
     }
+    public class ResetMeasurement : PubSubEvent<Type>
+    {
+    }
 }

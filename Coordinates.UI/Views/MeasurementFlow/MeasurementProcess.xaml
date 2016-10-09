@@ -25,7 +25,7 @@
                 <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness" ConverterParameter="0">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[0].Element}" />
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel}" />
-                    <behaviors:MultiBindingItem Value="{Binding ViewHack}" />
+                    <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].ViewHack}" />
                 </behaviors:MultiBindingBehavior>
             </interactivity:Interaction.Behaviors>
             <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
@@ -38,7 +38,7 @@
                 <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness" ConverterParameter="1">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].Element}" />
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel}" />
-                    <behaviors:MultiBindingItem Value="{Binding ViewHack}" />
+                    <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].ViewHack}" />
                 </behaviors:MultiBindingBehavior>
             </interactivity:Interaction.Behaviors>
             <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>

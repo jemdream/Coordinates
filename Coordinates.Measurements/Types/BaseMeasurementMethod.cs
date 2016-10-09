@@ -14,10 +14,33 @@ namespace Coordinates.Measurements.Types
 
         public IElement ActivateNextElement()
         {
-            // TODO temporary solution for 2 member measurements
-            ActiveElement = (ActiveElement == null) ? BaseElements.First() : BaseElements[1];
+            // TODO ugly temporary solution for 2 member measurements
+            if (ActiveElement == null)
+            {
+                ActiveElement = BaseElements[0];
+            }
+            else if (ActiveElement == BaseElements[0])
+            {
+                ActiveElement = BaseElements[1];
+            }
+            else
+            {
+                ActiveElement = null;
+            }
 
             return ActiveElement;
+
+            //ActiveElement = (ActiveElement == null) ? BaseElements.First() : BaseElements[1];
+            //return ActiveElement;
+        }
+
+        /// <summary>
+        /// By default, sets same plane on each element.
+        /// </summary>
+        public virtual bool SetupPlane(PlaneEnum? plane)
+        {
+            BaseElements.ForEach(be => be.Plane = plane);
+            return true;
         }
 
         public bool IsNextElementAvailable

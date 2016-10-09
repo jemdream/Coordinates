@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
     xmlns:converters="using:Coordinates.UI.Helpers.Converters"
+    xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
     mc:Ignorable="d"
     PrimaryButtonText="OK"
-    d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
+    PrimaryButtonCommand="{Binding SetMeasurementPlane}"
+    PrimaryButtonCommandParameter="{Binding Path=SelectedItem, ElementName=PlaneComboBox}"
+    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
     <ContentDialog.Resources>
         <converters:EnumToStringConverter x:Key="EnumToStringConverter"/>
     </ContentDialog.Resources>
@@ -21,9 +23,9 @@
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
         <!--Wybór rodzaju pomiaru-->
-        <ComboBox HorizontalAlignment="Center" Margin="25"
-            ItemsSource="{Binding MeasurementMethodViewModel.SurfaceEnums}"
-            SelectedItem="{Binding MeasurementMethodViewModel.MeasurementMethod.Plane, Mode=TwoWay}"
+        <ComboBox HorizontalAlignment="Center" Margin="25" x:Name="PlaneComboBox"
+            ItemsSource="{Binding SurfaceEnums}"
+            SelectedItem="{Binding SurfaceEnums[0]}"
             Header="W której płaszczyźnie wykonujesz pomiar?:">
             <ComboBox.ItemTemplate>
                 <DataTemplate x:Name="DataTemplate">

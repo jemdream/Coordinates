@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Models.DTO;
+using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
 using Template10.Mvvm;
@@ -54,7 +55,10 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            if(_measurementManager.SelectedMeasurementMethod == null) GoBackCommand.Execute(null);
+            if (_measurementManager.SelectedMeasurementMethod == null)
+                EventAggregator
+                        .GetEvent<ResetMeasurement>()
+                        .Publish(null);
 
             return base.OnNavigatedToAsync(parameter, mode, state);
         }

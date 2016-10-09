@@ -147,6 +147,9 @@
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />
     <Compile Include="Helpers\Converters\EqualityConverter.cs" />
+    <Compile Include="Views\Dialogs\AxisBlockDialog.xaml.cs">
+      <DependentUpon>AxisBlockDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\PlaneSelectionDialog.xaml.cs">
       <DependentUpon>PlaneSelectionDialog.xaml</DependentUpon>
     </Compile>
@@ -226,6 +229,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\AxisBlockDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\PlaneSelectionDialog.xaml">
       <SubType>Designer</SubType>

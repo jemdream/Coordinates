@@ -12,18 +12,24 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     public interface IElementViewModel
     {
         int RequiredMeasurementCount { get; }
+        PlaneEnum? Plane { get; }
 
         bool CanCalculate();
         object Calculate();
 
         IElement Element { get; }
 
+        void RefreshUi();
+        bool ViewHack { get; set; }
+        
         ObservableList<Position> SelectedPositions { get; }
         ObservableCollection<Position> Positions { get; }
     }
 
     public class ElementViewModel : ViewModelBase, IElementViewModel
     {
+        private bool _viewHack;
+
         public ElementViewModel(IElement element)
         {
             Element = element;
@@ -39,17 +45,27 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .Subscribe(pos => Positions.Remove(pos));
 
             Element.SelectedPositions.OnAdd
-                .Subscribe(pos => RaisePropertyChanged(() => SelectedPositions));
+                .Subscribe(pos => RefreshUi());
 
             Element.SelectedPositions.OnRemove
-                .Subscribe(pos => RaisePropertyChanged(() => SelectedPositions));
+                .Subscribe(pos => RefreshUi());
         }
 
         public IElement Element { get; }
 
+        public bool ViewHack { get { return _viewHack; } set { Set(ref _viewHack, value); } }
         public int RequiredMeasurementCount => Element.RequiredMeasurementCount;
+        public PlaneEnum? Plane => Element.Plane;
+
         public bool CanCalculate() => Element.CanCalculate();
         public object Calculate() => Element.Calculate();
+
+        public void RefreshUi()
+        {
+            ViewHack = !ViewHack;
+            RaisePropertyChanged(() => Plane);
+            RaisePropertyChanged(() => SelectedPositions);
+        }
 
         public ObservableList<Position> SelectedPositions => Element.SelectedPositions;
         public ObservableCollection<Position> Positions { get; }

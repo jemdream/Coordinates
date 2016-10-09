@@ -7,5 +7,10 @@ namespace Coordinates.Measurements.Models
     {
         public string Message { get; set; }
         public IList<Position> FaultyPositions { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Message}";
+        }
     }
 }

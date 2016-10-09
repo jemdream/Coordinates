@@ -67,6 +67,7 @@ namespace Coordinates.UI
             var canCalculateFirstElement = firstElement.CanCalculate();
             var calculateFirstElement = firstElement.Calculate();
 
+
             Debugger.Break();
 
             #endregion

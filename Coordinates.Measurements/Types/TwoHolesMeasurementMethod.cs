@@ -17,23 +17,28 @@ namespace Coordinates.Measurements.Types
             return true;
         }
 
-        public override object Calculate()
+        public override ICalculationResult Calculate()
         {
+            if (!CanCalculate()) return null;
+
             var firstElement = BaseElements[0];
-            //var firstElementPlane = firstElement.SelectedPlane;
             var secondElement = BaseElements[1];
-            //var secondElementPlane = secondElement.SelectedPlane;
-            // Jak nie da sie policzyc dwóch
+
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
                 return null;
+
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
-            double x10 = ((HoleResult)firstElementCalculation).X0;
-            double y10 = ((HoleResult)firstElementCalculation).Y0;
-            double x20 = ((HoleResult)secondElementCalculation).X0;
-            double y20 = ((HoleResult)secondElementCalculation).Y0;
-            var result = Math.Sqrt((x10-x20)*(x10-x20) + (y10 - y20) * (y10 - y20));
-            return result;
+
+            var x10 = ((HoleResult)firstElementCalculation).X0;
+            var y10 = ((HoleResult)firstElementCalculation).Y0;
+            var x20 = ((HoleResult)secondElementCalculation).X0;
+            var y20 = ((HoleResult)secondElementCalculation).Y0;
+
+            return new TwoHolesResult
+            {
+                Result = Math.Sqrt((x10 - x20) * (x10 - x20) + (y10 - y20) * (y10 - y20))
+            };
         }
 
         public override string ToString() { return "Dwa otwory"; }

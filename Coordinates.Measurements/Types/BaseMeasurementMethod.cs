@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Models;
 
 namespace Coordinates.Measurements.Types
 {
@@ -53,7 +53,7 @@ namespace Coordinates.Measurements.Types
         }
 
         public virtual bool CanCalculate() => true;
-        public virtual object Calculate() => null;
+        public virtual ICalculationResult Calculate() => null;
 
         public virtual CompositeDisposable Subscriptions { get; } = new CompositeDisposable();
     }

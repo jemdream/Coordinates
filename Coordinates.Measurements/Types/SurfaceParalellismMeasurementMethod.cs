@@ -1,4 +1,5 @@
 ﻿using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Models;
 
 namespace Coordinates.Measurements.Types
 {
@@ -15,25 +16,24 @@ namespace Coordinates.Measurements.Types
             return true;
         }
 
-        public override object Calculate()
+        public override ICalculationResult Calculate()
         {
+            if (!CanCalculate())
+                return null;
+
             var firstElement = BaseElements[0];
-            //var firstElementPlane = firstElement.SelectedPlane;
-
             var secondElement = BaseElements[1];
-            //var secondElementPlane = secondElement.SelectedPlane;
 
-            // Jak nie da sie policzyc dwóch
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
                 return null;
 
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
-            // TODO obliczenia wspólne
-            var wynik = 0; // mock
-
-            return wynik;
+            return new SurfaceParalellismResult
+            {
+                Result = 0
+            };
         }
 
         public override string ToString() { return "Płaszczyzny - równoległość"; }

@@ -1,4 +1,5 @@
 ﻿using Coordinates.Measurements.Helpers;
+using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Elements
@@ -9,7 +10,7 @@ namespace Coordinates.Measurements.Elements
         PlaneEnum? Plane { get; set; }
 
         bool CanCalculate();
-        object Calculate();
+        ICalculationResult Calculate();
 
         ObservableList<Position> SelectedPositions { get; }
         ObservableList<Position> Positions { get; }

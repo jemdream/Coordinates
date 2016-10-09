@@ -118,7 +118,11 @@
     <Compile Include="IMeasurementManager.cs" />
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Models\HoleResult.cs" />
+    <Compile Include="Models\ICalculationResult.cs" />
+    <Compile Include="Models\SurfaceParalellismResult.cs" />
+    <Compile Include="Models\SurfacePerpendicularityResult.cs" />
     <Compile Include="Models\SurfaceResult.cs" />
+    <Compile Include="Models\TwoHolesResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\BaseMeasurementMethod.cs" />
     <Compile Include="Types\IMeasurementMethod.cs" />

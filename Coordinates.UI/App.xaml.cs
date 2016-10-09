@@ -48,17 +48,18 @@ namespace Coordinates.UI
 
         private static void MeasurementDevelopment()
         {
-            // ca³y pomiar
+            // caly pomiar
             var measurements = new TwoHolesMeasurementMethod();
 
             #region First Element
 
             var firstElement = measurements.ActivateNextElement();
+            firstElement.Plane = PlaneEnum.YZ;
             var mockoweZaznaczoneDaneFirstElement = new[]
             {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
+                new Position(0.0, 0.0, 0.3, true), new Position(0.0, 0.1, 0.3, true),
+                new Position(1.0, 0.0, 0.3, true), new Position(1.0, 1.0, 0.3, true),
+                new Position(0.0, -1.0, 0.3, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneFirstElement)
@@ -74,6 +75,7 @@ namespace Coordinates.UI
             #region Second Element
 
             var secondElement = measurements.ActivateNextElement();
+            secondElement.Plane = PlaneEnum.YZ;
             var mockoweZaznaczoneDaneSecondElement = new[]
             {
                 new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),

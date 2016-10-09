@@ -30,6 +30,9 @@ namespace Coordinates.Measurements.Types
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
+            if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
+                return null;
+
             var x10 = ((HoleResult)firstElementCalculation).X0;
             var y10 = ((HoleResult)firstElementCalculation).Y0;
             var x20 = ((HoleResult)secondElementCalculation).X0;

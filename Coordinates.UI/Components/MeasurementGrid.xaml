@@ -53,6 +53,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--, Converter={StaticResource StringFormatConverter}, ConverterParameter=Płaszczyzna: \{0:d\}}"-->
         <TextBlock Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged}"
@@ -77,5 +78,6 @@
             <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
                     Style="{ThemeResource BodyTextBlockStyle}" Margin="12"/>
         </StackPanel>
+        <TextBlock Grid.Row="3" Text="{Binding Calculate}"/>
     </Grid>
 </UserControl>

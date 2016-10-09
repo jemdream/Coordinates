@@ -26,9 +26,12 @@ namespace Coordinates.Measurements.Types
 
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
                 return null;
-
+            
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
+
+            if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
+                return null;
 
             return new SurfaceParalellismResult
             {

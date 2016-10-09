@@ -14,5 +14,12 @@ namespace Coordinates.Measurements.Elements
 
         public ObservableList<Position> SelectedPositions { get; } = new ObservableList<Position>();
         public ObservableList<Position> Positions { get; } = new ObservableList<Position>();
+
+        public override string ToString()
+        {
+            var test = "";
+
+            return test;
+        }
     }
 }

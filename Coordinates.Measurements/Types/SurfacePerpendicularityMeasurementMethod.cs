@@ -37,6 +37,9 @@ namespace Coordinates.Measurements.Types
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
+            if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
+                return null;
+
             return new SurfacePerpendicularityResult
             {
                 Result = 0

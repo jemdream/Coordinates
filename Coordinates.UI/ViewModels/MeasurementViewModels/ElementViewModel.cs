@@ -15,7 +15,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         PlaneEnum? Plane { get; }
 
         bool CanCalculate();
-        object Calculate();
+        object Calculate { get; }
 
         IElement Element { get; }
 
@@ -38,11 +38,19 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
             Element.Positions.OnAdd
                 .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(pos => Positions.Insert(0, pos));
+                .Subscribe(pos =>
+                {
+                    Positions.Insert(0, pos);
+                    RaisePropertyChanged(() => Calculate);
+                });
 
             Element.Positions.OnRemove
                 .ObserveOn(SynchronizationContext.Current)
-                .Subscribe(pos => Positions.Remove(pos));
+                .Subscribe(pos =>
+                {
+                    Positions.Remove(pos);
+                    RaisePropertyChanged(() => Calculate);
+                });
 
             Element.SelectedPositions.OnAdd
                 .Subscribe(pos => RefreshUi());
@@ -58,12 +66,13 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         public PlaneEnum? Plane => Element.Plane;
 
         public bool CanCalculate() => Element.CanCalculate();
-        public object Calculate() => Element.Calculate();
+        public object Calculate => Element.Calculate();
 
         public void RefreshUi()
         {
             ViewHack = !ViewHack;
             RaisePropertyChanged(() => Plane);
+            RaisePropertyChanged(() => Calculate);
             RaisePropertyChanged(() => SelectedPositions);
         }
 

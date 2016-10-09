@@ -49,18 +49,27 @@ namespace Coordinates.UI
         private static void MeasurementDevelopment()
         {
             // ca³y pomiar
-            var measurements = new TwoHolesMeasurementMethod();
+            var measurements = new SurfaceParalellismMeasurementMethod();
 
             #region First Element
 
             var firstElement = measurements.ActivateNextElement();
-            firstElement.Plane = PlaneEnum.YZ;
+            firstElement.Plane = PlaneEnum.ZX;
 
             var mockoweZaznaczoneDaneFirstElement = new[]
             {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
+                //XY
+                //new Position(0.1, 0.2, 0.3, true), new Position(0.2, 0.4, 0.3, true),
+                //new Position(0.2, 0.3, 0.3, true), new Position(0.3, 0.6, 0.3, true),
+                //new Position(0.4, 0.8, 0.3, true)
+                //YZ
+                //new Position(0.3, 0.3, 0.1, true), new Position(0.3, 0.6, 0.4, true),
+                //new Position(1.0, 13.0, 5.0, true), new Position(0.3, 1.2, 1.0, true),
+                //new Position(0.3, 1.5, 11.3, true)
+                //ZX
+                new Position(0.3, 0.3, 0.1, true), new Position(0.6, 0.35, 0.4, true),
+                new Position(0.9, 1.0, 0.7, true), new Position(1.2, 0.3, 1.0, true),
+                new Position(0.1, 0.35, 1.3, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneFirstElement)
@@ -76,13 +85,13 @@ namespace Coordinates.UI
             #region Second Element
 
             var secondElement = measurements.ActivateNextElement();
-            secondElement.Plane = PlaneEnum.YZ;
+            secondElement.Plane = PlaneEnum.XY;
 
             var mockoweZaznaczoneDaneSecondElement = new[]
             {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
+                new Position(0.1, 0.2, 0.3, true), new Position(0.2, 0.4, 0.3, true),
+                new Position(0.2, 0.3, 0.3, true), new Position(0.3, 0.6, 0.3, true),
+                new Position(0.4, 0.8, 0.3, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneSecondElement)

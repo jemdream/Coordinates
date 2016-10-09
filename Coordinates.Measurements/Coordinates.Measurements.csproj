@@ -117,6 +117,7 @@
     <Compile Include="Helpers\ObservableList.cs" />
     <Compile Include="IMeasurementManager.cs" />
     <Compile Include="MeasurementManager.cs" />
+    <Compile Include="Models\ErrorResult.cs" />
     <Compile Include="Models\HoleResult.cs" />
     <Compile Include="Models\ICalculationResult.cs" />
     <Compile Include="Models\SurfaceParalellismResult.cs" />

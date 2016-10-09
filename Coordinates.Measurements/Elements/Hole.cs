@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Xml.Linq;
+using Coordinates.Measurements.Models;
 
 namespace Coordinates.Measurements.Elements
 {
@@ -108,11 +109,11 @@ namespace Coordinates.Measurements.Elements
                 x0 = (b / n) + bb;
                 R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
             }
-            var result = new List<object>();
-            result.Add(x0);
-            result.Add(y0);
-            result.Add(z0);
-            result.Add(R);
+            var result = new HoleResult();
+            result.X0 = x0;
+            result.Y0 = y0;
+            result.Z0 = z0;
+            result.R = R;
             return result;
         }
     }

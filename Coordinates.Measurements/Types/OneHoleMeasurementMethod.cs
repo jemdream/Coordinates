@@ -18,7 +18,7 @@ namespace Coordinates.Measurements.Types
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate())
-                return null;
+                return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
 
             var firstElement = BaseElements[0];
 
@@ -26,6 +26,6 @@ namespace Coordinates.Measurements.Types
                 null : firstElement.Calculate();
         }
 
-        public override string ToString() { return "Jeden otwór"; }
+        public override string ToString() => $"Jeden otwór";
     }
 }

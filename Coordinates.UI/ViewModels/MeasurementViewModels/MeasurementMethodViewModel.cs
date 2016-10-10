@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Models;
 using Coordinates.Measurements.Types;
 using Coordinates.UI.Views.Dialogs;
 using Microsoft.Practices.ObjectBuilder2;
@@ -20,6 +21,8 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         Task SetNextElement();
         IEnumerable<PlaneEnum> SurfaceEnums { get; }
         DelegateCommand<PlaneEnum> SetMeasurementPlane { get; }
+        bool CanCalculate();
+        ICalculationResult Calculate { get; }
     }
 
     public class MeasurementMethodViewModel : ViewModelBase, IMeasurementMethodViewModel
@@ -47,6 +50,10 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             ElementsViewModels.ForEach(evm => evm.RefreshUi());
         }, x => true));
 
+        public bool CanCalculate() => MeasurementMethod != null && MeasurementMethod.CanCalculate();
+
+        public ICalculationResult Calculate => MeasurementMethod?.Calculate();
+
         public IMeasurementMethod MeasurementMethod
         {
             get { return _measurementMethod; }
@@ -69,7 +76,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         private async Task SetNextElement(IMeasurementMethod measurementMethod)
         {
             _measurementManager.GatherData = false;
-            
+
             measurementMethod.Subscriptions.Clear();
 
             var element = measurementMethod.ActivateNextElement();
@@ -77,12 +84,12 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             ElementsViewModels.ForEach(evm => evm.RefreshUi());
 
             if (element == null) return;
-            
+
             if (element.Plane == null) await ShowPlaneSelectionDialog();
             await ShowAxisBlockDialog();
 
             measurementMethod.Subscriptions.Add(
-                _measurementManager.PositionSource   
+                _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
                     // TODO Here to add validation (that blocks wrong parameters) 
                     .Where(position => position.Contact)
@@ -91,11 +98,19 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             );
 
             measurementMethod.Subscriptions.Add(
-                _measurementManager.PositionSource   
+                _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
                     // TODO Here to add validation (that pops up validation dialog) 
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => { })
+            );
+
+            measurementMethod.Subscriptions.Add(
+                element.SelectedPositions.OnAdd.Subscribe(_ => RaisePropertyChanged(() => Calculate))
+            );
+
+            measurementMethod.Subscriptions.Add(
+                element.SelectedPositions.OnRemove.Subscribe(_ => RaisePropertyChanged(() => Calculate))
             );
 
             _measurementManager.GatherData = true;

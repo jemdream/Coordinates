@@ -105,12 +105,16 @@
     <Compile Include="Components\MeasurementGrid.xaml.cs">
       <DependentUpon>MeasurementGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\MeasurementPanel.xaml.cs">
+      <DependentUpon>MeasurementPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\Converters\ValueToggleConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanToSelectionMode.cs" />
     <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
+    <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
     <Compile Include="Helpers\ScrollToBottomBehavior.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
@@ -217,6 +221,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Components\MeasurementGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MeasurementPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

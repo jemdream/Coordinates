@@ -10,14 +10,17 @@
     xmlns:converters1="using:Coordinates.UI.Helpers.Converters"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Cimbalino.Toolkit.Behaviors"
+    xmlns:models="using:Coordinates.Measurements.Models"
+    xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
+    xmlns:converters2="using:Cimbalino.Toolkit.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}"
-    Margin="50" x:Name="MeasurementGridUserControl">
+    x:Name="MeasurementGridUserControl"
+    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
 
     <UserControl.Resources>
-        <!-- When using x:Bind, you need to set x:DataType -->
+
         <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
             <Grid >
                 <Grid.RowDefinitions>
@@ -31,20 +34,40 @@
                 <TextBlock Grid.Column="0"
                            Text="{x:Bind X}" 
                            Style="{ThemeResource BaseTextBlockStyle}"
-                           Margin="12"/>
+                           Margin="5"/>
                 <TextBlock  Grid.Column="1"
                             Text="{x:Bind Y}" 
                             Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="12"/>
+                            Margin="5"/>
                 <TextBlock  Grid.Column="2"
                             Text="{x:Bind Z}" 
                             Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="12"/>
+                            Margin="5"/>
             </Grid>
         </DataTemplate>
+
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
         <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
+        <converters2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <DataTemplate x:Name="HoleResultDataTemplate" x:DataType="models:HoleResult">
+            <TextBlock Text="{Binding }"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="SurfaceResultDataTemplate" x:DataType="models:SurfaceResult">
+            <TextBlock Text="{Binding }"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
+            <TextBlock Text="{Binding }" Foreground="Red"/>
+        </DataTemplate>
+
+        <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
+                    ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
+                    HoleResultDataTemplate="{StaticResource HoleResultDataTemplate}"
+                    SurfaceResultDataTemplate="{StaticResource SurfaceResultDataTemplate}" />
+
     </UserControl.Resources>
 
     <Grid>
@@ -78,6 +101,7 @@
             <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
                     Style="{ThemeResource BodyTextBlockStyle}" Margin="12"/>
         </StackPanel>
-        <TextBlock Grid.Row="3" Text="{Binding Calculate}"/>
+        <ContentControl Grid.Row="3" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+                        Visibility="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

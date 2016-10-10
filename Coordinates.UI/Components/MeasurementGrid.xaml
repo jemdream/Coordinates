@@ -17,12 +17,14 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="MeasurementGridUserControl"
+    MinWidth="120"
+    MaxWidth="200"
     d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
 
     <UserControl.Resources>
 
         <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
-            <Grid >
+            <Grid HorizontalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -81,7 +83,7 @@
         <!--, Converter={StaticResource StringFormatConverter}, ConverterParameter=Płaszczyzna: \{0:d\}}"-->
         <TextBlock Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged}"
                    Style="{ThemeResource BodyTextBlockStyle}"/>
-        <ListView Grid.Row="1" ItemsSource="{Binding Positions}"
+        <ListView Grid.Row="1" ItemsSource="{Binding Positions}" HorizontalAlignment="Stretch"
                   ItemTemplate="{StaticResource ContactListViewTemplate}"
                   SelectionChanged="Selector_OnSelectionChanged"
                   Loaded="FrameworkElement_OnLoaded"

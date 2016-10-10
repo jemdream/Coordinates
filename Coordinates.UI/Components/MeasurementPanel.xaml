@@ -14,24 +14,29 @@
     d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
 
     <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
+            <Style.Setters>
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            </Style.Setters>
+        </Style>
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
         
         <DataTemplate x:Name="OneHoleResultDataTemplate" x:DataType="models:OneHoleResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
         
         <DataTemplate x:Name="TwoHolesResultDataTemplate" x:DataType="models:TwoHolesResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
         
         <DataTemplate x:Name="SurfaceParalellismResultDataTemplate" x:DataType="models:SurfaceParalellismResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
         
         <DataTemplate x:Name="SurfacePerpendicularityResultDataTemplate" x:DataType="models:SurfacePerpendicularityResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
         
         <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"

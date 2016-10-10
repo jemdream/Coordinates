@@ -14,7 +14,7 @@ namespace Coordinates.Measurements.Elements
 
         public override ICalculationResult Calculate()
         {
-            if (!CanCalculate()) return null;
+            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
 
             // TODO add validation (checking if points are not too far from each other etc.) and return Error Result
             //if (!ValidateSelectedPositions())

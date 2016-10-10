@@ -10,8 +10,16 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementSelectionCalculationViewModel}">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
-        <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
-    </StackPanel>
+    
+    <Grid HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <components:MeasurementGrid Grid.Column="0" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
+        <components:MeasurementGrid Grid.Column="1" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
+        <components:MeasurementPanel Grid.Column="2" />
+    </Grid>
+    
 </UserControl>

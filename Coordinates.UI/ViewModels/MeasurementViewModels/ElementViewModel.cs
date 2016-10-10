@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Helpers;
+using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 using Template10.Mvvm;
 
@@ -15,7 +16,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         PlaneEnum? Plane { get; }
 
         bool CanCalculate();
-        object Calculate { get; }
+        ICalculationResult Calculate { get; }
 
         IElement Element { get; }
 
@@ -66,7 +67,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         public PlaneEnum? Plane => Element.Plane;
 
         public bool CanCalculate() => Element.CanCalculate();
-        public object Calculate => Element.Calculate();
+        public ICalculationResult Calculate => Element.Calculate();
 
         public void RefreshUi()
         {

@@ -26,26 +26,26 @@ namespace Coordinates.Measurements.Types
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate())
-                return null;
+                return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
 
             var firstElement = BaseElements[0];
             var secondElement = BaseElements[1];
-            
+
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
-                return null;
+                return new ErrorResult { Message = "(!firstElement.CanCalculate() || !secondElement.CanCalculate())" }; ;
 
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
-                return null;
+                return new ErrorResult { Message = "(firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)" };
 
             return new SurfacePerpendicularityResult
             {
-                Result = 0
+                Result = $"{firstElementCalculation} & {secondElementCalculation}"
             };
         }
 
-        public override string ToString() { return "Płaszczyzny - prostopadłość"; }
+        public override string ToString() => "Płaszczyzny - prostopadłość";
     }
 }

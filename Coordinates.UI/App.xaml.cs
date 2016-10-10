@@ -68,7 +68,7 @@ namespace Coordinates.UI
             var calculateFirstElement = firstElement.Calculate();
 
 
-            Debugger.Break();
+            //Debugger.Break();
 
             #endregion
 
@@ -88,14 +88,14 @@ namespace Coordinates.UI
             var canCalculateSecondElement = firstElement.CanCalculate();
             var calculateSecondElement = firstElement.Calculate();
 
-            Debugger.Break();
+            //Debugger.Break();
 
             #endregion
 
             var canCalculate = measurements.CanCalculate();
             var calculate = measurements.Calculate();
 
-            Debugger.Break();
+            //Debugger.Break();
             // TODO TERMINATE
         }
 

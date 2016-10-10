@@ -120,6 +120,7 @@
     <Compile Include="Models\ErrorResult.cs" />
     <Compile Include="Models\HoleResult.cs" />
     <Compile Include="Models\ICalculationResult.cs" />
+    <Compile Include="Models\OneHoleResult.cs" />
     <Compile Include="Models\SurfaceParalellismResult.cs" />
     <Compile Include="Models\SurfacePerpendicularityResult.cs" />
     <Compile Include="Models\SurfaceResult.cs" />

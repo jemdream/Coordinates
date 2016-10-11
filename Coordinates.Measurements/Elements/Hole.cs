@@ -57,6 +57,10 @@ namespace Coordinates.Measurements.Elements
                         z0 = pos.Z;
                     }
                     r = 2 * ((e * f) - (g * g));
+                    if (r.Equals(0.0))
+                    {
+                        return new ErrorResult {Message = "Wybrane pomiary są zbyt blisko siebie"};
+                    }
                     aa = ((i * f) - (j * g)) / r;
                     bb = ((j * e) - (i * g)) / r;
                     x0 = (a / n) + aa;
@@ -85,6 +89,10 @@ namespace Coordinates.Measurements.Elements
                         x0 = pos.X;
                     }
                     r = 2 * ((e * f) - (g * g));
+                    if (r.Equals(0.0))
+                    {
+                        return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie" };
+                    }
                     aa = ((i * f) - (j * g)) / r;
                     bb = ((j * e) - (i * g)) / r;
                     y0 = (a / n) + aa;
@@ -113,6 +121,10 @@ namespace Coordinates.Measurements.Elements
                         y0 = pos.Y;
                     }
                     r = 2 * ((e * f) - (g * g));
+                    if (r.Equals(0.0))
+                    {
+                        return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie" };
+                    }
                     aa = ((i * f) - (j * g)) / r;
                     bb = ((j * e) - (i * g)) / r;
                     z0 = (a / n) + aa;

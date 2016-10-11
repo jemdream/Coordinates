@@ -52,18 +52,30 @@ namespace Coordinates.Measurements.Elements
                 {
                     case PlaneEnum.XY:
                         w = n * g * h + a * b * d + a * b * d - b * b * g - a * a * h - n * d * d;
+                        if (w.Equals(0.0))
+                        {
+                            return new ErrorResult {Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej"};
+                        }
                         wa1 = c * g * h + f * d * b + a * d * e - e * g * b - f * a * h - c * d * d;
                         wa2 = n * f * h + a * b * e + b * c * d - b * b * f - a * c * h - n * e * d;
                         wa3 = n * g * e + a * c * d + a * b * f - b * c * g - a * a * e - n * d * f;
                         break;
                     case PlaneEnum.YZ:
                         w = n * h * i + b * e * c + b * e * c - c * c * h - b * b * i - n * e * e;
+                        if (w.Equals(0.0))
+                        {
+                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej" };
+                        }
                         wa1 = a * h * i + d * e * c + b * e * f - f * h * c - d * b * i - a * e * e;
                         wa2 = n * d * i + b * c * f + c * a * e - c * c * d - b * a * i - n * f * e;
                         wa3 = n * h * f + b * a * e + b * c * d - c * a * h - b * b * f - n * e * d;
                         break;
                     case PlaneEnum.ZX:
                         w = n * i * g + c * f * a + c * f * a - a * a * i - c * c * g - n * f * f;
+                        if (w.Equals(0.0))
+                        {
+                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej" };
+                        }
                         wa1 = b * i * g + e * f * a + c * f * d - d * i * a - e * c * g - b * f * f;
                         wa2 = n * e * g + c * a * d + a * b * f - a * a * e - c * b * g - n * d * f;
                         wa3 = n * i * d + c * b * f + c * a * e - a * b * i - c * c * d - n * f * e;

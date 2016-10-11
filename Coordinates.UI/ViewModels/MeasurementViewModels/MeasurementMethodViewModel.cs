@@ -104,15 +104,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => { })
             );
-
-            measurementMethod.Subscriptions.Add(
-                element.SelectedPositions.OnAdd.Subscribe(_ => RaisePropertyChanged(() => Calculate))
-            );
-
-            measurementMethod.Subscriptions.Add(
-                element.SelectedPositions.OnRemove.Subscribe(_ => RaisePropertyChanged(() => Calculate))
-            );
-
+            
             _measurementManager.GatherData = true;
         }
 
@@ -124,6 +116,14 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 ElementsViewModels = measurementMethod.Elements
                     .Select((el, i) => new ElementViewModel(el))
                     .ToArray();
+
+                ElementsViewModels
+                    .Select(evm => evm.Element)
+                    .ForEach(e =>
+                    {
+                        e.SelectedPositions.OnAdd.ObserveOn(SynchronizationContext.Current).Subscribe(_ => RaisePropertyChanged(() => Calculate));
+                        e.SelectedPositions.OnRemove.ObserveOn(SynchronizationContext.Current).Subscribe(_ => RaisePropertyChanged(() => Calculate));
+                    });
 
                 // Expose measurement method
                 MeasurementMethod = measurementMethod;

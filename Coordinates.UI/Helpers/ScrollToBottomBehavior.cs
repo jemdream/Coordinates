@@ -4,7 +4,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
-using Syncfusion.UI.Xaml.Controls.Navigation;
+
 
 namespace Coordinates.UI.Helpers
 {
@@ -34,8 +34,8 @@ namespace Coordinates.UI.Helpers
             {
                 collection.CollectionChanged += (s, args) =>
                 {
-                    var scrollViewer = behavior.AssociatedObject.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-                    scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+                    //var scrollViewer = behavior.AssociatedObject.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+                    //scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
                 };
             }
         }

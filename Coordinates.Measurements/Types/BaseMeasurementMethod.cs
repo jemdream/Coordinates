@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
@@ -40,6 +41,16 @@ namespace Coordinates.Measurements.Types
         public virtual bool SetupPlane(PlaneEnum? plane)
         {
             BaseElements.ForEach(be => be.Plane = plane);
+            return true;
+        }
+
+        /// <summary>
+        /// By default, sets given position as InitialPosition on ActiveElement
+        /// </summary>
+        public virtual bool SetupInitialPosition(Position position)
+        {
+            if (ActiveElement == null) return false;
+            ActiveElement.InitialPosition = position;
             return true;
         }
 

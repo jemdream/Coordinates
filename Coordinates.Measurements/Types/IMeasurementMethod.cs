@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
@@ -12,6 +13,8 @@ namespace Coordinates.Measurements.Types
         IElement ActivateNextElement();
 
         bool SetupPlane(PlaneEnum? plane);
+        bool SetupInitialPosition(Position position);
+
         bool IsNextElementAvailable { get; }
         bool CanCalculate();
         ICalculationResult Calculate();

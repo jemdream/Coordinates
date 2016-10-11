@@ -1,5 +1,6 @@
 ﻿using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Types
 {
@@ -10,6 +11,8 @@ namespace Coordinates.Measurements.Types
             BaseElements.Add(new Surface());
             BaseElements.Add(new Surface());
         }
+
+        public override bool SetupInitialPosition(Position position) => true;
 
         public override bool SetupPlane(PlaneEnum? plane)
         {

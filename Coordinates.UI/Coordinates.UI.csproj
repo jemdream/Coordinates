@@ -109,6 +109,7 @@
       <DependentUpon>MeasurementPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter.cs" />
     <Compile Include="Helpers\Converters\ValueToggleConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanToSelectionMode.cs" />

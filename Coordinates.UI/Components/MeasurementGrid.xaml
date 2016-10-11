@@ -18,7 +18,7 @@
     d:DesignWidth="400"
     x:Name="MeasurementGridUserControl"
     MinWidth="120"
-    MaxWidth="200"
+    MaxWidth="340"
     d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
 
     <UserControl.Resources>

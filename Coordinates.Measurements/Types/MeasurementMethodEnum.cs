@@ -10,10 +10,10 @@ namespace Coordinates.Measurements.Types
         [Description("Dwa otwory")]
         TwoHolesMeasurementMethod,
 
-        [Description("Płaszczyzny - prostopadłość")]
+        [Description("Płaszczyzny - równoległość")]
         SurfaceParalellismMeasurementMethod,
 
-        [Description("Płaszczyzny - równoległość")]
+        [Description("Płaszczyzny - prostopadłość")]
         SurfacePerpendicularityMeasurementMethod
     }
 }

@@ -5,26 +5,55 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:Coordinates.UI.Views"
+      xmlns:converters="using:Coordinates.UI.Helpers.Converters"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance views:Shell}">
+
+    <Page.Resources>
+        <Style x:Name="ButtonSymbolIcon" TargetType="SymbolIcon">
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="48" />
+        </Style>
+        <Style x:Name="ButtonSymbolLiteralIcon" TargetType="SymbolIcon">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Margin" Value="24,0,0,0" />
+        </Style>
+        <Style x:Name="ButtonTextBlock" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Name="ButtonRelativePanel" TargetType="RelativePanel">
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Padding" Value="0,0,12,0" />
+        </Style>
+        <converters:PositionTypeToBackground x:Name="PositionTypeToBackground"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <controls:HamburgerMenu x:Name="MyHamburgerMenu">
+        <controls:HamburgerMenu x:Name="MyHamburgerMenu"
+                                NavButtonCheckedBackground="SteelBlue"
+                                NavButtonCheckedForeground="White"
+                                NavButtonCheckedIndicatorBrush="Transparent"
+                                Loaded="MyHamburgerMenu_OnLoaded">
 
             <controls:HamburgerMenu.PrimaryButtons>
 
+                <!-- Margin -->
+                <controls:HamburgerButtonInfo ButtonType="Command">
+                    <Grid Margin="10"/>
+                </controls:HamburgerButtonInfo>
+
                 <!--  Mainpage button  -->
-                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage" >
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48"
-                                Symbol="Home" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Start" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Home" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Start" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
@@ -32,48 +61,75 @@
                 <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
                     <StackPanel Orientation="Horizontal">
                         <!-- Symbol icon reference: https://msdn.microsoft.com/pl-pl/library/windows/apps/dn252842 -->
-                        <SymbolIcon Width="48" Height="48"
-                                Symbol="Edit" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Coding Playground" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Edit" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Coding Playground" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
                 <!--  Measurement button  -->
-                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MeasurementsPage">
+                <controls:HamburgerButtonInfo x:Name="MeasurementsButton" ClearHistory="True" PageType="views:MeasurementsPage">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48"
-                                Symbol="Calculator" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Pomiary" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Calculator" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Pomiary" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
                 <!--  Visualisation button  -->
                 <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48"
-                                Symbol="Pictures" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Wizualizacja" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Pictures" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Wizualizacja" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
+                <!-- Instrukcje -->
+                <controls:HamburgerButtonInfo ButtonType="Command" x:Name="InstrukcjeButton" Tapped="Instrukcje_Tapped">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="OpenLocal" />
+                        <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Instrukcje" />
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+                <!-- Maszyna -->
+                <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="views:MainPage" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Style="{StaticResource ButtonSymbolLiteralIcon}" Symbol="OpenLocal" />
+                        <RelativePanel Style="{StaticResource ButtonRelativePanel}">
+                            <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True" Style="{StaticResource ButtonTextBlock}">
+                                <Run FontSize="12" Text="Maszyna" />
+                                <LineBreak />
+                                <Run FontSize="10" Text="Mitutoyo" />
+                            </TextBlock>
+                        </RelativePanel>
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
+
+                <!-- Metrologia -->
+                <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="views:MainPage" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Style="{StaticResource ButtonSymbolLiteralIcon}" Symbol="OpenLocal" />
+                        <RelativePanel Style="{StaticResource ButtonRelativePanel}">
+                            <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True" Style="{StaticResource ButtonTextBlock}">
+                                <Run FontSize="12" Text="Metrologia" />
+                                <LineBreak />
+                                <Run FontSize="10" Text="Pomiary wspolrzednosciowe" />
+                            </TextBlock>
+                        </RelativePanel>
+                    </StackPanel>
+                </controls:HamburgerButtonInfo>
             </controls:HamburgerMenu.PrimaryButtons>
 
             <controls:HamburgerMenu.SecondaryButtons>
 
-                <!--  settingspage button  -->
+                <!--  Ustawienia -->
                 <controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
                                           PageType="views:SettingsPage">
                     <controls:HamburgerButtonInfo.NavigationTransitionInfo>
                         <SuppressNavigationTransitionInfo />
                     </controls:HamburgerButtonInfo.NavigationTransitionInfo>
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48"
-                                Symbol="Setting" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                               Text="Ustawienia" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Setting" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Ustawienia" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
             </controls:HamburgerMenu.SecondaryButtons>
@@ -84,20 +140,41 @@
         <Grid Grid.Row="1">
             <!--CommandBar DataContext binding does not work (UWP issue). It requires codebehind Loaded event callback. 
             I placed the binding anyway, to prevent IDE from underlining and connect editor with datacontext. -->
-            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}">
+            <CommandBar x:Name="ConnectionBar" Loaded="ConnectionBar_OnLoaded" DataContext="{Binding ConnectionSetupViewModel}" 
+                         HorizontalContentAlignment="Stretch" Background="{Binding Position, Converter={StaticResource PositionTypeToBackground}}">
                 <CommandBar.Content>
-                    <TextBlock Text="{Binding SomeTestBinding}"/>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="2*" MinWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Text="{Binding ConnectionStatus}"/>
+                        <AppBarSeparator Grid.Column="2"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Position.X}"/>
+                        <AppBarSeparator Grid.Column="4" />
+                        <TextBlock Grid.Column="5" Text="{Binding Position.Y}"/>
+                        <AppBarSeparator Grid.Column="6"/>
+                        <TextBlock Grid.Column="7" Text="{Binding Position.Z}"/>
+                    </Grid>
                 </CommandBar.Content>
-                <AppBarSeparator/>
-                <AppBarToggleButton Icon="Shuffle" Label="Shuffle" Command="{Binding ShuffleCommand}"/>
                 <AppBarSeparator/>
                 <AppBarButton Icon="List" Label="Mode">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Cho" />
-                            <MenuFlyoutItem Text="Na" />
-                            <MenuFlyoutItem Text="Solo" />
-                            <MenuFlyoutItem Text="Qtasiarzu" />
+                            <MenuFlyoutItem Text="Connect" Command="{Binding ConnectCommand}"/>
+                            <MenuFlyoutItem Text="Disconnect" Command="{Binding DisconnectCommand}"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>

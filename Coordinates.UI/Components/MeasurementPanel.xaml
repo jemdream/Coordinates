@@ -1,0 +1,53 @@
+﻿<UserControl
+    x:Class="Coordinates.UI.Components.MeasurementPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Coordinates.Measurements.Models"
+    xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
+    xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    Margin="50"
+    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
+            <Style.Setters>
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            </Style.Setters>
+        </Style>
+        <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Name="OneHoleResultDataTemplate" x:DataType="models:OneHoleResult">
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Name="TwoHolesResultDataTemplate" x:DataType="models:TwoHolesResult">
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Name="SurfaceParalellismResultDataTemplate" x:DataType="models:SurfaceParalellismResult">
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Name="SurfacePerpendicularityResultDataTemplate" x:DataType="models:SurfacePerpendicularityResult">
+            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        </DataTemplate>
+        
+        <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
+                    ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
+                    OneHoleResultDataTemplate="{StaticResource OneHoleResultDataTemplate}"
+                    TwoHolesResultDataTemplate="{StaticResource TwoHolesResultDataTemplate}"
+                    SurfaceParalellismResultDataTemplate="{StaticResource SurfaceParalellismResultDataTemplate}"
+                    SurfacePerpendicularityResultDataTemplate="{StaticResource SurfacePerpendicularityResultDataTemplate}"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <ContentControl ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" />
+    </Grid>
+</UserControl>

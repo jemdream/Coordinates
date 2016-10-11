@@ -15,8 +15,7 @@ namespace Coordinates.UI.Views
             InitializeComponent();
         }
 
-        public Shell(INavigationService navigationService, 
-            IConnectionSetupViewModel connectionSetupViewModel) : this()
+        public Shell(INavigationService navigationService, IConnectionSetupViewModel connectionSetupViewModel) : this()
         {
             SetNavigationService(navigationService);
             ConnectionSetupViewModel = connectionSetupViewModel;
@@ -34,6 +33,19 @@ namespace Coordinates.UI.Views
         private void ConnectionBar_OnLoaded(object sender, RoutedEventArgs e)
         {
             (sender as CommandBar).DataContext = ConnectionSetupViewModel;
+        }
+
+        private void Instrukcje_Tapped(object sender, RoutedEventArgs e)
+        {
+            var isMaszynaButtonVisible = MaszynaButton.Visibility == Visibility.Visible;
+            
+            MaszynaButton.Visibility = MetrologiaButton.Visibility =
+                isMaszynaButtonVisible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void MyHamburgerMenu_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            MyHamburgerMenu.NavigationService.Navigate(typeof(MeasurementsPage));
         }
     }
 }

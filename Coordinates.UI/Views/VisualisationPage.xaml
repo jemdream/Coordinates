@@ -1,14 +1,15 @@
-﻿<Page xmlns:sfgrid="using:Syncfusion.UI.Xaml.Grid"  x:Class="Coordinates.UI.Views.VisualisationPage"
+﻿<Page x:Class="Coordinates.UI.Views.VisualisationPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
     xmlns:vm="using:Coordinates.UI.ViewModels"
-    xmlns:sfchart="using:Syncfusion.UI.Xaml.Charts"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
-
+    
+    <!--xmlns:sfgrid="using:Syncfusion.UI.Xaml.Grid" xmlns:sfchart="using:Syncfusion.UI.Xaml.Charts"-->
+    
     <Page.DataContext>
         <Binding Path="VisualisationPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
@@ -47,7 +48,7 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Wizualizacja"/>
         <!-- data visualization -->
-        <sfchart:SfChart Name="TwoDimChart" Header="Dwuwymiarowy wykres pomiarów" RelativePanel.Below="PageHeader" Margin="12,12,0,0" Width="700" Height="300" FontSize="14">
+        <!--<sfchart:SfChart Name="TwoDimChart" Header="Dwuwymiarowy wykres pomiarów" RelativePanel.Below="PageHeader" Margin="12,12,0,0" Width="700" Height="300" FontSize="14">
             <sfchart:SfChart.PrimaryAxis>
                 <sfchart:NumericalAxis Header="X" FontSize="14"></sfchart:NumericalAxis>
             </sfchart:SfChart.PrimaryAxis>
@@ -66,7 +67,7 @@
             <sfgrid:SfDataGrid.SortColumnDescriptions>
                 <sfgrid:SortColumnDescription ColumnName="XPicked.Name"></sfgrid:SortColumnDescription>
             </sfgrid:SfDataGrid.SortColumnDescriptions>
-        </sfgrid:SfDataGrid>
+        </sfgrid:SfDataGrid>-->
     </RelativePanel>
 </Page>
 

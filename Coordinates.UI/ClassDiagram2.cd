@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Coordinates.UI.ViewModels.MeasurementViewModels.MeasurementMethodViewModel">
+    <Position X="0.5" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Coordinates.UI.ViewModels.MeasurementFlow.MeasurementProcessViewModel">
+    <Position X="4.25" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAEAEAAgACAAEAAAAAAQAAAAQAAAAAAAAI=</HashCode>
+      <FileName>ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Coordinates.UI.ViewModels.MeasurementViewModels.IMeasurementMethodViewModel">
+    <Position X="0.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Coordinates.UI.ViewModels.MeasurementFlow.IMeasurementProcessViewModel">
+    <Position X="4.25" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

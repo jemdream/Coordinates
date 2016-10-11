@@ -1,0 +1,109 @@
+﻿<UserControl
+    x:Class="Coordinates.UI.Components.MeasurementGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:Coordinates.Models.DTO"
+    xmlns:converters="using:Template10.Converters"
+    xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    xmlns:converters1="using:Coordinates.UI.Helpers.Converters"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Cimbalino.Toolkit.Behaviors"
+    xmlns:models="using:Coordinates.Measurements.Models"
+    xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
+    xmlns:converters2="using:Cimbalino.Toolkit.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    x:Name="MeasurementGridUserControl"
+    MinWidth="120"
+    MaxWidth="200"
+    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
+
+    <UserControl.Resources>
+
+        <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="{x:Bind X}" 
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="5"/>
+                <TextBlock  Grid.Column="1"
+                            Text="{x:Bind Y}" 
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="5"/>
+                <TextBlock  Grid.Column="2"
+                            Text="{x:Bind Z}" 
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="5"/>
+            </Grid>
+        </DataTemplate>
+
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
+        <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
+        <converters2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <DataTemplate x:Name="HoleResultDataTemplate" x:DataType="models:HoleResult">
+            <TextBlock Text="{Binding }"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="SurfaceResultDataTemplate" x:DataType="models:SurfaceResult">
+            <TextBlock Text="{Binding }"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
+            <TextBlock Text="{Binding }" Foreground="Red"/>
+        </DataTemplate>
+
+        <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
+                    ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
+                    HoleResultDataTemplate="{StaticResource HoleResultDataTemplate}"
+                    SurfaceResultDataTemplate="{StaticResource SurfaceResultDataTemplate}" />
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--, Converter={StaticResource StringFormatConverter}, ConverterParameter=Płaszczyzna: \{0:d\}}"-->
+        <TextBlock Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged}"
+                   Style="{ThemeResource BodyTextBlockStyle}"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding Positions}" HorizontalAlignment="Stretch"
+                  ItemTemplate="{StaticResource ContactListViewTemplate}"
+                  SelectionChanged="Selector_OnSelectionChanged"
+                  Loaded="FrameworkElement_OnLoaded"
+                  SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}"
+                  ShowsScrollingPlaceholders="True">
+        </ListView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Margin="12">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">
+                            <behaviors:MultiBindingItem Value="{Binding IsSelectable, ElementName=MeasurementGridUserControl}" />
+                            <behaviors:MultiBindingItem Value="{Binding Positions.Count}" />
+                            <behaviors:MultiBindingItem Value="{Binding SelectedPositions.Count}" />
+                        </behaviors:MultiBindingBehavior>   
+                    </interactivity:Interaction.Behaviors>
+            </TextBlock>
+            <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
+                    Style="{ThemeResource BodyTextBlockStyle}" Margin="12"/>
+        </StackPanel>
+        <ContentControl Grid.Row="3" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+                        Visibility="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+    </Grid>
+</UserControl>

@@ -7,21 +7,22 @@ using Coordinates.ExternalDevices.Events.ConnectionEvents;
 
 namespace Coordinates.ExternalDevices.Connections
 {
-    public abstract class BaseConnectionService<T> : IConnectionService<T>
+    public abstract class BaseConnectionService : IConnectionService
     {
-        private readonly ReplaySubject<DiagnosticEvent> _connectionMessagesSubject;
-        private ConnectionStatus _connectionStatus;
+        private readonly ReplaySubject<DiagnosticEvent> _diagnosticEventsSubject;
         private readonly List<DiagnosticEvent> _diagnosticEvents;
+
+        private ConnectionStatus _connectionStatus;
 
         protected BaseConnectionService()
         {
-            _connectionMessagesSubject = new ReplaySubject<DiagnosticEvent>(int.MaxValue);
             _diagnosticEvents = new List<DiagnosticEvent>();
 
-            _connectionMessagesSubject.Subscribe(_diagnosticEvents.Add);
+            _diagnosticEventsSubject = new ReplaySubject<DiagnosticEvent>(int.MaxValue);
+            _diagnosticEventsSubject.Subscribe(_diagnosticEvents.Add);
         }
 
-        public abstract T ConnectionConfiguration { get; set; }
+        public virtual IConnection ConnectionConfiguration { get; }
 
         public ConnectionStatus ConnectionStatus
         {
@@ -33,14 +34,12 @@ namespace Coordinates.ExternalDevices.Connections
                 ConnectionStateChanged();
             }
         }
-
+        
         protected abstract Task<bool> OnOpeningAsync();
         protected abstract Task<bool> OnClosingAsync();
 
-        public IEnumerable<DiagnosticEvent> DiagnosticEvents => _diagnosticEvents;
-        public IObservable<DiagnosticEvent> DiagnosticEventsStream => _connectionMessagesSubject.AsObservable();
-
-        // TODO requires flag, so you can't hammer toggling (on/off/on/off)
+        public IObservable<DiagnosticEvent> DiagnosticEventsStream => _diagnosticEventsSubject.AsObservable();
+        
         public async Task<ConnectionStatus> Open()
         {
             if (ConnectionStatus.Equals(ConnectionStatus.Open))
@@ -63,7 +62,7 @@ namespace Coordinates.ExternalDevices.Connections
             ConnectionStatus = ConnectionStatus.Closing;
 
             var result = await OnClosingAsync();
-            
+
             ConnectionStatus = result ? ConnectionStatus.Closed : ConnectionStatus.Broken;
 
             return ConnectionStatus;
@@ -77,7 +76,7 @@ namespace Coordinates.ExternalDevices.Connections
                 TimeStamp = DateTime.UtcNow
             };
 
-            _connectionMessagesSubject.OnNext(connectionEvent);
+            _diagnosticEventsSubject.OnNext(connectionEvent);
         }
         public void Dispose()
         {

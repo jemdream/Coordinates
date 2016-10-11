@@ -1,11 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
+using Prism.Events;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface IMeasurementsPageViewModel
     {
-        ICoordsOriginPartViewModel CoordsOriginPartViewModel { get; }
-        ICoordsComputationPartViewModel CoordsComputationPartViewModel { get; }
+        IEventAggregator EventAggregator { get; }
+        List<IMeasurementViewModelBase> MeasurementFlowViewModels { get; }
         int SelectedTabIndex { get; set; }
+
+        //MockDeviceService MockingDataService { get; set; } // TODO MOCK CONNECTION
     }
 }

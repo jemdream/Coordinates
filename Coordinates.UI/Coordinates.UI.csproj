@@ -18,6 +18,9 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Coordinates.UI_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +93,8 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Coordinates.UI_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
@@ -97,13 +102,31 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\MeasurementGrid.xaml.cs">
+      <DependentUpon>MeasurementGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MeasurementPanel.xaml.cs">
+      <DependentUpon>MeasurementPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Converters\ValueToggleConverter.cs" />
+    <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\BooleanToSelectionMode.cs" />
+    <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
+    <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
+    <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
+    <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
+    <Compile Include="Helpers\ScrollToBottomBehavior.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
-    <Compile Include="Messages\NewMeasurementMessage.cs" />
-    <Compile Include="Models\MeasurementSettingsModel.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\FlatnessMeasurementViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\IMeasurementTypeViewModel.cs" />
+    <Compile Include="Messages\GoNextMeasurementMsg.cs" />
+    <Compile Include="ViewModels\Interfaces\IMeasurementViewModelBase.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementElementSelectionViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementSelectionCalculationViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementCalibrationViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementFlow\MeasurementViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServiceLocator\IViewModelLocator.cs" />
     <Compile Include="Services\ServiceLocator\ViewModelLocator.cs" />
@@ -111,25 +134,41 @@
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ViewModels\AboutPartViewModel.cs" />
     <Compile Include="ViewModels\CodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\CoordsComputationPartViewModel.cs" />
-    <Compile Include="ViewModels\CoordsOriginPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IAboutPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ICoordsComputationPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMeasurementsPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ICoordsOriginPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVisualisationPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MeasurementsPageViewModel.cs" />
-    <Compile Include="ViewModels\MeasurementViewModels\RoundnessMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementViewModels\ElementViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />
+    <Compile Include="Helpers\Converters\EqualityConverter.cs" />
+    <Compile Include="Views\Dialogs\AxisBlockDialog.xaml.cs">
+      <DependentUpon>AxisBlockDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PlaneSelectionDialog.xaml.cs">
+      <DependentUpon>PlaneSelectionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml.cs">
+      <DependentUpon>MeasurementSelectionCalculation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MeasurementFlow\MeasurementCalibration.xaml.cs">
+      <DependentUpon>MeasurementCalibration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MeasurementFlow\MeasurementProcess.xaml.cs">
+      <DependentUpon>MeasurementProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MeasurementFlow\MeasurementTypeSelection.xaml.cs">
+      <DependentUpon>MeasurementTypeSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MeasurementsPage.xaml.cs">
       <DependentUpon>MeasurementsPage.xaml</DependentUpon>
     </Compile>
@@ -181,10 +220,47 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Components\MeasurementGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MeasurementPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Custom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\CustomStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\AxisBlockDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\PlaneSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeasurementFlow\MeasurementCalibration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeasurementFlow\MeasurementProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeasurementFlow\MeasurementTypeSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MeasurementsPage.xaml">
       <SubType>Designer</SubType>
@@ -224,22 +300,21 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\MeasurementViews\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj">
       <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
       <Name>Coordinates.ExternalDevices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Coordinates.Measurements\Coordinates.Measurements.csproj">
+      <Project>{2a1b41e3-29ba-4ca3-bfbc-97f695695f29}</Project>
+      <Name>Coordinates.Measurements</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
       <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
       <Name>Coordinates.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="Syncfusion Controls for UWP XAML, Version=14.1.0.41">
-      <Name>Syncfusion Controls for UWP XAML</Name>
-    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

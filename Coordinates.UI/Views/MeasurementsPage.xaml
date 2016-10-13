@@ -95,6 +95,9 @@
         <Pivot x:Name="Pivot" ItemsSource="{Binding MeasurementFlowViewModels}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                ManipulationMode="None" RelativePanel.Below="PageHeader" RelativePanel.RightOf="BackButton" ItemTemplateSelector="{StaticResource CoordsViewModelBaseSelector}"
                RelativePanel.AlignBottomWithPanel="True" RelativePanel.LeftOf="NextButton" SelectionChanged="Pivot_OnSelectionChanged">
+            <Pivot.Resources>
+                <Style TargetType="PivotHeaderItem" BasedOn="{StaticResource PivotHeaderItemStyle}"/>
+            </Pivot.Resources>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
                     <VisualState>

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
-using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Models;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
@@ -123,15 +120,10 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         // invoked every time even initially
         private async Task SetNextElement(IMeasurementMethod measurementMethod)
         {
-            // TODO move this out
-            _measurementManager.GatherData = false;
-
-            measurementMethod.Subscriptions.Clear();
-
-            var element = measurementMethod.ActivateNextElement();
-
+            var element = ActivateNextElement(measurementMethod);
+            
             ElementsViewModels.ForEach(evm => evm.Update());
-
+            
             ActiveElementViewModel = ElementsViewModels.FirstOrDefault(x => x.Element == element);
 
             if (element == null) return;
@@ -141,6 +133,13 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
             await ShowAxisBlockDialog();
 
+            Subscribe(measurementMethod, element);
+
+            _measurementManager.GatherData = true;
+        }
+
+        private void Subscribe(IMeasurementMethod measurementMethod, IElement element)
+        {
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
@@ -148,7 +147,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                     .Where(position => position.Contact)
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => element.Positions.Add(position))
-            );
+                );
 
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
@@ -158,9 +157,15 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                     .Where(_ => !_isAxisLocked)
                     .SelectMany(async _ => await ShowAxisMovementDialog())
                     .Subscribe()
-            );
+                );
+        }
 
-            _measurementManager.GatherData = true;
+        private IElement ActivateNextElement(IMeasurementMethod measurementMethod)
+        {
+            _measurementManager.GatherData = false;
+            measurementMethod.Subscriptions.Clear();
+
+            return measurementMethod.ActivateNextElement();
         }
 
         private void InitializeMeasurement(IMeasurementMethod measurementMethod)

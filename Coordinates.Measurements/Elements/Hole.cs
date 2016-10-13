@@ -11,7 +11,7 @@ namespace Coordinates.Measurements.Elements
         {
             return SelectedPositions.Count >= RequiredMeasurementCount;
         }
-
+        
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };

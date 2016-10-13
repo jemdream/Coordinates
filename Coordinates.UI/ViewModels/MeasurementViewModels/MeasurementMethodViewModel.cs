@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Helpers;
@@ -25,8 +27,11 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         IElementViewModel ActiveElementViewModel { get; }
         Task SetNextElement();
         IEnumerable<PlaneEnum> SurfaceEnums { get; }
+
         DelegateCommand<PlaneEnum> SetMeasurementPlane { get; }
         DelegateCommand<Position> SetInitialPosition { get; }
+        DelegateCommand ReleaseDialog { get; }
+
         bool CanCalculate();
         ICalculationResult Calculate { get; }
     }
@@ -35,11 +40,13 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         private readonly IMeasurementManager _measurementManager;
         private readonly object _lock = new object();
+        AxisMovementDialog _axisMovementDialog;
 
         private IMeasurementMethod _measurementMethod;
         private IEnumerable<IElementViewModel> _elementsViewModels;
         private DelegateCommand<PlaneEnum> _setMeasurementPlane;
         private DelegateCommand<Position> _setInitialPosition;
+        private DelegateCommand _releaseDialog;
         private IElementViewModel _activeElementViewModel;
         private Position _presentPosition;
 
@@ -51,7 +58,12 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 .Subscribe(InitializeMeasurement);
 
             _measurementManager.PositionSource
-                .Subscribe(pos => PresentPosition = pos);
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(pos =>
+                {
+                    PresentPosition = pos;
+                    ReleaseDialog.RaiseCanExecuteChanged();
+                });
         }
 
         public IEnumerable<PlaneEnum> SurfaceEnums => Enum.GetValues(typeof(PlaneEnum)).Cast<PlaneEnum>();
@@ -60,7 +72,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         {
             await Task.CompletedTask;
             MeasurementMethod.SetupPlane(x);
-            ElementsViewModels.ForEach(evm => evm.RefreshUi());
+            ElementsViewModels.ForEach(evm => evm.Update());
         }, x => true));
 
         public DelegateCommand<Position> SetInitialPosition => _setInitialPosition ?? (_setInitialPosition = new DelegateCommand<Position>(async x =>
@@ -68,6 +80,11 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             await Task.CompletedTask;
             MeasurementMethod.SetupInitialPosition(x);
         }, x => true));
+
+        public DelegateCommand ReleaseDialog => _releaseDialog ?? (_releaseDialog = new DelegateCommand(() =>
+        {
+            _axisMovementDialog?.Hide();
+        }, () => ActiveElementViewModel.Element.AxisMovementValidation(PresentPosition)));
 
         public bool CanCalculate() => MeasurementMethod != null && MeasurementMethod.CanCalculate();
 
@@ -106,13 +123,14 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         // invoked every time even initially
         private async Task SetNextElement(IMeasurementMethod measurementMethod)
         {
+            // TODO move this out
             _measurementManager.GatherData = false;
 
             measurementMethod.Subscriptions.Clear();
 
             var element = measurementMethod.ActivateNextElement();
 
-            ElementsViewModels.ForEach(evm => evm.RefreshUi());
+            ElementsViewModels.ForEach(evm => evm.Update());
 
             ActiveElementViewModel = ElementsViewModels.FirstOrDefault(x => x.Element == element);
 
@@ -126,7 +144,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
-                    .Where(pos => (element.InitialPosition == null) || Math.Abs(pos.GetBlockedAxisValue(element.Plane).Value - element.InitialPosition.GetBlockedAxisValue(element.Plane).Value) < 0.00001)
+                    .Where(element.AxisMovementValidation)
                     .Where(position => position.Contact)
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => element.Positions.Add(position))
@@ -135,9 +153,11 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
-                    .Where(pos => !((element.InitialPosition == null) || Math.Abs(pos.GetBlockedAxisValue(element.Plane).Value - element.InitialPosition.GetBlockedAxisValue(element.Plane).Value) < 0.00001))
+                    .Where(pos => !element.AxisMovementValidation(pos))
                     .ObserveOn(SynchronizationContext.Current)
-                    .Subscribe(position => { Debugger.Break(); })
+                    .Where(_ => !_isAxisLocked)
+                    .SelectMany(async _ => await ShowAxisMovementDialog())
+                    .Subscribe()
             );
 
             _measurementManager.GatherData = true;
@@ -170,6 +190,21 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             var axisBlockDialog = new AxisBlockDialog(this);
             await axisBlockDialog.ShowAsync();
             axisBlockDialog.Hide();
+        }
+
+        private bool _isAxisLocked;
+        private async Task<ContentDialogResult> ShowAxisMovementDialog()
+        {
+            _isAxisLocked = true;
+
+            if (_axisMovementDialog == null)
+                _axisMovementDialog = new AxisMovementDialog(this);
+
+            var dialogResult = await _axisMovementDialog.ShowAsync();
+
+            _isAxisLocked = false;
+
+            return dialogResult;
         }
 
         private async Task ShowPlaneSelectionDialog()

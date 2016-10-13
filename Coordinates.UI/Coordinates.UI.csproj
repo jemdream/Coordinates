@@ -155,6 +155,9 @@
     <Compile Include="Views\Dialogs\AxisBlockDialog.xaml.cs">
       <DependentUpon>AxisBlockDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\AxisMovementDialog.xaml.cs">
+      <DependentUpon>AxisMovementDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\PlaneSelectionDialog.xaml.cs">
       <DependentUpon>PlaneSelectionDialog.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\Dialogs\AxisBlockDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AxisMovementDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

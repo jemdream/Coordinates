@@ -118,6 +118,7 @@
     <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
     <Compile Include="Helpers\ScrollToBottomBehavior.cs" />
+    <Compile Include="ViewModels\ChartsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
@@ -152,6 +153,9 @@
     <Compile Include="ViewModels\SettingsPartViewModel.cs" />
     <Compile Include="ViewModels\VisualisationPageViewModel.cs" />
     <Compile Include="Helpers\Converters\EqualityConverter.cs" />
+    <Compile Include="Views\ChartsView.xaml.cs">
+      <DependentUpon>ChartsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\AxisBlockDialog.xaml.cs">
       <DependentUpon>AxisBlockDialog.xaml</DependentUpon>
     </Compile>
@@ -241,6 +245,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\ChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\AxisBlockDialog.xaml">
       <SubType>Designer</SubType>

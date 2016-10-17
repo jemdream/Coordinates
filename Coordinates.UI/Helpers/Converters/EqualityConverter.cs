@@ -21,7 +21,7 @@ namespace Coordinates.UI.Helpers.Converters
 
             var referenceEquality = values[0] == vm.MeasurementMethod.ActiveElement;
 
-            return referenceEquality ? new Thickness(5) : new Thickness(0);
+            return referenceEquality ? new Thickness(1) : new Thickness(0);
         }
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

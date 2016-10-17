@@ -12,30 +12,32 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementFlow:IMeasurementProcessViewModel}">
+    d:DataContext="{d:DesignInstance measurementFlow:MeasurementProcessViewModel}">
 
     <UserControl.Resources>
         <converters:EqualityConverter x:Key="EqualityConverter"/>
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        
+
         <Border BorderBrush="GreenYellow">
             <interactivity:Interaction.Behaviors>
-                <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness" ConverterParameter="0">
+                <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[0].Element}" />
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel}" />
-                    <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].ViewHack}" />
+                    <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[0].ViewHack}" />
                 </behaviors:MultiBindingBehavior>
             </interactivity:Interaction.Behaviors>
             <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
         </Border>
 
-        <Button Content="Dalej" Command="{Binding NextElementCommand}"/>
+        <Button Command="{Binding NextElementCommand}" Margin="50" RelativePanel.AlignRightWithPanel="True" Width="50" Height="50">
+            <SymbolIcon Symbol="Forward"/>
+        </Button>
 
         <Border BorderBrush="GreenYellow">
             <interactivity:Interaction.Behaviors>
-                <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness" ConverterParameter="1">
+                <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].Element}" />
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel}" />
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].ViewHack}" />

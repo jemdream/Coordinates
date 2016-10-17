@@ -102,6 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\AlternatingRowListView.cs" />
     <Compile Include="Components\MeasurementGrid.xaml.cs">
       <DependentUpon>MeasurementGrid.xaml</DependentUpon>
     </Compile>

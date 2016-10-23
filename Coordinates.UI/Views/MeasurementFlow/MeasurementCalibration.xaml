@@ -5,44 +5,48 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementFlow="using:Coordinates.UI.ViewModels.MeasurementFlow"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementFlow:IMeasurementCalibrationViewModel}">
+    d:DesignHeight="500"
+    d:DesignWidth="800"
+    d:DataContext="{d:DesignInstance measurementFlow:MeasurementCalibrationViewModel}">
 
-    <!--Pozycja początkowa-->
-    <StackPanel Name="CoordsRelativePanel"  HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Aktualna pozycja"/>
-        <Grid Name="CoordsInitialGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="0" BorderThickness="1 1 0 1">
-                <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="1" BorderThickness="1 1 0 1">
-                <TextBlock Text="y" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border BorderBrush="DodgerBlue" Grid.Row="0" Grid.Column="2" BorderThickness="1 1 1 1">
-                <TextBlock Text="z" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="0" BorderThickness="1 0 0 1">
-                <TextBlock Text="{Binding CurrentGaugePosition.X}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="1" BorderThickness="1 0 0 1">
-                <TextBlock Text="{Binding CurrentGaugePosition.Y}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Border BorderBrush="DodgerBlue" Grid.Row="1" Grid.Column="2" BorderThickness="1 0 1 1">
-                <TextBlock Text="{Binding CurrentGaugePosition.Z}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}"  Content="Zeruj" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"/>
-        </Grid>
-    </StackPanel>
+    <UserControl.Resources>
+        <converters:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+    </UserControl.Resources>
+    <RelativePanel>
+        <RelativePanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="15" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource HeaderTextBlockStyle}" x:Key="XyzTextBlock">
+                <Setter Property="Margin" Value="15"/>
+                <Setter Property="Width" Value="175"/>
+                <Setter Property="TextAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </RelativePanel.Resources>
+
+        <TextBlock Text="Aktualna pozycja" Style="{StaticResource SubheaderTextBlockStyle}" TextAlignment="Center" Margin="15"
+                   RelativePanel.AlignLeftWith="XTb" RelativePanel.AlignRightWith="ZTb" RelativePanel.Above="YTby"/>
+        
+        <TextBlock Text="X" RelativePanel.Above="XTb" RelativePanel.AlignHorizontalCenterWith="XTb"/>
+        <TextBlock x:Name="XTb" Text="{Binding CurrentGaugePosition.X, Converter={StaticResource XyzStringConverter}}" Style="{StaticResource XyzTextBlock}"
+                  RelativePanel.LeftOf="YTb" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+        <TextBlock x:Name="YTby" Text="Y" RelativePanel.Above="YTb" RelativePanel.AlignHorizontalCenterWith="YTb"/>
+        <TextBlock x:Name="YTb" Text="{Binding CurrentGaugePosition.Y, Converter={StaticResource XyzStringConverter}}" Style="{StaticResource XyzTextBlock}"
+                   RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+        <TextBlock Text="Z" RelativePanel.Above="ZTb" RelativePanel.AlignHorizontalCenterWith="ZTb"/>
+        <TextBlock x:Name="ZTb" Text="{Binding CurrentGaugePosition.Z, Converter={StaticResource XyzStringConverter}}" Style="{StaticResource XyzTextBlock}"
+                   RelativePanel.RightOf="YTb" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+        <Button Name="ZeroButton" Command="{Binding SetupInitialCoordinates}" Content="Zeruj" HorizontalAlignment="Stretch" Margin="15" Height="50"
+                RelativePanel.Below="ZTb" RelativePanel.AlignLeftWith="XTb" RelativePanel.AlignRightWith="ZTb">
+        </Button>
+    </RelativePanel>
 </UserControl>

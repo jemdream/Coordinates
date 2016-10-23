@@ -3,7 +3,9 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
@@ -35,7 +37,7 @@ namespace Coordinates.UI
         public App()
         {
             MeasurementDevelopment();
-
+            
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);
@@ -105,7 +107,14 @@ namespace Coordinates.UI
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Debug.WriteLine(ApplicationData.Current.LocalFolder.Path);
+            
+            var view = ApplicationView.GetForCurrentView();
+            if (view.IsFullScreenMode) view.ExitFullScreenMode();
 
+            view.SetPreferredMinSize(new Size(1366, 768));
+            ApplicationView.PreferredLaunchViewSize = new Size(1366, 768);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            
             if (!(Window.Current.Content is ModalDialog))
             {
                 // create a new frame and register it

@@ -110,12 +110,12 @@
       <DependentUpon>MeasurementPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Converters\ConnectionStatusToForeground.cs" />
     <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter.cs" />
     <Compile Include="Helpers\Converters\ValueToggleConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanToSelectionMode.cs" />
     <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
-    <Compile Include="Helpers\Converters\ConnectionStatusToBackground.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
     <Compile Include="Helpers\ScrollToBottomBehavior.cs" />

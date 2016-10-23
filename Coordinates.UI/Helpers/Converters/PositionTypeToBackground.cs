@@ -9,8 +9,8 @@ namespace Coordinates.UI.Helpers.Converters
 {
     public class PositionTypeToBackground : IValueConverter
     {
-        private readonly SolidColorBrush _contact = (SolidColorBrush)Application.Current.Resources["GaugeContactBarColorBrush"];
-        private readonly SolidColorBrush _noContact = new SolidColorBrush((Color)Application.Current.Resources["SystemChromeMediumColor"]);
+        private readonly SolidColorBrush _contact = new SolidColorBrush(Color.FromArgb(255, 30, 215, 96));//= new SolidColorBrush(Color.FromArgb(255, 127, 223, 73));//(SolidColorBrush)Application.Current.Resources["GaugeContactBarColorBrush"];
+        private readonly SolidColorBrush _noContact = (SolidColorBrush)Application.Current.Resources["SystemControlBackgroundChromeMediumBrush"];
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

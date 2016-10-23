@@ -23,6 +23,8 @@
     d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
 
     <UserControl.Resources>
+        <converters:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+
         <Style TargetType="TextBlock" x:Key="PositionTextBlockStyle">
             <Setter Property="Margin" Value="5"/>
         </Style>
@@ -40,9 +42,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Bind X}"/>
-                <TextBlock Grid.Column="1" Text="{x:Bind Y}"/>
-                <TextBlock Grid.Column="2" Text="{x:Bind Z}"/>
+                <TextBlock Grid.Column="0" Text="{x:Bind X, Converter={StaticResource XyzStringConverter}}"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Y, Converter={StaticResource XyzStringConverter}}"/>
+                <TextBlock Grid.Column="2" Text="{x:Bind Z, Converter={StaticResource XyzStringConverter}}"/>
             </Grid>
         </DataTemplate>
 
@@ -68,6 +70,17 @@
                     HoleResultDataTemplate="{StaticResource HoleResultDataTemplate}"
                     SurfaceResultDataTemplate="{StaticResource SurfaceResultDataTemplate}" />
 
+        <converters:ValueWhenConverter x:Key="VisibleWhenTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
     </UserControl.Resources>
 
     <Grid>
@@ -87,16 +100,21 @@
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <!-- TODO ADD NEW COLUMN AND BIND WIDTH TO IsSelectable (use template10 converter - there is something to equality check)-->
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="X"/>
-            <Border Grid.Column="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1 0 1 0">
+            <Border BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" 
+                    Visibility="{Binding Path=IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource VisibleWhenTrueConverter}}"
+                    BorderThickness="0 0 1 0">
+                <TextBlock TextAlignment="Center" Width="35" />
+            </Border>
+            <TextBlock Grid.Column="1" Text="X"/>
+            <Border Grid.Column="2" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1 0 1 0">
                 <TextBlock Text="Y"/>
             </Border>
-            <TextBlock Grid.Column="2" Text="Z"/>
+            <TextBlock Grid.Column="3" Text="Z"/>
         </Grid>
 
         <!--Pomiary-->

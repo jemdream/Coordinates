@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.UI", "Coordinates.UI\Coordinates.UI.csproj", "{B24B1802-2CE4-4DEA-B7CC-CFC7FE36D1A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.UI.Tests", "Coordinates.UI.Tests\Coordinates.UI.Tests.csproj", "{59E3A289-083A-4177-B8C0-20E4C8AD1453}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.Models", "Coordinates.Models\Coordinates.Models.csproj", "{F1EC649C-E7F4-44B9-B495-A8B7D8969822}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.ExternalDevices", "Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj", "{C8D77F96-446D-455A-A9A1-5C858D69BF0A}"
@@ -45,22 +43,6 @@ Global
 		{B24B1802-2CE4-4DEA-B7CC-CFC7FE36D1A8}.Release|x86.ActiveCfg = Release|x86
 		{B24B1802-2CE4-4DEA-B7CC-CFC7FE36D1A8}.Release|x86.Build.0 = Release|x86
 		{B24B1802-2CE4-4DEA-B7CC-CFC7FE36D1A8}.Release|x86.Deploy.0 = Release|x86
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|ARM.Build.0 = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|x64.Build.0 = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Debug|x86.Build.0 = Debug|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|ARM.ActiveCfg = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|ARM.Build.0 = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|x64.ActiveCfg = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|x64.Build.0 = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|x86.ActiveCfg = Release|Any CPU
-		{59E3A289-083A-4177-B8C0-20E4C8AD1453}.Release|x86.Build.0 = Release|Any CPU
 		{F1EC649C-E7F4-44B9-B495-A8B7D8969822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1EC649C-E7F4-44B9-B495-A8B7D8969822}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1EC649C-E7F4-44B9-B495-A8B7D8969822}.Debug|ARM.ActiveCfg = Debug|ARM

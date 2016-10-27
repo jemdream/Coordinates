@@ -71,7 +71,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             MeasurementMethod.SetupPlane(x);
             ElementsViewModels.ForEach(evm => evm.Update());
         }, x => true));
-
+        
         public DelegateCommand<Position> SetInitialPosition => _setInitialPosition ?? (_setInitialPosition = new DelegateCommand<Position>(async x =>
         {
             await Task.CompletedTask;
@@ -81,7 +81,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         public DelegateCommand ReleaseDialog => _releaseDialog ?? (_releaseDialog = new DelegateCommand(() =>
         {
             _axisMovementDialog?.Hide();
-        }, () => ActiveElementViewModel.Element.AxisMovementValidation(PresentPosition)));
+        }, () => ActiveElementViewModel!= null && ActiveElementViewModel.Element.AxisMovementValidation(PresentPosition)));
 
         public bool CanCalculate() => MeasurementMethod != null && MeasurementMethod.CanCalculate();
 
@@ -131,7 +131,9 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             if (element.Plane == null)
                 await ShowPlaneSelectionDialog();
 
-            await ShowAxisBlockDialog();
+            // Check if should show blocking dialog
+            if(MeasurementMethod.SetupInitialPosition(null))
+                await ShowAxisBlockDialog();
 
             Subscribe(measurementMethod, element);
 

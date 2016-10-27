@@ -12,7 +12,7 @@
     PrimaryButtonText="OK"
     PrimaryButtonCommand="{Binding SetInitialPosition}"
     PrimaryButtonCommandParameter="{Binding PresentPosition}"
-    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
+    d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
     <ContentDialog.Resources>
         <Style TargetType="TextBlock">
             <Style.Setters>

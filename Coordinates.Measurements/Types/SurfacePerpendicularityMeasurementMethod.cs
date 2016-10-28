@@ -1,4 +1,5 @@
-﻿using Coordinates.Measurements.Elements;
+﻿using System;
+using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 
@@ -43,9 +44,33 @@ namespace Coordinates.Measurements.Types
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
                 return new ErrorResult { Message = "(firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)" };
 
+            double t0, t1;
+
+            if (firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.YZ || firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.XY)
+            {
+                t0 = ((SurfaceResult)firstElementCalculation).A2;
+                t1 = ((SurfaceResult)secondElementCalculation).A3;
+            }
+            else if (firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX || firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY)
+            {
+                t0 = ((SurfaceResult)firstElementCalculation).A3;
+                t1 = ((SurfaceResult)secondElementCalculation).A3;
+            }
+            else if (firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX || firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ)
+            {
+                t0 = ((SurfaceResult)firstElementCalculation).A2;
+                t1 = ((SurfaceResult)secondElementCalculation).A2;
+            }
+            else
+            {
+                return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości" };
+            }
+
+            var result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)));
+
             return new SurfacePerpendicularityResult
             {
-                Result = $"{firstElementCalculation} & {secondElementCalculation}"
+                Result = $"{result}"
             };
         }
 

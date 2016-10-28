@@ -36,7 +36,7 @@ namespace Coordinates.UI
 
         public App()
         {
-            MeasurementDevelopment();
+            //MeasurementDevelopment();
             
             InitializeComponent();
             _myContainer = SetupContainer();

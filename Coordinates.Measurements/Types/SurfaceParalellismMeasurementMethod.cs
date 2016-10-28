@@ -1,4 +1,5 @@
-﻿using Coordinates.Measurements.Elements;
+﻿using System;
+using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
 
 namespace Coordinates.Measurements.Types
@@ -25,7 +26,7 @@ namespace Coordinates.Measurements.Types
             var secondElement = BaseElements[1];
 
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
-                return new ErrorResult { Message = "(!firstElement.CanCalculate() || !secondElement.CanCalculate())" }; ;
+                return new ErrorResult { Message = "(!firstElement.CanCalculate() || !secondElement.CanCalculate())" };
 
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
@@ -33,9 +34,14 @@ namespace Coordinates.Measurements.Types
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
                 return new ErrorResult { Message = "(firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)" };
 
+            var t0 = ((SurfaceResult)firstElementCalculation).A2;
+            var t1 = ((SurfaceResult)secondElementCalculation).A2;
+
+            var result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)));
+
             return new SurfaceParalellismResult
             {
-                Result = $"{firstElementCalculation} & {secondElementCalculation}"
+                Result = $"{result}"
             };
         }
 

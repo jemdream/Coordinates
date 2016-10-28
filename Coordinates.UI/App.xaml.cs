@@ -49,7 +49,7 @@ namespace Coordinates.UI
         private static void MeasurementDevelopment()
         {
             // caly pomiar
-            var measurements = new TwoHolesMeasurementMethod();
+            var measurements = new SurfaceParalellismMeasurementMethod();
 
             #region First Element
 
@@ -57,9 +57,9 @@ namespace Coordinates.UI
             firstElement.Plane = PlaneEnum.YZ;
             var mockoweZaznaczoneDaneFirstElement = new[]
             {
-                new Position(0.0, 0.0, 0.3, true), new Position(0.0, 0.1, 0.3, true),
-                new Position(1.0, 0.0, 0.3, true), new Position(1.0, 1.0, 0.3, true),
-                new Position(0.0, -1.0, 0.3, true)
+                new Position(0.3, 0.1, 0.3, true), new Position(13.0, 5.0, 1.0, true),
+                new Position(0.6, 0.4, 0.3, true), new Position(1.0, 1.0, 0.3, true),
+                new Position(1.5, 11.3, 0.3, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneFirstElement)
@@ -79,16 +79,16 @@ namespace Coordinates.UI
             secondElement.Plane = PlaneEnum.YZ;
             var mockoweZaznaczoneDaneSecondElement = new[]
             {
-                new Position(0.0, 0.2, 0.3, true), new Position(0.0, 0.4, 0.3, true),
-                new Position(0.0, 0.3, 0.3, true), new Position(0.0, 0.6, 0.3, true),
-                new Position(0.0, 0.8, 0.3, true)
+                new Position(0.3, 0.1, 1.0, true), new Position(0.6, 0.4, 0.5, true),
+                new Position(1.2, 1.0, 1.0, true), new Position(13.0, 5.0, 1.0, true),
+                new Position(1.5, 11.3, 0.5, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneSecondElement)
-                firstElement.SelectedPositions.Add(position);
+                secondElement.SelectedPositions.Add(position);
 
-            var canCalculateSecondElement = firstElement.CanCalculate();
-            var calculateSecondElement = firstElement.Calculate();
+            var canCalculateSecondElement = secondElement.CanCalculate();
+            var calculateSecondElement = secondElement.Calculate();
 
             //Debugger.Break();
 
@@ -97,7 +97,7 @@ namespace Coordinates.UI
             var canCalculate = measurements.CanCalculate();
             var calculate = measurements.Calculate();
 
-            //Debugger.Break();
+            Debugger.Break();
             // TODO TERMINATE
         }
 

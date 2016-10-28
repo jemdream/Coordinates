@@ -13,38 +13,38 @@
     xmlns:models="using:Coordinates.Measurements.Models"
     xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
     xmlns:converters2="using:Cimbalino.Toolkit.Converters"
+    xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="MeasurementGridUserControl"
-    MinWidth="120"
-    MaxWidth="340"
-    d:DataContext="{d:DesignInstance measurementViewModels:IElementViewModel}">
+    MaxWidth="400"
+    Margin="50"
+    d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
 
     <UserControl.Resources>
+        <converters:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+
+        <Style TargetType="TextBlock" x:Key="PositionTextBlockStyle">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
 
         <DataTemplate x:Name="ContactListViewTemplate" x:DataType="dto:Position">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource CaptionTextBlockStyle}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0"
-                           Text="{x:Bind X}" 
-                           Style="{ThemeResource BaseTextBlockStyle}"
-                           Margin="5"/>
-                <TextBlock  Grid.Column="1"
-                            Text="{x:Bind Y}" 
-                            Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="5"/>
-                <TextBlock  Grid.Column="2"
-                            Text="{x:Bind Z}" 
-                            Style="{ThemeResource BodyTextBlockStyle}"
-                            Margin="5"/>
+                <TextBlock Grid.Column="0" Text="{x:Bind X, Converter={StaticResource XyzStringConverter}}"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Y, Converter={StaticResource XyzStringConverter}}"/>
+                <TextBlock Grid.Column="2" Text="{x:Bind Z, Converter={StaticResource XyzStringConverter}}"/>
             </Grid>
         </DataTemplate>
 
@@ -70,40 +70,89 @@
                     HoleResultDataTemplate="{StaticResource HoleResultDataTemplate}"
                     SurfaceResultDataTemplate="{StaticResource SurfaceResultDataTemplate}" />
 
+        <converters:ValueWhenConverter x:Key="VisibleWhenTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--, Converter={StaticResource StringFormatConverter}, ConverterParameter=Płaszczyzna: \{0:d\}}"-->
-        <TextBlock Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged}"
-                   Style="{ThemeResource BodyTextBlockStyle}"/>
-        <ListView Grid.Row="1" ItemsSource="{Binding Positions}" HorizontalAlignment="Stretch"
+
+        <!--Headers-->
+        <Grid Grid.Row="0">
+            <Grid.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource PositionTextBlockStyle}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" 
+                    Visibility="{Binding Path=IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource VisibleWhenTrueConverter}}"
+                    BorderThickness="0 0 1 0">
+                <TextBlock TextAlignment="Center" Width="35" />
+            </Border>
+            <TextBlock Grid.Column="1" Text="X"/>
+            <Border Grid.Column="2" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}" BorderThickness="1 0 1 0">
+                <TextBlock Text="Y"/>
+            </Border>
+            <TextBlock Grid.Column="3" Text="Z"/>
+        </Grid>
+
+        <!--Pomiary-->
+        <components:AlternatingRowListView Grid.Row="1" ItemsSource="{Binding Positions}" 
                   ItemTemplate="{StaticResource ContactListViewTemplate}"
                   SelectionChanged="Selector_OnSelectionChanged"
                   Loaded="FrameworkElement_OnLoaded"
-                  SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}"
-                  ShowsScrollingPlaceholders="True">
-        </ListView>
+                  OddRowBackground="LightBlue"
+                  SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </components:AlternatingRowListView>
+
+        <!--Ile pomiarow-->
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Margin="12">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">
-                            <behaviors:MultiBindingItem Value="{Binding IsSelectable, ElementName=MeasurementGridUserControl}" />
-                            <behaviors:MultiBindingItem Value="{Binding Positions.Count}" />
-                            <behaviors:MultiBindingItem Value="{Binding SelectedPositions.Count}" />
-                        </behaviors:MultiBindingBehavior>   
-                    </interactivity:Interaction.Behaviors>
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
+                <Run Text="Wymagana liczba pomiarów: &#160;" />
             </TextBlock>
-            <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
-                    Style="{ThemeResource BodyTextBlockStyle}" Margin="12"/>
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:MultiBindingBehavior Converter="{StaticResource ValueToggleConverter}" PropertyName="Text">
+                        <behaviors:MultiBindingItem Value="{Binding IsSelectable, ElementName=MeasurementGridUserControl}" />
+                        <behaviors:MultiBindingItem Value="{Binding Positions.Count}" />
+                        <behaviors:MultiBindingItem Value="{Binding SelectedPositions.Count}" />
+                    </behaviors:MultiBindingBehavior>   
+                </interactivity:Interaction.Behaviors>
+            </TextBlock>
+            <TextBlock Text="{Binding RequiredMeasurementCount, Converter={StaticResource StringFormatConverter}, ConverterParameter='/\{0:d\}'}" 
+                       Style="{ThemeResource BodyTextBlockStyle}" />
         </StackPanel>
-        <ContentControl Grid.Row="3" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+
+        <TextBlock Grid.Row="3" Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringFormatConverter}, ConverterParameter='Płaszczyzna: \{0\}'}"/>
+
+        <!--Calculations-->
+        <ContentControl Grid.Row="4" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
                         Visibility="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

@@ -31,11 +31,14 @@ namespace Coordinates.ExternalDevices.Devices
         private CancellationToken _readCancellationToken;
         private Task _readTask;
 
-        private const string StmFrameRegex = "^(X)(\\d+).*?(\\d+).*?(\\d+).*?(\\d+)$";
-        private const uint ReadFrameLength = 26;
+        private const string StmFrameRegex = "^(X)(-?\\d+).*?(-?\\d+).*?(-?\\d+).*?(\\d+)$";
+        private const uint ReadFrameLength = 38;
         private string _previousBufferString;
 
         private readonly Subject<GaugePositionDTO> _dataSourceSubject;
+
+        private const string CorruptDataExceptionMessage = "Data sent from device is corrupt. Please restart whole system.";
+        private const string SpecialFrameSign = "X";
 
         private void InitializeTokens()
         {
@@ -146,14 +149,12 @@ namespace Coordinates.ExternalDevices.Devices
                 while (true)
                 {
                     if (_readCancellationToken.IsCancellationRequested) break;
-                    var swRa = Stopwatch.StartNew();
                     // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
                     _dataReaderObject.InputStreamOptions = InputStreamOptions.None;
 
                     // Create a task object to wait for data on the serialPort.InputStream
                     var bufferString = await ReadBuffer(ReadFrameLength);
-                    swRa.Stop();
-                    await ProcessBuffer(bufferString, swRa);
+                    await ProcessBuffer(bufferString);
                 }
             }
             catch (Exception ex)
@@ -169,31 +170,28 @@ namespace Coordinates.ExternalDevices.Devices
             var bytesRead = await _dataReaderObject.LoadAsync(readBufferLength)
                 .AsTask(_readCancellationToken);
 
-            var bufferArray = _dataReaderObject.ReadBuffer(bytesRead)
-                .ToArray();
+            var bufferArray = (bytesRead != 0) ? _dataReaderObject.ReadBuffer(bytesRead).ToArray() : new byte[0];
 
             return Encoding.ASCII.GetString(bufferArray);
         }
-        
-        private async Task ProcessBuffer(string bufferString, Stopwatch swRa)
+
+        private async Task ProcessBuffer(string bufferString)
         {
-            var sw = Stopwatch.StartNew();
-            sw.Start();
             // Validate if any change
             if (!string.IsNullOrEmpty(_previousBufferString) && bufferString.Equals(_previousBufferString))
                 return;
-            
+
             // Validate if matches
             var match = MatchStmFrame(bufferString);
-            
+
             // If not matching, try to manipulate 'out of phase' frame 
             // (np. jak jest przesunięty X na 5 miejsce, to usun poczatek, dograj koniec i zachowaj normalny tryb dalej)
             if (!match.Success || !ValidateFrame(match.Groups[1]))
             {
-                var xPosition = bufferString.IndexOf("X", StringComparison.CurrentCulture);
+                var xPosition = bufferString.IndexOf(SpecialFrameSign, StringComparison.CurrentCulture);
 
                 if (xPosition < 0)
-                    throw new Exception("Data sent from device is corrupt. Please restart whole system.");
+                    throw new Exception($"{CorruptDataExceptionMessage} Frame special sign 'X' is missing. [X index is {xPosition}].");
 
                 // Delete incomplete data/letter before X
                 var stringBuilder = new StringBuilder(bufferString);
@@ -202,7 +200,7 @@ namespace Coordinates.ExternalDevices.Devices
                 // Check how many letters to read from buffer
                 var restLength = ReadFrameLength - stringBuilder.Length;
                 if (restLength < 0)
-                    throw new Exception("Data sent from device is corrupt. Please restart whole system.");
+                    throw new Exception($"{CorruptDataExceptionMessage} Frame has negative length: {restLength}.");
 
                 // Read missing data and append
                 var readFromBuffer = await ReadBuffer((uint)restLength);
@@ -212,7 +210,8 @@ namespace Coordinates.ExternalDevices.Devices
 
                 // Validate modified frame; if not matching, return;
                 var secondMatch = MatchStmFrame(newBuffer);
-                if (!secondMatch.Success || !ValidateFrame(secondMatch.Groups[1])) return;
+                if (!secondMatch.Success || !ValidateFrame(secondMatch.Groups[1]))
+                    throw new Exception($"{CorruptDataExceptionMessage} Second regex validation has failed. New buffer: {newBuffer}.");
 
                 // Swap the matches and buffer
                 match = secondMatch;
@@ -227,12 +226,11 @@ namespace Coordinates.ExternalDevices.Devices
             var zParse = double.TryParse(match.Groups[4].Value, out z);
             var gParse = int.TryParse(match.Groups[5].Value, out gaugeInt);
 
-            if (!xParse && !yParse && !zParse && !gParse) // parsing the data has failed
-                return;
+            if (!xParse || !yParse || !zParse || !gParse) // parsing the data has failed
+                throw new Exception($"{CorruptDataExceptionMessage} Parsing Match.Groups[] has failed.");
 
             _previousBufferString = bufferString;
-            sw.Stop();
-            _dataSourceSubject.OnNext(new GaugePositionDTO(x, y, z, gaugeInt != 0));
+            _dataSourceSubject.OnNext(new GaugePositionDTO(x / 100, y / 100, z / 100, gaugeInt != 0));
         }
     }
 }

@@ -3,6 +3,9 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
@@ -34,7 +37,7 @@ namespace Coordinates.UI
         public App()
         {
             MeasurementDevelopment();
-
+            
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);
@@ -103,6 +106,15 @@ namespace Coordinates.UI
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
+            Debug.WriteLine(ApplicationData.Current.LocalFolder.Path);
+            
+            var view = ApplicationView.GetForCurrentView();
+            if (view.IsFullScreenMode) view.ExitFullScreenMode();
+
+            view.SetPreferredMinSize(new Size(1366, 768));
+            ApplicationView.PreferredLaunchViewSize = new Size(1366, 768);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            
             if (!(Window.Current.Content is ModalDialog))
             {
                 // create a new frame and register it
@@ -117,7 +129,7 @@ namespace Coordinates.UI
                     ModalContent = _myContainer.Resolve<Busy>()
                 };
             }
-
+            
             await Task.CompletedTask;
         }
 
@@ -137,9 +149,7 @@ namespace Coordinates.UI
         private static IUnityContainer SetupContainer()
         {
             var container = new UnityContainer();
-
-            // _ new ContainerControlledLifetimeManager() means it's singleton (the same instance each resolve)
-
+            
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
@@ -180,7 +190,7 @@ namespace Coordinates.UI
 
             return container;
         }
-
+        
         /// <summary>
         /// Injecting Unity cointainer into Service Locator,
         /// that is saved in App.xaml as Static Resource.

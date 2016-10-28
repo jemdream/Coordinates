@@ -39,12 +39,10 @@ namespace Coordinates.Measurements.Types
 
             var t0 = ((SurfaceResult)firstElementCalculation).A2;
             var t1 = ((SurfaceResult)secondElementCalculation).A2;
-
-            var result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)));
-
+            
             return new SurfaceParalellismResult
             {
-                Result = $"{result}"
+                Result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)))
             };
         }
 

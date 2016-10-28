@@ -66,11 +66,9 @@ namespace Coordinates.Measurements.Types
                 return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości" };
             }
 
-            var result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)));
-
             return new SurfacePerpendicularityResult
             {
-                Result = $"{result}"
+                Result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)))
             };
         }
 

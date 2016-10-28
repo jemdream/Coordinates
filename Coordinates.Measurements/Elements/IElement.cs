@@ -8,6 +8,7 @@ namespace Coordinates.Measurements.Elements
     {
         int RequiredMeasurementCount { get; }
         PlaneEnum? Plane { get; set; }
+        Position InitialPosition { get; set; }
 
         bool CanCalculate();
         ICalculationResult Calculate();

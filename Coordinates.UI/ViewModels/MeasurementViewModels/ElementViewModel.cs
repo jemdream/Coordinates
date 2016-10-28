@@ -14,12 +14,9 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         int RequiredMeasurementCount { get; }
         PlaneEnum? Plane { get; }
-
         bool CanCalculate();
         ICalculationResult Calculate { get; }
-
         IElement Element { get; }
-
         void RefreshUi();
         bool ViewHack { get; set; }
         

@@ -11,7 +11,7 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance measurementFlow:IMeasurementSelectionCalculationViewModel}">
     
-    <Grid HorizontalAlignment="Center">
+    <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <components:MeasurementGrid Grid.Column="0" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
         <components:MeasurementGrid Grid.Column="1" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"/>
-        <components:MeasurementPanel Grid.Column="2" />
+        <components:MeasurementPanel Grid.Column="2" DataContext="{Binding MeasurementMethodViewModel}"/>
     </Grid>
     
 </UserControl>

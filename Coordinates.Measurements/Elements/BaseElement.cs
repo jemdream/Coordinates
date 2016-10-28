@@ -8,6 +8,7 @@ namespace Coordinates.Measurements.Elements
     {
         public abstract int RequiredMeasurementCount { get; }
         public PlaneEnum? Plane { get; set; }
+        public Position InitialPosition { get; set; }
 
         public virtual bool CanCalculate() => true;
         public virtual ICalculationResult Calculate() => new ErrorResult { Message = "Not implemented." };

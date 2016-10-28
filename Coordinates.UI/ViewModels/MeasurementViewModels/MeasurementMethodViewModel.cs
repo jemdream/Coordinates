@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Models;
 using Coordinates.Measurements.Types;
+using Coordinates.Models.DTO;
 using Coordinates.UI.Views.Dialogs;
 using Microsoft.Practices.ObjectBuilder2;
 using Template10.Mvvm;
@@ -18,9 +21,12 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         IMeasurementMethod MeasurementMethod { get; }
         IEnumerable<IElementViewModel> ElementsViewModels { get; }
+        Position PresentPosition { get; }
+        IElementViewModel ActiveElementViewModel { get; }
         Task SetNextElement();
         IEnumerable<PlaneEnum> SurfaceEnums { get; }
         DelegateCommand<PlaneEnum> SetMeasurementPlane { get; }
+        DelegateCommand<Position> SetInitialPosition { get; }
         bool CanCalculate();
         ICalculationResult Calculate { get; }
     }
@@ -33,12 +39,19 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         private IMeasurementMethod _measurementMethod;
         private IEnumerable<IElementViewModel> _elementsViewModels;
         private DelegateCommand<PlaneEnum> _setMeasurementPlane;
+        private DelegateCommand<Position> _setInitialPosition;
+        private IElementViewModel _activeElementViewModel;
+        private Position _presentPosition;
 
         public MeasurementMethodViewModel(IMeasurementManager measurementManager)
         {
             _measurementManager = measurementManager;
+
             _measurementManager.MeasurementSource
                 .Subscribe(InitializeMeasurement);
+
+            _measurementManager.PositionSource
+                .Subscribe(pos => PresentPosition = pos);
         }
 
         public IEnumerable<PlaneEnum> SurfaceEnums => Enum.GetValues(typeof(PlaneEnum)).Cast<PlaneEnum>();
@@ -50,14 +63,32 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             ElementsViewModels.ForEach(evm => evm.RefreshUi());
         }, x => true));
 
+        public DelegateCommand<Position> SetInitialPosition => _setInitialPosition ?? (_setInitialPosition = new DelegateCommand<Position>(async x =>
+        {
+            await Task.CompletedTask;
+            MeasurementMethod.SetupInitialPosition(x);
+        }, x => true));
+
         public bool CanCalculate() => MeasurementMethod != null && MeasurementMethod.CanCalculate();
 
         public ICalculationResult Calculate => MeasurementMethod?.Calculate();
+
+        public Position PresentPosition
+        {
+            get { return _presentPosition; }
+            set { Set(ref _presentPosition, value); }
+        }
 
         public IMeasurementMethod MeasurementMethod
         {
             get { return _measurementMethod; }
             private set { Set(ref _measurementMethod, value); }
+        }
+
+        public IElementViewModel ActiveElementViewModel
+        {
+            get { return _activeElementViewModel; }
+            set { Set(ref _activeElementViewModel, value); }
         }
 
         public IEnumerable<IElementViewModel> ElementsViewModels
@@ -83,15 +114,19 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
             ElementsViewModels.ForEach(evm => evm.RefreshUi());
 
+            ActiveElementViewModel = ElementsViewModels.FirstOrDefault(x => x.Element == element);
+
             if (element == null) return;
 
-            if (element.Plane == null) await ShowPlaneSelectionDialog();
+            if (element.Plane == null)
+                await ShowPlaneSelectionDialog();
+
             await ShowAxisBlockDialog();
 
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
-                    // TODO Here to add validation (that blocks wrong parameters) 
+                    .Where(pos => (element.InitialPosition == null) || Math.Abs(pos.GetBlockedAxisValue(element.Plane).Value - element.InitialPosition.GetBlockedAxisValue(element.Plane).Value) < 0.00001)
                     .Where(position => position.Contact)
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => element.Positions.Add(position))
@@ -100,17 +135,9 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
-                    // TODO Here to add validation (that pops up validation dialog) 
+                    .Where(pos => !((element.InitialPosition == null) || Math.Abs(pos.GetBlockedAxisValue(element.Plane).Value - element.InitialPosition.GetBlockedAxisValue(element.Plane).Value) < 0.00001))
                     .ObserveOn(SynchronizationContext.Current)
-                    .Subscribe(position => { })
-            );
-
-            measurementMethod.Subscriptions.Add(
-                element.SelectedPositions.OnAdd.Subscribe(_ => RaisePropertyChanged(() => Calculate))
-            );
-
-            measurementMethod.Subscriptions.Add(
-                element.SelectedPositions.OnRemove.Subscribe(_ => RaisePropertyChanged(() => Calculate))
+                    .Subscribe(position => { Debugger.Break(); })
             );
 
             _measurementManager.GatherData = true;
@@ -124,6 +151,14 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 ElementsViewModels = measurementMethod.Elements
                     .Select((el, i) => new ElementViewModel(el))
                     .ToArray();
+
+                ElementsViewModels
+                    .Select(evm => evm.Element)
+                    .ForEach(e =>
+                    {
+                        e.SelectedPositions.OnAdd.ObserveOn(SynchronizationContext.Current).Subscribe(_ => RaisePropertyChanged(() => Calculate));
+                        e.SelectedPositions.OnRemove.ObserveOn(SynchronizationContext.Current).Subscribe(_ => RaisePropertyChanged(() => Calculate));
+                    });
 
                 // Expose measurement method
                 MeasurementMethod = measurementMethod;

@@ -5,8 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Cimbalino.Toolkit.Behaviors"
+    xmlns:converters="using:Coordinates.UI.Helpers.Converters"
     mc:Ignorable="d"
     PrimaryButtonText="OK"
+    PrimaryButtonCommand="{Binding SetInitialPosition}"
+    PrimaryButtonCommandParameter="{Binding PresentPosition}"
     d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
     <ContentDialog.Resources>
         <Style TargetType="TextBlock">
@@ -14,9 +19,13 @@
                 <Setter Property="Margin" Value="15"/>
             </Style.Setters>
         </Style>
+
+        <converters:PositionWithPlaneToDoubleConverter x:Key="PositionWithPlaneToDoubleConverter"/>
     </ContentDialog.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,9 +33,20 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        
+
         <TextBlock Grid.Row="0" TextWrapping="Wrap">Pomiar w płaszczyźnie:</TextBlock>
-        <TextBlock Grid.Row="1" Text="{Binding MeasurementMethod.ActiveElement.Plane}" FontStyle="Oblique"/>
-        <TextBlock Grid.Row="2" Foreground="Red" TextWrapping="Wrap">Ustaw czujnik w początkowej pozycji i zablokuj mechanicznie wyłączoną oś. Po zatwierdzeniu blbalbalba</TextBlock>
+        <TextBlock Grid.Row="1" Text="{Binding ActiveElementViewModel.Plane}" FontStyle="Oblique"/>
+
+        <TextBlock Grid.Row="2" TextWrapping="Wrap">Pozycja na osi, która zostanie zablokowana:</TextBlock>
+        <TextBlock Grid.Row="3" FontStyle="Oblique">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:MultiBindingBehavior Converter="{StaticResource PositionWithPlaneToDoubleConverter}" PropertyName="Text">
+                    <behaviors:MultiBindingItem Value="{Binding PresentPosition}" />
+                    <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel.Plane}" />
+                </behaviors:MultiBindingBehavior>   
+            </interactivity:Interaction.Behaviors>
+        </TextBlock>
+
+        <TextBlock Grid.Row="4" Foreground="Red" TextWrapping="Wrap">Ustaw czujnik w początkowej pozycji i zablokuj mechanicznie wyłączoną oś. Po zatwierdzeniu blbalbalba</TextBlock>
     </Grid>
 </ContentDialog>

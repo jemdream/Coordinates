@@ -113,6 +113,7 @@
     <Compile Include="Elements\IElement.cs" />
     <Compile Include="Elements\Surface.cs" />
     <Compile Include="Elements\PlaneEnum.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\ObservableCollectionRx.cs" />
     <Compile Include="Helpers\ObservableList.cs" />
     <Compile Include="IMeasurementManager.cs" />

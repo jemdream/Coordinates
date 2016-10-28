@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="Coordinates.UI.Components.PlaneChart"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:charts="using:Syncfusion.UI.Xaml.Charts"
+    xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    x:Name="PlaneChartUserControl"
+    d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
+
+    <RelativePanel>
+        <charts:SfChart x:Name="Chart" Header="{Binding Header, ElementName=PlaneChartUserControl}"
+                        
+                        Margin="25" FontSize="14">
+            <charts:SfChart.Behaviors>
+                <charts:ChartZoomPanBehavior EnableZoomingToolBar="True" 
+                                             ToolBarItems="All" ToolBarOrientation="Horizontal" 
+                                             HorizontalPosition="Left" VerticalPosition="Top" 
+                                             ToolBarBackground="#E6E6E6" EnableSelectionZooming="True"/>
+            </charts:SfChart.Behaviors>
+            <charts:SfChart.PrimaryAxis>
+                <charts:NumericalAxis Header="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}"/>
+        </charts:SfChart.PrimaryAxis>
+        <charts:SfChart.SecondaryAxis>
+                <charts:NumericalAxis Header="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+            </charts:SfChart.SecondaryAxis>
+
+            <charts:FastScatterBitmapSeries Interior="#4A4A4A" ScatterHeight="2" ScatterWidth="2" 
+                                            ShowTooltip="True" 
+                                  ItemsSource="{Binding Positions}" 
+                                  XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                  YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+
+            <charts:FastScatterBitmapSeries Interior="#1ED760" ScatterHeight="2" ScatterWidth="2" 
+                                            ShowTooltip="True" 
+                                  ItemsSource="{Binding SelectedPositions}" 
+                                  XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                  YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+        </charts:SfChart>
+    </RelativePanel>
+    
+</UserControl>

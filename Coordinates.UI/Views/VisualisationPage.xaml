@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
     xmlns:vm="using:Coordinates.UI.ViewModels"
-    xmlns:charts="using:Syncfusion.UI.Xaml.Charts"
+    xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
 
@@ -19,17 +19,13 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" />
 
-        <charts:SfChart Name="XZChart" Margin="25" FontSize="14"
-                        RelativePanel.Below="PageHeader" 
-                        RelativePanel.AlignLeftWithPanel="True"
-                        RelativePanel.LeftOf="Aligner">
-            <charts:SfChart.PrimaryAxis>
-                <charts:NumericalAxis Header="X"/>
-            </charts:SfChart.PrimaryAxis>
-            <charts:SfChart.SecondaryAxis>
-                <charts:NumericalAxis Header="Z"/>
-            </charts:SfChart.SecondaryAxis>
-        </charts:SfChart>
+        <components:PlaneChart Margin="25" x:Name="XzChart" 
+                               PrimaryAxis="X"
+                               SecondaryAxis="Z"
+                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"
+                               RelativePanel.Below="PageHeader" 
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.LeftOf="Aligner"/>
 
         <Grid x:Name="Aligner" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
             <Grid.ColumnDefinitions>
@@ -37,20 +33,14 @@
             </Grid.ColumnDefinitions>
         </Grid>
 
-        <charts:SfChart Name="YZChart" Margin="25" FontSize="14" 
-                        RelativePanel.Below="PageHeader" 
-                        RelativePanel.AlignRightWithPanel="True"
-                        RelativePanel.RightOf="Aligner">
-            <charts:SfChart.PrimaryAxis>
-                <charts:NumericalAxis Header="Y"/>
-            </charts:SfChart.PrimaryAxis>
-            <charts:SfChart.SecondaryAxis>
-                <charts:NumericalAxis Header="Z"/>
-            </charts:SfChart.SecondaryAxis>
-            <charts:ScatterSeries Interior="#4A4A4A" ScatterHeight="4" ScatterWidth="4" 
-                                  ItemsSource="{Binding DataPoints}" XBindingPath="Eruptions" 
-                                  YBindingPath="WaitingTime"/>
-        </charts:SfChart>
+        <components:PlaneChart x:Name="YzChart" Margin="25" FontSize="14" 
+                               PrimaryAxis="Y"
+                               SecondaryAxis="Z"
+                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"
+                               RelativePanel.Below="PageHeader" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               RelativePanel.RightOf="Aligner"/>
+        
     </RelativePanel>
 </Page>
 

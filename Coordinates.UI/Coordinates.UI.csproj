@@ -109,6 +109,9 @@
     <Compile Include="Components\MeasurementPanel.xaml.cs">
       <DependentUpon>MeasurementPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\PlaneChart.xaml.cs">
+      <DependentUpon>PlaneChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToForeground.cs" />
     <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter.cs" />
@@ -234,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MeasurementPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\PlaneChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

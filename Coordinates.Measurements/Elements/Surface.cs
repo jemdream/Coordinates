@@ -18,16 +18,6 @@ namespace Coordinates.Measurements.Elements
         {
             if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
 
-            // TODO validation example (checking if points are not too far from each other etc.) and return Error Result
-            //if (!ValidateSelectedPositions())
-            //{
-            //    return new ErrorResult
-            //    {
-            //        Message = "Jakiś błąd na UI",
-            //        FaultyPositions = new List<Position>() // pomiary, które mają złe wartości względem pozostałych zaznaczonych
-            //    };
-            //}
-
             try
             {
                 double a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0;
@@ -82,9 +72,6 @@ namespace Coordinates.Measurements.Elements
                         break;
                 }
 
-                // wczesniej tez dodac walidacje jakas na inne parametry - uzyc 'ref'
-                ValidateWs(ref w, ref wa1, ref wa2, ref wa3);
-
                 a1 = wa1 / w;
                 a2 = wa2 / w;
                 a3 = wa3 / w;
@@ -104,21 +91,6 @@ namespace Coordinates.Measurements.Elements
                     FaultyPositions = new List<Position>() // pomiary, które mają złe wartości względem pozostałych zaznaczonych
                 };
             }
-        }
-
-        private static void ValidateWs(ref double w, ref double wa1, ref double wa2, ref double wa3)
-        {
-            var faultyW = false;
-            if (faultyW) throw new Exception("Coś się zepsuło i nie było mnie słychać. @faultyW");
-
-            var faultyWA1 = false;
-            if (faultyWA1) throw new Exception("Coś się zepsuło i nie było mnie słychać. @faultyWA1");
-
-            var faultyWA2 = false;
-            if (faultyWA2) throw new Exception("Coś się zepsuło i nie było mnie słychać. @faultyWA2");
-
-            var faultyWA3 = false;
-            if (faultyWA3) throw new Exception("Coś się zepsuło i nie było mnie słychać. @faultyWA3");
         }
     }
 }

@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementFlow:IMeasurementSelectionCalculationViewModel}">
+    d:DataContext="{d:DesignInstance measurementFlow:MeasurementSelectionCalculationViewModel}">
     
     <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>

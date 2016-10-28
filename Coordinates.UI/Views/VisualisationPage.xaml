@@ -5,69 +5,104 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
     xmlns:vm="using:Coordinates.UI.ViewModels"
+    xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
-    
-    <!--xmlns:sfgrid="using:Syncfusion.UI.Xaml.Grid" xmlns:sfchart="using:Syncfusion.UI.Xaml.Charts"-->
-    
+
     <Page.DataContext>
         <Binding Path="VisualisationPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!-- change properties for narrow view  -->
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
-                <VisualState x:Name="VisualStateNarrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!-- change properties for narrow view  -->
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateNormal">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!-- change properties for normal view -->
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!-- change properties for wide view -->
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <!--  header  -->
-        <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
+
+        <controls:PageHeader x:Name="PageHeader" Text="Wizualizacja" 
+                             RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Wizualizacja"/>
-        <!-- data visualization -->
-        <!--<sfchart:SfChart Name="TwoDimChart" Header="Dwuwymiarowy wykres pomiarów" RelativePanel.Below="PageHeader" Margin="12,12,0,0" Width="700" Height="300" FontSize="14">
-            <sfchart:SfChart.PrimaryAxis>
-                <sfchart:NumericalAxis Header="X" FontSize="14"></sfchart:NumericalAxis>
-            </sfchart:SfChart.PrimaryAxis>
-            <sfchart:SfChart.SecondaryAxis>
-                <sfchart:NumericalAxis Header="Y" FontSize="14"></sfchart:NumericalAxis>
-            </sfchart:SfChart.SecondaryAxis>
-            <sfchart:ScatterSeries ItemsSource="{Binding XYZPicked}" XBindingPath="{Binding XPicked}" YBindingPath="{Binding YPicked}"/>
-        </sfchart:SfChart>
-        <sfgrid:SfDataGrid Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding XYZPicked}" 
-                           RelativePanel.Below="TwoDimChart" Margin="12,12,0,0" Height="300">
-            <sfgrid:SfDataGrid.Columns>
-                <sfgrid:GridTextColumn MappingName="XPicked.Name"/>
-                <sfgrid:GridTextColumn MappingName="YPicked.Name"/>
-                <sfgrid:GridTextColumn MappingName="ZPicked.Name"/>
-            </sfgrid:SfDataGrid.Columns>
-            <sfgrid:SfDataGrid.SortColumnDescriptions>
-                <sfgrid:SortColumnDescription ColumnName="XPicked.Name"></sfgrid:SortColumnDescription>
-            </sfgrid:SfDataGrid.SortColumnDescriptions>
-        </sfgrid:SfDataGrid>-->
+                             RelativePanel.AlignTopWithPanel="True" />
+
+        <components:PlaneChart Margin="25" x:Name="XzChart" 
+                               PrimaryAxis="X"
+                               SecondaryAxis="Z"
+                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"
+                               RelativePanel.Below="PageHeader" 
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.LeftOf="Aligner"/>
+
+        <Grid x:Name="Aligner" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        <components:PlaneChart x:Name="YzChart" Margin="25" FontSize="14" 
+                               PrimaryAxis="Y"
+                               SecondaryAxis="Z"
+                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"
+                               RelativePanel.Below="PageHeader" 
+                               RelativePanel.AlignRightWithPanel="True"
+                               RelativePanel.RightOf="Aligner"/>
+        
     </RelativePanel>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

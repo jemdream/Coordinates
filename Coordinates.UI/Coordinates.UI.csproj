@@ -109,6 +109,9 @@
     <Compile Include="Components\MeasurementPanel.xaml.cs">
       <DependentUpon>MeasurementPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\PlaneChart.xaml.cs">
+      <DependentUpon>PlaneChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToForeground.cs" />
     <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter.cs" />
@@ -237,6 +240,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\PlaneChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Custom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -332,6 +339,11 @@
       <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
       <Name>Coordinates.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Syncfusion Controls for UWP XAML, Version=14.1.0.41">
+      <Name>Syncfusion Controls for UWP XAML</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

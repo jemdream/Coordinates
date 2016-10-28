@@ -13,7 +13,7 @@ namespace Coordinates.Measurements.Types
             BaseElements.Add(new Surface());
         }
 
-        public override bool SetupInitialPosition(Position position) => true;
+        public override bool SetupInitialPosition(Position position) => false;
 
         public override bool CanCalculate()
         {

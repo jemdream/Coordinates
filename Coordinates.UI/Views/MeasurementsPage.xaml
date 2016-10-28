@@ -85,7 +85,7 @@
         </VisualStateManager.VisualStateGroups>
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Measurements"/>
+                             RelativePanel.AlignTopWithPanel="True" Text="Pomiary"/>
 
         <!--Previous-->
         <Button x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Style="{StaticResource NavigationButton}">

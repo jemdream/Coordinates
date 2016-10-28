@@ -15,24 +15,14 @@ namespace Coordinates.Measurements.Types
 
         public IElement ActivateNextElement()
         {
-            // TODO ugly temporary solution for 2 member measurements
             if (ActiveElement == null)
-            {
                 ActiveElement = BaseElements[0];
-            }
-            else if (ActiveElement == BaseElements[0])
-            {
+            else if (ActiveElement == BaseElements[0] && BaseElements.Count != 1)
                 ActiveElement = BaseElements[1];
-            }
             else
-            {
                 ActiveElement = null;
-            }
 
             return ActiveElement;
-
-            //ActiveElement = (ActiveElement == null) ? BaseElements.First() : BaseElements[1];
-            //return ActiveElement;
         }
 
         /// <summary>
@@ -54,11 +44,15 @@ namespace Coordinates.Measurements.Types
             return true;
         }
 
+        // TODO ugly temporary solution for max 2 member measurements
         public bool IsNextElementAvailable
         {
             get
             {
                 if (ActiveElement == null) return false;
+                // TODO ugly temporary solution for max 2 member measurements
+                if (BaseElements.Count == 1 && ActiveElement == BaseElements[0]) return false;
+
                 return ActiveElement != BaseElements[1];
             }
         }

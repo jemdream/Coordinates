@@ -6,41 +6,107 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:charts="using:Syncfusion.UI.Xaml.Charts"
     xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    xmlns:converters="using:Coordinates.UI.Helpers.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="PlaneChartUserControl"
-    d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
+    d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
+
+    <UserControl.Resources>
+        <converters:EnumerableCountToValue x:Key="EnumerableCountToVisibility" Count="2" Value="True" DefaultValue="False"/>
+    </UserControl.Resources>
 
     <RelativePanel>
-        <charts:SfChart x:Name="Chart" Header="{Binding Header, ElementName=PlaneChartUserControl}"
-                        
-                        Margin="25" FontSize="14">
+        <RelativePanel.Resources>
+            <DataTemplate x:Key="TooltipTemplate">
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding XData}"/>
+                            <TextBlock Grid.Column="1" Text=";"/>
+                            <TextBlock Grid.Column="2" Text="{Binding YData}"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </RelativePanel.Resources>
+
+        <charts:SfChart x:Name="Chart" Header="{Binding Header, ElementName=PlaneChartUserControl}" FontSize="14">
+
             <charts:SfChart.Behaviors>
+                <charts:ChartSelectionBehavior SelectionMode="MouseClick" EnableSegmentSelection="True"/>
                 <charts:ChartZoomPanBehavior EnableZoomingToolBar="True" 
                                              ToolBarItems="All" ToolBarOrientation="Horizontal" 
                                              HorizontalPosition="Left" VerticalPosition="Top" 
                                              ToolBarBackground="#E6E6E6" EnableSelectionZooming="True"/>
             </charts:SfChart.Behaviors>
+
             <charts:SfChart.PrimaryAxis>
-                <charts:NumericalAxis Header="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}"/>
-        </charts:SfChart.PrimaryAxis>
-        <charts:SfChart.SecondaryAxis>
-                <charts:NumericalAxis Header="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+                <charts:NumericalAxis Header="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}"
+                                      />
+            </charts:SfChart.PrimaryAxis>
+
+            <charts:SfChart.SecondaryAxis>
+                <charts:NumericalAxis Header="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"
+                                      />
+                <!--ShowTrackBallInfo="True"-->
             </charts:SfChart.SecondaryAxis>
 
-            <charts:FastScatterBitmapSeries Interior="#4A4A4A" ScatterHeight="2" ScatterWidth="2" 
-                                            ShowTooltip="True" 
-                                  ItemsSource="{Binding Positions}" 
-                                  XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
-                                  YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+            <charts:SfChart.Legend>
+                <charts:ChartLegend  
+                    IconHeight="10" IconWidth="10" 
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"                                    
+                    DockPosition="Top"
+                    IconVisibility="Visible"
+                    ItemMargin="2">
+                    <charts:ChartLegend.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid MaximumRowsOrColumns="2" ItemWidth="100"></WrapGrid>
+                        </ItemsPanelTemplate>
+                    </charts:ChartLegend.ItemsPanel>
+                </charts:ChartLegend>
+            </charts:SfChart.Legend>
 
-            <charts:FastScatterBitmapSeries Interior="#1ED760" ScatterHeight="2" ScatterWidth="2" 
+            <charts:FastScatterBitmapSeries Interior="#B7D6C2" ScatterHeight="2" ScatterWidth="2" 
                                             ShowTooltip="True" 
-                                  ItemsSource="{Binding SelectedPositions}" 
-                                  XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
-                                  YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+                                            Label="(1) Pozycje"
+                                            TooltipTemplate="{StaticResource TooltipTemplate}"
+                                            ItemsSource="{Binding ElementsViewModels[0].Positions}" 
+                                            XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                            YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+
+            <charts:FastScatterBitmapSeries Interior="#00D84D" ScatterHeight="2" ScatterWidth="2" 
+                                            ShowTooltip="True" 
+                                            Label="(1) Zaznaczenie"
+                                            TooltipTemplate="{StaticResource TooltipTemplate}"
+                                            ItemsSource="{Binding ElementsViewModels[0].SelectedPositions}" 
+                                            XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                            YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+
+            <charts:FastScatterBitmapSeries Interior="#E8B5B5" ScatterHeight="2" ScatterWidth="2" 
+                                            ShowTooltip="True" 
+                                            Label="(2) Pozycje"
+                                            TooltipTemplate="{StaticResource TooltipTemplate}"
+                                            IsSeriesVisible="{Binding ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
+                                            ItemsSource="{Binding ElementsViewModels[1].Positions}" 
+                                            XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                            YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
+
+            <charts:FastScatterBitmapSeries Interior="#E25757" ScatterHeight="2" ScatterWidth="2" 
+                                            ShowTooltip="True" 
+                                            Label="(2) Zaznaczenie"
+                                            TooltipTemplate="{StaticResource TooltipTemplate}"
+                                            IsSeriesVisible="{Binding ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
+                                            ItemsSource="{Binding ElementsViewModels[1].SelectedPositions}" 
+                                            XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
+                                            YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
         </charts:SfChart>
     </RelativePanel>
-    
+
 </UserControl>

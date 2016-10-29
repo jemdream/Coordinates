@@ -18,29 +18,33 @@
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" />
-
-        <components:PlaneChart Margin="25" x:Name="XzChart" 
-                               PrimaryAxis="X"
-                               SecondaryAxis="Z"
-                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}"
-                               RelativePanel.Below="PageHeader" 
-                               RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.LeftOf="Aligner"/>
-
-        <Grid x:Name="Aligner" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+        
+        <Grid RelativePanel.Below="PageHeader" 
+              RelativePanel.AlignLeftWithPanel="True" 
+              RelativePanel.AlignRightWithPanel="True"
+              RelativePanel.AlignBottomWithPanel="True">
+            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-        </Grid>
+            
+            <components:PlaneChart x:Name="XyChart" Margin="15" 
+                               PrimaryAxis="X"
+                               SecondaryAxis="Y"
+                               DataContext="{Binding MeasurementMethodViewModel}"/>
 
-        <components:PlaneChart x:Name="YzChart" Margin="25" FontSize="14" 
+            <components:PlaneChart Grid.Column="1" Margin="15" 
                                PrimaryAxis="Y"
                                SecondaryAxis="Z"
-                               DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}"
-                               RelativePanel.Below="PageHeader" 
-                               RelativePanel.AlignRightWithPanel="True"
-                               RelativePanel.RightOf="Aligner"/>
-        
+                               DataContext="{Binding MeasurementMethodViewModel}"/>
+
+            <components:PlaneChart Grid.Column="2" Margin="15"
+                               PrimaryAxis="Z"
+                               SecondaryAxis="X"
+                               DataContext="{Binding MeasurementMethodViewModel}"/>
+        </Grid>
     </RelativePanel>
 </Page>
 

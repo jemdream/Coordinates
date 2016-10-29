@@ -12,27 +12,22 @@ namespace Coordinates.Measurements.Types
             BaseElements.Add(new Hole());
         }
 
-        public override bool CanCalculate()
-        {
-            return true;
-        }
-
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate())
-                return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
+                return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
 
             var firstElement = BaseElements[0];
             var secondElement = BaseElements[1];
 
             if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
-                return new ErrorResult { Message = "(!firstElement.CanCalculate() || !secondElement.CanCalculate())" }; ;
+                return new ErrorResult { Message = "Nie można policzyć jednego lub obu elementów." }; ;
 
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
-                return new ErrorResult { Message = $"{firstElementCalculation} & {secondElementCalculation}" };
+                return new ErrorResult { Message = "Wystąpił błąd podczas obliczania elementu." };
 
             var x10 = ((HoleResult)firstElementCalculation).X0;
             var y10 = ((HoleResult)firstElementCalculation).Y0;

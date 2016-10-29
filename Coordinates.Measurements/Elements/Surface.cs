@@ -16,7 +16,7 @@ namespace Coordinates.Measurements.Elements
 
         public override ICalculationResult Calculate()
         {
-            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
+            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
 
             try
             {
@@ -30,45 +30,45 @@ namespace Coordinates.Measurements.Elements
                     a = a + pos.X;
                     b = b + pos.Y;
                     c = c + pos.Z;
-                    d = d + pos.X * pos.Y;
-                    e = e + pos.Y * pos.Z;
-                    f = f + pos.X * pos.Z;
-                    g = g + pos.X * pos.X;
-                    h = h + pos.Y * pos.Y;
-                    i = i + pos.Z * pos.Z;
+                    d = d + (pos.X * pos.Y);
+                    e = e + (pos.Y * pos.Z);
+                    f = f + (pos.X * pos.Z);
+                    g = g + (pos.X * pos.X);
+                    h = h + (pos.Y * pos.Y);
+                    i = i + (pos.Z * pos.Z);
                 }
 
                 switch (Plane)
                 {
                     case PlaneEnum.XY:
-                        w = n * g * h + a * b * d + a * b * d - b * b * g - a * a * h - n * d * d;
+                        w = n * g * h + 2 * a * b * d - b * b * g - a * a * h - n * d * d;
                         if (w.Equals(0.0))
                         {
-                            return new ErrorResult {Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej"};
+                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
                         }
-                        wa1 = c * g * h + f * d * b + a * d * e - e * g * b - f * a * h - c * d * d;
-                        wa2 = n * f * h + a * b * e + b * c * d - b * b * f - a * c * h - n * e * d;
-                        wa3 = n * g * e + a * c * d + a * b * f - b * c * g - a * a * e - n * d * f;
+                        wa1 = c * g * h + b * d * f + a * d * e - b * e * g - a * f * h - c * d * d;
+                        wa2 = n * f * h + a * b * e + b * c * d - b * f * f - a * c * h - n * e * d;
+                        wa3 = n * e * g + a * c * d + a * b * f - b * c * g - a * a * e - n * d * f;
                         break;
                     case PlaneEnum.YZ:
-                        w = n * h * i + b * e * c + b * e * c - c * c * h - b * b * i - n * e * e;
+                        w = n * h * i + 2 * b * c * e - c * c * h - b * b * i - n * e * e;
                         if (w.Equals(0.0))
                         {
-                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej" };
+                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
                         }
-                        wa1 = a * h * i + d * e * c + b * e * f - f * h * c - d * b * i - a * e * e;
-                        wa2 = n * d * i + b * c * f + c * a * e - c * c * d - b * a * i - n * f * e;
-                        wa3 = n * h * f + b * a * e + b * c * d - c * a * h - b * b * f - n * e * d;
+                        wa1 = a * h * i + c * d * e + b * e * f - c * f * h - b * d * i - a * e * e;
+                        wa2 = n * d * i + b * c * f + a * c * e - c * c * d - a * b * i - n * e * f;
+                        wa3 = n * f * h + a * b * e + b * c * d - a * c * h - b * b * f - n * e * d;
                         break;
                     case PlaneEnum.ZX:
-                        w = n * i * g + c * f * a + c * f * a - a * a * i - c * c * g - n * f * f;
+                        w = n * g * i + 2 * a * c * f - a * a * i - c * c * g - n * f * f;
                         if (w.Equals(0.0))
                         {
-                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej" };
+                            return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
                         }
-                        wa1 = b * i * g + e * f * a + c * f * d - d * i * a - e * c * g - b * f * f;
-                        wa2 = n * e * g + c * a * d + a * b * f - a * a * e - c * b * g - n * d * f;
-                        wa3 = n * i * d + c * b * f + c * a * e - a * b * i - c * c * d - n * f * e;
+                        wa1 = b * g * i + a * e * f + c * d * f - a * d * i - c * e * g - b * f * f;
+                        wa2 = n * e * g + a * c * d + a * b * f - a * a * e - b * c * g - n * d * f;
+                        wa3 = n * d * i + b * c * f + a * c * e - a * b * i - c * c * d - n * e * f;
                         break;
                 }
 

@@ -78,18 +78,21 @@ namespace Coordinates.Measurements.Tests.Types
         }
 
         [TestMethod]
-        public void When_TooClosePoints_Expect_ErrorResults()
+        public void When_InOneLine_Expect_ErrorResults()
         {
             // Arrange
             var mockDataFirstElement = new[]
-            {
-                Position.Default, Position.Default, Position.Default, Position.Default, Position.Default
+             {
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true)
             };
             var firstElementPlane = PlaneEnum.YZ;
 
             var mockDataSecondElement = new[]
             {
-                Position.Default, Position.Default, Position.Default, Position.Default, Position.Default
+                new Position(11.5, 2.1, 1.0, true), new Position(11.5, 5.4, 1.0, true),
+                new Position(11.5, 0.1, 1.0, true), new Position(13.5, 5.0, 1.0, true)
             };
             var secondElementPlane = PlaneEnum.YZ;
 
@@ -97,15 +100,129 @@ namespace Coordinates.Measurements.Tests.Types
             var measurements = ArrangeSurfParalMeasureMethodModel(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
             var arrayOfElements = measurements.Elements.ToArray();
 
-            // Act 
+            // Act
             var calculateFirstElement = arrayOfElements[0].Calculate();
             var calculateSecondElement = arrayOfElements[1].Calculate();
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsInstanceOfType(calculateFirstElement, typeof(ErrorResult));
-            Assert.IsInstanceOfType(calculateSecondElement, typeof(ErrorResult));
-            Assert.IsInstanceOfType(calculate, typeof(ErrorResult));
+            Assert.IsTrue(((ErrorResult)calculateFirstElement).Message.Equals("Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+            Assert.IsTrue(((ErrorResult)calculateSecondElement).Message.Equals("Wybierz odpowiednią liczbę pomiarów."));
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Wybierz odpowiednią liczbę pomiarów."));
+        }
+
+        [TestMethod]
+        public void When_ResultsParallelXY_Expect_Values()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+            {
+                new Position(1, 1, 1, true), new Position(100, 100, 1, true),
+                new Position(50, 51, 1, true), new Position(100, 1, 1, true),
+                new Position(1, 100, 1, true)
+            };
+            var firstElementPlane = PlaneEnum.XY;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(1, 1, 10, true), new Position(100, 100, 10, true),
+                new Position(50, 51, 10, true), new Position(100, 1, 10, true),
+                new Position(1, 100, 10, true)
+            };
+            var secondElementPlane = PlaneEnum.XY;
+
+            // Prepare object with data from above
+            var measurements = ArrangeSurfParalMeasureMethodModel(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.99 && ((SurfaceResult)calculateFirstElement).A1 < 1.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > -0.01 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > -0.01 && ((SurfaceResult)calculateFirstElement).A3 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 9.99 && ((SurfaceResult)calculateSecondElement).A1 < 10.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > -0.01 && ((SurfaceResult)calculateSecondElement).A2 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > -0.01 && ((SurfaceResult)calculateSecondElement).A3 < 0.01);
+        }
+
+        [TestMethod]
+        public void When_ResultsParallelYZ_Expect_Values()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+            {
+                new Position(0, 1, 1, true), new Position(1, 100, 1, true),
+                new Position(1, 1, 100, true), new Position(1, 50, 51, true),
+                new Position(1, 100, 100, true)
+            };
+            var firstElementPlane = PlaneEnum.YZ;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(0, 1, 1, true), new Position(100, 100, 1, true),
+                new Position(100, 1, 100, true), new Position(100, 50, 51, true),
+                new Position(100, 100, 100, true)
+            };
+            var secondElementPlane = PlaneEnum.YZ;
+
+            // Prepare object with data from above
+            var measurements = ArrangeSurfParalMeasureMethodModel(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.28 && ((SurfaceResult)calculateFirstElement).A1 < 0.30);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > 0 && ((SurfaceResult)calculateFirstElement).A3 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 28.98 && ((SurfaceResult)calculateSecondElement).A1 < 30);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.49 && ((SurfaceResult)calculateSecondElement).A2 < 0.51);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > 0.49 && ((SurfaceResult)calculateSecondElement).A3 < 0.51);
+        }
+
+        [TestMethod]
+        public void When_ResultsParallelZX_Expect_Values()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+            {
+                new Position(1, 1, 1, true), new Position(1, 1, 100, true),
+                new Position(100, 1, 1, true), new Position(50, 2, 50, true),
+                new Position(100, 3, 100, true)
+            };
+            var firstElementPlane = PlaneEnum.ZX;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(1, 11, 1, true), new Position(1, 11, 100, true),
+                new Position(100, 11, 1, true), new Position(50, 12, 50, true),
+                new Position(100, 13, 100, true)
+            };
+            var secondElementPlane = PlaneEnum.ZX;
+
+            // Prepare object with data from above
+            var measurements = ArrangeSurfParalMeasureMethodModel(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.57 && ((SurfaceResult)calculateFirstElement).A1 < 0.59);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.02);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > 0 && ((SurfaceResult)calculateFirstElement).A3 < 0.02);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 10.57 && ((SurfaceResult)calculateSecondElement).A1 < 10.59);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0 && ((SurfaceResult)calculateSecondElement).A2 < 0.02);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > 0 && ((SurfaceResult)calculateSecondElement).A3 < 0.02);
         }
 
         private static SurfaceParalellismMeasurementMethod ArrangeSurfParalMeasureMethodModel(IEnumerable<Position> mockoweZaznaczoneDaneFirstElement, PlaneEnum firstElementPlane,

@@ -10,17 +10,36 @@
     xmlns:behaviors="using:Cimbalino.Toolkit.Behaviors"
     xmlns:converters="using:Coordinates.UI.Helpers.Converters"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignHeight="600"
+    d:DesignWidth="1300"
     d:DataContext="{d:DesignInstance measurementFlow:MeasurementProcessViewModel}">
 
     <UserControl.Resources>
+        <converters:EnumerableCountToValue x:Key="EnumerableCountToVisibility" Count="2"/>
+        <converters:EnumerableCountToValue x:Key="EnumerableCountToBoolean" Count="2" Value="False" DefaultValue="True"/>
         <converters:EqualityConverter x:Key="EqualityConverter"/>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+    <RelativePanel>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="textSwitcher">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{Binding MeasurementMethodViewModel.ElementsViewModels, Converter={StaticResource EnumerableCountToBoolean}}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="FirstBorder.(RelativePanel.LeftOf)" Value="{x:Null}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        <Border BorderBrush="GreenYellow">
+        <Border BorderBrush="GreenYellow"
+                x:Name="FirstBorder"
+                RelativePanel.LeftOf="NextElementCommand"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignHorizontalCenterWithPanel="True">
             <interactivity:Interaction.Behaviors>
                 <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[0].Element}" />
@@ -31,11 +50,19 @@
             <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
         </Border>
 
-        <Button Command="{Binding NextElementCommand}" Margin="50" RelativePanel.AlignRightWithPanel="True" Width="50" Height="50">
+        <Button x:Name="NextElementCommand" Command="{Binding NextElementCommand}" Margin="50" Width="50" Height="50" 
+                Visibility="{Binding MeasurementMethodViewModel.ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.AlignHorizontalCenterWithPanel="True">
             <SymbolIcon Symbol="Forward"/>
         </Button>
 
-        <Border BorderBrush="GreenYellow">
+        <Border BorderBrush="GreenYellow" 
+                x:Name="SecondBorder"
+                Visibility="{Binding MeasurementMethodViewModel.ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
+                RelativePanel.RightOf="NextElementCommand"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.AlignBottomWithPanel="True">
             <interactivity:Interaction.Behaviors>
                 <behaviors:MultiBindingBehavior Converter="{StaticResource EqualityConverter}" PropertyName="BorderThickness">
                     <behaviors:MultiBindingItem Value="{Binding MeasurementMethodViewModel.ElementsViewModels[1].Element}" />
@@ -45,5 +72,5 @@
             </interactivity:Interaction.Behaviors>
             <components:MeasurementGrid DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="False"/>
         </Border>
-    </StackPanel>
+    </RelativePanel>
 </UserControl>

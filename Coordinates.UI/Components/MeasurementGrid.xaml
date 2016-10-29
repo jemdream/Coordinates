@@ -18,7 +18,8 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="MeasurementGridUserControl"
-    MaxWidth="400"
+    MinWidth="200"
+    MaxWidth="300"
     Margin="50"
     d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
 

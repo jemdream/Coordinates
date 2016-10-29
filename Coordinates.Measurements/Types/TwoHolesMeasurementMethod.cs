@@ -15,13 +15,10 @@ namespace Coordinates.Measurements.Types
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate())
-                return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
+                return new ErrorResult { Message = "Nie można policzyć jednego lub obu elementów." };
 
             var firstElement = BaseElements[0];
             var secondElement = BaseElements[1];
-
-            if (!firstElement.CanCalculate() || !secondElement.CanCalculate())
-                return new ErrorResult { Message = "Nie można policzyć jednego lub obu elementów." }; ;
 
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();

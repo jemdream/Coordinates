@@ -108,7 +108,7 @@ namespace Coordinates.Measurements.Tests.Types
             // Assert
             Assert.IsTrue(((ErrorResult)calculateFirstElement).Message.Equals("Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
             Assert.IsTrue(((ErrorResult)calculateSecondElement).Message.Equals("Wybierz odpowiednią liczbę pomiarów."));
-            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Wybierz odpowiednią liczbę pomiarów."));
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Nie można policzyć jednego lub obu elementów."));
         }
 
         [TestMethod]

@@ -26,7 +26,7 @@ namespace Coordinates.Measurements.Types
         public override ICalculationResult Calculate()
         {
             if (!CanCalculate())
-                return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
+                return new ErrorResult { Message = "Nie można policzyć jednego lub obu elementów." };
 
             var firstElement = BaseElements[0];
             var secondElement = BaseElements[1];
@@ -35,7 +35,7 @@ namespace Coordinates.Measurements.Types
             var secondElementCalculation = secondElement.Calculate();
 
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
-                return new ErrorResult { Message = "Wystąpił błąd podczas obliczania elementu." };
+                return new ErrorResult { Message = "Wystąpił błąd podczas obliczeń." };
 
             double t0, t1;
 
@@ -61,7 +61,7 @@ namespace Coordinates.Measurements.Types
             }
             else
             {
-                return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości" };
+                return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości." };
             }
 
             return new SurfacePerpendicularityResult

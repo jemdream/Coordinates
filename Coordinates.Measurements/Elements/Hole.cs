@@ -6,6 +6,7 @@ namespace Coordinates.Measurements.Elements
     public class Hole : BaseElement
     {
         public override int RequiredMeasurementCount { get; } = 5;
+        public static int SensorRadius = 3;
 
         public override bool CanCalculate()
         {
@@ -55,7 +56,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     x0 = (a / n) + aa;
                     y0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
 
                 case PlaneEnum.YZ:
@@ -87,7 +88,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     y0 = (a / n) + aa;
                     z0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
 
                 case PlaneEnum.ZX:
@@ -119,7 +120,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     z0 = (a / n) + aa;
                     x0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
             }
 

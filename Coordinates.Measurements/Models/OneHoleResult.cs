@@ -3,6 +3,6 @@
     public class OneHoleResult : ICalculationResult
     {
         public double Result { get; set; }
-        public override string ToString() => $"Result = {Result}";
+        public override string ToString() => $"{Result}";
     }
 }

@@ -3,6 +3,7 @@ using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Coordinates.Measurements.Elements
 {
@@ -13,6 +14,7 @@ namespace Coordinates.Measurements.Elements
 
         public abstract int RequiredMeasurementCount { get; }
         [JsonProperty]
+        [JsonConverter(typeof(StringEnumConverter))]
         public PlaneEnum? Plane { get; set; }
         public Position InitialPosition { get; set; }
         
@@ -25,6 +27,8 @@ namespace Coordinates.Measurements.Elements
         }
 
         public virtual bool CanCalculate() => true;
+        [JsonProperty("Result")]
+        public ICalculationResult ResultGetter => Calculate();
         public virtual ICalculationResult Calculate() => new ErrorResult { Message = "Not implemented." };
 
         [JsonProperty]

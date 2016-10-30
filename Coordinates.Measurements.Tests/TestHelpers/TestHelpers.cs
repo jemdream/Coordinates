@@ -14,15 +14,19 @@ namespace Coordinates.Measurements.Tests.TestHelpers
 
             var firstElement = measurements.ActivateNextElement();
             firstElement.Plane = firstElementPlane;
-
             foreach (var position in mockoweZaznaczoneDaneFirstElement)
+            {
+                firstElement.Positions.Add(position);
                 firstElement.SelectedPositions.Add(position);
+            }
 
             var secondElement = measurements.ActivateNextElement();
             secondElement.Plane = secondElementPlane;
-
             foreach (var position in mockoweZaznaczoneDaneSecondElement)
+            {
+                secondElement.Positions.Add(position);
                 secondElement.SelectedPositions.Add(position);
+            }
 
             return measurements;
         }

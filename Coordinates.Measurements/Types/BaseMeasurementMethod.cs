@@ -4,16 +4,24 @@ using System.Reactive.Disposables;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Models;
 using Coordinates.Models.DTO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Coordinates.Measurements.Types
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public abstract class BaseMeasurementMethod : IMeasurementMethod
     {
         protected List<IElement> BaseElements = new List<IElement>();
+        [JsonProperty]
         public IEnumerable<IElement> Elements => BaseElements;
         public virtual IElement ActiveElement { get; private set; }
+
+        [JsonProperty]
+        [JsonConverter(typeof(StringEnumConverter))]
         public PlaneEnum Plane { get; set; }
 
+        // TODO ugly temporary solution for max 2 member measurements
         public IElement ActivateNextElement()
         {
             if (ActiveElement == null)
@@ -51,7 +59,6 @@ namespace Coordinates.Measurements.Types
             get
             {
                 if (ActiveElement == null) return false;
-                // TODO ugly temporary solution for max 2 member measurements
                 if (BaseElements.Count == 1 && ActiveElement == BaseElements[0]) return false;
 
                 return ActiveElement != BaseElements[1];
@@ -59,6 +66,8 @@ namespace Coordinates.Measurements.Types
         }
 
         public virtual bool CanCalculate() => BaseElements.All(be => be.CanCalculate());
+        [JsonProperty("Result")]
+        public ICalculationResult ResultGetter => Calculate();
         public virtual ICalculationResult Calculate() => null;
 
         public virtual CompositeDisposable Subscriptions { get; } = new CompositeDisposable();

@@ -38,7 +38,6 @@ namespace Coordinates.UI
         public App()
         {
             //MeasurementDevelopment();
-            SerializationDevelopment();
 
             InitializeComponent();
             _myContainer = SetupContainer();
@@ -50,14 +49,7 @@ namespace Coordinates.UI
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
         }
-
-        private static void SerializationDevelopment()
-        {
-            var hole = new Hole();
-
-            var holeJson = JsonConvert.SerializeObject(hole, Formatting.Indented);
-        }
-
+        
         private static void MeasurementDevelopment()
         {
             // caly pomiar

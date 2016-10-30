@@ -92,5 +92,7 @@ namespace Coordinates.Measurements.Elements
                 };
             }
         }
+
+        public override string ToString() => "Powierzchnia";
     }
 }

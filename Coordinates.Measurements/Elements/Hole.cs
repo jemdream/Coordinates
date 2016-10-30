@@ -75,8 +75,8 @@ namespace Coordinates.Measurements.Elements
                         f = f + dz * dz;
                         g = g + (dy * dz);
                         h = h + (dy * dy) + (dz * dz);
-                        i = i + ((dy * dy) + (dz * dz)) * dz;
-                        j = j + ((dy * dy) + (dz * dz)) * dy;
+                        i = i + ((dy * dy) + (dz * dz)) * dy;
+                        j = j + ((dy * dy) + (dz * dz)) * dz;
                         x0 = pos.X;
                     }
                     r = 2 * ((e * f) - (g * g));

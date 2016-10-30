@@ -132,5 +132,7 @@ namespace Coordinates.Measurements.Elements
                 R = R
             };
         }
+
+        public override string ToString() => "Otwór";
     }
 }

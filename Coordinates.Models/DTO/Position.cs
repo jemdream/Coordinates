@@ -18,7 +18,7 @@ namespace Coordinates.Models.DTO
             Contact = contact;
             _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
-        
+
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
         [JsonProperty]
@@ -40,5 +40,9 @@ namespace Coordinates.Models.DTO
             return fooItem != null && fooItem._id == _id;
         }
         public override int GetHashCode() => _id;
+        public override string ToString()
+        {
+            return $"{X}, {Y}, {Z}, {Contact}";
+        }
     }
 }

@@ -117,6 +117,7 @@
     <Compile Include="Helpers\Serialization\BaseElementJsonConverter.cs" />
     <Compile Include="Helpers\ObservableCollectionRx.cs" />
     <Compile Include="Helpers\ObservableList.cs" />
+    <Compile Include="Helpers\Serialization\ReadableStringHelpers.cs" />
     <Compile Include="IMeasurementManager.cs" />
     <Compile Include="MeasurementManager.cs" />
     <Compile Include="Models\ErrorResult.cs" />
@@ -148,7 +149,11 @@
       <Name>Coordinates.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\..\..\..\.nuget\packages\Unity\4.0.1\lib\win8\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

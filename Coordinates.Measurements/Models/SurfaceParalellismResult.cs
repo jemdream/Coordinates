@@ -3,6 +3,6 @@
     public class SurfaceParalellismResult : ICalculationResult
     {
         public object Result { get; set; }
-        public override string ToString() => $"Result = {Result}";
+        public override string ToString() => $"{Result}";
     }
 }

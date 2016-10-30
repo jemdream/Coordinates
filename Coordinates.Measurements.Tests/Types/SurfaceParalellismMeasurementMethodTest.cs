@@ -141,12 +141,12 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.99 && ((SurfaceResult)calculateFirstElement).A1 < 1.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.99 && ((SurfaceResult)calculateFirstElement).A0 < 1.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > -0.01 && ((SurfaceResult)calculateFirstElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > -0.01 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > -0.01 && ((SurfaceResult)calculateFirstElement).A3 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 9.99 && ((SurfaceResult)calculateSecondElement).A1 < 10.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 9.99 && ((SurfaceResult)calculateSecondElement).A0 < 10.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > -0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > -0.01 && ((SurfaceResult)calculateSecondElement).A2 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > -0.01 && ((SurfaceResult)calculateSecondElement).A3 < 0.01);
         }
 
         [TestMethod]
@@ -179,12 +179,12 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.28 && ((SurfaceResult)calculateFirstElement).A1 < 0.30);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.28 && ((SurfaceResult)calculateFirstElement).A0 < 0.30);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0 && ((SurfaceResult)calculateFirstElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > 0 && ((SurfaceResult)calculateFirstElement).A3 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 28.98 && ((SurfaceResult)calculateSecondElement).A1 < 30);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.98 && ((SurfaceResult)calculateSecondElement).A0 < 30);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.49 && ((SurfaceResult)calculateSecondElement).A1 < 0.51);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.49 && ((SurfaceResult)calculateSecondElement).A2 < 0.51);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > 0.49 && ((SurfaceResult)calculateSecondElement).A3 < 0.51);
         }
 
         [TestMethod]
@@ -217,12 +217,12 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.57 && ((SurfaceResult)calculateFirstElement).A1 < 0.59);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.57 && ((SurfaceResult)calculateFirstElement).A0 < 0.59);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0 && ((SurfaceResult)calculateFirstElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.02);
-            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A3 > 0 && ((SurfaceResult)calculateFirstElement).A3 < 0.02);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 10.57 && ((SurfaceResult)calculateSecondElement).A1 < 10.59);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 10.57 && ((SurfaceResult)calculateSecondElement).A0 < 10.59);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0 && ((SurfaceResult)calculateSecondElement).A2 < 0.02);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A3 > 0 && ((SurfaceResult)calculateSecondElement).A3 < 0.02);
         }
 
         private static SurfaceParalellismMeasurementMethod ArrangeSurfParalMeasureMethodModel(IEnumerable<Position> mockoweZaznaczoneDaneFirstElement, PlaneEnum firstElementPlane,

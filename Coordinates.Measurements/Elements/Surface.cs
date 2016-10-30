@@ -22,7 +22,7 @@ namespace Coordinates.Measurements.Elements
             {
                 double a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0;
                 double w = 0, wa1 = 0, wa2 = 0, wa3 = 0;
-                double a1 = 0, a2 = 0, a3 = 0;
+                double a0 = 0, a1 = 0, a2 = 0;
                 double n = SelectedPositions.Count;
 
                 foreach (var pos in SelectedPositions)
@@ -72,15 +72,15 @@ namespace Coordinates.Measurements.Elements
                         break;
                 }
 
-                a1 = wa1 / w;
-                a2 = wa2 / w;
-                a3 = wa3 / w;
+                a0 = wa1 / w;
+                a1 = wa2 / w;
+                a2 = wa3 / w;
 
                 return new SurfaceResult
                 {
+                    A0 = a0,
                     A1 = a1,
-                    A2 = a2,
-                    A3 = a3
+                    A2 = a2
                 };
             }
             catch (Exception ex)

@@ -29,8 +29,8 @@ namespace Coordinates.Measurements.Types
             if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
                 return new ErrorResult { Message = "Wystąpił błąd podczas obliczania elementu." };
 
-            var t0 = ((SurfaceResult)firstElementCalculation).A2;
-            var t1 = ((SurfaceResult)secondElementCalculation).A2;
+            var t0 = ((SurfaceResult)firstElementCalculation).A1;
+            var t1 = ((SurfaceResult)secondElementCalculation).A1;
 
             return new SurfaceParalellismResult
             {

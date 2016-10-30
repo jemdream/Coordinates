@@ -5,7 +5,6 @@ using System.Text;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
-using Microsoft.Practices.ObjectBuilder2;
 
 namespace Coordinates.Measurements.Helpers.Serialization
 {
@@ -21,10 +20,14 @@ namespace Coordinates.Measurements.Helpers.Serialization
             sB.AppendLine($"{baseMeasurementMethod.Calculate()}");
             sB.AppendLine("Elements:");
             sB.AppendLine();
-            
-            baseMeasurementMethod.Elements.OfType<BaseElement>()
-                .Select((el, i) => new {index = i, element = el.AsReadableString()})
-                .ForEach(indexElement => sB.AppendLine($"[{indexElement.index}] {indexElement.element}"));
+
+            var indexElements = baseMeasurementMethod.Elements.OfType<BaseElement>()
+                .Select((el, i) => new { index = i, element = el.AsReadableString() });
+
+            foreach (var indexElement in indexElements)
+            {
+                sB.AppendLine($"[{indexElement.index}] {indexElement.element}");
+            }
 
             return sB;
         }

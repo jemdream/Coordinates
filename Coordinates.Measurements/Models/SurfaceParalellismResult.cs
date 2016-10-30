@@ -2,7 +2,7 @@
 {
     public class SurfaceParalellismResult : ICalculationResult
     {
-        public object Result { get; set; }
+        public double Result { get; set; }
         public override string ToString() => $"{Result}";
     }
 }

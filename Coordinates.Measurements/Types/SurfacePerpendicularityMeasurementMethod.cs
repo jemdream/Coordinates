@@ -49,12 +49,12 @@ namespace Coordinates.Measurements.Types
                 t0 = ((SurfaceResult)firstElementCalculation).A2;
                 t1 = ((SurfaceResult)secondElementCalculation).A1;
             }
-            else if (firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX || firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY)
+            else if ((firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX) || (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY))
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A2;
                 t1 = ((SurfaceResult)secondElementCalculation).A2;
             }
-            else if (firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX || firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ)
+            else if ((firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX) || (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ))
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A1;
                 t1 = ((SurfaceResult)secondElementCalculation).A1;
@@ -62,6 +62,7 @@ namespace Coordinates.Measurements.Types
             else
             {
                 return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości." };
+
             }
 
             return new SurfacePerpendicularityResult

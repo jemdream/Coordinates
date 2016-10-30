@@ -221,7 +221,6 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            
             Assert.IsTrue(((HoleResult)calculateFirstElement).X0 > 7.51 && ((HoleResult)calculateFirstElement).X0 < 7.53);
             Assert.IsTrue(((HoleResult)calculateFirstElement).Y0 > 0.99 && ((HoleResult)calculateFirstElement).Y0 < 1.01);
             Assert.IsTrue(((HoleResult)calculateFirstElement).Z0 > 3.47 && ((HoleResult)calculateFirstElement).Z0 < 3.49);

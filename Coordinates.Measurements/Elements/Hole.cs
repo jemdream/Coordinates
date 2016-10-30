@@ -6,6 +6,7 @@ namespace Coordinates.Measurements.Elements
     public class Hole : BaseElement
     {
         public override int RequiredMeasurementCount { get; } = 5;
+        public static int SensorRadius = 3;
 
         public override bool CanCalculate()
         {
@@ -14,17 +15,7 @@ namespace Coordinates.Measurements.Elements
         
         public override ICalculationResult Calculate()
         {
-            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią ilość pomiarów." };
-
-            // TODO add validation (checking if points are not too far from each other etc.) and return Error Result
-            //if (!ValidateSelectedPositions())
-            //{
-            //    return new ErrorResult
-            //    {
-            //        Message = "Jakiś błąd na UI",
-            //        FaultyPositions = new List<Position>() // pomiary, które mają złe wartości względem pozostałych zaznaczonych
-            //    };
-            //}
+            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
 
             double a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0, h = 0, i = 0, j = 0;
             double n = SelectedPositions.Count;
@@ -65,7 +56,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     x0 = (a / n) + aa;
                     y0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
 
                 case PlaneEnum.YZ:
@@ -97,7 +88,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     y0 = (a / n) + aa;
                     z0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
 
                 case PlaneEnum.ZX:
@@ -129,7 +120,7 @@ namespace Coordinates.Measurements.Elements
                     bb = ((j * e) - (i * g)) / r;
                     z0 = (a / n) + aa;
                     x0 = (b / n) + bb;
-                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n));
+                    R = Math.Sqrt((aa * aa) + (bb * bb) + ((e + f) / n)) + SensorRadius;
                     break;
             }
 

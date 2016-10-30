@@ -27,7 +27,6 @@ namespace Coordinates.Models.DTO
         public double Z { get; }
         [JsonProperty]
         public double Y { get; }
-        [JsonProperty("C")]
         public bool Contact { get; }
 
         public static Position Default => new Position();

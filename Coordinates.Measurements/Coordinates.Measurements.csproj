@@ -114,7 +114,7 @@
     <Compile Include="Elements\Surface.cs" />
     <Compile Include="Elements\PlaneEnum.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Helpers\MetrologySerializer.cs" />
+    <Compile Include="Helpers\Serialization\BaseElementJsonConverter.cs" />
     <Compile Include="Helpers\ObservableCollectionRx.cs" />
     <Compile Include="Helpers\ObservableList.cs" />
     <Compile Include="IMeasurementManager.cs" />
@@ -148,9 +148,7 @@
       <Name>Coordinates.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

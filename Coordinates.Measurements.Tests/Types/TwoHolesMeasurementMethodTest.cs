@@ -112,7 +112,7 @@ namespace Coordinates.Measurements.Tests.Types
         }
 
         [TestMethod]
-        public void When_ResultsParallelXY_Expect_Values()
+        public void When_ResultsTwoHolesXY_Expect_Values()
         {
             // Arrange
             var mockDataFirstElement = new[]
@@ -144,11 +144,11 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((HoleResult)calculateFirstElement).X0 > 3.47 && ((HoleResult)calculateFirstElement).X0 < 3.49);
             Assert.IsTrue(((HoleResult)calculateFirstElement).Y0 > 7.51 && ((HoleResult)calculateFirstElement).Y0 < 7.53);
             Assert.IsTrue(((HoleResult)calculateFirstElement).Z0 > 0.99 && ((HoleResult)calculateFirstElement).Z0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).R > 4.31 && ((HoleResult)calculateFirstElement).R < 4.33);
+            Assert.IsTrue(((HoleResult)calculateFirstElement).R > 7.31 && ((HoleResult)calculateFirstElement).R < 7.33);
             Assert.IsTrue(((HoleResult)calculateSecondElement).X0 > 4.47 && ((HoleResult)calculateSecondElement).X0 < 4.49);
             Assert.IsTrue(((HoleResult)calculateSecondElement).Y0 > 8.51 && ((HoleResult)calculateSecondElement).Y0 < 8.53);
             Assert.IsTrue(((HoleResult)calculateSecondElement).Z0 > 0.99 && ((HoleResult)calculateSecondElement).Z0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).R > 4.31 && ((HoleResult)calculateSecondElement).R < 4.33);
+            Assert.IsTrue(((HoleResult)calculateSecondElement).R > 7.31 && ((HoleResult)calculateSecondElement).R < 7.33);
         }
 
         private static TwoHolesMeasurementMethod TwoHolesMeasureMethodModel(IEnumerable<Position> mockoweZaznaczoneDaneFirstElement, PlaneEnum firstElementPlane,

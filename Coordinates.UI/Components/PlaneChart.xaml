@@ -20,7 +20,7 @@
     <RelativePanel>
         <RelativePanel.Resources>
             <DataTemplate x:Key="TooltipTemplate">
-                <Border BorderBrush="Black" BorderThickness="1">
+                <Border BorderBrush="Black" BorderThickness="1" Background="#E6E6E6">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -39,21 +39,20 @@
 
             <charts:SfChart.Behaviors>
                 <charts:ChartSelectionBehavior SelectionMode="MouseClick" EnableSegmentSelection="True"/>
-                <charts:ChartZoomPanBehavior EnableZoomingToolBar="True" 
+                <charts:ChartZoomPanBehavior EnableMouseWheelZooming="True"
                                              ToolBarItems="All" ToolBarOrientation="Horizontal" 
                                              HorizontalPosition="Left" VerticalPosition="Top" 
+                                             EnableZoomingToolBar="True"
+                                             ToolBarItemHeight="12" ToolBarItemWidth="12"
                                              ToolBarBackground="#E6E6E6" EnableSelectionZooming="True"/>
             </charts:SfChart.Behaviors>
 
             <charts:SfChart.PrimaryAxis>
-                <charts:NumericalAxis Header="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}"
-                                      />
+                <charts:NumericalAxis Header="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}"/>
             </charts:SfChart.PrimaryAxis>
 
             <charts:SfChart.SecondaryAxis>
-                <charts:NumericalAxis Header="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"
-                                      />
-                <!--ShowTrackBallInfo="True"-->
+                <charts:NumericalAxis Header="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
             </charts:SfChart.SecondaryAxis>
 
             <charts:SfChart.Legend>

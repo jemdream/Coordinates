@@ -47,7 +47,7 @@ namespace Coordinates.Measurements.Elements
                             return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
                         }
                         wa1 = c * g * h + b * d * f + a * d * e - b * e * g - a * f * h - c * d * d;
-                        wa2 = n * f * h + a * b * e + b * c * d - b * f * f - a * c * h - n * e * d;
+                        wa2 = n * f * h + a * b * e + b * c * d - b * b * f - a * c * h - n * e * d;
                         wa3 = n * e * g + a * c * d + a * b * f - b * c * g - a * a * e - n * d * f;
                         break;
                     case PlaneEnum.YZ:

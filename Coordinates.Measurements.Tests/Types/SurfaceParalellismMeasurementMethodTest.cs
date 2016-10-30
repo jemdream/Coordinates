@@ -118,7 +118,7 @@ namespace Coordinates.Measurements.Tests.Types
             var mockDataFirstElement = new[]
             {
                 new Position(1, 1, 1, true), new Position(100, 100, 1, true),
-                new Position(50, 51, 1, true), new Position(100, 1, 1, true),
+                new Position(50, 50, 1, true), new Position(100, 1, 1, true),
                 new Position(1, 100, 1, true)
             };
             var firstElementPlane = PlaneEnum.XY;
@@ -126,7 +126,7 @@ namespace Coordinates.Measurements.Tests.Types
             var mockDataSecondElement = new[]
             {
                 new Position(1, 1, 10, true), new Position(100, 100, 10, true),
-                new Position(50, 51, 10, true), new Position(100, 1, 10, true),
+                new Position(50, 50, 10, true), new Position(100, 1, 10, true),
                 new Position(1, 100, 10, true)
             };
             var secondElementPlane = PlaneEnum.XY;

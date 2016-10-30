@@ -11,7 +11,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     Margin="50"
-    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
+    d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <UserControl.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
@@ -22,23 +22,23 @@
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
             <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Name="OneHoleResultDataTemplate" x:DataType="models:OneHoleResult">
             <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Name="TwoHolesResultDataTemplate" x:DataType="models:TwoHolesResult">
             <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Name="SurfaceParalellismResultDataTemplate" x:DataType="models:SurfaceParalellismResult">
             <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Name="SurfacePerpendicularityResultDataTemplate" x:DataType="models:SurfacePerpendicularityResult">
             <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
         </DataTemplate>
-        
+
         <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
                     ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
                     OneHoleResultDataTemplate="{StaticResource OneHoleResultDataTemplate}"
@@ -47,7 +47,15 @@
                     SurfacePerpendicularityResultDataTemplate="{StaticResource SurfacePerpendicularityResultDataTemplate}"/>
     </UserControl.Resources>
 
-    <Grid>
-        <ContentControl ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" />
-    </Grid>
+    <RelativePanel>
+        <ContentControl x:Name="Wyniki" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+                        RelativePanel.AlignTopWithPanel="True"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"/>
+        <Button Content="Eksport" Command="{Binding ExportData}"
+                RelativePanel.Below="Wyniki"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"/>
+    </RelativePanel>
 </UserControl>

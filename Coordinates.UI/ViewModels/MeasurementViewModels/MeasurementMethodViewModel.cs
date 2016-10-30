@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
+using Coordinates.Measurements.Helpers.Serialization;
 using Coordinates.Measurements.Models;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
+using Coordinates.UI.Services;
 using Coordinates.UI.Views.Dialogs;
 using Microsoft.Practices.ObjectBuilder2;
 using Template10.Mvvm;
@@ -28,6 +30,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         DelegateCommand<PlaneEnum> SetMeasurementPlane { get; }
         DelegateCommand<Position> SetInitialPosition { get; }
         DelegateCommand ReleaseDialog { get; }
+        DelegateCommand ExportData { get; }
 
         bool CanCalculate();
         ICalculationResult Calculate { get; }
@@ -36,6 +39,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     public class MeasurementMethodViewModel : ViewModelBase, IMeasurementMethodViewModel
     {
         private readonly IMeasurementManager _measurementManager;
+        private readonly IDataExportService _dataExportService;
         private readonly object _lock = new object();
         AxisMovementDialog _axisMovementDialog;
 
@@ -44,12 +48,14 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         private DelegateCommand<PlaneEnum> _setMeasurementPlane;
         private DelegateCommand<Position> _setInitialPosition;
         private DelegateCommand _releaseDialog;
+        private DelegateCommand _exportData;
         private IElementViewModel _activeElementViewModel;
         private Position _presentPosition;
 
-        public MeasurementMethodViewModel(IMeasurementManager measurementManager)
+        public MeasurementMethodViewModel(IMeasurementManager measurementManager, IDataExportService dataExportService)
         {
             _measurementManager = measurementManager;
+            _dataExportService = dataExportService;
 
             _measurementManager.MeasurementSource
                 .Subscribe(InitializeMeasurement);
@@ -71,7 +77,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
             MeasurementMethod.SetupPlane(x);
             ElementsViewModels.ForEach(evm => evm.Update());
         }, x => true));
-        
+
         public DelegateCommand<Position> SetInitialPosition => _setInitialPosition ?? (_setInitialPosition = new DelegateCommand<Position>(async x =>
         {
             await Task.CompletedTask;
@@ -81,7 +87,12 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         public DelegateCommand ReleaseDialog => _releaseDialog ?? (_releaseDialog = new DelegateCommand(() =>
         {
             _axisMovementDialog?.Hide();
-        }, () => ActiveElementViewModel!= null && ActiveElementViewModel.Element.AxisMovementValidation(PresentPosition)));
+        }, () => ActiveElementViewModel != null && ActiveElementViewModel.Element.AxisMovementValidation(PresentPosition)));
+
+        public DelegateCommand ExportData => _exportData ?? (_exportData = new DelegateCommand(async () =>
+        {
+            await _dataExportService.SaveToFile(_measurementMethod as BaseMeasurementMethod);
+        }));
 
         public bool CanCalculate() => MeasurementMethod != null && MeasurementMethod.CanCalculate();
 
@@ -121,9 +132,9 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         private async Task SetNextElement(IMeasurementMethod measurementMethod)
         {
             var element = ActivateNextElement(measurementMethod);
-            
+
             ElementsViewModels.ForEach(evm => evm.Update());
-            
+
             ActiveElementViewModel = ElementsViewModels.FirstOrDefault(x => x.Element == element);
 
             if (element == null) return;
@@ -132,7 +143,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 await ShowPlaneSelectionDialog();
 
             // Check if should show blocking dialog
-            if(MeasurementMethod.SetupInitialPosition(null))
+            if (MeasurementMethod.SetupInitialPosition(null))
                 await ShowAxisBlockDialog();
 
             Subscribe(measurementMethod, element);
@@ -200,6 +211,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         }
 
         private bool _isAxisLocked;
+
         private async Task<ContentDialogResult> ShowAxisMovementDialog()
         {
             _isAxisLocked = true;

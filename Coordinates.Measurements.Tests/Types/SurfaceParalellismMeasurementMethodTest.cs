@@ -147,6 +147,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 9.99 && ((SurfaceResult)calculateSecondElement).A0 < 10.01);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > -0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > -0.01 && ((SurfaceResult)calculateSecondElement).A2 < 0.01);
+            Assert.IsTrue(((SurfaceParalellismResult)calculate).Result > -0.01 && ((SurfaceParalellismResult)calculate).Result < 0.01);
         }
 
         [TestMethod]
@@ -185,6 +186,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.98 && ((SurfaceResult)calculateSecondElement).A0 < 30);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.49 && ((SurfaceResult)calculateSecondElement).A1 < 0.51);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.49 && ((SurfaceResult)calculateSecondElement).A2 < 0.51);
+            Assert.IsTrue(((SurfaceParalellismResult)calculate).Result > 0.45 && ((SurfaceParalellismResult)calculate).Result < 0.47);
         }
 
         [TestMethod]
@@ -223,6 +225,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 10.57 && ((SurfaceResult)calculateSecondElement).A0 < 10.59);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0 && ((SurfaceResult)calculateSecondElement).A2 < 0.02);
+            Assert.IsTrue(((SurfaceParalellismResult)calculate).Result > -0.01 && ((SurfaceParalellismResult)calculate).Result < 0.01);
         }
     }
 }

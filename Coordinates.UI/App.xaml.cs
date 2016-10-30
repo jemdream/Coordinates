@@ -22,6 +22,7 @@ using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using Prism.Events;
 using Template10.Services.NavigationService;
 
@@ -37,7 +38,8 @@ namespace Coordinates.UI
         public App()
         {
             //MeasurementDevelopment();
-            
+            SerializationDevelopment();
+
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);
@@ -47,6 +49,13 @@ namespace Coordinates.UI
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
+        }
+
+        private static void SerializationDevelopment()
+        {
+            var hole = new Hole();
+
+            var holeJson = JsonConvert.SerializeObject(hole, Formatting.Indented);
         }
 
         private static void MeasurementDevelopment()
@@ -59,10 +68,20 @@ namespace Coordinates.UI
             var firstElement = measurements.ActivateNextElement();
             firstElement.Plane = PlaneEnum.YZ;
             var mockoweZaznaczoneDaneFirstElement = new[]
+            //{
+            //    new Position(1, 1, 3, true), new Position(0.5, 3, 4, true),
+            //    new Position(1, 6, 8, true), new Position(1, 10, 12, true),
+            //    new Position(0.5, 5, 14, true)
+            //};
+            //{
+            //    new Position(1, 8, 7, true), new Position(5, 7.3, 3, true),
+            //    new Position(3, 7.5, 4, true), new Position(4, 7.1, 5, true),
+            //    new Position(6, 7.3, 6, true)
+            //};
             {
-                new Position(0.3, 0.1, 0.3, true), new Position(13.0, 5.0, 1.0, true),
-                new Position(0.6, 0.4, 0.3, true), new Position(1.0, 1.0, 0.3, true),
-                new Position(1.5, 11.3, 0.3, true)
+                new Position(1, 1, 1, true), new Position(1, 100, 1, true),
+                new Position(1, 1, 100, true), new Position(1, 50, 51, true),
+                new Position(1, 100, 100, true)
             };
 
             foreach (var position in mockoweZaznaczoneDaneFirstElement)
@@ -107,14 +126,14 @@ namespace Coordinates.UI
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Debug.WriteLine(ApplicationData.Current.LocalFolder.Path);
-            
+
             var view = ApplicationView.GetForCurrentView();
             if (view.IsFullScreenMode) view.ExitFullScreenMode();
 
             view.SetPreferredMinSize(new Size(1366, 768));
             ApplicationView.PreferredLaunchViewSize = new Size(1366, 768);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            
+
             if (!(Window.Current.Content is ModalDialog))
             {
                 // create a new frame and register it
@@ -129,7 +148,7 @@ namespace Coordinates.UI
                     ModalContent = _myContainer.Resolve<Busy>()
                 };
             }
-            
+
             await Task.CompletedTask;
         }
 
@@ -149,7 +168,7 @@ namespace Coordinates.UI
         private static IUnityContainer SetupContainer()
         {
             var container = new UnityContainer();
-            
+
             // Registering Services
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
@@ -190,7 +209,7 @@ namespace Coordinates.UI
 
             return container;
         }
-        
+
         /// <summary>
         /// Injecting Unity cointainer into Service Locator,
         /// that is saved in App.xaml as Static Resource.

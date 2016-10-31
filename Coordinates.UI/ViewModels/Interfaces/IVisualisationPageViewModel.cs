@@ -6,5 +6,6 @@ namespace Coordinates.UI.ViewModels.Interfaces
     {
         bool IsAvailable { get; }
         IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
+        bool RenderCharts { get; }
     }
 }

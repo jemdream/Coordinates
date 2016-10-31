@@ -6,16 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:charts="using:Syncfusion.UI.Xaml.Charts"
     xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
-    xmlns:converters="using:Coordinates.UI.Helpers.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="PlaneChartUserControl"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
-
-    <UserControl.Resources>
-        <converters:EnumerableCountToValue x:Key="EnumerableCountToVisibility" Count="2" Value="True" DefaultValue="False"/>
-    </UserControl.Resources>
 
     <RelativePanel>
         <RelativePanel.Resources>
@@ -35,7 +30,8 @@
             </DataTemplate>
         </RelativePanel.Resources>
 
-        <charts:SfChart x:Name="Chart" Header="{Binding Header, ElementName=PlaneChartUserControl}" FontSize="14">
+        <charts:SfChart x:Name="Chart" Header="{Binding Header, ElementName=PlaneChartUserControl}" FontSize="14"
+                        IsEnabled="{Binding RenderCharts, ElementName=PlaneChartUserControl}" IsEnabledChanged="Chart_OnIsEnabledChanged">
 
             <charts:SfChart.Behaviors>
                 <charts:ChartSelectionBehavior SelectionMode="MouseClick" EnableSegmentSelection="True"/>
@@ -76,8 +72,8 @@
                                             ShowTooltip="True" 
                                             Label="(1) Pozycje"
                                             TooltipTemplate="{StaticResource TooltipTemplate}"
-                                            ItemsSource="{Binding ElementsViewModels[0].Positions}" 
-                                            ListenPropertyChange="True"
+                                            ItemsSource="{Binding ElementsViewModels[0].Positions}"
+                                            IsEnabled="False"
                                             XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
                                             YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
 
@@ -86,7 +82,7 @@
                                             Label="(1) Zaznaczenie"
                                             TooltipTemplate="{StaticResource TooltipTemplate}"
                                             ItemsSource="{Binding ElementsViewModels[0].SelectedPositions}" 
-                                            ListenPropertyChange="True"
+                                            IsEnabled="False"
                                             XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
                                             YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
 
@@ -94,9 +90,8 @@
                                             ShowTooltip="True" 
                                             Label="(2) Pozycje"
                                             TooltipTemplate="{StaticResource TooltipTemplate}"
-                                            IsSeriesVisible="{Binding ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
                                             ItemsSource="{Binding ElementsViewModels[1].Positions}" 
-                                            ListenPropertyChange="True"
+                                            IsEnabled="False"
                                             XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
                                             YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
 
@@ -104,9 +99,8 @@
                                             ShowTooltip="True" 
                                             Label="(2) Zaznaczenie"
                                             TooltipTemplate="{StaticResource TooltipTemplate}"
-                                            IsSeriesVisible="{Binding ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
-                                            ItemsSource="{Binding ElementsViewModels[1].SelectedPositions}" 
-                                            ListenPropertyChange="True"
+                                            ItemsSource="{Binding ElementsViewModels[1].SelectedPositions}"
+                                            IsEnabled="False"
                                             XBindingPath="{Binding PrimaryAxis, ElementName=PlaneChartUserControl}" 
                                             YBindingPath="{Binding SecondaryAxis, ElementName=PlaneChartUserControl}"/>
         </charts:SfChart>

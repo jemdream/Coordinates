@@ -34,76 +34,71 @@ namespace Coordinates.Measurements.Types
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
-            if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
-                return new ErrorResult { Message = "Wystąpił błąd podczas obliczeń." };
-
-            double t0, t1;
+            if (firstElementCalculation is ErrorResult && secondElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Pierwsza płaszczyzna: {firstElementCalculation} Druga płaszczyzna: {secondElementCalculation}" };
+            if (firstElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Pierwsza płaszczyzna: {firstElementCalculation}" };
+            if (secondElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Druga płaszczyzna: {secondElementCalculation}" };
 
             if (firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.YZ)
             {
-                t0 = ((SurfaceResult)firstElementCalculation).A1;
-                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                return new SurfacePerpendicularityResult
                 {
-                    return new SurfacePerpendicularityResult
-                    {
-                        Result = 1.57
-                    };
-                }
-                t1 = -1 / ((SurfaceResult)secondElementCalculation).A2;
+                    Result = DeterminedResult(((SurfaceResult)firstElementCalculation).A1,
+                    ((SurfaceResult)secondElementCalculation).A2)
+                };
             }
-            else if (firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.XY)
+            if (firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.XY)
             {
-                t0 = ((SurfaceResult)firstElementCalculation).A2;
-                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                return new SurfacePerpendicularityResult
                 {
-                    return new SurfacePerpendicularityResult
-                    {
-                        Result = 1.57
-                    };
-                }
-                t1 = -1 / ((SurfaceResult)secondElementCalculation).A1;
+                    Result = DeterminedResult(((SurfaceResult)firstElementCalculation).A2,
+                        ((SurfaceResult)secondElementCalculation).A1)
+                };
             }
-            else if ((firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX) ||
-                     (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY))
+            if ((firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX) ||
+                (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY))
             {
-                t0 = ((SurfaceResult)firstElementCalculation).A2;
-                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                return new SurfacePerpendicularityResult
                 {
-                    return new SurfacePerpendicularityResult
-                    {
-                        Result = 1.57
-                    };
-                }
-                t1 = -1 / ((SurfaceResult)secondElementCalculation).A2;
+                    Result = DeterminedResult(((SurfaceResult)firstElementCalculation).A2,
+                    ((SurfaceResult)secondElementCalculation).A2)
+                };
+            }
+            if ((firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX) ||
+                (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ))
+            {
+                return new SurfacePerpendicularityResult
+                {
+                    Result = DeterminedResult(((SurfaceResult)firstElementCalculation).A1,
+                    ((SurfaceResult)secondElementCalculation).A1)
+                };
+            }
+            return new ErrorResult
+            {
+                Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości."
+            };
+        }
 
-
-            }
-            else if ((firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX) ||
-                     (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ))
+        private double DeterminedResult(double sr0, double sr1)
+        {
+            double t0, t1;
+            if (sr0.Equals(0.0) && sr1.Equals(0.0))
             {
-                t0 = ((SurfaceResult)firstElementCalculation).A1;
-                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
-                {
-                    return new SurfacePerpendicularityResult
-                    {
-                        Result = 1.57
-                    };
-                }
-                t1 = -1 / ((SurfaceResult)secondElementCalculation).A1;
+                return 1.57;
+            }
+            if (sr1.Equals(0.0))
+            {
+                t0 = -1 / sr0;
+                t1 = sr1;
             }
             else
             {
-                return new ErrorResult
-                {
-                    Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości."
-                };
-
+                t1 = -1 / sr1;
+                t0 = sr0;
             }
-
-            return new SurfacePerpendicularityResult
-            {
-                Result = Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)))
-            };
+            return Math.Atan(Math.Abs((t1 - t0) / (1 + t0 * t1)));
         }
 
         public override string ToString() => "Płaszczyzny - prostopadłość";

@@ -23,8 +23,12 @@ namespace Coordinates.Measurements.Types
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
-            if (firstElementCalculation is ErrorResult || secondElementCalculation is ErrorResult)
-                return new ErrorResult { Message = "Wystąpił błąd podczas obliczania elementu." };
+            if (firstElementCalculation is ErrorResult && secondElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Pierwszy otwór: {firstElementCalculation} Drugi otwór: {secondElementCalculation}" };
+            if (firstElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Pierwszy otwór: {firstElementCalculation}" };
+            if (secondElementCalculation is ErrorResult)
+                return new ErrorResult { Message = $"Drugi otwór: {secondElementCalculation}" };
 
             var x10 = ((HoleResult)firstElementCalculation).X0;
             var y10 = ((HoleResult)firstElementCalculation).Y0;

@@ -14,6 +14,7 @@ using Coordinates.Measurements;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;
+using Coordinates.UI.Services;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
@@ -161,20 +162,24 @@ namespace Coordinates.UI
         {
             var container = new UnityContainer();
 
-            // Registering Services
-            container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
-
+            // External devices layer
             // TODO: modify projects so IDeviceService is unreachable in UI: provide IDeviceManager, where IDeviceService implementations should be internal
-
             //container.RegisterType<IConnectionService, MockDeviceService>(new ContainerControlledLifetimeManager());
             //container.RegisterType<IDataSource<GaugePositionDTO>, MockDeviceService>(new ContainerControlledLifetimeManager());
-
             container.RegisterType<IConnectionService, SerialDeviceService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IDataSource<GaugePositionDTO>, SerialDeviceService>(new ContainerControlledLifetimeManager());
 
+            // Measurement layer
             container.RegisterType<IMeasurementManager, MeasurementManager>(new ContainerControlledLifetimeManager());
 
+            // UI 
+
+            // Registering Services
+            container.RegisterType<IMeasurementsExporter, MeasurementsExporter>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IDataExportService, DataExportService>(new ContainerControlledLifetimeManager());
+            
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>();
             container.RegisterType<IDetailPageViewModel, DetailPageViewModel>();

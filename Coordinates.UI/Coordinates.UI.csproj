@@ -123,6 +123,7 @@
     <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
     <Compile Include="Helpers\ScrollToBottomBehavior.cs" />
+    <Compile Include="Services\DataExportService.cs" />
     <Compile Include="ViewModels\ChartsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />

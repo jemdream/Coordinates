@@ -66,7 +66,7 @@ namespace Coordinates.Measurements.Tests.Serialization
             var serialized = measurement.AsReadableString();
 
             // Assert
-            Assert.IsFalse(string.IsNullOrEmpty(serialized));
+            Assert.IsFalse(string.IsNullOrEmpty(serialized.ToString()));
         }
     }
 }

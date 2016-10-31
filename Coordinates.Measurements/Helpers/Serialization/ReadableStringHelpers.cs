@@ -10,7 +10,7 @@ namespace Coordinates.Measurements.Helpers.Serialization
 {
     public static class ReadableStringHelpers
     {
-        public static string AsReadableString(this BaseMeasurementMethod baseMeasurementMethod)
+        public static StringBuilder AsReadableString(this BaseMeasurementMethod baseMeasurementMethod)
         {
             var sB = new StringBuilder();
 
@@ -29,10 +29,10 @@ namespace Coordinates.Measurements.Helpers.Serialization
                 sB.AppendLine($"[{indexElement.index}] {indexElement.element}");
             }
 
-            return sB.ToString();
+            return sB;
         }
 
-        public static string AsReadableString(this BaseElement baseElement)
+        public static StringBuilder AsReadableString(this BaseElement baseElement)
         {
             var sB = new StringBuilder();
 
@@ -43,7 +43,7 @@ namespace Coordinates.Measurements.Helpers.Serialization
             sB.AppendLine("Element points:");
             sB.AppendLine($"{baseElement.Positions.AsReadableString()}");
 
-            return sB.ToString();
+            return sB;
         }
 
         public static string AsReadableString(this IEnumerable<Position> positions)

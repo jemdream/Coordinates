@@ -29,7 +29,7 @@ namespace Coordinates.Measurements.Tests.Types
                 new Position(1.2, 1.0, 1.0, true), new Position(13.0, 5.0, 1.0, true),
                 new Position(1.5, 11.3, 0.5, true)
             };
-            var secondElementPlane = PlaneEnum.YZ;
+            var secondElementPlane = PlaneEnum.XY;
 
             // Prepare object with data from above
             var measurements = PrepareMeasurementMethodModel<SurfacePerpendicularityMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
@@ -76,7 +76,40 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsFalse(canCalculateSecondElement);
             Assert.IsFalse(canCalculate);
         }
-        
+
+        [TestMethod]
+        public void When_TheSamePlane_Expect_ErrorResults()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+            {
+                new Position(0.3, 0.1, 0.3, true), new Position(13.0, 5.0, 1.0, true),
+                new Position(0.6, 0.4, 0.3, true), new Position(1.0, 1.0, 0.3, true),
+                new Position(1.5, 11.3, 0.3, true)
+            };
+            var firstElementPlane = PlaneEnum.YZ;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(0.3, 0.1, 1.0, true), new Position(0.6, 0.4, 0.5, true),
+                new Position(1.2, 1.0, 1.0, true), new Position(13.0, 5.0, 1.0, true),
+                new Position(1.5, 11.3, 0.5, true)
+            };
+            var secondElementPlane = PlaneEnum.YZ;
+
+            // Prepare object with data from above
+            var measurements = PrepareMeasurementMethodModel<SurfacePerpendicularityMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości."));
+        }
+
         [TestMethod]
         public void When_VeryClose_Expect_ErrorResults()
         {
@@ -110,24 +143,24 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((ErrorResult)calculateSecondElement).Message.Equals("Wybierz odpowiednią liczbę pomiarów."));
             Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Nie można policzyć jednego lub obu elementów."));
         }
-        /*
+        
         [TestMethod]
-        public void When_ResultsPerpendicularXYYZ_Expect_Values()
+        public void When_A1A2Zero_Expect_Values()
         {
             // Arrange
             var mockDataFirstElement = new[]
             {
-                new Position(4, 2, 1, true), new Position(2, 6, 1, true),
-                new Position(6, 8, 1, true), new Position(4, 13, 1, true),
-                new Position(2.5, 3, 1, true)
+                new Position(1, 1, 1, true), new Position(100, 1, 1, true),
+                new Position(100, 1, 1, true), new Position(50, 50, 1, true),
+                new Position(100, 100, 1, true)
             };
             var firstElementPlane = PlaneEnum.XY;
 
             var mockDataSecondElement = new[]
             {
-                new Position(5, 3, 1, true), new Position(3, 7, 1, true),
-                new Position(7, 9, 1, true), new Position(5, 14, 1, true),
-                new Position(3.5, 4, 1, true)
+                new Position(1, 1, 1, true), new Position(1, 100, 1, true),
+                new Position(1, 1, 100, true), new Position(1, 50, 50, true),
+                new Position(1, 100, 100, true)
             };
             var secondElementPlane = PlaneEnum.YZ;
 
@@ -141,16 +174,54 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((HoleResult)calculateFirstElement).X0 > 3.47 && ((HoleResult)calculateFirstElement).X0 < 3.49);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).Y0 > 7.51 && ((HoleResult)calculateFirstElement).Y0 < 7.53);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).Z0 > 0.99 && ((HoleResult)calculateFirstElement).Z0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).R > 7.31 && ((HoleResult)calculateFirstElement).R < 7.33);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).X0 > 4.47 && ((HoleResult)calculateSecondElement).X0 < 4.49);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).Y0 > 8.51 && ((HoleResult)calculateSecondElement).Y0 < 8.53);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).Z0 > 0.99 && ((HoleResult)calculateSecondElement).Z0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).R > 7.31 && ((HoleResult)calculateSecondElement).R < 7.33);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.99 && ((SurfaceResult)calculateFirstElement).A0 < 1.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > -0.01 && ((SurfaceResult)calculateFirstElement).A1 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > -0.01 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.99 && ((SurfaceResult)calculateSecondElement).A0 < 1.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > -0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.01);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > -0.01 && ((SurfaceResult)calculateSecondElement).A2 < 0.01);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.56 && ((SurfacePerpendicularityResult)calculate).Result < 1.58);
         }
-        
+
+        [TestMethod]
+        public void When_ResultsPerpendicularXYYZ_Expect_Values()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+            {
+                new Position(1, 1, 1, true), new Position(100, 1, 2, true),
+                new Position(1, 100, 3, true), new Position(50, 50, 4, true),
+                new Position(100, 100, 5, true)
+            };
+            var firstElementPlane = PlaneEnum.XY;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(1, 1, 1, true), new Position(2, 100, 1, true),
+                new Position(3, 1, 100, true), new Position(4, 50, 50, true),
+                new Position(5, 100, 100, true)
+            };
+            var secondElementPlane = PlaneEnum.YZ;
+
+            // Prepare object with data from above
+            var measurements = PrepareMeasurementMethodModel<SurfacePerpendicularityMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.96 && ((SurfaceResult)calculateFirstElement).A0 < 0.98);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0.01 && ((SurfaceResult)calculateFirstElement).A1 < 0.02);
+            Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0.02 && ((SurfaceResult)calculateFirstElement).A2 < 0.03);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.96 && ((SurfaceResult)calculateSecondElement).A0 < 0.98);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.02 && ((SurfaceResult)calculateSecondElement).A2 < 0.03);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.55 && ((SurfacePerpendicularityResult)calculate).Result < 1.57);
+        }
+        /*
         [TestMethod]
         public void When_ResultsTwoHolesYZ_Expect_Values()
         {

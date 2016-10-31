@@ -42,26 +42,61 @@ namespace Coordinates.Measurements.Types
             if (firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.YZ)
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A1;
-                t1 = ((SurfaceResult)secondElementCalculation).A2;
+                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                {
+                    return new SurfacePerpendicularityResult
+                    {
+                        Result = 1.57
+                    };
+                }
+                t1 = -1 / ((SurfaceResult)secondElementCalculation).A2;
             }
             else if (firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.XY)
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A2;
-                t1 = ((SurfaceResult)secondElementCalculation).A1;
+                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                {
+                    return new SurfacePerpendicularityResult
+                    {
+                        Result = 1.57
+                    };
+                }
+                t1 = -1 / ((SurfaceResult)secondElementCalculation).A1;
             }
-            else if ((firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX) || (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY))
+            else if ((firstElement.Plane == PlaneEnum.XY && secondElement.Plane == PlaneEnum.ZX) ||
+                     (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.XY))
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A2;
-                t1 = ((SurfaceResult)secondElementCalculation).A2;
+                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                {
+                    return new SurfacePerpendicularityResult
+                    {
+                        Result = 1.57
+                    };
+                }
+                t1 = -1 / ((SurfaceResult)secondElementCalculation).A2;
+
+
             }
-            else if ((firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX) || (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ))
+            else if ((firstElement.Plane == PlaneEnum.YZ && secondElement.Plane == PlaneEnum.ZX) ||
+                     (firstElement.Plane == PlaneEnum.ZX && secondElement.Plane == PlaneEnum.YZ))
             {
                 t0 = ((SurfaceResult)firstElementCalculation).A1;
-                t1 = ((SurfaceResult)secondElementCalculation).A1;
+                if (t0.Equals(0.0) && ((SurfaceResult)secondElementCalculation).A2.Equals(0.0))
+                {
+                    return new SurfacePerpendicularityResult
+                    {
+                        Result = 1.57
+                    };
+                }
+                t1 = -1 / ((SurfaceResult)secondElementCalculation).A1;
             }
             else
             {
-                return new ErrorResult { Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości." };
+                return new ErrorResult
+                {
+                    Message = "Wybrano dwie te same płaszczyzny przy pomiarze prostopadłości."
+                };
 
             }
 

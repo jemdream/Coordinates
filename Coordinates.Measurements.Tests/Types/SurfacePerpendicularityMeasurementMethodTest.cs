@@ -351,7 +351,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.96 && ((SurfaceResult)calculateSecondElement).A0 < 0.98);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.02 && ((SurfaceResult)calculateSecondElement).A2 < 0.03);
-            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.55 && ((SurfacePerpendicularityResult)calculate).Result < 1.57);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.52 && ((SurfacePerpendicularityResult)calculate).Result < 1.54);
         }
 
         [TestMethod]
@@ -390,7 +390,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.96 && ((SurfaceResult)calculateSecondElement).A0 < 0.98);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.02 && ((SurfaceResult)calculateSecondElement).A2 < 0.03);
-            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.55 && ((SurfacePerpendicularityResult)calculate).Result < 1.57);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.52 && ((SurfacePerpendicularityResult)calculate).Result < 1.54);
         }
         [TestMethod]
         public void When_ResultsPerpendicularXYZX_Expect_Values()
@@ -428,7 +428,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.96 && ((SurfaceResult)calculateSecondElement).A0 < 0.98);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.02 && ((SurfaceResult)calculateSecondElement).A2 < 0.03);
-            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.56 && ((SurfacePerpendicularityResult)calculate).Result < 1.58);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.51 && ((SurfacePerpendicularityResult)calculate).Result < 1.53);
         }
 
         [TestMethod]
@@ -467,48 +467,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 0.96 && ((SurfaceResult)calculateSecondElement).A0 < 0.98);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.01 && ((SurfaceResult)calculateSecondElement).A1 < 0.02);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.02 && ((SurfaceResult)calculateSecondElement).A2 < 0.03);
-            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.56 && ((SurfacePerpendicularityResult)calculate).Result < 1.58);
+            Assert.IsTrue(((SurfacePerpendicularityResult)calculate).Result > 1.53 && ((SurfacePerpendicularityResult)calculate).Result < 1.55);
         }
-        /*
-        [TestMethod]
-        public void When_ResultsTwoHolesZX_Expect_Values()
-        {
-            // Arrange
-            var mockDataFirstElement = new[]
-            {
-                new Position(2, 1, 4, true), new Position(6, 1, 2, true),
-                new Position(8, 1, 6, true), new Position(13, 1, 4, true),
-                new Position(3, 1, 2.5, true)
-            };
-            var firstElementPlane = PlaneEnum.ZX;
-
-            var mockDataSecondElement = new[]
-            {
-                new Position(3, 1, 5, true), new Position(7, 1, 3, true),
-                new Position(9, 1, 7, true), new Position(14, 1, 5, true),
-                new Position(4, 1, 3.5, true)
-            };
-            var secondElementPlane = PlaneEnum.ZX;
-
-            // Prepare object with data from above
-            var measurements = PrepareMeasurementMethodModel<SurfacePerpendicularityMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
-            var arrayOfElements = measurements.Elements.ToArray();
-
-            // Act
-            var calculateFirstElement = arrayOfElements[0].Calculate();
-            var calculateSecondElement = arrayOfElements[1].Calculate();
-            var calculate = measurements.Calculate();
-
-            // Assert
-            Assert.IsTrue(((HoleResult)calculateFirstElement).X0 > 7.51 && ((HoleResult)calculateFirstElement).X0 < 7.53);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).Y0 > 0.99 && ((HoleResult)calculateFirstElement).Y0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).Z0 > 3.47 && ((HoleResult)calculateFirstElement).Z0 < 3.49);
-            Assert.IsTrue(((HoleResult)calculateFirstElement).R > 7.31 && ((HoleResult)calculateFirstElement).R < 7.34);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).X0 > 8.51 && ((HoleResult)calculateSecondElement).X0 < 8.53);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).Y0 > 0.99 && ((HoleResult)calculateSecondElement).Y0 < 1.01);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).Z0 > 4.47 && ((HoleResult)calculateSecondElement).Z0 < 4.49);
-            Assert.IsTrue(((HoleResult)calculateSecondElement).R > 7.31 && ((HoleResult)calculateSecondElement).R < 7.34);
-            
-        }*/
     }
 }

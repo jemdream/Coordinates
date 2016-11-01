@@ -282,7 +282,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.28 && ((SurfaceResult)calculateFirstElement).A0 < 0.30);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0 && ((SurfaceResult)calculateFirstElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.98 && ((SurfaceResult)calculateSecondElement).A0 < 30);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.97 && ((SurfaceResult)calculateSecondElement).A0 < 28.99);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.49 && ((SurfaceResult)calculateSecondElement).A1 < 0.51);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.49 && ((SurfaceResult)calculateSecondElement).A2 < 0.51);
             Assert.IsTrue(((SurfaceParalellismResult)calculate).Result > 0.45 && ((SurfaceParalellismResult)calculate).Result < 0.47);

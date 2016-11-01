@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    Margin="50"
+    Margin="15"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <UserControl.Resources>
@@ -49,13 +49,14 @@
 
     <RelativePanel>
         <ContentControl x:Name="Wyniki" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+                        Margin="0,10,0,0"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True"
-                        RelativePanel.AlignRightWithPanel="True"/>
-        <Button Content="Eksport" Command="{Binding ExportData}"
-                RelativePanel.Below="Wyniki"
-                RelativePanel.AlignBottomWithPanel="True"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignRightWithPanel="True"/>
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.Above="SaveButton"/>
+        
+        <AppBarButton x:Name="SaveButton" Icon="Save" Label="Zapisz jako" Command="{Binding ExportData}" Margin="0"
+                      RelativePanel.AlignHorizontalCenterWithPanel="True"
+                      RelativePanel.AlignBottomWithPanel="True"/>
     </RelativePanel>
 </UserControl>

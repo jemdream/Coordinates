@@ -36,6 +36,7 @@
 
         <Border BorderBrush="GreenYellow"
                 x:Name="FirstBorder"
+                Margin="15"
                 RelativePanel.LeftOf="NextElementCommand"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -59,6 +60,7 @@
 
         <Border BorderBrush="GreenYellow" 
                 x:Name="SecondBorder"
+                Margin="15"
                 Visibility="{Binding MeasurementMethodViewModel.ElementsViewModels, Converter={StaticResource EnumerableCountToVisibility}}"
                 RelativePanel.RightOf="NextElementCommand"
                 RelativePanel.AlignTopWithPanel="True"

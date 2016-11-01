@@ -20,7 +20,7 @@
     x:Name="MeasurementGridUserControl"
     MinWidth="200"
     MaxWidth="300"
-    Margin="50"
+    Margin="15"
     d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
 
     <UserControl.Resources>
@@ -55,15 +55,15 @@
         <converters2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <DataTemplate x:Name="HoleResultDataTemplate" x:DataType="models:HoleResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
         </DataTemplate>
 
         <DataTemplate x:Name="SurfaceResultDataTemplate" x:DataType="models:SurfaceResult">
-            <TextBlock Text="{Binding }"/>
+            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
         </DataTemplate>
 
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
-            <TextBlock Text="{Binding }" Foreground="Red"/>
+            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords" Foreground="Red"/>
         </DataTemplate>
 
         <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
@@ -133,7 +133,7 @@
         </components:AlternatingRowListView>
 
         <!--Ile pomiarow-->
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Margin="0,5,0,5" Orientation="Horizontal">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
                 <Run Text="Wymagana liczba pomiarów: &#160;" />
             </TextBlock>
@@ -150,10 +150,12 @@
                        Style="{ThemeResource BodyTextBlockStyle}" />
         </StackPanel>
 
-        <TextBlock Grid.Row="3" Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringFormatConverter}, ConverterParameter='Płaszczyzna: \{0\}'}"/>
+        <!--Plaszczyzna-->
+        <TextBlock Grid.Row="3" Margin="0,5,0,5" 
+                   Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringFormatConverter}, ConverterParameter='Płaszczyzna: \{0\}'}"/>
 
         <!--Calculations-->
-        <ContentControl Grid.Row="4" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+        <ContentControl Grid.Row="4" Margin="0,5,0,5" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
                         Visibility="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

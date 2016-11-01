@@ -12,6 +12,8 @@
     PrimaryButtonText="OK"
     PrimaryButtonCommand="{Binding SetInitialPosition}"
     PrimaryButtonCommandParameter="{Binding PresentPosition}"
+    VerticalAlignment="Center"
+    MaxHeight="380"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
     <ContentDialog.Resources>
         <Style TargetType="TextBlock">

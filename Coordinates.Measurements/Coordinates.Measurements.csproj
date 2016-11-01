@@ -113,6 +113,10 @@
     <Compile Include="Elements\IElement.cs" />
     <Compile Include="Elements\Surface.cs" />
     <Compile Include="Elements\PlaneEnum.cs" />
+    <Compile Include="Export\JsonExportFormat.cs" />
+    <Compile Include="Export\MeasurementExportFormat.cs" />
+    <Compile Include="Export\MeasurementsExporter.cs" />
+    <Compile Include="Export\TxtExportFormat.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\Serialization\BaseElementJsonConverter.cs" />
     <Compile Include="Helpers\ObservableCollectionRx.cs" />

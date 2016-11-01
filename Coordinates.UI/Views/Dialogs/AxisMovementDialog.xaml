@@ -11,12 +11,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
-
-
-    <!--PrimaryButtonText="OK"
-    PrimaryButtonCommand="{Binding ReleaseDialog}"
-    PrimaryButtonCommandParameter="{Binding PresentPosition}"-->
+    d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <ContentDialog.Resources>
         <Style TargetType="TextBlock">

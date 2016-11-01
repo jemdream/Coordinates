@@ -2,58 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
-using Coordinates.Measurements.Helpers.Serialization;
-using Coordinates.Measurements.Types;
-using Newtonsoft.Json;
+using Coordinates.Measurements.Export;
+using Coordinates.UI.Helpers;
 using Template10.Utils;
 
 namespace Coordinates.UI.Services
 {
-    public class TxtExportFormat : MeasurementExportFormat
-    {
-        public TxtExportFormat()
-        {
-            Extension = ".txt";
-            Description = "Plik tekstowy (*.txt)";
-        }
-
-        public override string Serialize<T>(T toSerialize) => 
-            (toSerialize as BaseMeasurementMethod)?.AsReadableString().ToString();
-    }
-
-    public class JsonExportFormat : MeasurementExportFormat
-    {
-        public JsonExportFormat()
-        {
-            Extension = ".json";
-            Description = "Plik json (*.json)";
-        }
-
-        public override string Serialize<T>(T toSerialize)
-            => JsonConvert.SerializeObject(toSerialize, Formatting.Indented);
-    }
-
-    public abstract class MeasurementExportFormat
-    {
-        public string Extension { get; protected set; }
-        public string Description { get; protected set; }
-        public abstract string Serialize<T>(T toSerialize);
-    }
-
-    public class MeasurementsExporter : IMeasurementsExporter
-    {
-        public IEnumerable<MeasurementExportFormat> Formats { get; }
-            = new MeasurementExportFormat[] { new JsonExportFormat(), new TxtExportFormat() };
-    }
-
-    public interface IMeasurementsExporter
-    {
-        IEnumerable<MeasurementExportFormat> Formats { get; }
-    }
-
     public interface IDataExportService
     {
         Task SaveToFile<T>(T content);
@@ -115,24 +72,23 @@ namespace Coordinates.UI.Services
                 await InformFail();
         }
 
-        private static async Task InformSuccess(IStorageItem newFile)
+        private static async Task InformSuccess(IStorageFile newFile)
         {
             var dialog = new ContentDialog
             {
                 Title = "Eksport",
                 Content = $"Dane zapisano jako {Environment.NewLine} {newFile.Path}",
-                PrimaryButtonText = "Kopiuj ścieżkę",
+                PrimaryButtonText = "Kopiuj ścieżkę i otwórz",
                 SecondaryButtonText = "OK"
             };
 
             if ((await dialog.ShowAsync()).Equals(ContentDialogResult.Primary))
             {
-                var dP = new DataPackage();
-                dP.SetText(newFile.Path);
-                Clipboard.SetContent(dP);
+                newFile.Path.CopyTextToClipboard();
+                await Launcher.LaunchFileAsync(newFile);
             }
         }
-
+        
         private static async Task InformFail()
         {
             var dialog = new ContentDialog

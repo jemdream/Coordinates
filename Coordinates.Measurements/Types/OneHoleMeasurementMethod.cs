@@ -22,8 +22,7 @@ namespace Coordinates.Measurements.Types
 
             var firstElement = BaseElements[0];
 
-            return !firstElement.CanCalculate() ?
-                null : firstElement.Calculate();
+            return firstElement.Calculate();
         }
 
         public override string ToString() => $"Jeden otwór";

@@ -1,4 +1,4 @@
-﻿namespace Coordinates.UI.Helpers
+﻿namespace Coordinates.ExternalDevices.Helpers
 {
     /// <summary>
     /// Source of exception messages

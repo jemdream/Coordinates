@@ -11,10 +11,7 @@ using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
 using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements;
-using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Export;
-using Coordinates.Measurements.Types;
-using Coordinates.Models.DTO;
 using Coordinates.UI.Services;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.ViewModels;
@@ -24,7 +21,6 @@ using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
 using Prism.Events;
 using Template10.Services.NavigationService;
 
@@ -120,6 +116,7 @@ namespace Coordinates.UI
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();
             container.RegisterType<ISettingsPageViewModel, SettingsPageViewModel>();
+            container.RegisterType<IInstructionsViewModel, InstructionsViewModel>();
 
             // Menu 
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>(new ContainerControlledLifetimeManager());

@@ -31,5 +31,6 @@ namespace Coordinates.UI.Services.ServiceLocator
         public IMeasurementsPageViewModel MeasurementsPageViewModel => _myContainer.Resolve<IMeasurementsPageViewModel>();
         public IVisualisationPageViewModel VisualisationPageViewModel => _myContainer.Resolve<IVisualisationPageViewModel>();
         public IConnectionSetupViewModel ConnectionSetupViewModel => _myContainer.Resolve<IConnectionSetupViewModel>();
+        public IInstructionsViewModel InstructionsViewModel => _myContainer.Resolve<IInstructionsViewModel>();
     }
 }

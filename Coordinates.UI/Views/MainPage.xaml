@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Coordinates.UI.ViewModels"
       xmlns:views="using:Coordinates.UI.Views"
+      xmlns:instructions="using:Coordinates.UI.Views.Instructions"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance vm:MainPageViewModel}">
 
@@ -124,7 +125,7 @@
 
                 <Button Command="{Binding GoTo}">
                     <Button.CommandParameter>
-                        <views:MeasurementsPage/>
+                        <instructions:MachineInstructions/>
                     </Button.CommandParameter>
                     <RelativePanel>
                         <Viewbox x:Name="Icon2">
@@ -139,7 +140,7 @@
 
                 <Button Command="{Binding GoTo}">
                     <Button.CommandParameter>
-                        <views:MeasurementsPage/>
+                        <instructions:MeasurementsInstructions/>
                     </Button.CommandParameter>
                     <RelativePanel>
                         <Viewbox x:Name="Icon3">

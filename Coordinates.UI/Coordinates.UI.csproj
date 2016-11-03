@@ -128,6 +128,7 @@
     <Compile Include="ViewModels\ChartsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
+    <Compile Include="ViewModels\InstructionsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
     <Compile Include="Messages\GoNextMeasurementMsg.cs" />
     <Compile Include="ViewModels\Interfaces\IMeasurementViewModelBase.cs" />
@@ -172,6 +173,12 @@
     <Compile Include="Views\Dialogs\PlaneSelectionDialog.xaml.cs">
       <DependentUpon>PlaneSelectionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Instructions\MachineInstructions.xaml.cs">
+      <DependentUpon>MachineInstructions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Instructions\MeasurementsInstructions.xaml.cs">
+      <DependentUpon>MeasurementsInstructions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml.cs">
       <DependentUpon>MeasurementSelectionCalculation.xaml</DependentUpon>
     </Compile>
@@ -192,9 +199,6 @@
     </Compile>
     <Compile Include="Views\CodingPlayground.xaml.cs">
       <DependentUpon>CodingPlayground.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DetailPage.xaml.cs">
-      <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -273,6 +277,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Instructions\MachineInstructions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Instructions\MeasurementsInstructions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MeasurementFlow\MeasurementSelectionCalculation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -301,10 +313,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DetailPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -329,6 +337,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\Export\" />
+    <Folder Include="ViewModels\Instructions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj">

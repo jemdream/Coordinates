@@ -1,13 +1,10 @@
-﻿using System.Windows.Input;
+﻿using Windows.UI.Xaml.Controls;
+using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels.Interfaces
 {
     public interface IMainPageViewModel
     {
-        ICommand GotoDetailsPage { get; }
-        ICommand GotoSettings { get; }
-        ICommand GotoPrivacy { get; }
-        ICommand GotoAbout { get; }
-        string Value { get; set; }
+        DelegateCommand<Page> GoTo { get; }
     }
 }

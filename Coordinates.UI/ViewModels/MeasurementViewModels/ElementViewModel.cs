@@ -14,13 +14,10 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
     {
         int RequiredMeasurementCount { get; }
         PlaneEnum? Plane { get; }
-
         bool CanCalculate();
         ICalculationResult Calculate { get; }
-
         IElement Element { get; }
-
-        void RefreshUi();
+        void Update();
         bool ViewHack { get; set; }
         
         ObservableList<Position> SelectedPositions { get; }
@@ -54,10 +51,10 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 });
 
             Element.SelectedPositions.OnAdd
-                .Subscribe(pos => RefreshUi());
+                .Subscribe(pos => Update());
 
             Element.SelectedPositions.OnRemove
-                .Subscribe(pos => RefreshUi());
+                .Subscribe(pos => Update());
         }
 
         public IElement Element { get; }
@@ -69,7 +66,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         public bool CanCalculate() => Element.CanCalculate();
         public ICalculationResult Calculate => Element.Calculate();
 
-        public void RefreshUi()
+        public void Update()
         {
             ViewHack = !ViewHack;
             RaisePropertyChanged(() => Plane);

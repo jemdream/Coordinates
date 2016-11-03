@@ -1,16 +1,12 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Coordinates.Models.DTO
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Position
     {
-        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
         private readonly int _id;
-
-        public double X { get; }
-        public double Z { get; }
-        public double Y { get; }
-        public bool Contact { get; }
 
         public Position() : this(0.0, 0.0, 0.0, false) { }
 
@@ -23,20 +19,19 @@ namespace Coordinates.Models.DTO
             _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
 
-        public static Position Default => new Position();
+        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
+        [JsonProperty]
+        public double X { get; }
+        [JsonProperty]
+        public double Z { get; }
+        [JsonProperty]
+        public double Y { get; }
+        public bool Contact { get; }
+
+        public static Position Default => new Position();
         public override bool Equals(object obj)
         {
-            //var objAsPosition = obj as Position;
-
-            //if (objAsPosition == null)
-            //    return false;
-
-            //return
-            //    (Math.Abs(X - objAsPosition.X) < double.Epsilon) &&
-            //    (Math.Abs(Y - objAsPosition.Y) < double.Epsilon) &&
-            //    (Math.Abs(Z - objAsPosition.Z) < double.Epsilon);
-
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
@@ -44,10 +39,10 @@ namespace Coordinates.Models.DTO
 
             return fooItem != null && fooItem._id == _id;
         }
-
-        public override int GetHashCode()
+        public override int GetHashCode() => _id;
+        public override string ToString()
         {
-            return _id;
+            return $"{X}, {Y}, {Z}, {Contact}";
         }
     }
 }

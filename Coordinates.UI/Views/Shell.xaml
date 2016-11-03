@@ -21,6 +21,17 @@
             <Setter Property="Height" Value="24" />
             <Setter Property="Margin" Value="24,0,0,0" />
         </Style>
+
+        <Style x:Name="ButtonSymbolFontIcon" TargetType="FontIcon">
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="48" />
+        </Style> 
+        <Style x:Name="ButtonSymbolLiteralFontIcon" TargetType="FontIcon">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Margin" Value="24,0,0,0" />
+        </Style>
+
         <Style x:Name="ButtonTextBlock" TargetType="TextBlock">
             <Setter Property="Margin" Value="12,0,0,0" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -64,7 +75,6 @@
                 <!--  Coding playground button  -->
                 <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
                     <StackPanel Orientation="Horizontal">
-                        <!-- Symbol icon reference: https://msdn.microsoft.com/pl-pl/library/windows/apps/dn252842 -->
                         <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Edit" />
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Coding Playground" />
                     </StackPanel>
@@ -81,15 +91,15 @@
                 <!--  Visualisation button  -->
                 <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:VisualisationPage">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Pictures" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Wizualizacja" />
+                        <FontIcon Glyph="&#xE9D9;" Style="{StaticResource ButtonSymbolFontIcon}"/>
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Wykresy" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
                 <!-- Instrukcje -->
                 <controls:HamburgerButtonInfo ButtonType="Command" x:Name="InstrukcjeButton" Tapped="Instrukcje_Tapped">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="OpenLocal" />
+                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Library" />
                         <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Instrukcje" />
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
@@ -97,7 +107,7 @@
                 <!-- Maszyna -->
                 <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="views:MainPage" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Style="{StaticResource ButtonSymbolLiteralIcon}" Symbol="OpenLocal" />
+                        <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">
                             <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True" Style="{StaticResource ButtonTextBlock}">
                                 <Run FontSize="12" Text="Maszyna" />
@@ -111,7 +121,7 @@
                 <!-- Metrologia -->
                 <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="views:MainPage" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Style="{StaticResource ButtonSymbolLiteralIcon}" Symbol="OpenLocal" />
+                        <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">
                             <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True" Style="{StaticResource ButtonTextBlock}">
                                 <Run FontSize="12" Text="Metrologia" />

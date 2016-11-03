@@ -15,7 +15,7 @@
     </Page.DataContext>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <controls:PageHeader x:Name="PageHeader" Text="Wizualizacja" 
+        <controls:PageHeader x:Name="PageHeader" Text="Wykresy" 
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" />

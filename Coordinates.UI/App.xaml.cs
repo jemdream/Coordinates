@@ -39,8 +39,6 @@ namespace Coordinates.UI
 
         public App()
         {
-            //MeasurementDevelopment();
-
             InitializeComponent();
             _myContainer = SetupContainer();
             SplashFactory = (e) => new Splash(e);
@@ -50,71 +48,6 @@ namespace Coordinates.UI
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
-        }
-        
-        private static void MeasurementDevelopment()
-        {
-            // caly pomiar
-            var measurements = new SurfaceParalellismMeasurementMethod();
-
-            #region First Element
-
-            var firstElement = measurements.ActivateNextElement();
-            firstElement.Plane = PlaneEnum.YZ;
-            var mockoweZaznaczoneDaneFirstElement = new[]
-            //{
-            //    new Position(1, 1, 3, true), new Position(0.5, 3, 4, true),
-            //    new Position(1, 6, 8, true), new Position(1, 10, 12, true),
-            //    new Position(0.5, 5, 14, true)
-            //};
-            //{
-            //    new Position(1, 8, 7, true), new Position(5, 7.3, 3, true),
-            //    new Position(3, 7.5, 4, true), new Position(4, 7.1, 5, true),
-            //    new Position(6, 7.3, 6, true)
-            //};
-            {
-                new Position(1, 1, 1, true), new Position(1, 100, 1, true),
-                new Position(1, 1, 100, true), new Position(1, 50, 51, true),
-                new Position(1, 100, 100, true)
-            };
-
-            foreach (var position in mockoweZaznaczoneDaneFirstElement)
-                firstElement.SelectedPositions.Add(position);
-
-            var canCalculateFirstElement = firstElement.CanCalculate();
-            var calculateFirstElement = firstElement.Calculate();
-
-
-            //Debugger.Break();
-
-            #endregion
-
-            #region Second Element
-
-            var secondElement = measurements.ActivateNextElement();
-            secondElement.Plane = PlaneEnum.YZ;
-            var mockoweZaznaczoneDaneSecondElement = new[]
-            {
-                new Position(0.3, 0.1, 1.0, true), new Position(0.6, 0.4, 0.5, true),
-                new Position(1.2, 1.0, 1.0, true), new Position(13.0, 5.0, 1.0, true),
-                new Position(1.5, 11.3, 0.5, true)
-            };
-
-            foreach (var position in mockoweZaznaczoneDaneSecondElement)
-                secondElement.SelectedPositions.Add(position);
-
-            var canCalculateSecondElement = secondElement.CanCalculate();
-            var calculateSecondElement = secondElement.Calculate();
-
-            //Debugger.Break();
-
-            #endregion
-
-            var canCalculate = measurements.CanCalculate();
-            var calculate = measurements.Calculate();
-
-            Debugger.Break();
-            // TODO TERMINATE
         }
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)

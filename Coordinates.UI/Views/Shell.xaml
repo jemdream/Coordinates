@@ -52,7 +52,6 @@
                                 NavButtonCheckedBackground="SteelBlue"
                                 NavButtonCheckedForeground="White"
                                 NavButtonCheckedIndicatorBrush="Transparent"
-                                Loaded="MyHamburgerMenu_OnLoaded"
                                 RelativePanel.Above="ConnectionBar"
                                 RelativePanel.AlignLeftWithPanel="True"
                                 RelativePanel.AlignRightWithPanel="True"

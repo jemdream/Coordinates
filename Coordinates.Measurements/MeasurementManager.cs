@@ -25,7 +25,11 @@ namespace Coordinates.Measurements
         {
             // Store raw position
             measurementDataSource.DataStream
-                .Subscribe(lastRaw => _lastRawPosition = lastRaw);
+                .Subscribe(lastRaw =>
+                {
+
+                    _lastRawPosition = lastRaw;
+                });
 
             // Compensating and mapping
             var compensatedPositions = measurementDataSource.DataStream
@@ -35,6 +39,8 @@ namespace Coordinates.Measurements
             compensatedPositions
                 .Subscribe(pos =>
                 {
+                    // TODO [bug-contact] here to validate with last position buffer and modify property (add to class)
+
                     // Storing all points
                     PositionBuffer.Add(pos);
                     // Bubbling compensated position

@@ -28,6 +28,7 @@ namespace Coordinates.Models.DTO
         [JsonProperty]
         public double Y { get; }
         public bool Contact { get; }
+        public bool FirstContact { get; }
 
         public static Position Default => new Position();
         public override bool Equals(object obj)
@@ -42,7 +43,7 @@ namespace Coordinates.Models.DTO
         public override int GetHashCode() => _id;
         public override string ToString()
         {
-            return $"{X}, {Y}, {Z}, {Contact}";
+            return $"{X}, {Y}, {Z}";
         }
     }
 }

@@ -41,16 +41,18 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         private readonly IMeasurementManager _measurementManager;
         private readonly IDataExportService _dataExportService;
         private readonly object _lock = new object();
-        AxisMovementDialog _axisMovementDialog;
-
+        
         private IMeasurementMethod _measurementMethod;
         private IEnumerable<IElementViewModel> _elementsViewModels;
+
         private DelegateCommand<PlaneEnum> _setMeasurementPlane;
         private DelegateCommand<Position> _setInitialPosition;
         private DelegateCommand _releaseDialog;
         private DelegateCommand _exportData;
+
         private IElementViewModel _activeElementViewModel;
         private Position _presentPosition;
+        private AxisMovementDialog _axisMovementDialog;
 
         public MeasurementMethodViewModel(IMeasurementManager measurementManager, IDataExportService dataExportService)
         {
@@ -153,15 +155,18 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
 
         private void Subscribe(IMeasurementMethod measurementMethod, IElement element)
         {
+            // Positions to register
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
                     .Where(element.AxisMovementValidation)
+                    // TODO [bug-contact] here to validate if initial contact made
                     .Where(position => position.Contact)
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => element.Positions.Add(position))
                 );
 
+            // Axis moved prompt
             measurementMethod.Subscriptions.Add(
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)

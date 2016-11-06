@@ -222,8 +222,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\offon.png" />
     <Content Include="Assets\otwory.png" />
     <Content Include="Assets\plaszczyzny.png" />
+    <Content Include="Assets\pokretlo.png" />
     <Content Include="Help.htm" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

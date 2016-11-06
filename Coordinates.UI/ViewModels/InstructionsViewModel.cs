@@ -23,8 +23,8 @@ W celu zablokowania ruchu osi trzeba dokręcić śrubę przedstawioną na poniż
         };
         public string[] MachineImageSources { get; } =
         {
-            @"ms-appx:///Assets/SplashScreen.png",
-            @"ms-appx:///Assets/SplashScreen.png"
+            @"ms-appx:///Assets/offon.png",
+            @"ms-appx:///Assets/pokretlo.png"
         };
 
         public string[] MeasurementsInstructionTexts { get; } =

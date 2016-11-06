@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
+using Coordinates.ExternalDevices.Helpers;
 using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
@@ -110,7 +111,15 @@ namespace Coordinates.Measurements
         /// <summary>
         /// Compensates position value with CompensationPosition
         /// </summary>
-        private Position CompensatePosition(Position position) =>
-            new Position(position.X - _compensationPosition.X, position.Y - _compensationPosition.Y, position.Z - _compensationPosition.Z, position.Contact, position.FirstContact);
+        private Position CompensatePosition(Position position)
+        {
+            return new Position(
+                (position.X - _compensationPosition.X).Round(), 
+                (position.Y - _compensationPosition.Y).Round(), 
+                (position.Z - _compensationPosition.Z).Round(), 
+                position.Contact, 
+                position.FirstContact
+            );
+        }
     }
 }

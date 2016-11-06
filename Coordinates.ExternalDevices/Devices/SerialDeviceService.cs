@@ -228,9 +228,9 @@ namespace Coordinates.ExternalDevices.Devices
 
             if (!xParse || !yParse || !zParse || !gParse) // parsing the data has failed
                 throw new Exception($"{CorruptDataExceptionMessage} Parsing Match.Groups[] has failed.");
-
+            
             _previousBufferString = bufferString;
-            _dataSourceSubject.OnNext(new GaugePositionDTO(x / 100, y / 100, z / 100, gaugeInt == 0));
+            _dataSourceSubject.OnNext(new GaugePositionDTO((x / 100).Round(), (y / 100).Round(), (z / 100).Round(), gaugeInt == 0));
         }
     }
 }

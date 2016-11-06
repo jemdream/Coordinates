@@ -17,30 +17,20 @@ namespace Coordinates.Measurements
         private readonly ReplaySubject<IMeasurementMethod> _measurementSource = new ReplaySubject<IMeasurementMethod>(1);
         private readonly MeasurementMethodFactory _measurementMethodFactory = new MeasurementMethodFactory();
 
-        private GaugePositionDTO _lastRawPosition = GaugePositionDTO.Default;
-        private GaugePositionDTO _compensationPosition = GaugePositionDTO.Default;
+        private Position _lastRawPosition = Position.Default;
+        private Position _compensationPosition = Position.Default;
         private IMeasurementMethod _selectedMeasurementMethod;
 
         public MeasurementManager(IDataSource<GaugePositionDTO> measurementDataSource)
         {
-            // Store raw position
-            measurementDataSource.DataStream
-                .Subscribe(lastRaw =>
-                {
-
-                    _lastRawPosition = lastRaw;
-                });
-
             // Compensating and mapping
             var compensatedPositions = measurementDataSource.DataStream
-                .Select(CompensatePosition)
-                .Select(pos => new Position(pos.X, pos.Y, pos.Z, pos.Contact));
+                .Select(RawPositionModification)
+                .Select(CompensatePosition);
 
             compensatedPositions
                 .Subscribe(pos =>
                 {
-                    // TODO [bug-contact] here to validate with last position buffer and modify property (add to class)
-
                     // Storing all points
                     PositionBuffer.Add(pos);
                     // Bubbling compensated position
@@ -86,7 +76,7 @@ namespace Coordinates.Measurements
             GatherData = false;
 
             PositionBuffer.Clear();
-            
+
             SelectedMeasurementMethod = null;
             _selectedMeasurementMethod?.Subscriptions.Clear();
             _selectedMeasurementMethod = null;
@@ -106,11 +96,21 @@ namespace Coordinates.Measurements
 
             return true;
         }
-        
+
+        /// <summary>
+        /// Stores raw position and checks for initial contact - calibration purposes
+        /// </summary>
+        private Position RawPositionModification(GaugePositionDTO pos)
+        {
+            // Checks if contact was initial, or sequential
+            var firstContact = pos.Contact && !_lastRawPosition.Contact;
+            return _lastRawPosition = new Position(pos.X, pos.Y, pos.Z, pos.Contact, firstContact);
+        }
+
         /// <summary>
         /// Compensates position value with CompensationPosition
         /// </summary>
-        private GaugePositionDTO CompensatePosition(GaugePositionDTO position) =>
-            new GaugePositionDTO(position.X - _compensationPosition.X, position.Y - _compensationPosition.Y, position.Z - _compensationPosition.Z, position.Contact);
+        private Position CompensatePosition(Position position) =>
+            new Position(position.X - _compensationPosition.X, position.Y - _compensationPosition.Y, position.Z - _compensationPosition.Z, position.Contact, position.FirstContact);
     }
 }

@@ -160,8 +160,7 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
                 _measurementManager.PositionSource
                     .Where(_ => _measurementManager.GatherData)
                     .Where(element.AxisMovementValidation)
-                    // TODO [bug-contact] here to validate if initial contact made
-                    .Where(position => position.Contact)
+                    .Where(position => position.FirstContact)
                     .ObserveOn(SynchronizationContext.Current)
                     .Subscribe(position => element.Positions.Add(position))
                 );

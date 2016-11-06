@@ -8,14 +8,15 @@ namespace Coordinates.Models.DTO
     {
         private readonly int _id;
 
-        public Position() : this(0.0, 0.0, 0.0, false) { }
-
-        public Position(double x, double y, double z, bool contact)
+        public Position() : this(0.0, 0.0, 0.0, false, false) { }
+        public Position(double x, double y, double z, bool contact) : this(x, y, z, contact, false) { }
+        public Position(double x, double y, double z, bool contact, bool firstContact)
         {
             X = x;
             Y = y;
             Z = z;
             Contact = contact;
+            FirstContact = firstContact;
             _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
 

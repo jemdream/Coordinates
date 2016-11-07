@@ -40,8 +40,10 @@ namespace Coordinates.Measurements.Helpers.Serialization
             sB.AppendLine($"Plane: {baseElement.Plane}");
             sB.AppendLine("Result:");
             sB.AppendLine($"{baseElement.Calculate()}");
-            sB.AppendLine("Element points:");
+            sB.AppendLine("Element positions:");
             sB.AppendLine($"{baseElement.Positions.AsReadableString()}");
+            sB.AppendLine("Element selected positions:");
+            sB.AppendLine($"{baseElement.SelectedPositions.AsReadableString()}");
 
             return sB;
         }

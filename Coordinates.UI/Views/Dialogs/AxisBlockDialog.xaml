@@ -13,7 +13,7 @@
     PrimaryButtonCommand="{Binding SetInitialPosition}"
     PrimaryButtonCommandParameter="{Binding PresentPosition}"
     VerticalAlignment="Center"
-    MaxHeight="380"
+    MaxHeight="420"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
     <ContentDialog.Resources>
         <Style TargetType="TextBlock">
@@ -24,7 +24,7 @@
 
         <converters:PositionWithPlaneToDoubleConverter x:Key="PositionWithPlaneToDoubleConverter"/>
     </ContentDialog.Resources>
-    <Grid>
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -37,10 +37,10 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" TextWrapping="Wrap">Pomiar w płaszczyźnie:</TextBlock>
-        <TextBlock Grid.Row="1" Text="{Binding ActiveElementViewModel.Plane}" FontStyle="Oblique"/>
+        <TextBlock Grid.Row="1" Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding ActiveElementViewModel.Plane}" Margin="15,0"/>
 
-        <TextBlock Grid.Row="2" TextWrapping="Wrap">Pozycja na osi, która zostanie zablokowana:</TextBlock>
-        <TextBlock Grid.Row="3" FontStyle="Oblique">
+        <TextBlock Grid.Row="2" TextWrapping="Wrap">Pozycja na osi prostopadłej, której nie będzie można później zmienić:</TextBlock>
+        <TextBlock Grid.Row="3" Style="{StaticResource SubheaderTextBlockStyle}" Margin="15,0">
             <interactivity:Interaction.Behaviors>
                 <behaviors:MultiBindingBehavior Converter="{StaticResource PositionWithPlaneToDoubleConverter}" PropertyName="Text">
                     <behaviors:MultiBindingItem Value="{Binding PresentPosition}" />
@@ -49,6 +49,6 @@
             </interactivity:Interaction.Behaviors>
         </TextBlock>
 
-        <TextBlock Grid.Row="4" Foreground="Red" TextWrapping="Wrap">Ustaw czujnik w początkowej pozycji i zablokuj mechanicznie wyłączoną oś. Po zatwierdzeniu blbalbalba</TextBlock>
+        <TextBlock Grid.Row="4" Foreground="Red" TextWrapping="Wrap">Uwaga! Zablokuj mechanicznie oś prostopadłą do płaszczyzny pomiaru. W przypadku zmiany pozycji będzie konieczny powrót do wyżej podanej.</TextBlock>
     </Grid>
 </ContentDialog>

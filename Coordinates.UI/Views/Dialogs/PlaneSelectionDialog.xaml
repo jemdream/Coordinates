@@ -23,6 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
+        
         <!--Wybór rodzaju pomiaru-->
         <ComboBox HorizontalAlignment="Center" Margin="25" x:Name="PlaneComboBox"
             ItemsSource="{Binding SurfaceEnums}"
@@ -36,5 +37,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        
     </Grid>
 </ContentDialog>

@@ -115,7 +115,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\Converters\ConnectionStatusToForeground.cs" />
     <Compile Include="Helpers\Converters\EnumerableCountToValue.cs" />
-    <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter - Copy.cs" />
+    <Compile Include="Helpers\Converters\BlockedAxisTextConverterWorkaround.cs" />
     <Compile Include="Helpers\Converters\PositionWithPlaneToDoubleConverter.cs" />
     <Compile Include="Helpers\Converters\ValueToggleConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />

@@ -3,21 +3,26 @@ using System.Globalization;
 using Cimbalino.Toolkit.Converters;
 using Coordinates.Measurements.Elements;
 using Coordinates.Measurements.Helpers;
-using Coordinates.Models.DTO;
+using Coordinates.UI.ViewModels.MeasurementViewModels;
 
 namespace Coordinates.UI.Helpers.Converters
 {
-    public class PositionWithPlaneToDoubleConverterr : MultiValueConverterBase
+    public class BlockedAxisTextConverterWorkaround : MultiValueConverterBase
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values == null || values.Length < 2)
                 return null;
 
-            var position = values[0] as Position;
+            var vm = values[0] as IElementViewModel;
             var plane = values[1] as PlaneEnum?;
-            
-            if (position == null || plane == null)
+
+            if (vm == null || plane == null)
+                return null;
+
+            var position = vm.Element.InitialPosition;
+
+            if (position == null)
                 return null;
 
             var transformed = position.GetBlockedAxisValue(plane);

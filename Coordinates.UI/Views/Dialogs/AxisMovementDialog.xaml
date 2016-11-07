@@ -11,6 +11,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
+    Opened="AxisMovementDialog_OnOpened"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <ContentDialog.Resources>
@@ -21,6 +22,7 @@
         </Style>
 
         <converters:PositionWithPlaneToDoubleConverter x:Key="PositionWithPlaneToDoubleConverter"/>
+        <converters:BlockedAxisTextConverterWorkaround x:Key="BlockedAxisTextConverterWorkaround"/>
     </ContentDialog.Resources>
 
     <Grid Margin="15">
@@ -38,8 +40,8 @@
         <TextBlock Grid.Row="0" TextWrapping="Wrap">Oczekiwana pozycja:</TextBlock>
         <TextBlock Grid.Row="1" Style="{StaticResource SubtitleTextBlockStyle}" Margin="15">
             <interactivity:Interaction.Behaviors>
-                <behaviors:MultiBindingBehavior Converter="{StaticResource PositionWithPlaneToDoubleConverter}" PropertyName="Text">
-                    <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel.Element.InitialPosition}" />
+                <behaviors:MultiBindingBehavior Converter="{StaticResource BlockedAxisTextConverterWorkaround}" PropertyName="Text">
+                    <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel}" />
                     <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel.Plane}" />
                 </behaviors:MultiBindingBehavior>   
             </interactivity:Interaction.Behaviors>

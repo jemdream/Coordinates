@@ -77,6 +77,8 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         {
             if (_measurementManager.SelectedMeasurementMethod == null) return true;
 
+            _measurementManager.GatherData = false;
+
             var dialog = new ContentDialog
             {
                 Title = "Uwaga",
@@ -84,15 +86,19 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
                 PrimaryButtonText = "OK",
                 SecondaryButtonText = "Anuluj"
             };
-
+            
             var returnConfirmed = (await dialog.ShowAsync()).Equals(ContentDialogResult.Primary);
 
             if (returnConfirmed)
             {
                 _measurementManager.ResetMeasurementData();
                 EventAggregator
-                        .GetEvent<ResetMeasurement>()
-                        .Publish(null);
+                    .GetEvent<ResetMeasurement>()
+                    .Publish(null);
+            }
+            else
+            {
+                _measurementManager.GatherData = true;
             }
 
             return false;

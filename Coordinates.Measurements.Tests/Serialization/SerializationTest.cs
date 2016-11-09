@@ -64,9 +64,10 @@ namespace Coordinates.Measurements.Tests.Serialization
             var measurement = PrepareMeasurementMethodModel<SurfaceParalellismMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
 
             var serialized = measurement.AsReadableString();
+            var serializedToString = serialized.ToString();
 
             // Assert
-            Assert.IsFalse(string.IsNullOrEmpty(serialized.ToString()));
+            Assert.IsFalse(string.IsNullOrEmpty(serializedToString));
         }
     }
 }

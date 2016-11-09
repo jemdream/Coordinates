@@ -11,6 +11,7 @@ namespace Coordinates.UI.Helpers.Converters
         public int Count { get; set; }
         public object Value { get; set; } = Visibility.Visible;
         public object DefaultValue { get; set; } = Visibility.Collapsed;
+        public bool Invert { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -19,9 +20,9 @@ namespace Coordinates.UI.Helpers.Converters
 
             var condition = ienum.Count() == Count;
 
-            return condition ?
-                Value :
-                DefaultValue;
+            if (Invert) return condition ? DefaultValue : Value;
+
+            return condition ? Value : DefaultValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

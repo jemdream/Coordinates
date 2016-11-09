@@ -10,18 +10,20 @@
     PrimaryButtonText="OK"
     PrimaryButtonCommand="{Binding SetMeasurementPlane}"
     PrimaryButtonCommandParameter="{Binding Path=SelectedItem, ElementName=PlaneComboBox}"
-    d:DataContext="{d:DesignInstance measurementViewModels:IMeasurementMethodViewModel}">
+    d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
+    
     <ContentDialog.Resources>
         <converters:EnumToStringConverter x:Key="EnumToStringConverter"/>
     </ContentDialog.Resources>
-    <Grid>
+    
+    <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
+        
         <!--Wybór rodzaju pomiaru-->
         <ComboBox HorizontalAlignment="Center" Margin="25" x:Name="PlaneComboBox"
             ItemsSource="{Binding SurfaceEnums}"
@@ -35,6 +37,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Grid.Row="1" Foreground="Red" TextWrapping="Wrap">Uwaga! Po ustawieniu pozycji do pomiaru należy zablokować mechanicznie oś prostopadłą do płaszczyzny.</TextBlock>
+        
     </Grid>
 </ContentDialog>

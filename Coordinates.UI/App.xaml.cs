@@ -61,7 +61,7 @@ namespace Coordinates.UI
             {
                 // create a new frame and register it
                 var navigationService = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                _myContainer.RegisterInstance(typeof(INavigationService), navigationService);
+                _myContainer.RegisterInstance(typeof(INavigationService), navigationService, new ContainerControlledLifetimeManager());
 
                 // create modal root
                 Window.Current.Content = new ModalDialog
@@ -111,7 +111,7 @@ namespace Coordinates.UI
             container.RegisterType<IDataExportService, DataExportService>(new ContainerControlledLifetimeManager());
             
             // Registering ViewModels
-            container.RegisterType<IMainPageViewModel, MainPageViewModel>();
+            container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IDetailPageViewModel, DetailPageViewModel>();
             container.RegisterType<ISettingsPartViewModel, SettingsPartViewModel>();
             container.RegisterType<IAboutPartViewModel, AboutPartViewModel>();

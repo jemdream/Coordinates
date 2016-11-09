@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Xaml.Navigation;
 using Coordinates.UI.Messages;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementFlow;
@@ -32,15 +34,42 @@ namespace Coordinates.UI.ViewModels
             // Listening to navigation requests from MeasurementFlowViewModels elements
             EventAggregator
                 .GetEvent<GoBackMeasurementMsg>()
-                .Subscribe(sender => { if (FindIndex(sender) > 0) SelectedTabIndex--; });
+                .Subscribe(sender =>
+                {
+                    var index = FindIndex(sender);
+                    if (index > 0)
+                    {
+                        var newIndex = SelectedTabIndex - 1;
+                        var newViewModel = MeasurementFlowViewModels.ElementAt(newIndex) as MeasurementViewModelBase;
+                        var oldViewModel = MeasurementFlowViewModels.ElementAt(SelectedTabIndex) as MeasurementViewModelBase;
+                        oldViewModel?.OnNavigatedFromAsync(null, false);
+                        newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
+                        SelectedTabIndex = newIndex;
+                    }
+                });
 
             EventAggregator
                 .GetEvent<GoNextMeasurementMsg>()
-                .Subscribe(sender => { if (FindIndex(sender) < MeasurementFlowViewModels.Count - 1) SelectedTabIndex++; });
+                .Subscribe(sender =>
+                {
+                    var index = FindIndex(sender);
+                    if (index < MeasurementFlowViewModels.Count - 1)
+                    {
+                        var newIndex = SelectedTabIndex + 1;
+                        var newViewModel = MeasurementFlowViewModels.ElementAt(newIndex) as MeasurementViewModelBase;
+                        var oldViewModel = MeasurementFlowViewModels.ElementAt(SelectedTabIndex) as MeasurementViewModelBase;
+                        oldViewModel?.OnNavigatedFromAsync(null, false);
+                        newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
+                        SelectedTabIndex = newIndex;
+                    }
+                });
 
             EventAggregator
                 .GetEvent<ResetMeasurement>()
-                .Subscribe(sender => { SelectedTabIndex = 0; });
+                .Subscribe(sender =>
+                {
+                    SelectedTabIndex = 0;
+                });
 
             //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
         }

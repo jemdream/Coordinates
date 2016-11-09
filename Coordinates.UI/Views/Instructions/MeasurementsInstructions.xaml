@@ -58,7 +58,7 @@
                       RelativePanel.Below="PageHeader"
                       HorizontalScrollMode="Disabled"
                       Padding="25"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Visible">
             
             <StackPanel>
                 <StackPanel.Resources>
@@ -67,8 +67,12 @@
                     </Style>
                     <Style TargetType="Viewbox">
                         <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="Width" Value="100"/>
-                        <Setter Property="Height" Value="100"/>
+                        <Setter Property="Width" Value="350"/>
+                        <Setter Property="Height" Value="350"/>
+                        <Setter Property="Margin" Value="10"/>
+                    </Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Margin" Value="0"/>
                     </Style>
                 </StackPanel.Resources>
 

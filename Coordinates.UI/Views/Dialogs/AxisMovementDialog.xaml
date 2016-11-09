@@ -55,6 +55,8 @@
                 </behaviors:MultiBindingBehavior>   
             </interactivity:Interaction.Behaviors>
         </TextBlock>
-        <Button Grid.Row="4" Command="{Binding ReleaseDialog}" Margin="15">Kontynuuj pomiar</Button>
+        <Button Grid.Row="4" Command="{Binding ReleaseDialog}" Margin="15" Content="Kontynuuj pomiar"
+                Width="50"
+                HorizontalAlignment="Stretch"/>
     </Grid>
 </ContentDialog>

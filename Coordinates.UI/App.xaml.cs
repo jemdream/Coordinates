@@ -22,7 +22,6 @@ using Coordinates.UI.Views;
 using Template10.Controls;
 using Microsoft.Practices.Unity;
 using Prism.Events;
-using Template10.Services.NavigationService;
 
 namespace Coordinates.UI
 {
@@ -31,16 +30,17 @@ namespace Coordinates.UI
 
     sealed partial class App : Template10.Common.BootStrapper
     {
-        private readonly IUnityContainer _myContainer;
+        private readonly IUnityContainer _container;
 
         public App()
         {
             InitializeComponent();
-            _myContainer = SetupContainer();
+            _container = SetupContainer();
+
             SplashFactory = (e) => new Splash(e);
 
             // SettingsService setup
-            var settings = _myContainer.Resolve<SettingsService>();
+            var settings = _container.Resolve<SettingsService>();
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
@@ -50,31 +50,38 @@ namespace Coordinates.UI
         {
             Debug.WriteLine(ApplicationData.Current.LocalFolder.Path);
 
+            // Logger
+            await _container.Resolve<IFileLogger>().InitiateLogger();
+
+            // Setup type of window
             var view = ApplicationView.GetForCurrentView();
             if (view.IsFullScreenMode) view.ExitFullScreenMode();
 
-            view.SetPreferredMinSize(new Size(1366, 768));
-            ApplicationView.PreferredLaunchViewSize = new Size(1366, 768);
+            var size = new Size(1366, 768);
+
+            view.SetPreferredMinSize(size);
+            ApplicationView.PreferredLaunchViewSize = size;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
+            // Setup main window
             if (!(Window.Current.Content is ModalDialog))
             {
                 // create a new frame and register it
                 var navigationService = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                _myContainer.RegisterInstance(typeof(INavigationService), navigationService, new ContainerControlledLifetimeManager());
+                _container.RegisterInstance(navigationService, new ContainerControlledLifetimeManager());
 
                 // create modal root
                 Window.Current.Content = new ModalDialog
                 {
                     DisableBackButtonWhenModal = true,
-                    Content = _myContainer.Resolve<Shell>(),
-                    ModalContent = _myContainer.Resolve<Busy>()
+                    Content = _container.Resolve<Shell>(),
+                    ModalContent = _container.Resolve<Busy>()
                 };
             }
 
             await Task.CompletedTask;
         }
-
+        
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // long-running startup tasks go here
@@ -104,12 +111,16 @@ namespace Coordinates.UI
 
             // UI 
 
+            // Logger
+            container.RegisterType<IFileLogger, FileLogger>(new ContainerControlledLifetimeManager());
+            container.RegisterInstance(container.Resolve<IFileLogger>().LoggingSession, new ContainerControlledLifetimeManager());
+
             // Registering Services
             container.RegisterType<IMeasurementsExporter, MeasurementsExporter>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IDataExportService, DataExportService>(new ContainerControlledLifetimeManager());
-            
+
             // Registering ViewModels
             container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IDetailPageViewModel, DetailPageViewModel>();
@@ -145,7 +156,7 @@ namespace Coordinates.UI
         private void SetupServiceLocator()
         {
             var serviceLocator = Application.Current.Resources["Locator"] as ViewModelLocator;
-            serviceLocator?.SetupContainer(_myContainer);
+            serviceLocator?.SetupContainer(_container);
         }
     }
 }

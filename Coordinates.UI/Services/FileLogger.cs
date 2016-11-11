@@ -72,14 +72,14 @@ namespace Coordinates.UI.Services
             }
             catch (Exception ex)
             {
-                _loggingChannel.LogMessage(ex.Message);
+                _loggingChannel.LogMessage(ex.Message, LoggingLevel.Error);
             }
         }
         
         private void CurrentOnUnhandledException(object sender, UnhandledExceptionEventArgs ex)
         {
-            _loggingChannel.LogMessage(string.Format($"Unhandled error HResult: {ex.Exception.HResult}"), LoggingLevel.Critical);
-            _loggingChannel.LogMessage(string.Format($"Unhandled error message: {ex.Exception.Message}"), LoggingLevel.Critical);
+            _loggingChannel.LogMessage($"Unhandled error HResult: {ex.Exception.HResult}", LoggingLevel.Critical);
+            _loggingChannel.LogMessage($"Unhandled error message: {ex.Exception.Message}", LoggingLevel.Critical);
 
             SaveFile();
         }
@@ -92,11 +92,10 @@ namespace Coordinates.UI.Services
             }
             catch (Exception ex)
             {
-                _loggingChannel.LogMessage(string.Format($"Unhandled error HResult: {ex.HResult}"), LoggingLevel.Critical);
-                _loggingChannel.LogMessage(string.Format($"Unhandled error message: {ex.Message}"), LoggingLevel.Critical);
+                _loggingChannel.LogMessage($"Unhandled error HResult: {ex.HResult}", LoggingLevel.Critical);
+                _loggingChannel.LogMessage($"Unhandled error message: {ex.Message}", LoggingLevel.Critical);
 
                 SaveFile();
-                throw;
             }
         }
 

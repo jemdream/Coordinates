@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.Models;
 
@@ -13,8 +14,12 @@ namespace Coordinates.ExternalDevices.Devices
         private readonly Subject<GaugePositionDTO> _mockSource;
         private CompositeDisposable _mockingDataSource = new CompositeDisposable();
 
-        public MockDeviceService(Subject<GaugePositionDTO> mockSource)
+        private readonly LoggingChannel _loggingChannel = new LoggingChannel(nameof(MockDeviceService), new LoggingChannelOptions(Guid.NewGuid()));
+
+        public MockDeviceService(Subject<GaugePositionDTO> mockSource, ILoggingSession loggingSession) : base(loggingSession)
         {
+            loggingSession.AddLoggingChannel(_loggingChannel);
+
             _mockSource = mockSource;
             DataStream = _mockSource.AsObservable();
         }

@@ -8,7 +8,8 @@ using Newtonsoft.Json.Linq;
 namespace Coordinates.Measurements.Helpers.Serialization
 {
     /// <summary>
-    /// TODO This class is not being used due to .NET Core issue with attributes
+    /// .NET Core problem with attributes: this class is not being used in this project.
+    /// An example of how to create custon json converter.
     /// </summary>
     public class BaseElementJsonConverter : JsonConverter
     {
@@ -16,7 +17,7 @@ namespace Coordinates.Measurements.Helpers.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            JToken t = JToken.FromObject(value);
+            var t = JToken.FromObject(value);
 
             if (t.Type != JTokenType.Object)
             {
@@ -24,7 +25,8 @@ namespace Coordinates.Measurements.Helpers.Serialization
             }
             else
             {
-                JObject o = (JObject)t;
+                // Adding another property into JSON
+                var o = (JObject)t;
                 IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
 
                 o.AddFirst(new JProperty("Keys", new JArray(propertyNames)));
@@ -37,7 +39,6 @@ namespace Coordinates.Measurements.Helpers.Serialization
         {
             throw new NotImplementedException("Won't enter if CanRead is false.");
         }
-
         public override bool CanRead => false;
 
         public override bool CanConvert(Type objectType)

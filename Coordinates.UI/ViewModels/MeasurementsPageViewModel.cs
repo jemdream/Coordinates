@@ -37,15 +37,7 @@ namespace Coordinates.UI.ViewModels
                 .Subscribe(sender =>
                 {
                     var index = FindIndex(sender);
-                    if (index > 0)
-                    {
-                        var newIndex = SelectedTabIndex - 1;
-                        var newViewModel = MeasurementFlowViewModels.ElementAt(newIndex) as MeasurementViewModelBase;
-                        var oldViewModel = MeasurementFlowViewModels.ElementAt(SelectedTabIndex) as MeasurementViewModelBase;
-                        oldViewModel?.OnNavigatedFromAsync(null, false);
-                        newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
-                        SelectedTabIndex = newIndex;
-                    }
+                    if (index > 0) NavigationWorkaround(SelectedTabIndex - 1);
                 });
 
             EventAggregator
@@ -53,28 +45,16 @@ namespace Coordinates.UI.ViewModels
                 .Subscribe(sender =>
                 {
                     var index = FindIndex(sender);
-                    if (index < MeasurementFlowViewModels.Count - 1)
-                    {
-                        var newIndex = SelectedTabIndex + 1;
-                        var newViewModel = MeasurementFlowViewModels.ElementAt(newIndex) as MeasurementViewModelBase;
-                        var oldViewModel = MeasurementFlowViewModels.ElementAt(SelectedTabIndex) as MeasurementViewModelBase;
-                        oldViewModel?.OnNavigatedFromAsync(null, false);
-                        newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
-                        SelectedTabIndex = newIndex;
-                    }
+                    if (index < MeasurementFlowViewModels.Count - 1) NavigationWorkaround(SelectedTabIndex + 1);
                 });
 
             EventAggregator
                 .GetEvent<ResetMeasurement>()
-                .Subscribe(sender =>
-                {
-                    SelectedTabIndex = 0;
-                });
+                .Subscribe(_ => SelectedTabIndex = 0);
 
             //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
         }
 
-        private int FindIndex(System.Type sender) => MeasurementFlowViewModels.FindIndex(x => x.GetType() == sender);
 
         public IEventAggregator EventAggregator { get; }
         public List<IMeasurementViewModelBase> MeasurementFlowViewModels { get; }
@@ -82,11 +62,21 @@ namespace Coordinates.UI.ViewModels
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set
-            {
-                Set(ref _selectedTabIndex, value);
-                RaisePropertyChanged();
-            }
+            set { Set(ref _selectedTabIndex, value); }
         }
+
+        private void NavigationWorkaround(int newIndex)
+        {
+            // Navigation workaround
+            var newViewModel = MeasurementFlowViewModels.ElementAt(newIndex) as MeasurementViewModelBase;
+            var oldViewModel = MeasurementFlowViewModels.ElementAt(SelectedTabIndex) as MeasurementViewModelBase;
+            oldViewModel?.OnNavigatedFromAsync(null, false);
+            newViewModel?.OnNavigatedToAsync(oldViewModel, NavigationMode.Refresh, null);
+
+            // Changing index
+            SelectedTabIndex = newIndex;
+        }
+
+        private int FindIndex(System.Type sender) => MeasurementFlowViewModels.FindIndex(x => x.GetType() == sender);
     }
 }

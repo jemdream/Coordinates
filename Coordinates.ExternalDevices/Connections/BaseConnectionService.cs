@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Coordinates.ExternalDevices.Events.ConnectionEvents;
 
 namespace Coordinates.ExternalDevices.Connections
@@ -10,16 +11,23 @@ namespace Coordinates.ExternalDevices.Connections
     public abstract class BaseConnectionService : IConnectionService
     {
         private readonly ReplaySubject<DiagnosticEvent> _diagnosticEventsSubject;
-        private readonly List<DiagnosticEvent> _diagnosticEvents;
 
         private ConnectionStatus _connectionStatus;
+        private readonly List<DiagnosticEvent> _diagnosticEvents;
+        private readonly LoggingChannel _loggingChannel = new LoggingChannel(nameof(BaseConnectionService), new LoggingChannelOptions(Guid.NewGuid()));
 
-        protected BaseConnectionService()
+        protected BaseConnectionService(ILoggingSession loggingSession)
         {
+            loggingSession.AddLoggingChannel(_loggingChannel);
+
             _diagnosticEvents = new List<DiagnosticEvent>();
 
             _diagnosticEventsSubject = new ReplaySubject<DiagnosticEvent>(int.MaxValue);
-            _diagnosticEventsSubject.Subscribe(_diagnosticEvents.Add);
+            _diagnosticEventsSubject.Subscribe(@event =>
+            {
+                // _loggingChannel.LogMessage();
+                _diagnosticEvents.Add(@event);
+            });
         }
 
         public virtual IConnection ConnectionConfiguration { get; }

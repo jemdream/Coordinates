@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Coordinates.UI.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
@@ -14,6 +14,7 @@ using Coordinates.Measurements;
 using Coordinates.Measurements.Export;
 using Coordinates.UI.Services;
 using Coordinates.UI.Services.ServiceLocator;
+using Coordinates.UI.Services.SettingsServices;
 using Coordinates.UI.ViewModels;
 using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementFlow;
@@ -45,7 +46,7 @@ namespace Coordinates.UI
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
         }
-
+        
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Debug.WriteLine(ApplicationData.Current.LocalFolder.Path);
@@ -62,7 +63,7 @@ namespace Coordinates.UI
             view.SetPreferredMinSize(size);
             ApplicationView.PreferredLaunchViewSize = size;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
+            
             // Setup main window
             if (!(Window.Current.Content is ModalDialog))
             {
@@ -100,7 +101,7 @@ namespace Coordinates.UI
             var container = new UnityContainer();
 
             // External devices layer
-            // TODO: modify projects so IDeviceService is unreachable in UI: provide IDeviceManager, where IDeviceService implementations should be internal
+            // TODO: [couldBe] modify projects so IDeviceService is unreachable in UI: provide IDeviceManager, where IDeviceService implementations should be internal
             //container.RegisterType<IConnectionService, MockDeviceService>(new ContainerControlledLifetimeManager());
             //container.RegisterType<IDataSource<GaugePositionDTO>, MockDeviceService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConnectionService, SerialDeviceService>(new ContainerControlledLifetimeManager());
@@ -113,7 +114,7 @@ namespace Coordinates.UI
 
             // Logger
             container.RegisterType<IFileLogger, FileLogger>(new ContainerControlledLifetimeManager());
-            container.RegisterInstance(container.Resolve<IFileLogger>().LoggingSession, new ContainerControlledLifetimeManager());
+            container.RegisterInstance(typeof(ILoggingSession), container.Resolve<IFileLogger>().LoggingSession, new ContainerControlledLifetimeManager());
 
             // Registering Services
             container.RegisterType<IMeasurementsExporter, MeasurementsExporter>(new ContainerControlledLifetimeManager());

@@ -152,7 +152,6 @@
     <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMeasurementsPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ISettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVisualisationPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />

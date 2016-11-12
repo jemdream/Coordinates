@@ -1,25 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Input;
+using Windows.System;
 using Windows.UI.Xaml;
+using Coordinates.UI.Services;
 using Coordinates.UI.Services.SettingsServices;
-using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface ISettingsPartViewModel
+    {
+        bool UseShellBackButton { get; }
+        bool UseLightThemeButton { get; }
+        ICommand OpenLoggingFolder { get; }
+    }
+
     public class SettingsPartViewModel : ViewModelBase, ISettingsPartViewModel
     {
         private readonly ISettingsService _settingsService;
-        private DelegateCommand _showBusyCommand;
-        private string _busyText = "Please wait...";
+        private readonly IFileLogger _fileLogger;
+        private ICommand _openLoggingFolder;
 
-        public SettingsPartViewModel(ISettingsService settingsService)
+        public SettingsPartViewModel(ISettingsService settingsService, IFileLogger fileLogger)
         {
-            // if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             _settingsService = settingsService;
+            _fileLogger = fileLogger;
         }
 
-        #region _ Some example bindings and visual settings
         public bool UseShellBackButton
         {
             get { return _settingsService.UseShellBackButton; }
@@ -32,23 +39,9 @@ namespace Coordinates.UI.ViewModels
             set { _settingsService.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; RaisePropertyChanged(); }
         }
 
-        public string BusyText
+        public ICommand OpenLoggingFolder => _openLoggingFolder ?? (_openLoggingFolder = new AwaitableDelegateCommand(async x =>
         {
-            get { return _busyText; }
-            set
-            {
-                Set(ref _busyText, value);
-                _showBusyCommand.RaiseCanExecuteChanged();
-            }
-        }
-        #endregion
-        
-        public ICommand ShowBusyCommand
-            => _showBusyCommand ?? (_showBusyCommand = new DelegateCommand(async () =>
-            {
-                Views.Busy.SetBusy(true, _busyText);
-                await Task.Delay(5000);
-                Views.Busy.SetBusy(false);
-            }, () => !string.IsNullOrEmpty(BusyText)));
+            await Launcher.LaunchFolderAsync(_fileLogger.LoggingFolder);
+        }));
     }
 }

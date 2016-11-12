@@ -11,12 +11,10 @@ namespace Coordinates.UI.Services.SettingsServices
     /// </summary>
     public class SettingsService : ISettingsService
     {
-        private readonly IFileLogger _fileLogger;
         private readonly ISettingsHelper _helper;
 
-        public SettingsService(IFileLogger fileLogger)
+        public SettingsService()
         {
-            _fileLogger = fileLogger;
             _helper = new SettingsHelper();
         }
 

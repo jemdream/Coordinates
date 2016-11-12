@@ -64,6 +64,7 @@
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="Margin" Value="10"/>
+                        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
                     </Style>
                     <Style TargetType="Viewbox">
                         <Setter Property="HorizontalAlignment" Value="Left"/>

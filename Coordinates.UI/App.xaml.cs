@@ -63,7 +63,7 @@ namespace Coordinates.UI
             view.SetPreferredMinSize(size);
             ApplicationView.PreferredLaunchViewSize = size;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            
+
             // Setup main window
             if (!(Window.Current.Content is ModalDialog))
             {

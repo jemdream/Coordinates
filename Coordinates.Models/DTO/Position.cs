@@ -8,14 +8,15 @@ namespace Coordinates.Models.DTO
     {
         private readonly int _id;
 
-        public Position() : this(0.0, 0.0, 0.0, false) { }
-
-        public Position(double x, double y, double z, bool contact)
+        public Position() : this(0.0, 0.0, 0.0, false, false) { }
+        public Position(double x, double y, double z, bool contact) : this(x, y, z, contact, false) { }
+        public Position(double x, double y, double z, bool contact, bool firstContact)
         {
             X = x;
             Y = y;
             Z = z;
             Contact = contact;
+            FirstContact = firstContact;
             _id = BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0);
         }
 
@@ -28,6 +29,7 @@ namespace Coordinates.Models.DTO
         [JsonProperty]
         public double Y { get; }
         public bool Contact { get; }
+        public bool FirstContact { get; }
 
         public static Position Default => new Position();
         public override bool Equals(object obj)
@@ -42,7 +44,7 @@ namespace Coordinates.Models.DTO
         public override int GetHashCode() => _id;
         public override string ToString()
         {
-            return $"{X}, {Y}, {Z}, {Contact}";
+            return $"{X}, {Y}, {Z}";
         }
     }
 }

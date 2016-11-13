@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.Helpers;
@@ -32,35 +33,28 @@ namespace Coordinates.ExternalDevices.Devices
         private Task _readTask;
 
         private const string StmFrameRegex = "^(X)(-?\\d+).*?(-?\\d+).*?(-?\\d+).*?(\\d+)$";
+        private const string SpecialFrameSign = "X";
+        private const string StmDeviceName = @"STMicroelectronics Virtual COM Port";
+
         private const uint ReadFrameLength = 38;
         private string _previousBufferString;
 
         private readonly Subject<GaugePositionDTO> _dataSourceSubject;
 
-        private const string CorruptDataExceptionMessage = "Data sent from device is corrupt. Please restart whole system.";
-        private const string SpecialFrameSign = "X";
-
-        private void InitializeTokens()
+        private readonly LoggingChannel _loggingChannel = new LoggingChannel(nameof(SerialDeviceService), new LoggingChannelOptions(Guid.NewGuid()));
+        
+        public SerialDeviceService(Subject<GaugePositionDTO> dataSourceSubject, ILoggingSession loggingSession) : base(loggingSession)
         {
-            if (_tokenSource != null && _tokenSource.IsCancellationRequested)
-                _tokenSource.Dispose();
+            loggingSession.AddLoggingChannel(_loggingChannel);
+            var t = _loggingChannel.Enabled;
 
-            _tokenSource = new CancellationTokenSource();
-            _readCancellationToken = _tokenSource.Token;
-            _previousBufferString = string.Empty;
-        }
-
-        public SerialDeviceService(Subject<GaugePositionDTO> dataSourceSubject)
-        {
             InitializeTokens();
             _dataSourceSubject = dataSourceSubject;
             DataStream = _dataSourceSubject.AsObservable();
         }
 
         public IObservable<GaugePositionDTO> DataStream { get; set; }
-
-        public override IConnection ConnectionConfiguration { get; }
-
+        
         protected override async Task<bool> OnOpeningAsync()
         {
             try
@@ -71,35 +65,36 @@ namespace Coordinates.ExternalDevices.Devices
                 var devices = await DeviceInformation.FindAllAsync(serialPortsSelector);
 
                 if (!devices.Any())
-                    throw new NullReferenceException("No device found. Make sure the device is connected and drivers are installed.");
+                    throw new Exception(ExceptionMessages.NoDeviceFound);
 
                 var deviceIds = devices
-                    .Where(device => device.Name.StartsWith(@"STMicroelectronics Virtual COM Port"))
+                    .Where(device => device.Name.StartsWith(StmDeviceName))
                     .Select(device => device.Id)
                     .ToList();
 
                 if (deviceIds.Count > 1)
-                    throw new Exception("Multiple suitable devices with name 'STMicroelectronics Virtual COM Port' found. Please make sure only one compatible device is connected.");
+                    throw new Exception(ExceptionMessages.MultipleDevicesFound);
 
                 var firstDeviceId = deviceIds.FirstOrDefault();
 
                 if (firstDeviceId == null)
-                    throw new NullReferenceException("No device found. Make sure the device is connected and drivers are installed.");
+                    throw new Exception(ExceptionMessages.NoSpecificDeviceFound);
 
                 _device = await SerialDevice.FromIdAsync(firstDeviceId);
 
                 if (_device == null)
-                    throw new NullReferenceException("Could not connect to device.");
+                    throw new Exception(ExceptionMessages.CouldNotConnect);
 
                 _dataReaderObject = new DataReader(_device.InputStream);
 
-                _readTask = Task.Run(ReadAsync, _readCancellationToken);
+                _readTask = Task.Run(TryReadAsync, _readCancellationToken);
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // TODO LOG 
+                // TODO POP TO UI - change how this method is invoked
+                _loggingChannel.LogMessage($"{ex.Message}", LoggingLevel.Error);
                 return false;
             }
         }
@@ -123,13 +118,23 @@ namespace Coordinates.ExternalDevices.Devices
                     _device?.Dispose();
                 }).TimeoutAfter(TimeSpan.FromSeconds(1), new ThreadPoolScheduler());
 
-                return await Task.FromResult(true);
+                return true;
             }
             catch (Exception ex)
             {
-                // TODO LOG 
-                return await Task.FromResult(false);
+                _loggingChannel.LogMessage($"{ex.Message}", LoggingLevel.Error);
+                return false;
             }
+        }
+
+        private void InitializeTokens()
+        {
+            if (_tokenSource != null && _tokenSource.IsCancellationRequested)
+                _tokenSource.Dispose();
+
+            _tokenSource = new CancellationTokenSource();
+            _readCancellationToken = _tokenSource.Token;
+            _previousBufferString = string.Empty;
         }
 
         private static Match MatchStmFrame(string modifier)
@@ -142,25 +147,27 @@ namespace Coordinates.ExternalDevices.Devices
             return group != null && group.Length == 1 && group.Value.Equals("X");
         }
 
-        private async Task ReadAsync()
+        private async Task TryReadAsync()
         {
             try
             {
                 while (true)
                 {
                     if (_readCancellationToken.IsCancellationRequested) break;
+
                     // Set InputStreamOptions to complete the asynchronous read operation when one or more bytes is available
                     _dataReaderObject.InputStreamOptions = InputStreamOptions.None;
 
                     // Create a task object to wait for data on the serialPort.InputStream
                     var bufferString = await ReadBuffer(ReadFrameLength);
+
                     await ProcessBuffer(bufferString);
                 }
             }
             catch (Exception ex)
             {
+                _loggingChannel.LogMessage($"{ex.Message}", LoggingLevel.Error);
                 if (_readCancellationToken.IsCancellationRequested) return;
-                // TODO LOG 
                 await Close();
             }
         }
@@ -170,7 +177,9 @@ namespace Coordinates.ExternalDevices.Devices
             var bytesRead = await _dataReaderObject.LoadAsync(readBufferLength)
                 .AsTask(_readCancellationToken);
 
-            var bufferArray = (bytesRead != 0) ? _dataReaderObject.ReadBuffer(bytesRead).ToArray() : new byte[0];
+            var bufferArray = (bytesRead != 0) ? 
+                _dataReaderObject.ReadBuffer(bytesRead).ToArray() : 
+                new byte[0];
 
             return Encoding.ASCII.GetString(bufferArray);
         }
@@ -185,13 +194,13 @@ namespace Coordinates.ExternalDevices.Devices
             var match = MatchStmFrame(bufferString);
 
             // If not matching, try to manipulate 'out of phase' frame 
-            // (np. jak jest przesunięty X na 5 miejsce, to usun poczatek, dograj koniec i zachowaj normalny tryb dalej)
+            // eg. X is moved by 5 signs, cut previous signs, and read remaining number of signs
             if (!match.Success || !ValidateFrame(match.Groups[1]))
             {
                 var xPosition = bufferString.IndexOf(SpecialFrameSign, StringComparison.CurrentCulture);
 
                 if (xPosition < 0)
-                    throw new Exception($"{CorruptDataExceptionMessage} Frame special sign 'X' is missing. [X index is {xPosition}].");
+                    throw new Exception($"{ExceptionMessages.CorruptData} Frame special sign 'X' is missing. [X index is {xPosition}].");
 
                 // Delete incomplete data/letter before X
                 var stringBuilder = new StringBuilder(bufferString);
@@ -200,7 +209,7 @@ namespace Coordinates.ExternalDevices.Devices
                 // Check how many letters to read from buffer
                 var restLength = ReadFrameLength - stringBuilder.Length;
                 if (restLength < 0)
-                    throw new Exception($"{CorruptDataExceptionMessage} Frame has negative length: {restLength}.");
+                    throw new Exception($"{ExceptionMessages.CorruptData} Frame has negative length: {restLength}.");
 
                 // Read missing data and append
                 var readFromBuffer = await ReadBuffer((uint)restLength);
@@ -211,7 +220,7 @@ namespace Coordinates.ExternalDevices.Devices
                 // Validate modified frame; if not matching, return;
                 var secondMatch = MatchStmFrame(newBuffer);
                 if (!secondMatch.Success || !ValidateFrame(secondMatch.Groups[1]))
-                    throw new Exception($"{CorruptDataExceptionMessage} Second regex validation has failed. New buffer: {newBuffer}.");
+                    throw new Exception($"{ExceptionMessages.CorruptData} Second regex validation has failed. New buffer: {newBuffer}.");
 
                 // Swap the matches and buffer
                 match = secondMatch;
@@ -227,10 +236,10 @@ namespace Coordinates.ExternalDevices.Devices
             var gParse = int.TryParse(match.Groups[5].Value, out gaugeInt);
 
             if (!xParse || !yParse || !zParse || !gParse) // parsing the data has failed
-                throw new Exception($"{CorruptDataExceptionMessage} Parsing Match.Groups[] has failed.");
-
+                throw new Exception($"{ExceptionMessages.CorruptData} Parsing Match.Groups[] has failed.");
+            
             _previousBufferString = bufferString;
-            _dataSourceSubject.OnNext(new GaugePositionDTO(x / 100, y / 100, z / 100, gaugeInt != 0));
+            _dataSourceSubject.OnNext(new GaugePositionDTO((x / 100).Round(), (y / 100).Round(), (z / 100).Round(), gaugeInt == 0));
         }
     }
 }

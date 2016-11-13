@@ -10,9 +10,11 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
+    x:Name="ParentUc"
     d:DataContext="{d:DesignInstance measurementFlow:MeasurementSelectionCalculationViewModel}">
 
     <UserControl.Resources>
+        <converters:EnumerableCountToValue x:Key="EnumerableCountToVisibilityInverter" Count="2" Invert="True"/>
         <converters:EnumerableCountToValue x:Key="EnumerableCountToVisibility" Count="2"/>
         <converters:EnumerableCountToValue x:Key="EnumerableCountToBoolean" Count="2" Value="False" DefaultValue="True"/>
     </UserControl.Resources>
@@ -25,7 +27,8 @@
                         <StateTrigger IsActive="{Binding MeasurementMethodViewModel.ElementsViewModels, Converter={StaticResource EnumerableCountToBoolean}}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MeasurementGrid0.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="MeasurementGrid0.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                        <Setter Target="MeasurementGrid0.(RelativePanel.LeftOf)" Value="" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -48,5 +51,12 @@
                                      RelativePanel.RightOf="MeasurementGrid1"
                                      RelativePanel.AlignTopWithPanel="True"
                                      RelativePanel.AlignBottomWithPanel="True"/>
+
+        <AppBarButton x:Name="SaveButton" Icon="Save" Label="Zapisz jako" Command="{Binding MeasurementMethodViewModel.ExportData}" 
+                      Visibility="{Binding Path=DataContext.MeasurementMethodViewModel.ElementsViewModels, ElementName=ParentUc, Converter={StaticResource EnumerableCountToVisibilityInverter}}"
+                      Margin="100"
+                      RelativePanel.RightOf="MeasurementGrid0"
+                      RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
     </RelativePanel>
 </UserControl>

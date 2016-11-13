@@ -21,11 +21,11 @@
         </Style>
 
         <converters:PositionWithPlaneToDoubleConverter x:Key="PositionWithPlaneToDoubleConverter"/>
+        <converters:BlockedAxisTextConverterWorkaround x:Key="BlockedAxisTextConverterWorkaround"/>
     </ContentDialog.Resources>
 
-    <Grid>
+    <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -36,20 +36,18 @@
             <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
         
-        <TextBlock Grid.Row="0" Foreground="Red" TextWrapping="Wrap">Ustaw czujnik w początkowej pozycji i zablokuj mechanicznie wyłączoną oś. Po zatwierdzeniu blbalbalba</TextBlock>
-        
-        <TextBlock Grid.Row="1" TextWrapping="Wrap">Wartość początkowa, oczekiwana:</TextBlock>
-        <TextBlock Grid.Row="2" FontStyle="Oblique">
+        <TextBlock Grid.Row="0" TextWrapping="Wrap">Oczekiwana pozycja:</TextBlock>
+        <TextBlock Grid.Row="1" Style="{StaticResource SubtitleTextBlockStyle}" Margin="15">
             <interactivity:Interaction.Behaviors>
-                <behaviors:MultiBindingBehavior Converter="{StaticResource PositionWithPlaneToDoubleConverter}" PropertyName="Text">
-                    <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel.Element.InitialPosition}" />
+                <behaviors:MultiBindingBehavior Converter="{StaticResource BlockedAxisTextConverterWorkaround}" PropertyName="Text">
+                    <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel}" />
                     <behaviors:MultiBindingItem Value="{Binding ActiveElementViewModel.Plane}" />
                 </behaviors:MultiBindingBehavior>   
             </interactivity:Interaction.Behaviors>
         </TextBlock>
 
-        <TextBlock Grid.Row="3" TextWrapping="Wrap">Wartość obecna:</TextBlock>
-        <TextBlock Grid.Row="4" FontStyle="Oblique">
+        <TextBlock Grid.Row="2" TextWrapping="Wrap">Obecna pozycja:</TextBlock>
+        <TextBlock Grid.Row="3" Style="{StaticResource TitleTextBlockStyle}" Margin="15">
             <interactivity:Interaction.Behaviors>
                 <behaviors:MultiBindingBehavior Converter="{StaticResource PositionWithPlaneToDoubleConverter}" PropertyName="Text">
                     <behaviors:MultiBindingItem Value="{Binding PresentPosition}" />
@@ -57,6 +55,8 @@
                 </behaviors:MultiBindingBehavior>   
             </interactivity:Interaction.Behaviors>
         </TextBlock>
-        <Button Grid.Row="5" Command="{Binding ReleaseDialog}">Kontynuuj</Button>
+        <Button Grid.Row="4" Command="{Binding ReleaseDialog}" Margin="15" Content="Kontynuuj pomiar"
+                Height="50"
+                HorizontalAlignment="Stretch"/>
     </Grid>
 </ContentDialog>

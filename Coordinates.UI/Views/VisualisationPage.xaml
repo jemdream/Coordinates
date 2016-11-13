@@ -8,6 +8,7 @@
     xmlns:components="using:Coordinates.UI.Components"
     mc:Ignorable="d"
     x:Name="Visualisation"
+      Loaded="VisualisationPage_OnLoaded"
     d:DataContext="{d:DesignInstance vm:VisualisationPageViewModel}">
 
     <Page.DataContext>
@@ -19,98 +20,38 @@
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" />
-        
-        <Grid RelativePanel.Below="PageHeader" 
+
+        <Grid x:Name="ChartGrid" x:DeferLoadStrategy="Lazy"
               RelativePanel.AlignLeftWithPanel="True" 
               RelativePanel.AlignRightWithPanel="True"
-              RelativePanel.AlignBottomWithPanel="True">
+              RelativePanel.AlignVerticalCenterWithPanel="True">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" x:Name="ColumnDefinition"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <components:PlaneChart x:Name="XyChart" Margin="15" 
-                               PrimaryAxis="X"
-                               SecondaryAxis="Y"
-                               RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
-                               DataContext="{Binding MeasurementMethodViewModel}"/>
 
-            <components:PlaneChart Grid.Column="1" Margin="15" 
-                               PrimaryAxis="Y"
-                               SecondaryAxis="Z"
-                               RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
-                               DataContext="{Binding MeasurementMethodViewModel}"/>
+            <components:PlaneChart x:Name="XyChart" Margin="15"
+                                   PrimaryAxis="X"
+                                   SecondaryAxis="Y"
+                                   Loaded="Chart_OnLoaded"
+                                   RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
+                                   DataContext="{Binding MeasurementMethodViewModel}"/>
 
-            <components:PlaneChart Grid.Column="2" Margin="15"
-                               PrimaryAxis="Z"
-                               SecondaryAxis="X"
-                               RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
-                               DataContext="{Binding MeasurementMethodViewModel}"/>
+            <components:PlaneChart x:Name="YzChart" Grid.Column="1" Margin="15" 
+                                   PrimaryAxis="Y"
+                                   SecondaryAxis="Z"
+                                   Loaded="Chart_OnLoaded"
+                                   RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
+                                   DataContext="{Binding MeasurementMethodViewModel}"/>
+
+            <components:PlaneChart x:Name="ZxChart" Grid.Column="2" Margin="15"
+                                   PrimaryAxis="Z"
+                                   SecondaryAxis="X"
+                                   Loaded="Chart_OnLoaded"
+                                   RenderCharts="{Binding DataContext.RenderCharts, ElementName=Visualisation}"
+                                   DataContext="{Binding MeasurementMethodViewModel}"/>
         </Grid>
     </RelativePanel>
 </Page>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

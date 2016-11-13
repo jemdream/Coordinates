@@ -13,7 +13,7 @@ namespace Coordinates.UI.Helpers.Converters
             if (values == null || values.Length < 2 || values[0] == null || values[1] == null)
                 return null;
 
-            // TODO dirty hack. multibinding from toolkit somehow caches the value if provided like: {Binding MeasurementMethodViewModel.MeasurementMethod.ActiveElement}
+            // dirty hack. multibinding from toolkit somehow caches the value if provided like: {Binding MeasurementMethodViewModel.MeasurementMethod.ActiveElement}
             var vm = values[1] as MeasurementMethodViewModel;
 
             if (vm == null)

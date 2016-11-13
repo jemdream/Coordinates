@@ -112,6 +112,105 @@ namespace Coordinates.Measurements.Tests.Types
         }
 
         [TestMethod]
+        public void When_FirstElementErrorResult_Expect_ErrorResults()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+             {
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true)
+             };
+            var firstElementPlane = PlaneEnum.XY;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(1, 1, 1, true), new Position(100, 100, 1, true),
+                new Position(50, 50, 1, true), new Position(100, 1, 1, true),
+                new Position(1, 100, 1, true)
+            };
+            var secondElementPlane = PlaneEnum.XY;
+
+            // Prepare object with data from above
+            var measurements = PrepareMeasurementMethodModel<SurfaceParalellismMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+        }
+
+        [TestMethod]
+        public void When_SecondElementErrorResult_Expect_ErrorResults()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+             {
+                new Position(1, 1, 1, true), new Position(100, 100, 1, true),
+                new Position(50, 50, 1, true), new Position(100, 1, 1, true),
+                new Position(1, 100, 1, true)
+            };
+            var firstElementPlane = PlaneEnum.XY;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true)
+            };
+            var secondElementPlane = PlaneEnum.XY;
+
+            // Prepare object with data from above
+            var measurements = PrepareMeasurementMethodModel<SurfaceParalellismMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+        }
+
+        [TestMethod]
+        public void When_BothElementsErrorResult_Expect_ErrorResults()
+        {
+            // Arrange
+            var mockDataFirstElement = new[]
+             {
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true)
+             };
+            var firstElementPlane = PlaneEnum.XY;
+
+            var mockDataSecondElement = new[]
+            {
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true), new Position(6, 6, 6, true),
+                new Position(6, 6, 6, true)
+            };
+            var secondElementPlane = PlaneEnum.XY;
+
+            // Prepare object with data from above
+            var measurements = PrepareMeasurementMethodModel<SurfaceParalellismMeasurementMethod>(mockDataFirstElement, firstElementPlane, mockDataSecondElement, secondElementPlane);
+            var arrayOfElements = measurements.Elements.ToArray();
+
+            // Act
+            var calculateFirstElement = arrayOfElements[0].Calculate();
+            var calculateSecondElement = arrayOfElements[1].Calculate();
+            var calculate = measurements.Calculate();
+
+            // Assert
+            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej. Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+        }
+
+        [TestMethod]
         public void When_ResultsParallelXY_Expect_Values()
         {
             // Arrange
@@ -183,7 +282,7 @@ namespace Coordinates.Measurements.Tests.Types
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A0 > 0.28 && ((SurfaceResult)calculateFirstElement).A0 < 0.30);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A1 > 0 && ((SurfaceResult)calculateFirstElement).A1 < 0.01);
             Assert.IsTrue(((SurfaceResult)calculateFirstElement).A2 > 0 && ((SurfaceResult)calculateFirstElement).A2 < 0.01);
-            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.98 && ((SurfaceResult)calculateSecondElement).A0 < 30);
+            Assert.IsTrue(((SurfaceResult)calculateSecondElement).A0 > 28.97 && ((SurfaceResult)calculateSecondElement).A0 < 28.99);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A1 > 0.49 && ((SurfaceResult)calculateSecondElement).A1 < 0.51);
             Assert.IsTrue(((SurfaceResult)calculateSecondElement).A2 > 0.49 && ((SurfaceResult)calculateSecondElement).A2 < 0.51);
             Assert.IsTrue(((SurfaceParalellismResult)calculate).Result > 0.45 && ((SurfaceParalellismResult)calculate).Result < 0.47);

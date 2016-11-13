@@ -1,0 +1,712 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel"
+  dslVersion="1.0.0.0"
+  Id="313d87da-74aa-4c94-a63a-c787f3615929"
+  name="UseCaseDiag" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <subsystem
+        Id="dbf56230-95df-4715-bb8b-59ee99302223"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="6f10790b-73fd-4158-bd9f-49b39f3c34fc"
+        name="Użytkownik"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="6b216349-4779-4c34-9379-66f4836aaec7"
+            isDerived="false"
+            sourceEndRoleName="Użytkownik"
+            targetEndRoleName="Pomiar"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="55863fa7-a960-4994-9ed6-0bde4cf07ca9"
+              LastKnownName="Pomiar"
+              LastKnownLocation="UseCaseDiag.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bb6c5e85-95ef-4897-8a07-6e393b7ec53f"
+                  name="Użytkownik"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4f54c614-cf21-4caa-8c06-75b8799f53d5"
+                  name="Pomiar"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="c22d369b-4923-4de7-ae6e-8a5df448ee88"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="aa3e4313-a437-451e-bb8c-56567ef46b10"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a3f0f4a6-b600-443f-a7a7-a22cb548f6de"
+            isDerived="false"
+            sourceEndRoleName="Użytkownik"
+            targetEndRoleName="Widok wykresów"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="78e3c49e-3d1b-4c86-a50d-9ec6c8381b3f"
+              LastKnownName="Widok wykresów"
+              LastKnownLocation="UseCaseDiag.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7aea8f74-b202-4748-955e-f335f7513f5d"
+                  name="Użytkownik"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4b76a1e6-d5f2-4bc1-b5ad-dd21a8e6af2f"
+                  name="Widok wykresów"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+        name="Aplikacja komputerowa"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="55863fa7-a960-4994-9ed6-0bde4cf07ca9"
+        name="Pomiar"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="735f5b64-9c01-437c-ab4a-c5521deb95bb">
+            <useCaseMoniker
+              Id="40d2aba6-1dfd-4962-8a53-9a041178768f"
+              LastKnownName="Wybór elementu do pomiaru"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="40d2aba6-1dfd-4962-8a53-9a041178768f"
+        name="Wybór elementu do pomiaru"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="5e27844a-2da5-444b-87cc-c7562e2c6c11">
+            <useCaseMoniker
+              Id="809bd71b-64ea-49a1-862f-99d296dd4822"
+              LastKnownName="Pomiar prostopadłości dwóch płaszczyzn"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+          <include
+            Id="ebdc2983-3ca7-48f0-b71a-e3081a644a18">
+            <useCaseMoniker
+              Id="6496da60-6665-4605-a411-b6484a15a807"
+              LastKnownName="Pomiar równoległości dwóch płaszczyzn"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+          <include
+            Id="34822388-1c09-46b4-a716-814306fd6469">
+            <useCaseMoniker
+              Id="20c8ee50-2a63-4b49-82fb-43639bca3720"
+              LastKnownName="Pomiar dwóch otworów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+          <include
+            Id="7d422fc6-847c-4979-aad2-20240409c712">
+            <useCaseMoniker
+              Id="52a01eba-2984-4bbc-b48e-c8fecfedfb31"
+              LastKnownName="Pomiar jednego otworu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="719b4c57-8e3d-4169-a3e0-9ffac492bd2d"
+        name="Wybór płaszczyzny pomiaru"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="987125a7-cb62-4272-b1f8-49d9cd7b0df9"
+        name="Wybór płaszczyzny elementu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="e1ba1920-c352-4881-a781-3a6bc267a07a">
+            <useCaseMoniker
+              Id="8381f181-411b-4337-a05d-f12ea6fce6f1"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1e9ccdda-1da2-4c55-a145-8e8846b174ad"
+        name="Kalibracja"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="81ccd471-32b0-4ee7-a58b-d72f8d99abb1">
+            <useCaseMoniker
+              Id="40d2aba6-1dfd-4962-8a53-9a041178768f"
+              LastKnownName="Wybór elementu do pomiaru"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="8381f181-411b-4337-a05d-f12ea6fce6f1"
+        name="Zebranie wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="7e221e1d-fb2b-4de5-9ccb-092442226dd7">
+            <useCaseMoniker
+              Id="282fa2ff-7411-4095-9e7b-727f008aa1aa"
+              LastKnownName="Wybór kolejnego elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="52a01eba-2984-4bbc-b48e-c8fecfedfb31"
+        name="Pomiar jednego otworu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="fce98695-744b-4a89-85d0-795385af85bb">
+            <useCaseMoniker
+              Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="20c8ee50-2a63-4b49-82fb-43639bca3720"
+        name="Pomiar dwóch otworów"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="efa4cdb0-f88c-4f4f-80bd-14f694a856fc">
+            <useCaseMoniker
+              Id="987125a7-cb62-4272-b1f8-49d9cd7b0df9"
+              LastKnownName="Wybór płaszczyzny elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="6496da60-6665-4605-a411-b6484a15a807"
+        name="Pomiar równoległości dwóch płaszczyzn"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="213661fd-328b-4a88-b321-880f69f71d7c">
+            <useCaseMoniker
+              Id="987125a7-cb62-4272-b1f8-49d9cd7b0df9"
+              LastKnownName="Wybór płaszczyzny elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="809bd71b-64ea-49a1-862f-99d296dd4822"
+        name="Pomiar prostopadłości dwóch płaszczyzn"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="3af68c40-9600-4bd7-b085-d9272cfc62e5">
+            <useCaseMoniker
+              Id="afdfd8b4-eed1-4633-9470-3bc94edaad2a"
+              LastKnownName="Wybór płaszczyzny elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="d95a1972-bd42-4da9-a7c9-80c3faef28a6"
+        name="Zebranie większej liczby pomiarów niż wymagana"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="72e39d00-b3f6-4d87-b171-0d0a6eb84979">
+            <useCaseMoniker
+              Id="8381f181-411b-4337-a05d-f12ea6fce6f1"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+          <extend
+            Id="b0db9978-f003-4e41-8fe8-749d40828994">
+            <useCaseMoniker
+              Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+          <extend
+            Id="acc268a2-cd02-4397-9196-959ab73943a3">
+            <useCaseMoniker
+              Id="836b405e-6cc8-455d-9afc-fb1082c89d21"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5137bed8-8add-47f3-9148-379bdb316ed4"
+        name="Selekcja wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="dc31c5b4-4b32-4f92-a86a-b9e1306f11f6">
+            <useCaseMoniker
+              Id="3d7d9559-0a97-4cb6-9b11-8d6d19459a5d"
+              LastKnownName="Wynik"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="3d7d9559-0a97-4cb6-9b11-8d6d19459a5d"
+        name="Wynik"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="78e3c49e-3d1b-4c86-a50d-9ec6c8381b3f"
+        name="Widok wykresów"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="988df57c-2553-4faf-ae5d-312198f1d89c"
+        name="Selekcja pomiarów z wykresów"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="db863f4e-55cb-43b2-9b0a-7c49e7164f62">
+            <useCaseMoniker
+              Id="5137bed8-8add-47f3-9148-379bdb316ed4"
+              LastKnownName="Selekcja wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+          <extend
+            Id="4aa5cc33-d608-4d96-9b25-bd474c700dc7">
+            <useCaseMoniker
+              Id="78e3c49e-3d1b-4c86-a50d-9ec6c8381b3f"
+              LastKnownName="Widok wykresów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+        </extendedCases>
+        <additions>
+          <include
+            Id="c4f6b1c3-41c6-4a46-aa0b-484983a2b088">
+            <useCaseMoniker
+              Id="3d7d9559-0a97-4cb6-9b11-8d6d19459a5d"
+              LastKnownName="Wynik"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="8b8fe32d-df69-499e-a688-66cc37080ebf"
+        name="Selekcja większej liczby pomiarów niż wymagana"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="e0a374b1-6711-498f-b378-2d640bf58cf2">
+            <useCaseMoniker
+              Id="5137bed8-8add-47f3-9148-379bdb316ed4"
+              LastKnownName="Selekcja wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1b65c189-a855-4bbe-a68f-ac63ac0aa93b"
+        name="Zebranie wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5b92ef2d-e7d1-4976-bc3e-b92cdf6ca757"
+        name="Zebranie wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="282fa2ff-7411-4095-9e7b-727f008aa1aa"
+        name="Wybór kolejnego elementu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="d18ad5a8-58f8-4c86-9b82-f37630e80a62">
+            <useCaseMoniker
+              Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="65ba96f5-19f8-4fb5-981d-3bbb883ac062"
+        name="Zebranie większej liczby pomiarów niż wymagana"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="8eb9395f-b0c8-4d1b-b3f2-c00f4e06ac0b">
+            <useCaseMoniker
+              Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </extend>
+        </extendedCases>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+        name="Zebranie wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="adb36e42-69f6-49a0-845a-89039aff20b8">
+            <useCaseMoniker
+              Id="5137bed8-8add-47f3-9148-379bdb316ed4"
+              LastKnownName="Selekcja wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="afdfd8b4-eed1-4633-9470-3bc94edaad2a"
+        name="Wybór płaszczyzny elementu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="221f1070-7217-4b04-bb8b-0ced8ac86fe3">
+            <useCaseMoniker
+              Id="836b405e-6cc8-455d-9afc-fb1082c89d21"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="836b405e-6cc8-455d-9afc-fb1082c89d21"
+        name="Zebranie wymaganej liczby pomiarów"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="f4f0722d-a00b-420a-88fb-6fce03479b64">
+            <useCaseMoniker
+              Id="09f67750-ba9d-41a5-9824-9fecaf963c12"
+              LastKnownName="Wybór kolejnego elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="09f67750-ba9d-41a5-9824-9fecaf963c12"
+        name="Wybór kolejnego elementu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="a21bd5a1-378a-4d40-aa0b-3caeb82b0421">
+            <useCaseMoniker
+              Id="03370526-5c97-450c-b70d-f819d754999c"
+              LastKnownName="Wybór płaszczyzny elementu"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="03370526-5c97-450c-b70d-f819d754999c"
+        name="Wybór płaszczyzny elementu"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="5e7a10f8-1bdc-4a03-96dd-95ba2d64397f">
+            <useCaseMoniker
+              Id="75f4fb30-9c77-463e-b757-bfbba7476a2b"
+              LastKnownName="Zebranie wymaganej liczby pomiarów"
+              LastKnownLocation="UseCaseDiag.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="ebbd68c9-a0e6-4992-9a17-cd915486436e"
+            LastKnownName="Aplikacja komputerowa"
+            LastKnownLocation="UseCaseDiag.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

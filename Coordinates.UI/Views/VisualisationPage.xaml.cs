@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Reactive.Linq;
+using System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +16,27 @@ namespace Coordinates.UI.Views
         public VisualisationPage()
         {
             this.InitializeComponent();
+        }
+
+        private void VisualisationPage_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Busy.SetBusy(true, "Wczytywanie wykresów");
+
+            Observable
+                .Timer(TimeSpan.FromMilliseconds(100))
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(_ =>
+                {
+                    FindName("ChartGrid");
+                });
+        }
+
+        private void Chart_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Observable
+                .Timer(TimeSpan.FromMilliseconds(500))
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(__ => Busy.SetBusy(false));
         }
     }
 }

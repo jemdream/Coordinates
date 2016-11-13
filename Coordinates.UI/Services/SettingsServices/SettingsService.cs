@@ -11,13 +11,15 @@ namespace Coordinates.UI.Services.SettingsServices
     /// </summary>
     public class SettingsService : ISettingsService
     {
+        private readonly IFileLogger _fileLogger;
         private readonly ISettingsHelper _helper;
 
-        public SettingsService()
+        public SettingsService(IFileLogger fileLogger)
         {
+            _fileLogger = fileLogger;
             _helper = new SettingsHelper();
         }
-        
+
         public bool UseShellBackButton
         {
             get { return _helper.Read<bool>(nameof(UseShellBackButton), true); }
@@ -60,4 +62,3 @@ namespace Coordinates.UI.Services.SettingsServices
         }
     }
 }
-

@@ -10,6 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     x:Name="PlaneChartUserControl"
+    SizeChanged="PlaneChart_OnSizeChanged"
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <RelativePanel>

@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="3228b1c3-20d6-4e0b-a193-471670ae3002" name="UseCaseUML" linkedPackageId="ea073cba-85ef-4647-83fe-b291701155db" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="88167316-7c53-4dd5-96be-349a59ecb200">
+      <profileInstance Id="5ce3e63a-4cba-4a3c-87d6-49a722e6a1a7" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="aa1c3b6f-93ff-4a54-9c64-02a1fc7a8075">
+      <profileInstance Id="39b9048a-f420-4e84-9f04-b22add9839eb" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="804f2f66-4e0b-45e2-98af-15e5f20a633e" name="Użytkownik" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6f10790b-73fd-4158-bd9f-49b39f3c34fc" />
+        <targetEnds>
+          <association Id="926c95f4-d30d-4984-bf39-21364621c292" isDerived="false" sourceEndRoleName="Użytkownik" targetEndRoleName="Pomiar" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="bbcda222-ff67-4a9e-b1a9-61b4cbdfce11" LastKnownName="Pomiar" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f7b4a954-ed9e-4075-ae20-99292336d1ee" name="Użytkownik" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="bb6c5e85-95ef-4897-8a07-6e393b7ec53f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="64944efc-f14e-4a38-a153-1068a2ce6cfc" name="Pomiar" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="d5b6791e-0c09-413c-ba84-63e9fcc5fc1b" name="Lower" value="1">
+                      <elementDefinition Id="c22d369b-4923-4de7-ae6e-8a5df448ee88" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="d4c7a4dc-2aec-4fe3-8a7e-7438be2630f5" name="Upper" value="1">
+                      <elementDefinition Id="aa3e4313-a437-451e-bb8c-56567ef46b10" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="4f54c614-cf21-4caa-8c06-75b8799f53d5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="6b216349-4779-4c34-9379-66f4836aaec7" />
+          </association>
+          <association Id="a9ce5cbe-0858-41b0-847e-4cfe00889c0d" isDerived="false" sourceEndRoleName="Użytkownik" targetEndRoleName="Widok wykresów" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="4481f30c-5c25-435d-9b05-dea8d4814a11" LastKnownName="Widok wykresów" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8b1fbb4f-8a7d-4c06-a0d0-b7a0d25ae49a" name="Użytkownik" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="7aea8f74-b202-4748-955e-f335f7513f5d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="fd1bcdc3-b1b0-48ab-92d6-c4e639148e03" name="Widok wykresów" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="4b76a1e6-d5f2-4bc1-b5ad-dd21a8e6af2f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a3f0f4a6-b600-443f-a7a7-a22cb548f6de" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" name="Aplikacja komputerowa" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ebbd68c9-a0e6-4992-9a17-cd915486436e" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="bbcda222-ff67-4a9e-b1a9-61b4cbdfce11" name="Pomiar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="55863fa7-a960-4994-9ed6-0bde4cf07ca9" />
+        <additions>
+          <include Id="28aa92af-6052-43bd-aeb0-94bda13b2f2f">
+            <useCaseMoniker Id="f3ce8a20-d26a-466c-b8b3-bffbc91b8737" LastKnownName="Wybór elementu do pomiaru" />
+            <elementDefinition Id="735f5b64-9c01-437c-ab4a-c5521deb95bb" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="f3ce8a20-d26a-466c-b8b3-bffbc91b8737" name="Wybór elementu do pomiaru" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="40d2aba6-1dfd-4962-8a53-9a041178768f" />
+        <additions>
+          <include Id="db278227-b3aa-405e-8863-b602b2bbc41f">
+            <useCaseMoniker Id="7051bd8d-37d3-40e0-aab3-943621660f96" LastKnownName="Pomiar prostopadłości dwóch płaszczyzn" />
+            <elementDefinition Id="5e27844a-2da5-444b-87cc-c7562e2c6c11" />
+          </include>
+          <include Id="238e8f6d-08d9-40df-86bf-aa984bd5fbb9">
+            <useCaseMoniker Id="a483a3e3-b0bf-41ab-8b0e-edd7386e735c" LastKnownName="Pomiar równoległości dwóch płaszczyzn" />
+            <elementDefinition Id="ebdc2983-3ca7-48f0-b71a-e3081a644a18" />
+          </include>
+          <include Id="c91a9c1b-66d5-4ab4-9193-2d83714b3036">
+            <useCaseMoniker Id="5053f5b5-9701-4f26-84a7-3d2a5fcbab38" LastKnownName="Pomiar dwóch otworów" />
+            <elementDefinition Id="34822388-1c09-46b4-a716-814306fd6469" />
+          </include>
+          <include Id="134975e1-a82a-42b5-a26e-372b78391c27">
+            <useCaseMoniker Id="2531ed68-b531-4a80-922a-34bbc15204aa" LastKnownName="Pomiar jednego otworu" />
+            <elementDefinition Id="7d422fc6-847c-4979-aad2-20240409c712" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="30ac77cf-288a-4bad-ac4b-195f4d3e28ff" name="Wybór płaszczyzny elementu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="987125a7-cb62-4272-b1f8-49d9cd7b0df9" />
+        <additions>
+          <include Id="6e59f20e-da6d-4390-be57-a1d064f6f0d6">
+            <useCaseMoniker Id="c36cb064-fbcd-46e3-a79d-668286503171" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="e1ba1920-c352-4881-a781-3a6bc267a07a" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="e2729a8f-e194-434a-9290-49e561448ad7" name="Kalibracja" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1e9ccdda-1da2-4c55-a145-8e8846b174ad" />
+        <extendedCases>
+          <extend Id="6e760602-fb1b-4de5-8a38-3171ac240e4c">
+            <useCaseMoniker Id="f3ce8a20-d26a-466c-b8b3-bffbc91b8737" LastKnownName="Wybór elementu do pomiaru" />
+            <elementDefinition Id="81ccd471-32b0-4ee7-a58b-d72f8d99abb1" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="c36cb064-fbcd-46e3-a79d-668286503171" name="Zebranie wymaganej liczby pomiarów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8381f181-411b-4337-a05d-f12ea6fce6f1" />
+        <additions>
+          <include Id="d312bd13-6119-4db8-a58e-b4c5caab9ae8">
+            <useCaseMoniker Id="c63ecf9d-c335-4ef5-8bc4-4928a6db01a5" LastKnownName="Wybór kolejnego elementu" />
+            <elementDefinition Id="7e221e1d-fb2b-4de5-9ccb-092442226dd7" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="2531ed68-b531-4a80-922a-34bbc15204aa" name="Pomiar jednego otworu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="52a01eba-2984-4bbc-b48e-c8fecfedfb31" />
+        <additions>
+          <include Id="8c443775-c2e6-4797-bb0e-97978fc86edb">
+            <useCaseMoniker Id="0b5b9fca-fa31-4a64-b764-ae913b9f58d9" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="fce98695-744b-4a89-85d0-795385af85bb" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="5053f5b5-9701-4f26-84a7-3d2a5fcbab38" name="Pomiar dwóch otworów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="20c8ee50-2a63-4b49-82fb-43639bca3720" />
+        <additions>
+          <include Id="62015bc6-65ad-4e17-b10a-80c5eb59c342">
+            <useCaseMoniker Id="30ac77cf-288a-4bad-ac4b-195f4d3e28ff" LastKnownName="Wybór płaszczyzny elementu" />
+            <elementDefinition Id="efa4cdb0-f88c-4f4f-80bd-14f694a856fc" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="a483a3e3-b0bf-41ab-8b0e-edd7386e735c" name="Pomiar równoległości dwóch płaszczyzn" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6496da60-6665-4605-a411-b6484a15a807" />
+        <additions>
+          <include Id="e85f5780-1d57-4c6c-b09a-eca7c043de13">
+            <useCaseMoniker Id="30ac77cf-288a-4bad-ac4b-195f4d3e28ff" LastKnownName="Wybór płaszczyzny elementu" />
+            <elementDefinition Id="213661fd-328b-4a88-b321-880f69f71d7c" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="7051bd8d-37d3-40e0-aab3-943621660f96" name="Pomiar prostopadłości dwóch płaszczyzn" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="809bd71b-64ea-49a1-862f-99d296dd4822" />
+        <additions>
+          <include Id="7074730c-acc0-4b20-b8cb-6f34440c7f56">
+            <useCaseMoniker Id="12ba7dbf-59d3-437a-9e69-e82e336d942f" LastKnownName="Wybór płaszczyzny elementu" />
+            <elementDefinition Id="3af68c40-9600-4bd7-b085-d9272cfc62e5" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="7c5e65c9-adca-4026-9e8b-34f60161197a" name="Zebranie większej liczby pomiarów niż wymagana" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d95a1972-bd42-4da9-a7c9-80c3faef28a6" />
+        <extendedCases>
+          <extend Id="05133911-86fc-4c8e-9bb6-e2d543e09cec">
+            <useCaseMoniker Id="c36cb064-fbcd-46e3-a79d-668286503171" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="72e39d00-b3f6-4d87-b171-0d0a6eb84979" />
+          </extend>
+          <extend Id="d3d75053-864c-4bf0-913e-138a1fa02e63">
+            <useCaseMoniker Id="0b5b9fca-fa31-4a64-b764-ae913b9f58d9" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="b0db9978-f003-4e41-8fe8-749d40828994" />
+          </extend>
+          <extend Id="dd04bc5f-1b88-4f1c-ba31-755ad3fb6245">
+            <useCaseMoniker Id="f700ac43-465d-4393-9411-3fd5d0a662c2" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="acc268a2-cd02-4397-9196-959ab73943a3" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="e569d516-7aa0-4491-ba1c-539461620c51" name="Selekcja wymaganej liczby pomiarów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="5137bed8-8add-47f3-9148-379bdb316ed4" />
+        <additions>
+          <include Id="143286db-9ead-436e-807b-c50a431869c6">
+            <useCaseMoniker Id="8d63ecd3-e3bc-4ded-a10b-6e1700600848" LastKnownName="Wynik" />
+            <elementDefinition Id="dc31c5b4-4b32-4f92-a86a-b9e1306f11f6" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="8d63ecd3-e3bc-4ded-a10b-6e1700600848" name="Wynik" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3d7d9559-0a97-4cb6-9b11-8d6d19459a5d" />
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="4481f30c-5c25-435d-9b05-dea8d4814a11" name="Widok wykresów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="78e3c49e-3d1b-4c86-a50d-9ec6c8381b3f" />
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="62f0346a-cc08-4294-aa56-b4fb4d4d626d" name="Selekcja pomiarów z wykresów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="988df57c-2553-4faf-ae5d-312198f1d89c" />
+        <extendedCases>
+          <extend Id="b370b4fe-24b9-4704-b048-fa26a1a5ec5b">
+            <useCaseMoniker Id="e569d516-7aa0-4491-ba1c-539461620c51" LastKnownName="Selekcja wymaganej liczby pomiarów" />
+            <elementDefinition Id="db863f4e-55cb-43b2-9b0a-7c49e7164f62" />
+          </extend>
+          <extend Id="cf9a16cb-6aaa-4a96-9474-47109f767da8">
+            <useCaseMoniker Id="4481f30c-5c25-435d-9b05-dea8d4814a11" LastKnownName="Widok wykresów" />
+            <elementDefinition Id="4aa5cc33-d608-4d96-9b25-bd474c700dc7" />
+          </extend>
+        </extendedCases>
+        <additions>
+          <include Id="c5fd9cde-3e4c-4bdc-b70b-e35ff06d2667">
+            <useCaseMoniker Id="8d63ecd3-e3bc-4ded-a10b-6e1700600848" LastKnownName="Wynik" />
+            <elementDefinition Id="c4f6b1c3-41c6-4a46-aa0b-484983a2b088" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="485b63cb-7618-4e1d-a78b-e745a7c1e57d" name="Selekcja większej liczby pomiarów niż wymagana" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8b8fe32d-df69-499e-a688-66cc37080ebf" />
+        <extendedCases>
+          <extend Id="cf2d73c0-09f3-4c19-9f76-215e79d7842d">
+            <useCaseMoniker Id="e569d516-7aa0-4491-ba1c-539461620c51" LastKnownName="Selekcja wymaganej liczby pomiarów" />
+            <elementDefinition Id="e0a374b1-6711-498f-b378-2d640bf58cf2" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="c63ecf9d-c335-4ef5-8bc4-4928a6db01a5" name="Wybór kolejnego elementu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="282fa2ff-7411-4095-9e7b-727f008aa1aa" />
+        <additions>
+          <include Id="be26ceaf-a209-4921-9956-6934a3d9ef8d">
+            <useCaseMoniker Id="0b5b9fca-fa31-4a64-b764-ae913b9f58d9" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="d18ad5a8-58f8-4c86-9b82-f37630e80a62" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <useCase Id="0b5b9fca-fa31-4a64-b764-ae913b9f58d9" name="Zebranie wymaganej liczby pomiarów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="75f4fb30-9c77-463e-b757-bfbba7476a2b" />
+        <additions>
+          <include Id="26d94b79-ac46-4777-9ece-a3a389aa02c3">
+            <useCaseMoniker Id="e569d516-7aa0-4491-ba1c-539461620c51" LastKnownName="Selekcja wymaganej liczby pomiarów" />
+            <elementDefinition Id="adb36e42-69f6-49a0-845a-89039aff20b8" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="12ba7dbf-59d3-437a-9e69-e82e336d942f" name="Wybór płaszczyzny elementu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="afdfd8b4-eed1-4633-9470-3bc94edaad2a" />
+        <additions>
+          <include Id="1baf203d-4f6e-4bc8-a40f-3d5449771822">
+            <useCaseMoniker Id="f700ac43-465d-4393-9411-3fd5d0a662c2" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="221f1070-7217-4b04-bb8b-0ced8ac86fe3" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="f700ac43-465d-4393-9411-3fd5d0a662c2" name="Zebranie wymaganej liczby pomiarów" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="836b405e-6cc8-455d-9afc-fb1082c89d21" />
+        <additions>
+          <include Id="ad14708e-b7ed-42dc-9734-91b4f1042d51">
+            <useCaseMoniker Id="32fc9126-ae2f-4c3b-a7c6-ffafdd6210a8" LastKnownName="Wybór kolejnego elementu" />
+            <elementDefinition Id="f4f0722d-a00b-420a-88fb-6fce03479b64" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="32fc9126-ae2f-4c3b-a7c6-ffafdd6210a8" name="Wybór kolejnego elementu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="09f67750-ba9d-41a5-9824-9fecaf963c12" />
+        <additions>
+          <include Id="bf7779a3-7189-4119-a75e-11ba9ac3b8e7">
+            <useCaseMoniker Id="078ff5bc-7942-4ec6-b87c-d26da46ae3c9" LastKnownName="Wybór płaszczyzny elementu" />
+            <elementDefinition Id="a21bd5a1-378a-4d40-aa0b-3caeb82b0421" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="078ff5bc-7942-4ec6-b87c-d26da46ae3c9" name="Wybór płaszczyzny elementu" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="03370526-5c97-450c-b70d-f819d754999c" />
+        <additions>
+          <include Id="b1ad9fd9-64ed-440e-9bae-c9a1521583d9">
+            <useCaseMoniker Id="0b5b9fca-fa31-4a64-b764-ae913b9f58d9" LastKnownName="Zebranie wymaganej liczby pomiarów" />
+            <elementDefinition Id="5e7a10f8-1bdc-4a03-96dd-95ba2d64397f" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="8b4c7d24-59a9-48ef-b494-083b68f4c05a" LastKnownName="Aplikacja komputerowa" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="ea073cba-85ef-4647-83fe-b291701155db" name="UseCaseDiag">
+    <elementDefinition Id="313d87da-74aa-4c94-a63a-c787f3615929" />
+  </package>
+</useCaseModelRoot>

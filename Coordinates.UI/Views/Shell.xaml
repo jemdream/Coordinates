@@ -7,6 +7,7 @@
       xmlns:views="using:Coordinates.UI.Views"
       xmlns:converters="using:Coordinates.UI.Helpers.Converters"
       xmlns:template10Converters="using:Template10.Converters"
+      xmlns:instructions="using:Coordinates.UI.Views.Instructions"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance views:Shell}">
@@ -52,7 +53,6 @@
                                 NavButtonCheckedBackground="SteelBlue"
                                 NavButtonCheckedForeground="White"
                                 NavButtonCheckedIndicatorBrush="Transparent"
-                                Loaded="MyHamburgerMenu_OnLoaded"
                                 RelativePanel.Above="ConnectionBar"
                                 RelativePanel.AlignLeftWithPanel="True"
                                 RelativePanel.AlignRightWithPanel="True"
@@ -105,7 +105,7 @@
                 </controls:HamburgerButtonInfo>
 
                 <!-- Maszyna -->
-                <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="views:MainPage" Visibility="Collapsed">
+                <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="instructions:MachineInstructions" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">
@@ -119,7 +119,7 @@
                 </controls:HamburgerButtonInfo>
 
                 <!-- Metrologia -->
-                <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="views:MainPage" Visibility="Collapsed">
+                <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="instructions:MeasurementsInstructions" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">

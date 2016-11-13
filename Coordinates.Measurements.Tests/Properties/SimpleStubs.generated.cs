@@ -163,6 +163,31 @@ namespace Coordinates.Measurements.Elements
     }
 }
 
+namespace Coordinates.Measurements.Export
+{
+    [CompilerGenerated]
+    public class StubIMeasurementsExporter : IMeasurementsExporter
+    {
+        private readonly StubContainer<StubIMeasurementsExporter> _stubs = new StubContainer<StubIMeasurementsExporter>();
+
+        global::System.Collections.Generic.IEnumerable<global::Coordinates.Measurements.Export.MeasurementExportFormat> global::Coordinates.Measurements.Export.IMeasurementsExporter.Formats
+        {
+            get
+            {
+                return _stubs.GetMethodStub<Formats_Get_Delegate>("get_Formats").Invoke();
+            }
+        }
+
+        public delegate global::System.Collections.Generic.IEnumerable<global::Coordinates.Measurements.Export.MeasurementExportFormat> Formats_Get_Delegate();
+
+        public StubIMeasurementsExporter Formats_Get(Formats_Get_Delegate del, int count = Times.Forever, bool overwrite = false)
+        {
+            _stubs.SetMethodStub(del, count, overwrite);
+            return this;
+        }
+    }
+}
+
 namespace Coordinates.Measurements
 {
     [CompilerGenerated]

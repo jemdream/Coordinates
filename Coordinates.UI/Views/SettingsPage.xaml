@@ -77,9 +77,15 @@
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwitch" />
 
+                        <ToggleSwitch x:Name="FullScreenToggleSwitch" Header="Use Light Theme"
+                                      IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
+                                      OffContent="Dark theme" OnContent="Light theme"
+                                      RelativePanel.AlignLeftWithPanel="True"
+                                      RelativePanel.Below="UseLightThemeToggleSwitch" />
+
                         <HyperlinkButton Command="{Binding OpenLoggingFolder}"
                                          Content="Lokalizacja plików .etl"
-                                         RelativePanel.Below="UseLightThemeToggleSwitch"/>
+                                         RelativePanel.Below="FullScreenToggleSwitch"/>
 
                     </RelativePanel>
 

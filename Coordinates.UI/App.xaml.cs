@@ -54,16 +54,6 @@ namespace Coordinates.UI
             // Logger
             await _container.Resolve<IFileLogger>().InitiateLogger();
 
-            // Setup type of window
-            var view = ApplicationView.GetForCurrentView();
-            if (view.IsFullScreenMode) view.ExitFullScreenMode();
-
-            var size = new Size(1366, 768);
-
-            view.SetPreferredMinSize(size);
-            ApplicationView.PreferredLaunchViewSize = size;
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
             // Setup main window
             if (!(Window.Current.Content is ModalDialog))
             {

@@ -71,27 +71,36 @@
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.AlignTopWithPanel="True" />
 
-                        <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Use Light Theme"
-                                      IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme" OnContent="Light theme"
+                        <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Użyj Jasny temat"
+                                      IsOn="{Binding UseLightThemeButton, Mode=TwoWay}" IsEnabled="False"
+                                      OffContent="Ciemny temat" OnContent="Jasny temat"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwitch" />
 
-                        <ToggleSwitch x:Name="FullScreenToggleSwitch" Header="Use Light Theme"
-                                      IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme" OnContent="Light theme"
+                        <ToggleSwitch x:Name="FullScreenToggleSwitch" Header="Tryb pełnego ekranu"
+                                      IsOn="{Binding UseFullScreenButton, Mode=TwoWay}"
+                                      OffContent="Okno" OnContent="Pełen ekran"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseLightThemeToggleSwitch" />
 
-                        <HyperlinkButton Command="{Binding OpenLoggingFolder}"
+                        <HyperlinkButton x:Name="LoggingFolderHyperlinkButton" Command="{Binding OpenLoggingFolder}"
                                          Content="Lokalizacja plików .etl"
+                                         RelativePanel.AlignLeftWithPanel="True"
                                          RelativePanel.Below="FullScreenToggleSwitch"/>
+
+                        <ComboBox x:Name="ComboBox" Header="Średnica głowicy" 
+                                  IsEnabled="False" 
+                                  SelectedIndex="0" Width="250"
+                                  RelativePanel.AlignLeftWithPanel="True"
+                                  RelativePanel.Below="LoggingFolderHyperlinkButton">
+                            <ComboBoxItem>3 [mm]</ComboBoxItem>
+                        </ComboBox>
 
                     </RelativePanel>
 
                 </ScrollViewer>
             </PivotItem>
-            
+
             <!--  about  -->
             <PivotItem Header="O twórcach">
                 <RelativePanel DataContext="{Binding AboutPartViewModel}">
@@ -128,7 +137,7 @@
 
                 </RelativePanel>
             </PivotItem>
-            
+
         </Pivot>
     </RelativePanel>
 </Page>

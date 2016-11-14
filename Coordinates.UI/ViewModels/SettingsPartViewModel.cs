@@ -12,6 +12,7 @@ namespace Coordinates.UI.ViewModels
     {
         bool UseShellBackButton { get; }
         bool UseLightThemeButton { get; }
+        bool UseFullScreenButton { get; }
         ICommand OpenLoggingFolder { get; }
     }
 
@@ -37,6 +38,12 @@ namespace Coordinates.UI.ViewModels
         {
             get { return _settingsService.AppTheme.Equals(ApplicationTheme.Light); }
             set { _settingsService.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; RaisePropertyChanged(); }
+        }
+
+        public bool UseFullScreenButton
+        {
+            get { return _settingsService.UseFullScreen; }
+            set { _settingsService.UseFullScreen = value; RaisePropertyChanged(); }
         }
 
         public ICommand OpenLoggingFolder => _openLoggingFolder ?? (_openLoggingFolder = new AwaitableDelegateCommand(async x =>

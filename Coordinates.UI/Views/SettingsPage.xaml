@@ -123,17 +123,34 @@
                                RelativePanel.AlignTopWithPanel="True"
                                Text="{Binding DisplayName}" />
 
-                    <TextBlock x:Name="PublisherTextBlock"
+                    <TextBlock x:Name="Publisher0TextBlock"
                                RelativePanel.AlignLeftWithPanel="True"
                                RelativePanel.Below="DisplayNameTextBlock"
-                               Text="{Binding Publisher}" />
+                               Text="Jędrzej Dankowski" />
+
+                    <TextBlock x:Name="Publisher1TextBlock"
+                               Margin="0,0,0,12"
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.Below="Publisher0TextBlock"
+                               Text="Adam Przybyszewski" />
 
                     <TextBlock x:Name="VersionTextBlock"
                                RelativePanel.AlignLeftWithPanel="True"
-                               RelativePanel.Below="PublisherTextBlock">
+                               RelativePanel.Below="Publisher1TextBlock">
                         <Run>Version</Run>
                         <Run Text="{Binding Version}" />
                     </TextBlock>
+                    
+                    <TextBlock x:Name="CodeTextBlock"
+                               Text="Przejrzyj kod na:"
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.Below="VersionTextBlock"/>
+                    
+                    <HyperlinkButton x:Name="GitHubHyperlink"
+                                     Margin="0"
+                                     Content="{Binding GitLink}"
+                                     NavigateUri="{Binding GitLink}"
+                                     RelativePanel.Below="CodeTextBlock"/>
 
                 </RelativePanel>
             </PivotItem>

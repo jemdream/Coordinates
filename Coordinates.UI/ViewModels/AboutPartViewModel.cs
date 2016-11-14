@@ -21,6 +21,6 @@ namespace Coordinates.UI.ViewModels
             }
         }
 
-        public Uri RateMe => new Uri("http://aka.ms/template10");
+        public Uri GitLink => new Uri("https://github.com/jemdream");
     }
 }

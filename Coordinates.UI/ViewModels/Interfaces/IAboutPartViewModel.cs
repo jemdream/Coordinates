@@ -8,6 +8,6 @@ namespace Coordinates.UI.ViewModels.Interfaces
         string DisplayName { get; }
         string Publisher { get; }
         string Version { get; }
-        Uri RateMe { get; }
+        Uri GitLink { get; }
     }
 }

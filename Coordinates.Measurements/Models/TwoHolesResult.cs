@@ -3,6 +3,6 @@
     public class TwoHolesResult : ICalculationResult
     {
         public double Result { get; set; }
-        public override string ToString() => $"{Result}";
+        public override string ToString() => $"L = {Result} [mm]";
     }
 }

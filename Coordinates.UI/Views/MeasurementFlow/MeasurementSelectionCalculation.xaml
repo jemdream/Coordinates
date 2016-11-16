@@ -34,23 +34,29 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <components:MeasurementGrid x:Name="MeasurementGrid0" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"
+        <components:MeasurementGrid x:Name="MeasurementGrid0" Width="350"
+                                    DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[0], UpdateSourceTrigger=PropertyChanged}" 
+                                    IsSelectable="True"
                                     RelativePanel.LeftOf="MeasurementGrid1"
+                                    RelativePanel.AlignLeftWithPanel="True"
                                     RelativePanel.AlignTopWithPanel="True"
                                     RelativePanel.AlignBottomWithPanel="True"/>
         
-        <components:MeasurementGrid x:Name="MeasurementGrid1" DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" IsSelectable="True"
+        <components:MeasurementGrid x:Name="MeasurementGrid1" Width="350"
+                                    DataContext="{Binding MeasurementMethodViewModel.ElementsViewModels[1], UpdateSourceTrigger=PropertyChanged}" 
+                                    IsSelectable="True"
                                     Visibility="{Binding Path=DataContext.MeasurementMethodViewModel.ElementsViewModels, ElementName=ParentUc, Converter={StaticResource EnumerableCountToVisibility}}"
                                     RelativePanel.AlignHorizontalCenterWithPanel="True"
                                     RelativePanel.AlignTopWithPanel="True"
                                     RelativePanel.AlignBottomWithPanel="True"/>
         
-        <components:MeasurementPanel x:Name="MeasurementPanel" DataContext="{Binding MeasurementMethodViewModel}"
-                                     MinWidth="200"
+        <components:MeasurementPanel x:Name="MeasurementPanel" MinWidth="300" MaxWidth="350"
+                                     DataContext="{Binding MeasurementMethodViewModel}"
                                      Visibility="{Binding Path=DataContext.MeasurementMethodViewModel.ElementsViewModels, ElementName=ParentUc, Converter={StaticResource EnumerableCountToVisibility}}"
                                      RelativePanel.RightOf="MeasurementGrid1"
                                      RelativePanel.AlignTopWithPanel="True"
-                                     RelativePanel.AlignBottomWithPanel="True"/>
+                                     RelativePanel.AlignBottomWithPanel="True"
+                                     RelativePanel.AlignRightWithPanel="True"/>
 
         <AppBarButton x:Name="SaveButton" Icon="Save" Label="Zapisz jako" Command="{Binding MeasurementMethodViewModel.ExportData}" 
                       Visibility="{Binding Path=DataContext.MeasurementMethodViewModel.ElementsViewModels, ElementName=ParentUc, Converter={StaticResource EnumerableCountToVisibilityInverter}}"

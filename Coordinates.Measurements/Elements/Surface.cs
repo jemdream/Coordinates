@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Coordinates.Measurements.Models;
-using Coordinates.Models.DTO;
 
 namespace Coordinates.Measurements.Elements
 {
@@ -16,7 +14,8 @@ namespace Coordinates.Measurements.Elements
 
         public override ICalculationResult Calculate()
         {
-            if (!CanCalculate()) return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
+            if (!CanCalculate())
+                return new ErrorResult { Message = "Wybierz odpowiednią liczbę pomiarów." };
 
             try
             {
@@ -42,30 +41,30 @@ namespace Coordinates.Measurements.Elements
                 {
                     case PlaneEnum.XY:
                         w = n * g * h + 2 * a * b * d - b * b * g - a * a * h - n * d * d;
+
                         if (w.Equals(0.0))
-                        {
                             return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
-                        }
+                        
                         wa1 = c * g * h + b * d * f + a * d * e - b * e * g - a * f * h - c * d * d;
                         wa2 = n * f * h + a * b * e + b * c * d - b * b * f - a * c * h - n * e * d;
                         wa3 = n * e * g + a * c * d + a * b * f - b * c * g - a * a * e - n * d * f;
                         break;
                     case PlaneEnum.YZ:
                         w = n * h * i + 2 * b * c * e - c * c * h - b * b * i - n * e * e;
+
                         if (w.Equals(0.0))
-                        {
                             return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
-                        }
+                        
                         wa1 = a * h * i + c * d * e + b * e * f - c * f * h - b * d * i - a * e * e;
                         wa2 = n * d * i + b * c * f + a * c * e - c * c * d - a * b * i - n * e * f;
                         wa3 = n * f * h + a * b * e + b * c * d - a * c * h - b * b * f - n * e * d;
                         break;
                     case PlaneEnum.ZX:
                         w = n * g * i + 2 * a * c * f - a * a * i - c * c * g - n * f * f;
+
                         if (w.Equals(0.0))
-                        {
                             return new ErrorResult { Message = "Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej." };
-                        }
+                        
                         wa1 = b * g * i + a * e * f + c * d * f - a * d * i - c * e * g - b * f * f;
                         wa2 = n * e * g + a * c * d + a * b * f - a * a * e - b * c * g - n * d * f;
                         wa3 = n * d * i + b * c * f + a * c * e - a * b * i - c * c * d - n * e * f;
@@ -87,8 +86,7 @@ namespace Coordinates.Measurements.Elements
             {
                 return new ErrorResult
                 {
-                    Message = ex.Message,
-                    FaultyPositions = new List<Position>() // pomiary, które mają złe wartości względem pozostałych zaznaczonych
+                    Message = ex.Message
                 };
             }
         }

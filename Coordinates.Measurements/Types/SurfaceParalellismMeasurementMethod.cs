@@ -26,10 +26,13 @@ namespace Coordinates.Measurements.Types
             var firstElementCalculation = firstElement.Calculate();
             var secondElementCalculation = secondElement.Calculate();
 
+            // TODO niewymowne bledy
             if (firstElementCalculation is ErrorResult && secondElementCalculation is ErrorResult)
                 return new ErrorResult { Message = $"Pierwsza płaszczyzna: {firstElementCalculation} Druga płaszczyzna: {secondElementCalculation}" };
+
             if (firstElementCalculation is ErrorResult)
                 return new ErrorResult { Message = $"Pierwsza płaszczyzna: {firstElementCalculation}" };
+
             if (secondElementCalculation is ErrorResult)
                 return new ErrorResult { Message = $"Druga płaszczyzna: {secondElementCalculation}" };
 
@@ -42,6 +45,6 @@ namespace Coordinates.Measurements.Types
             };
         }
 
-        public override string ToString() => $"Płaszczyzny - równoległość";
+        public override string ToString() => "Płaszczyzny - równoległość";
     }
 }

@@ -72,14 +72,6 @@
                     </StackPanel>
                 </controls:HamburgerButtonInfo>
 
-                <!--  Coding playground button  -->
-                <controls:HamburgerButtonInfo ClearHistory="True" PageType="views:CodingPlayground">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Style="{StaticResource ButtonSymbolIcon}" Symbol="Edit" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Coding Playground" />
-                    </StackPanel>
-                </controls:HamburgerButtonInfo>
-
                 <!--  Measurement button  -->
                 <controls:HamburgerButtonInfo x:Name="MeasurementsButton" ClearHistory="True" PageType="views:MeasurementsPage">
                     <StackPanel Orientation="Horizontal">
@@ -105,7 +97,7 @@
                 </controls:HamburgerButtonInfo>
 
                 <!-- Maszyna -->
-                <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="instructions:MachineInstructions" Visibility="Collapsed">
+                <controls:HamburgerButtonInfo x:Name="MaszynaButton" PageType="instructions:MachineInstructions" Visibility="Visible">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">
@@ -119,7 +111,7 @@
                 </controls:HamburgerButtonInfo>
 
                 <!-- Metrologia -->
-                <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="instructions:MeasurementsInstructions" Visibility="Collapsed">
+                <controls:HamburgerButtonInfo x:Name="MetrologiaButton" PageType="instructions:MeasurementsInstructions" Visibility="Visible">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE82D;" Style="{StaticResource ButtonSymbolLiteralFontIcon}"/>
                         <RelativePanel Style="{StaticResource ButtonRelativePanel}">

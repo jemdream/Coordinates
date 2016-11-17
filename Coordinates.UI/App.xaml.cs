@@ -122,7 +122,6 @@ namespace Coordinates.UI
 
             // Menu 
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMeasurementMethodViewModel, MeasurementMethodViewModel>(new ContainerControlledLifetimeManager());

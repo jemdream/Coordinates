@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.Models;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.ExternalDevices.Devices
 {

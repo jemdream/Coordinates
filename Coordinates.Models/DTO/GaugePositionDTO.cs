@@ -1,4 +1,4 @@
-﻿namespace Coordinates.ExternalDevices.Models
+﻿namespace Coordinates.Models.DTO
 {
     public class GaugePositionDTO
     {

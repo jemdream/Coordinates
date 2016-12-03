@@ -6,7 +6,7 @@ namespace Coordinates.Measurements.Elements
     public class Hole : BaseElement
     {
         public override int RequiredMeasurementCount { get; } = 5;
-        public static int SensorRadius = 3;
+        public static double SensorRadius = 4.9985;
 
         public override bool CanCalculate()
         {

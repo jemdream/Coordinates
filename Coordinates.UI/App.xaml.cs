@@ -2,16 +2,14 @@
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.DataSources;
 using Coordinates.ExternalDevices.Devices;
-using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Export;
+using Coordinates.Models.DTO;
 using Coordinates.UI.Services;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.Services.SettingsServices;

@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\GaugePositionDTO.cs" />
     <Compile Include="DTO\Position.cs" />
     <Compile Include="Helpers\DescriptionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

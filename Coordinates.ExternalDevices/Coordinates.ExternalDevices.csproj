@@ -118,7 +118,6 @@
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="IConnection.cs" />
-    <Compile Include="Models\GaugePositionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Coordinates.ExternalDevices.rd.xml" />
   </ItemGroup>

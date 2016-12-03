@@ -93,7 +93,7 @@
                                   SelectedIndex="0" Width="250"
                                   RelativePanel.AlignLeftWithPanel="True"
                                   RelativePanel.Below="LoggingFolderHyperlinkButton">
-                            <ComboBoxItem>3 [mm]</ComboBoxItem>
+                            <ComboBoxItem>4.9985 [mm]</ComboBoxItem>
                         </ComboBox>
 
                     </RelativePanel>

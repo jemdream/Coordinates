@@ -7,6 +7,11 @@ namespace Coordinates.Measurements.Helpers
 {
     public static class ExtensionMethods
     {
+        public static double Round(this double value)
+        {
+            return Math.Round(value, 2, MidpointRounding.AwayFromZero);
+        }
+
         /// <summary>
         /// Returns -Key(axis):Value(Position on axis value)- according to provided plane
         /// </summary>

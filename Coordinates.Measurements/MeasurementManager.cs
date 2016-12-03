@@ -4,8 +4,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Coordinates.ExternalDevices.DataSources;
-using Coordinates.ExternalDevices.Helpers;
-using Coordinates.ExternalDevices.Models;
 using Coordinates.Measurements.Helpers;
 using Coordinates.Measurements.Types;
 using Coordinates.Models.DTO;

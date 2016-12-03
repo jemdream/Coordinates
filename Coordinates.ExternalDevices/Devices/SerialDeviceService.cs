@@ -15,7 +15,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
 using Coordinates.ExternalDevices.Connections;
 using Coordinates.ExternalDevices.Helpers;
-using Coordinates.ExternalDevices.Models;
+using Coordinates.Models.DTO;
 
 namespace Coordinates.ExternalDevices.Devices
 {

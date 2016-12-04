@@ -111,7 +111,6 @@
     <Compile Include="Connections\BaseConnectionService.cs" />
     <Compile Include="Connections\IConnectionService.cs" />
     <Compile Include="DataSources\IDataSource.cs" />
-    <Compile Include="Devices\IDeviceService.cs" />
     <Compile Include="Devices\MockDeviceService.cs" />
     <Compile Include="Devices\SerialDeviceService.cs" />
     <Compile Include="Events\ConnectionEvents\DiagnosticEvent.cs" />

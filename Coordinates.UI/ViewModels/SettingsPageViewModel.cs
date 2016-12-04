@@ -1,8 +1,13 @@
 using Template10.Mvvm;
-using Coordinates.UI.ViewModels.Interfaces;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface ISettingsPageViewModel
+    {
+        ISettingsPartViewModel SettingsPartViewModel { get; }
+        IAboutPartViewModel AboutPartViewModel { get; }
+    }
+
     public class SettingsPageViewModel : ViewModelBase, ISettingsPageViewModel
     {
         public SettingsPageViewModel(ISettingsPartViewModel settingsPartViewModel, IAboutPartViewModel aboutPartViewModel)

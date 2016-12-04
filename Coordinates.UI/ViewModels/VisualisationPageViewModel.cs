@@ -2,13 +2,19 @@
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
-using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Prism.Events;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface IVisualisationPageViewModel
+    {
+        bool IsAvailable { get; }
+        IMeasurementMethodViewModel MeasurementMethodViewModel { get; }
+        bool RenderCharts { get; }
+    }
+
     public class VisualisationPageViewModel : ViewModelBase, IVisualisationPageViewModel
     {
         private readonly IEventAggregator _eventAggregator;

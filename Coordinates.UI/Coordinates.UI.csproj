@@ -131,9 +131,7 @@
     <Compile Include="ViewModels\ConnectionSetupViewModel.cs" />
     <Compile Include="Helpers\ExceptionMessages.cs" />
     <Compile Include="ViewModels\InstructionsViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IConnectionSetupViewModel.cs" />
     <Compile Include="Messages\GoNextMeasurementMsg.cs" />
-    <Compile Include="ViewModels\Interfaces\IMeasurementViewModelBase.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementElementSelectionViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementSelectionCalculationViewModel.cs" />
     <Compile Include="ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs" />
@@ -145,15 +143,6 @@
     <Compile Include="Services\SettingsServices\ISettingsService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ViewModels\AboutPartViewModel.cs" />
-    <Compile Include="ViewModels\CodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IAboutPartViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ICodingPlaygroundViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IDetailPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IMeasurementsPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ISettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\ISettingsPartViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IVisualisationPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MeasurementsPageViewModel.cs" />
@@ -195,9 +184,6 @@
     </Compile>
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CodingPlayground.xaml.cs">
-      <DependentUpon>CodingPlayground.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -308,10 +294,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CodingPlayground.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -339,9 +321,9 @@
     <Folder Include="ViewModels\Instructions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj">
+    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.DataSources.csproj">
       <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
-      <Name>Coordinates.ExternalDevices</Name>
+      <Name>Coordinates.DataSources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Coordinates.Measurements\Coordinates.Measurements.csproj">
       <Project>{2a1b41e3-29ba-4ca3-bfbc-97f695695f29}</Project>

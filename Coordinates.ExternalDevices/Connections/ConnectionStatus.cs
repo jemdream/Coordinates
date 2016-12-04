@@ -1,7 +1,7 @@
 ﻿using System;
 using Coordinates.Models.Helpers;
 
-namespace Coordinates.ExternalDevices
+namespace Coordinates.DataSources.Connections
 {
     [Flags]
     public enum ConnectionStatus

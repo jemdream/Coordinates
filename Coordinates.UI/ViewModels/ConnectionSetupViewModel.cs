@@ -1,13 +1,20 @@
 using System;
 using System.Windows.Input;
-using Coordinates.ExternalDevices;
-using Coordinates.ExternalDevices.Connections;
+using Coordinates.DataSources;
+using Coordinates.DataSources.Connections;
 using Coordinates.Measurements;
 using Coordinates.Models.DTO;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface IConnectionSetupViewModel
+    {
+        ICommand ConnectCommand { get; }
+        ICommand DisconnectCommand { get; }
+        ConnectionStatus ConnectionStatus { get; set; }
+        Position Position { get; }
+    }
     public class ConnectionSetupViewModel : ViewModelBase, IConnectionSetupViewModel
     {
         private readonly IConnectionService _connectionService;

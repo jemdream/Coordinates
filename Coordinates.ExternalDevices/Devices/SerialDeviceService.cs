@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -13,17 +12,18 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
-using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.Helpers;
-using Coordinates.ExternalDevices.Models;
+using Coordinates.DataSources.Connections;
+using Coordinates.DataSources.Exceptions;
+using Coordinates.DataSources.Helpers;
+using Coordinates.Models.DTO;
 
-namespace Coordinates.ExternalDevices.Devices
+namespace Coordinates.DataSources.Devices
 {
     /// <summary>
     /// Implementation of STM32F4 VCP connection.
     /// TODO ProcessBuffer method could be extracted into another class - StmDataParser/Mapper
     /// </summary>
-    public class SerialDeviceService : BaseConnectionService, IDeviceService<GaugePositionDTO>
+    public class SerialDeviceService : BaseConnectionService, IDataSource<GaugePositionDTO>
     {
         private SerialDevice _device;
         private DataReader _dataReaderObject;
@@ -43,13 +43,12 @@ namespace Coordinates.ExternalDevices.Devices
 
         private readonly LoggingChannel _loggingChannel = new LoggingChannel(nameof(SerialDeviceService), new LoggingChannelOptions(Guid.NewGuid()));
         
-        public SerialDeviceService(Subject<GaugePositionDTO> dataSourceSubject, ILoggingSession loggingSession) : base(loggingSession)
+        public SerialDeviceService(ILoggingSession loggingSession) : base(loggingSession)
         {
             loggingSession.AddLoggingChannel(_loggingChannel);
-            var t = _loggingChannel.Enabled;
 
             InitializeTokens();
-            _dataSourceSubject = dataSourceSubject;
+            _dataSourceSubject = new Subject<GaugePositionDTO>();
             DataStream = _dataSourceSubject.AsObservable();
         }
 

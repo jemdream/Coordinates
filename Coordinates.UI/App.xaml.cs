@@ -2,21 +2,18 @@
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
-using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.DataSources;
-using Coordinates.ExternalDevices.Devices;
-using Coordinates.ExternalDevices.Models;
+using Coordinates.DataSources;
+using Coordinates.DataSources.Connections;
+using Coordinates.DataSources.Devices;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Export;
+using Coordinates.Models.DTO;
 using Coordinates.UI.Services;
 using Coordinates.UI.Services.ServiceLocator;
 using Coordinates.UI.Services.SettingsServices;
 using Coordinates.UI.ViewModels;
-using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementFlow;
 using Coordinates.UI.ViewModels.MeasurementViewModels;
 using Coordinates.UI.Views;
@@ -54,16 +51,6 @@ namespace Coordinates.UI
             // Logger
             await _container.Resolve<IFileLogger>().InitiateLogger();
 
-            // Setup type of window
-            var view = ApplicationView.GetForCurrentView();
-            if (view.IsFullScreenMode) view.ExitFullScreenMode();
-
-            var size = new Size(1366, 768);
-
-            view.SetPreferredMinSize(size);
-            ApplicationView.PreferredLaunchViewSize = size;
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            
             // Setup main window
             if (!(Window.Current.Content is ModalDialog))
             {
@@ -132,7 +119,6 @@ namespace Coordinates.UI
 
             // Menu 
             container.RegisterType<IMeasurementsPageViewModel, MeasurementsPageViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ICodingPlaygroundViewModel, CodingPlaygroundViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IVisualisationPageViewModel, VisualisationPageViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConnectionSetupViewModel, ConnectionSetupViewModel>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMeasurementMethodViewModel, MeasurementMethodViewModel>(new ContainerControlledLifetimeManager());

@@ -24,7 +24,24 @@
     d:DataContext="{d:DesignInstance measurementViewModels:ElementViewModel}">
 
     <UserControl.Resources>
+        
         <converters:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+        <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
+        <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
+        <converters2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <converters:ValueWhenConverter x:Key="VisibleWhenTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
 
         <Style TargetType="TextBlock" x:Key="PositionTextBlockStyle">
             <Setter Property="Margin" Value="5"/>
@@ -49,17 +66,80 @@
             </Grid>
         </DataTemplate>
 
-        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-        <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
-        <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
-        <converters2:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
         <DataTemplate x:Name="HoleResultDataTemplate" x:DataType="models:HoleResult">
-            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                           Text="R"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding R}"/>
+                </TextBlock>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="Z0"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding Z0}"/>
+                </TextBlock>
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" 
+                           Text="Y0"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding Y0}"/>
+                </TextBlock>
+                
+                <TextBlock Grid.Row="3" Grid.Column="0" 
+                           Text="X0"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding X0}"/>
+                </TextBlock>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="SurfaceResultDataTemplate" x:DataType="models:SurfaceResult">
-            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                           Text="A0"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding A0}"/>
+                </TextBlock>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="A1"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding A1}"/>
+                </TextBlock>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" 
+                           Text="A2"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" >
+                    <Run Text="&#160;=&#160;"/>
+                    <Run Text="{Binding A2}"/>
+                </TextBlock>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
@@ -70,18 +150,6 @@
                     ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
                     HoleResultDataTemplate="{StaticResource HoleResultDataTemplate}"
                     SurfaceResultDataTemplate="{StaticResource SurfaceResultDataTemplate}" />
-
-        <converters:ValueWhenConverter x:Key="VisibleWhenTrueConverter">
-            <converters:ValueWhenConverter.When>
-                <x:Boolean>True</x:Boolean>
-            </converters:ValueWhenConverter.When>
-            <converters:ValueWhenConverter.Value>
-                <Visibility>Visible</Visibility>
-            </converters:ValueWhenConverter.Value>
-            <converters:ValueWhenConverter.Otherwise>
-                <Visibility>Collapsed</Visibility>
-            </converters:ValueWhenConverter.Otherwise>
-        </converters:ValueWhenConverter>
     </UserControl.Resources>
 
     <Grid>
@@ -124,6 +192,7 @@
                   SelectionChanged="Selector_OnSelectionChanged"
                   Loaded="FrameworkElement_OnLoaded"
                   OddRowBackground="LightBlue"
+                  Margin="0,0,0,5"
                   SelectionMode="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToSelectionMode}, ConverterParameter={Binding Path=SelectedPositions}}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -155,7 +224,7 @@
                    Text="{Binding Plane, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringFormatConverter}, ConverterParameter='Płaszczyzna: \{0\}'}"/>
 
         <!--Calculations-->
-        <ContentControl Grid.Row="4" Margin="0,5,0,5" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+        <ContentControl Grid.Row="4" Margin="0,5,0,0" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
                         Visibility="{Binding IsSelectable, ElementName=MeasurementGridUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

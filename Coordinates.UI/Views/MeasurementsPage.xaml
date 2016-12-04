@@ -10,7 +10,6 @@
     xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
     xmlns:measurementFlow="using:Coordinates.UI.Views.MeasurementFlow"
     xmlns:measurementFlowViewModel="using:Coordinates.UI.ViewModels.MeasurementFlow"
-    xmlns:interfaces="using:Coordinates.UI.ViewModels.Interfaces"
     mc:Ignorable="d"
     Name="Page"
     d:DataContext="{d:DesignInstance vm:MeasurementsPageViewModel}"
@@ -116,7 +115,7 @@
             </VisualStateManager.VisualStateGroups>
 
             <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="interfaces:IMeasurementViewModelBase">
+                <DataTemplate x:DataType="measurementFlowViewModel:IMeasurementViewModelBase">
                     <TextBlock Text="{Binding Title}"/>
                 </DataTemplate>
             </Pivot.HeaderTemplate>

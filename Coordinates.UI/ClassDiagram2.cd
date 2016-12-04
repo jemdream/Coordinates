@@ -2,31 +2,34 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Coordinates.UI.ViewModels.MeasurementViewModels.MeasurementMethodViewModel">
     <Position X="0.5" Y="0.5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>GEABCQgAAoAAEBAwQAgAwAAAECASQAQBAxgAABAAAAA=</HashCode>
       <FileName>ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Coordinates.UI.ViewModels.MeasurementFlow.MeasurementProcessViewModel">
-    <Position X="4.25" Y="0.5" Width="3.5" />
+    <Position X="7.75" Y="0.5" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAEAEAAgACAAEAAAAAAQAAAAQAAAAAAAAI=</HashCode>
+      <HashCode>CEAEAAAAACACCEAAgAAAAEAAAAAAQAAAAQAAAAAAAAA=</HashCode>
       <FileName>ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Coordinates.UI.ViewModels.MeasurementViewModels.IMeasurementMethodViewModel">
-    <Position X="0.5" Y="2.5" Width="2.5" />
+    <Position X="4.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AEABCAgAAAAAAAAQQAAAQAAAACAAQAAAAAgAABAAAAA=</HashCode>
       <FileName>ViewModels\MeasurementViewModels\MeasurementMethodViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Coordinates.UI.ViewModels.MeasurementFlow.IMeasurementProcessViewModel">
-    <Position X="4.25" Y="4.5" Width="2.5" />
+    <Position X="11.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAAAAACAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\MeasurementFlow\MeasurementProcessViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>

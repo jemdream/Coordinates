@@ -2,13 +2,21 @@
 using System.Linq;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.UI.Messages;
-using Coordinates.UI.ViewModels.Interfaces;
 using Coordinates.UI.ViewModels.MeasurementFlow;
 using Template10.Mvvm;
 using Prism.Events;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface IMeasurementsPageViewModel
+    {
+        IEventAggregator EventAggregator { get; }
+        List<IMeasurementViewModelBase> MeasurementFlowViewModels { get; }
+        int SelectedTabIndex { get; set; }
+
+        //MockDeviceService MockingDataService { get; set; } // TODO MOCK CONNECTION
+    }
+
     public class MeasurementsPageViewModel : ViewModelBase, IMeasurementsPageViewModel
     {
         private int _selectedTabIndex;

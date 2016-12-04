@@ -140,7 +140,7 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+            Assert.IsTrue(((ErrorResult)calculate).Message.StartsWith("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
         }
 
         [TestMethod]
@@ -173,7 +173,7 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+            Assert.IsTrue(((ErrorResult)calculate).Message.StartsWith("Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
         }
 
         [TestMethod]
@@ -206,7 +206,7 @@ namespace Coordinates.Measurements.Tests.Types
             var calculate = measurements.Calculate();
 
             // Assert
-            Assert.IsTrue(((ErrorResult)calculate).Message.Equals("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej. Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
+            Assert.IsTrue(((ErrorResult)calculate).Message.StartsWith("Pierwsza płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej. Druga płaszczyzna: Wybrane pomiary są zbyt blisko siebie lub wykonane w linii prostej."));
         }
 
         [TestMethod]

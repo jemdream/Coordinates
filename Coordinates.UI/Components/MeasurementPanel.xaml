@@ -14,46 +14,32 @@
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <UserControl.Resources>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
-            <Style.Setters>
-                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
-            </Style.Setters>
-        </Style>
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
-            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords" Foreground="Red"/>
         </DataTemplate>
 
-        <DataTemplate x:Name="OneHoleResultDataTemplate" x:DataType="models:OneHoleResult">
-            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="TwoHolesResultDataTemplate" x:DataType="models:TwoHolesResult">
-            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="SurfaceParalellismResultDataTemplate" x:DataType="models:SurfaceParalellismResult">
-            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="SurfacePerpendicularityResultDataTemplate" x:DataType="models:SurfacePerpendicularityResult">
-            <TextBlock Text="{Binding }" Style="{StaticResource BaseTextBlockStyle}"/>
+        <DataTemplate x:Name="DefaultResultDataTemplate" x:DataType="models:ICalculationResult">
+            <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
         </DataTemplate>
 
         <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
                     ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
-                    OneHoleResultDataTemplate="{StaticResource OneHoleResultDataTemplate}"
-                    TwoHolesResultDataTemplate="{StaticResource TwoHolesResultDataTemplate}"
-                    SurfaceParalellismResultDataTemplate="{StaticResource SurfaceParalellismResultDataTemplate}"
-                    SurfacePerpendicularityResultDataTemplate="{StaticResource SurfacePerpendicularityResultDataTemplate}"/>
+                    DefaultResultDataTemplate="{StaticResource DefaultResultDataTemplate}"/>
+        
     </UserControl.Resources>
 
     <RelativePanel>
+        <TextBlock x:Name="WynikiHeaderTextBlock"
+            Text="Wynik obliczeń" Style="{StaticResource BaseTextBlockStyle}"
+                   Margin="0,10,0,10"
+                   RelativePanel.AlignTopWithPanel="True"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"/>
+        
         <ContentControl x:Name="Wyniki" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
-                        Margin="0,10,0,0"
-                        RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
-                        RelativePanel.Above="SaveButton"/>
+                        RelativePanel.Below="WynikiHeaderTextBlock"/>
         
         <AppBarButton x:Name="SaveButton" Icon="Save" Label="Zapisz jako" Command="{Binding ExportData}" Margin="0"
                       RelativePanel.AlignHorizontalCenterWithPanel="True"

@@ -57,7 +57,7 @@
                    TextAlignment="Center" Margin="25"
                    RelativePanel.Below="PageHeader"/>
 
-        <TextBlock x:Name="OpisText" Text="Współrzędnościowe pomiary na maszynie Mitutoyo" Style="{StaticResource BaseTextBlockStyle}" 
+        <TextBlock x:Name="OpisText" Text="Współrzędnościowe pomiary przy użyciu maszyny Mitutoyo" Style="{StaticResource BaseTextBlockStyle}" 
                    TextAlignment="Center" Margin="25"
                    RelativePanel.Below="HeaderText"/>
 

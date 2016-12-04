@@ -1,9 +1,17 @@
 ﻿using System;
-using Coordinates.UI.ViewModels.Interfaces;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface IAboutPartViewModel
+    {
+        Uri Logo { get; }
+        string DisplayName { get; }
+        string Publisher { get; }
+        string Version { get; }
+        Uri GitLink { get; }
+    }
+
     public class AboutPartViewModel : ViewModelBase, IAboutPartViewModel
     {
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
@@ -21,6 +29,6 @@ namespace Coordinates.UI.ViewModels
             }
         }
 
-        public Uri RateMe => new Uri("http://aka.ms/template10");
+        public Uri GitLink => new Uri("https://github.com/jemdream");
     }
 }

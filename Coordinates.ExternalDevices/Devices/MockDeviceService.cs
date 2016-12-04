@@ -4,12 +4,12 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
-using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.Models;
+using Coordinates.DataSources.Connections;
+using Coordinates.Models.DTO;
 
-namespace Coordinates.ExternalDevices.Devices
+namespace Coordinates.DataSources.Devices
 {
-    public class MockDeviceService : BaseConnectionService, IDeviceService<GaugePositionDTO>
+    public class MockDeviceService : BaseConnectionService, IDataSource<GaugePositionDTO>
     {
         private readonly Subject<GaugePositionDTO> _mockSource;
         private CompositeDisposable _mockingDataSource = new CompositeDisposable();

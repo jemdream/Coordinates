@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Coordinates.ExternalDevices.Events.ConnectionEvents;
+using Coordinates.DataSources.Events;
 
-namespace Coordinates.ExternalDevices.Connections
+namespace Coordinates.DataSources.Connections
 {
     public interface IConnectionService : IDisposable
     {
-        IConnection ConnectionConfiguration { get; }
+        IConnectionConfiguration ConnectionConfiguration { get; }
 
         ConnectionStatus ConnectionStatus { get; }
         IObservable<DiagnosticEvent> DiagnosticEventsStream { get; }

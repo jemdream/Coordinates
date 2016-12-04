@@ -3,8 +3,8 @@
   <Identity Name="09ffe545-bf76-4470-98ee-320da5e9b9b0" Publisher="CN=Jemdream" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="09ffe545-bf76-4470-98ee-320da5e9b9b0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Coordinates.UI</DisplayName>
-    <PublisherDisplayName>Jemdream</PublisherDisplayName>
+    <DisplayName>Coordinates</DisplayName>
+    <PublisherDisplayName>Jędrzej Dankowski</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

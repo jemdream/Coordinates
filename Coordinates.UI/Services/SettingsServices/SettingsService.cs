@@ -1,4 +1,6 @@
 using System;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Template10.Common;
 using Template10.Utils;
 using Windows.UI.Xaml;
@@ -11,12 +13,10 @@ namespace Coordinates.UI.Services.SettingsServices
     /// </summary>
     public class SettingsService : ISettingsService
     {
-        private readonly IFileLogger _fileLogger;
         private readonly ISettingsHelper _helper;
 
-        public SettingsService(IFileLogger fileLogger)
+        public SettingsService()
         {
-            _fileLogger = fileLogger;
             _helper = new SettingsHelper();
         }
 
@@ -32,6 +32,17 @@ namespace Coordinates.UI.Services.SettingsServices
                     BootStrapper.Current.UpdateShellBackButton();
                     BootStrapper.Current.NavigationService.Refresh();
                 });
+            }
+        }
+
+        public bool UseFullScreen
+        {
+            get { return _helper.Read<bool>(nameof(UseFullScreen), true); }
+            set
+            {
+                _helper.Write(nameof(UseFullScreen), value);
+                if (value) SetupFullScreen();
+                else SetupWindow();
             }
         }
 
@@ -59,6 +70,31 @@ namespace Coordinates.UI.Services.SettingsServices
                 _helper.Write(nameof(CacheMaxDuration), value);
                 BootStrapper.Current.CacheMaxDuration = value;
             }
+        }
+
+        private static void SetupFullScreen()
+        {
+            // Setup type of window
+            var view = ApplicationView.GetForCurrentView();
+            if (!view.IsFullScreenMode) view.TryEnterFullScreenMode();
+
+            var size = new Size(1366, 768);
+
+            view.SetPreferredMinSize(size);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+        }
+
+        private static void SetupWindow()
+        {
+            // Setup type of window
+            var view = ApplicationView.GetForCurrentView();
+            if (view.IsFullScreenMode) view.ExitFullScreenMode();
+            
+            var size = new Size(1366, 768);
+
+            view.SetPreferredMinSize(size);
+            ApplicationView.PreferredLaunchViewSize = size;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
     }
 }

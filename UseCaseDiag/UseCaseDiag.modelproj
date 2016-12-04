@@ -22,12 +22,6 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="CodeMap.dgml">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Copy of CodeMap.dgml">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="UseCaseUML.usecasediagram">
       <SubType>Content</SubType>
     </Content>

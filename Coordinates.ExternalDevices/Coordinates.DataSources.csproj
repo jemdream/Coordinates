@@ -118,13 +118,15 @@
     <Compile Include="Exceptions\ExceptionMessages.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Coordinates.ExternalDevices.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coordinates.Models\Coordinates.Models.csproj">
       <Project>{f1ec649c-e7f4-44b9-b495-a8b7d8969822}</Project>
       <Name>Coordinates.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\Coordinates.DataSources.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

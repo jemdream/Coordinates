@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.UI", "Coordinat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.Models", "Coordinates.Models\Coordinates.Models.csproj", "{F1EC649C-E7F4-44B9-B495-A8B7D8969822}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.ExternalDevices", "Coordinates.ExternalDevices\Coordinates.ExternalDevices.csproj", "{C8D77F96-446D-455A-A9A1-5C858D69BF0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.DataSources", "Coordinates.ExternalDevices\Coordinates.DataSources.csproj", "{C8D77F96-446D-455A-A9A1-5C858D69BF0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coordinates.Measurements", "Coordinates.Measurements\Coordinates.Measurements.csproj", "{2A1B41E3-29BA-4CA3-BFBC-97F695695F29}"
 EndProject

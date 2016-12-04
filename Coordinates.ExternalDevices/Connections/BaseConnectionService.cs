@@ -4,9 +4,9 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
-using Coordinates.ExternalDevices.Events.ConnectionEvents;
+using Coordinates.DataSources.Events;
 
-namespace Coordinates.ExternalDevices.Connections
+namespace Coordinates.DataSources.Connections
 {
     public abstract class BaseConnectionService : IConnectionService
     {
@@ -30,7 +30,7 @@ namespace Coordinates.ExternalDevices.Connections
             });
         }
 
-        public virtual IConnection ConnectionConfiguration { get; }
+        public virtual IConnectionConfiguration ConnectionConfiguration { get; }
 
         public ConnectionStatus ConnectionStatus
         {

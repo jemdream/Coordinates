@@ -3,7 +3,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using Coordinates.ExternalDevices;
+using Coordinates.DataSources.Connections;
 
 namespace Coordinates.UI.Helpers.Converters
 {

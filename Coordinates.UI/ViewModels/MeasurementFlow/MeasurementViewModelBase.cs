@@ -1,12 +1,18 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Coordinates.UI.Messages;
-using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
 using Template10.Mvvm;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow
 {
+    public interface IMeasurementViewModelBase
+    {
+        string Title { get; }
+        ICommand GoBackCommand { get; }
+        ICommand GoNextCommand { get; }
+    }
+
     public abstract class MeasurementViewModelBase : ViewModelBase, IMeasurementViewModelBase
     {
         protected readonly IEventAggregator EventAggregator;

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Measurements.Types;
-using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
 
 namespace Coordinates.UI.ViewModels.MeasurementFlow

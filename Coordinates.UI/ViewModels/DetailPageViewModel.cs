@@ -3,10 +3,14 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
-using Coordinates.UI.ViewModels.Interfaces;
 
 namespace Coordinates.UI.ViewModels
 {
+    public interface IDetailPageViewModel
+    {
+        string Value { get; set; }
+    }
+
     public class DetailPageViewModel : ViewModelBase, IDetailPageViewModel
     {
         private string _value = "Default";

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -13,12 +12,12 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
-using Coordinates.ExternalDevices.Connections;
-using Coordinates.ExternalDevices.DataSources;
-using Coordinates.ExternalDevices.Helpers;
+using Coordinates.DataSources.Connections;
+using Coordinates.DataSources.Exceptions;
+using Coordinates.DataSources.Helpers;
 using Coordinates.Models.DTO;
 
-namespace Coordinates.ExternalDevices.Devices
+namespace Coordinates.DataSources.Devices
 {
     /// <summary>
     /// Implementation of STM32F4 VCP connection.

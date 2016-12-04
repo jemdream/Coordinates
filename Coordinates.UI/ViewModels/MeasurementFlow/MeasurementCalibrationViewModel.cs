@@ -6,7 +6,6 @@ using Windows.UI.Xaml.Navigation;
 using Coordinates.Measurements;
 using Coordinates.Models.DTO;
 using Coordinates.UI.Messages;
-using Coordinates.UI.ViewModels.Interfaces;
 using Prism.Events;
 using Template10.Mvvm;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using Coordinates.UI.Helpers;
 using Coordinates.UI.ViewModels;
-using Coordinates.UI.ViewModels.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace Coordinates.UI.Services.ServiceLocator

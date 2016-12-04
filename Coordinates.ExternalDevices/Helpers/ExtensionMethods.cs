@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 
-namespace Coordinates.ExternalDevices.Helpers
+namespace Coordinates.DataSources.Helpers
 {
     public static class ExtensionMethods
     {

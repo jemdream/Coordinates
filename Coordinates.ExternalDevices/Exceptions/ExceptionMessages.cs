@@ -1,4 +1,4 @@
-﻿namespace Coordinates.ExternalDevices.Helpers
+﻿namespace Coordinates.DataSources.Exceptions
 {
     /// <summary>
     /// Source of exception messages

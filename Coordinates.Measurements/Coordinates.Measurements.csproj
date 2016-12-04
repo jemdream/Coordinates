@@ -144,7 +144,7 @@
     <EmbeddedResource Include="Properties\Coordinates.Measurements.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.DataSources.csproj">
+    <ProjectReference Include="..\Coordinates.DataSources\Coordinates.DataSources.csproj">
       <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
       <Name>Coordinates.DataSources</Name>
     </ProjectReference>

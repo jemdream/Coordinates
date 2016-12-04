@@ -93,8 +93,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="Coordinates.UI_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
@@ -321,7 +319,7 @@
     <Folder Include="ViewModels\Instructions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Coordinates.ExternalDevices\Coordinates.DataSources.csproj">
+    <ProjectReference Include="..\Coordinates.DataSources\Coordinates.DataSources.csproj">
       <Project>{c8d77f96-446d-455a-a9a1-5c858d69bf0a}</Project>
       <Name>Coordinates.DataSources</Name>
     </ProjectReference>

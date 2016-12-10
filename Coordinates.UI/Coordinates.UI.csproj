@@ -119,6 +119,7 @@
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanToSelectionMode.cs" />
     <Compile Include="Helpers\Converters\PositionTypeToBackground.cs" />
+    <Compile Include="Helpers\Converters\RadianMicroConverter.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CalculationResultTemplateSelector.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\CoordsViewModelBaseSelector.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
@@ -315,8 +316,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Services\Export\" />
-    <Folder Include="ViewModels\Instructions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coordinates.DataSources\Coordinates.DataSources.csproj">

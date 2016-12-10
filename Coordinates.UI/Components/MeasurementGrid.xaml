@@ -26,6 +26,7 @@
     <UserControl.Resources>
         
         <converters:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+        <converters:StringFormatConverter x:Name="DoubleDecimalConverter" Format="{}{0:0.00}" />
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
         <converters1:BooleanToSelectionMode x:Key="BooleanToSelectionMode"/>
         <converters1:ValueToggleConverter x:Key="ValueToggleConverter"/>
@@ -82,28 +83,28 @@
                            Text="R"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding R}"/>
+                    <Run Text="{Binding R, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" 
                            Text="Z0"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding Z0}"/>
+                    <Run Text="{Binding Z0, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
                 
                 <TextBlock Grid.Row="2" Grid.Column="0" 
                            Text="Y0"/>
                 <TextBlock Grid.Row="2" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding Y0}"/>
+                    <Run Text="{Binding Y0, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
                 
                 <TextBlock Grid.Row="3" Grid.Column="0" 
                            Text="X0"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding X0}"/>
+                    <Run Text="{Binding X0, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
             </Grid>
         </DataTemplate>
@@ -123,21 +124,21 @@
                            Text="A0"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding A0}"/>
+                    <Run Text="{Binding A0, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" 
                            Text="A1"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding A1}"/>
+                    <Run Text="{Binding A1, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" 
                            Text="A2"/>
                 <TextBlock Grid.Row="2" Grid.Column="1" >
                     <Run Text="&#160;=&#160;"/>
-                    <Run Text="{Binding A2}"/>
+                    <Run Text="{Binding A2, Converter={StaticResource DoubleDecimalConverter}}"/>
                 </TextBlock>
             </Grid>
         </DataTemplate>

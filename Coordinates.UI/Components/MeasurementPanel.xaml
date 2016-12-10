@@ -7,6 +7,8 @@
     xmlns:models="using:Coordinates.Measurements.Models"
     xmlns:dataTemplateSelectors="using:Coordinates.UI.Helpers.DataTemplateSelectors"
     xmlns:measurementViewModels="using:Coordinates.UI.ViewModels.MeasurementViewModels"
+    xmlns:converters="using:Coordinates.UI.Helpers.Converters"
+    xmlns:converters1="using:Template10.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -14,34 +16,61 @@
     d:DataContext="{d:DesignInstance measurementViewModels:MeasurementMethodViewModel}">
 
     <UserControl.Resources>
+        <converters1:StringFormatConverter x:Name="XyzStringConverter" Format="{}{0:0.00}" />
+
+        <converters:ValueToMicroConverter x:Name="ValueToMicroConverter"
+                                          UnderThresholdSuffix="[µrad]"
+                                          OverThresholdSuffix="[rad]"/>
+
         <DataTemplate x:Name="ErrorResultDataTemplate" x:DataType="models:ErrorResult">
             <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords" Foreground="Red"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="TwoHolesResultDataTemplate" x:DataType="models:TwoHolesResult">
+            <TextBlock TextWrapping="WrapWholeWords">
+                <Run Text="L =&#160;"/>
+                <Run Text="{Binding Result, Converter={StaticResource XyzStringConverter}}"/>
+                <Run Text="&#160;[mm]"/>
+            </TextBlock>
         </DataTemplate>
 
         <DataTemplate x:Name="DefaultResultDataTemplate" x:DataType="models:ICalculationResult">
             <TextBlock Text="{Binding }" TextWrapping="WrapWholeWords"/>
         </DataTemplate>
 
+        <DataTemplate x:Name="RadianResultDataTemplate" x:DataType="models:ICalculationResult">
+            <TextBlock TextWrapping="WrapWholeWords">
+                <Run Text="ψ =&#160;"/>
+                <Run Text="{Binding Converter={StaticResource ValueToMicroConverter}}"/>
+            </TextBlock>
+        </DataTemplate>
+
         <dataTemplateSelectors:CalculationResultTemplateSelector x:Key="CalculationResultTemplateSelector"
+                    TwoHolesResultDataTemplate="{StaticResource TwoHolesResultDataTemplate}"
+                    RadianResultDataTemplate="{StaticResource RadianResultDataTemplate}"
                     ErrorResultDataTemplate="{StaticResource ErrorResultDataTemplate}"
                     DefaultResultDataTemplate="{StaticResource DefaultResultDataTemplate}"/>
-        
+
     </UserControl.Resources>
 
     <RelativePanel>
         <TextBlock x:Name="WynikiHeaderTextBlock"
-            Text="Wynik obliczeń" Style="{StaticResource BaseTextBlockStyle}"
+                   Text="Wynik obliczeń" Style="{StaticResource BaseTextBlockStyle}"
                    Margin="0,10,0,10"
                    RelativePanel.AlignTopWithPanel="True"
                    RelativePanel.AlignLeftWithPanel="True"
                    RelativePanel.AlignRightWithPanel="True"/>
-        
-        <ContentControl x:Name="Wyniki" ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" Content="{Binding Calculate}" 
+
+        <ContentControl x:Name="Wyniki" 
+                        ContentTemplateSelector="{StaticResource CalculationResultTemplateSelector}" 
+                        Content="{Binding Calculate}" 
                         RelativePanel.AlignLeftWithPanel="True"
                         RelativePanel.AlignRightWithPanel="True"
                         RelativePanel.Below="WynikiHeaderTextBlock"/>
-        
-        <AppBarButton x:Name="SaveButton" Icon="Save" Label="Zapisz jako" Command="{Binding ExportData}" Margin="0"
+
+        <AppBarButton x:Name="SaveButton" Icon="Save" 
+                      Label="Zapisz jako" Margin="0"
+                      Command="{Binding ExportData}" 
                       RelativePanel.AlignHorizontalCenterWithPanel="True"
                       RelativePanel.AlignBottomWithPanel="True"/>
     </RelativePanel>

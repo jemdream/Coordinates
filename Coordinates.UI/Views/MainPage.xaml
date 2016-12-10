@@ -7,12 +7,17 @@
       xmlns:vm="using:Coordinates.UI.ViewModels"
       xmlns:views="using:Coordinates.UI.Views"
       xmlns:instructions="using:Coordinates.UI.Views.Instructions"
+      xmlns:converters="using:Template10.Converters"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance vm:MainPageViewModel}">
 
     <Page.DataContext>
         <Binding Path="MainPageViewModel" Source="{StaticResource Locator}" x:Name="ViewModel"/>
     </Page.DataContext>
+    
+    <Page.Resources>
+        <converters:StringFormatConverter x:Name="DoubleDecimalConverter" Format="{}{0:0.00}" />
+    </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -52,8 +57,9 @@
         <controls:PageHeader x:Name="PageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" Text="Start"/>
-
-        <TextBlock x:Name="HeaderText" Text="Program Coordinates" Style="{StaticResource SubheaderTextBlockStyle}" 
+        <TextBlock x:Name="HeaderText" 
+                   Text="Program Coordinates"
+                   Style="{StaticResource SubheaderTextBlockStyle}" 
                    TextAlignment="Center" Margin="25"
                    RelativePanel.Below="PageHeader"/>
 

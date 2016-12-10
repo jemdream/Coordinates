@@ -58,7 +58,7 @@ namespace Coordinates.UI.ViewModels.MeasurementFlow
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             RaisePropertyChanged(() => MeasurementMethodViewModel);
-
+            RaisePropertyChanged(() => MeasurementMethodViewModel.Calculate);
             UpdateNavigationCommands();
 
             return base.OnNavigatedToAsync(parameter, mode, state);

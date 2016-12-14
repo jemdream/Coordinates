@@ -22,10 +22,16 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="SolutionMap.dgml">
+    <Content Include="ExternalDevicesMap_1.dgml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="SolutionMap1.dgml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UI.dgml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UI_1.dgml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="UseCaseUML.usecasediagram">

@@ -1,76 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<DirectedGraph DataVirtualized="True" GraphDirection="TopToBottom" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+<DirectedGraph DataVirtualized="True" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="157.933333333333,-35,158.666666666667,25" CodeSchemaProperty_StrongName="Coordinates.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(b24b1802-2ce4-4dea-b7cc-cfc7fe36d1a8.OutputPath)" Group="Collapsed" Label="Coordinates.UI.exe" UseManualLocation="True" />
-    <Node Id="@4" Category="CodeSchema_Assembly" Bounds="134.255,129.00005,208.023333333333,25" CodeSchemaProperty_StrongName="Coordinates.DataSources, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(c8d77f96-446d-455a-a9a1-5c858d69bf0a.OutputPath)" Group="Collapsed" Label="Coordinates.DataSources.dll" UseManualLocation="True" />
-    <Node Id="@6" Category="CodeSchema_Assembly" Bounds="-218.333333333333,41,181.2,25" CodeSchemaProperty_StrongName="Coordinates.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(f1ec649c-e7f4-44b9-b495-a8b7d8969822.OutputPath)" Group="Collapsed" Label="Coordinates.Models.dll" UseManualLocation="True" />
-    <Node Id="@8" Category="CodeSchema_Assembly" Bounds="9.65149678874941,42.99995,220.106666666667,25" CodeSchemaProperty_StrongName="Coordinates.Measurements, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(2a1b41e3-29ba-4ca3-bfbc-97f695695f29.OutputPath)" Group="Collapsed" Label="Coordinates.Measurements.dll" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=MainPage)" Category="CodeSchema_Class" Bounds="65.9761424045005,-79.8166733742512,113.34,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MainPage" />
+    <Node Id="(@1 @3 Type=MeasurementsPage)" Category="CodeSchema_Class" Bounds="68.046385495022,-23.8165733742512,164.816666666667,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MeasurementsPage" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=SettingsPage)" Category="CodeSchema_Class" Bounds="181.72670695023,-135.300788723451,129.4,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SettingsPage" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Shell)" Category="CodeSchema_Class" Bounds="65.4733736168969,-134.816773374251,86.2533333333333,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Shell" />
+    <Node Id="(@1 @3 Type=Splash)" Category="CodeSchema_Class" Bounds="209.334963842425,-80.3006887234513,95.3233333333335,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Splash" UseManualLocation="True" />
+    <Node Id="(@1 @5 Type=MeasurementCalibration)" Category="CodeSchema_Class" Bounds="-98.4496683555366,126.183726625749,191.44,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MeasurementCalibration" />
+    <Node Id="(@1 @5 Type=MeasurementProcess)" Category="CodeSchema_Class" Bounds="-98.4496683555366,71.1836266257488,173.893333333333,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MeasurementProcess" />
+    <Node Id="(@1 @5 Type=MeasurementSelectionCalculation)" Category="CodeSchema_Class" Bounds="-98.449668355537,236.183926625749,240.716666666667,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MeasurementSelectionCalculation" />
+    <Node Id="(@1 @5 Type=MeasurementTypeSelection)" Category="CodeSchema_Class" Bounds="-98.4496683555366,181.183826625749,206.896666666667,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="MeasurementTypeSelection" />
+    <Node Id="@2" Category="CodeSchema_Assembly" AssemblyTimestamp="12/11/2016 16:23:52" Bounds="-158.449668355537,-215.300988723451,509.576375305767,536.4852153492" CodeSchemaProperty_StrongName="Coordinates.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FilePath="$(b24b1802-2ce4-4dea-b7cc-cfc7fe36d1a8.OutputPath)" Group="Expanded" Label="Coordinates.UI.exe">
+      <Category Ref="FileSystem.Category.FileOfType.exe" />
+    </Node>
+    <Node Id="@4" Category="CodeSchema_Namespace" Bounds="-138.449668355537,-175.300888723451,469.576375305767,476.4850153492" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="7" Group="Expanded" Label="Coordinates‎.UI‎.Views" />
+    <Node Id="@6" Category="CodeSchema_Namespace" Bounds="-118.449668355537,31.1835266257489,280.716666666667,250.0005" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="4" Group="Expanded" Label="Coordinates‎.UI‎.Views‎.MeasurementFlow" UseManualLocation="True" />
+    <Node Id="@7" Category="CodeSchema_Class" Bounds="-83.7186004037167,-24.2014510792087,85.57,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="Busy" />
+    <Node Id="@8" Category="CodeSchema_Class" Bounds="-117.386828811283,-104.690520815342,152.916666666667,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="VisualisationPage" UseManualLocation="True" />
   </Nodes>
   <Links>
-    <Link Source="@2" Target="@4" Category="References" Bounds="237.342886155624,-10,0.792684010196325,130.000217306357" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="29">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@2" Target="@6" Category="References" Bounds="-58.8894140413599,-10,236.123185971184,49.1653757090686" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="142">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@2" Target="@8" Category="References" Bounds="146.044343793254,-10,72.382272888671,48.0242043859328" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="220">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_FunctionPointer" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@4" Target="@6" Category="References" Bounds="-66.9941099052781,68.1039745864208,253.27216974729,60.8960754135792" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="28">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_AttributeUse" />
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
-    <Link Source="@8" Target="@4" Category="References" Bounds="136.937635163092,67.99995,76.8109815349504,55.7156694398865" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_Calls" />
-    </Link>
-    <Link Source="@8" Target="@6" Category="References" Bounds="-28.1336272986844,54.3050271199167,37.7851240874338,0.305403006001043" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="139">
-      <Category Ref="CodeMap_ProjectReference" />
-      <Category Ref="CodeSchema_AttributeUse" />
-      <Category Ref="CodeSchema_Calls" />
-      <Category Ref="CodeSchema_ReturnTypeLink" />
-    </Link>
+    <Link Source="@2" Target="@4" Category="Contains" FetchingParent="@2" />
+    <Link Source="@4" Target="(@1 @3 Type=MainPage)" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="(@1 @3 Type=MeasurementsPage)" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="(@1 @3 Type=SettingsPage)" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="(@1 @3 Type=Shell)" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="(@1 @3 Type=Splash)" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="@6" Category="Contains" />
+    <Link Source="@4" Target="@7" Category="Contains" FetchingParent="@4" />
+    <Link Source="@4" Target="@8" Category="Contains" FetchingParent="@4" />
+    <Link Source="@6" Target="(@1 @5 Type=MeasurementCalibration)" Category="Contains" FetchingParent="@6" />
+    <Link Source="@6" Target="(@1 @5 Type=MeasurementProcess)" Category="Contains" FetchingParent="@6" />
+    <Link Source="@6" Target="(@1 @5 Type=MeasurementSelectionCalculation)" Category="Contains" FetchingParent="@6" />
+    <Link Source="@6" Target="(@1 @5 Type=MeasurementTypeSelection)" Category="Contains" FetchingParent="@6" />
+    <Link Source="@8" Target="@7" Category="CodeSchema_Calls" Bounds="-40.976983584881,-79.6905208153414,0.0296642360578545,46.4890715683501" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
   </Links>
   <Categories>
-    <Category Id="CodeMap_ProjectReference" Label="Project Reference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
     <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
-    <Category Id="CodeSchema_AttributeUse" Label="Uses Attribute" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Used by" OutgoingActionLabel="Uses Attribute" />
     <Category Id="CodeSchema_Calls" Label="Calls" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Called By" OutgoingActionLabel="Calls" />
-    <Category Id="CodeSchema_FunctionPointer" Label="Function Pointer" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Function Pointers" OutgoingActionLabel="Function Pointers" />
-    <Category Id="CodeSchema_ReturnTypeLink" Label="Return" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Return types" OutgoingActionLabel="Return types" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
+    <Category Id="CodeSchema_Namespace" Label="Namespace" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="CodeSchema_Namespace" NavigationActionLabel="Namespaces" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
     <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
-    <Category Id="References" Label="References" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
+    <Category Id="FileSystem.Category.FileOfType.exe" BasedOn="CodeSchema_Assembly" CanBeDataDriven="True" IsProviderRoot="False" />
   </Categories>
   <Properties>
+    <Property Id="AssemblyTimestamp" DataType="System.DateTime" />
     <Property Id="Bounds" DataType="System.Windows.Rect" />
     <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
     <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsFinal" Label="Is Final" Description="Flag to indicate the member is 'Final' and cannot be derived from" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
     <Property Id="CodeSchemaProperty_StrongName" Label="StrongName" Description="StrongName" DataType="System.String" />
     <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
     <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
     <Property Id="DelayedChildNodesState" Label="Delayed Child Nodes State" Description="Unspecified if the delayed child nodes state is not specified. NotFetched if the group contains child nodes that are not fetched into the graph yet. Fetched if the group has all its delayed child nodes already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
     <Property Id="DelayedCrossGroupLinksState" Label="Delayed Cross-Group Links State" Description="Unspecified if the delayed cross-group links state is not specified. NotFetched if delayed cross-group links on this node are not fetched into the graph yet. Fetched if all delayed cross-group links have already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
     <Property Id="Expression" DataType="System.String" />
+    <Property Id="FetchedChildrenCount" DataType="System.Int32" />
+    <Property Id="FetchingParent" DataType="Microsoft.VisualStudio.GraphModel.GraphNodeId" />
     <Property Id="FilePath" Label="File Path" Description="File Path" DataType="System.String" />
-    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
     <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
     <Property Id="GroupLabel" DataType="System.String" />
     <Property Id="Icon" Label="Icon" Description="Icon" DataType="System.String" />
     <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
     <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
     <Property Id="IsSourceVirtualized" Label="Link Source Virtualized" Description="If true, the link source end contains data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
     <Property Id="IsTargetVirtualized" Label="Link Target Virtualized" Description="If true, the link target end contains data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
     <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
-    <Property Id="Layout" DataType="System.String" />
     <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
     <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
     <Property Id="TargetType" DataType="System.Type" />
@@ -83,16 +82,18 @@
   </Properties>
   <QualifiedNames>
     <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
   </QualifiedNames>
   <IdentifierAliases>
     <Alias n="1" Uri="Assembly=$(b24b1802-2ce4-4dea-b7cc-cfc7fe36d1a8.OutputPathUri)" />
     <Alias n="2" Id="(@1)" />
-    <Alias n="3" Uri="Assembly=$(c8d77f96-446d-455a-a9a1-5c858d69bf0a.OutputPathUri)" />
-    <Alias n="4" Id="(@3)" />
-    <Alias n="5" Uri="Assembly=$(f1ec649c-e7f4-44b9-b495-a8b7d8969822.OutputPathUri)" />
-    <Alias n="6" Id="(@5)" />
-    <Alias n="7" Uri="Assembly=$(2a1b41e3-29ba-4ca3-bfbc-97f695695f29.OutputPathUri)" />
-    <Alias n="8" Id="(@7)" />
+    <Alias n="3" Id="Namespace=Coordinates.UI.Views" />
+    <Alias n="4" Id="(@1 @3)" />
+    <Alias n="5" Id="Namespace=Coordinates.UI.Views.MeasurementFlow" />
+    <Alias n="6" Id="(@1 @5)" />
+    <Alias n="7" Id="(@1 @3 Type=Busy)" />
+    <Alias n="8" Id="(@1 @3 Type=VisualisationPage)" />
   </IdentifierAliases>
   <Styles>
     <Style TargetType="Node" GroupLabel="Results" ValueLabel="True">
@@ -312,13 +313,7 @@
     </Style>
   </Styles>
   <Paths>
-    <Path Id="2a1b41e3-29ba-4ca3-bfbc-97f695695f29.OutputPath" Value="C:\Users\Jemdream\Documents\GitHub\Coordinates\Coordinates\Coordinates.Measurements\bin\x64\Debug\Coordinates.Measurements.dll" />
-    <Path Id="2a1b41e3-29ba-4ca3-bfbc-97f695695f29.OutputPathUri" Value="file:///C:/Users/Jemdream/Documents/GitHub/Coordinates/Coordinates/Coordinates.Measurements/bin/x64/Debug/Coordinates.Measurements.dll" />
     <Path Id="b24b1802-2ce4-4dea-b7cc-cfc7fe36d1a8.OutputPath" Value="C:\Users\Jemdream\Documents\GitHub\Coordinates\Coordinates\Coordinates.UI\bin\x64\Debug\Coordinates.UI.exe" />
     <Path Id="b24b1802-2ce4-4dea-b7cc-cfc7fe36d1a8.OutputPathUri" Value="file:///C:/Users/Jemdream/Documents/GitHub/Coordinates/Coordinates/Coordinates.UI/bin/x64/Debug/Coordinates.UI.exe" />
-    <Path Id="c8d77f96-446d-455a-a9a1-5c858d69bf0a.OutputPath" Value="C:\Users\Jemdream\Documents\GitHub\Coordinates\Coordinates\Coordinates.DataSources\bin\x64\Debug\Coordinates.DataSources.dll" />
-    <Path Id="c8d77f96-446d-455a-a9a1-5c858d69bf0a.OutputPathUri" Value="file:///C:/Users/Jemdream/Documents/GitHub/Coordinates/Coordinates/Coordinates.DataSources/bin/x64/Debug/Coordinates.DataSources.dll" />
-    <Path Id="f1ec649c-e7f4-44b9-b495-a8b7d8969822.OutputPath" Value="C:\Users\Jemdream\Documents\GitHub\Coordinates\Coordinates\Coordinates.Models\bin\x64\Debug\Coordinates.Models.dll" />
-    <Path Id="f1ec649c-e7f4-44b9-b495-a8b7d8969822.OutputPathUri" Value="file:///C:/Users/Jemdream/Documents/GitHub/Coordinates/Coordinates/Coordinates.Models/bin/x64/Debug/Coordinates.Models.dll" />
   </Paths>
 </DirectedGraph>

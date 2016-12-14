@@ -27,7 +27,6 @@ namespace Coordinates.UI.ViewModels
             IMeasurementSelectionCalculationViewModel measurementSelectionCalculationViewModel,
             IMeasurementElementSelectionViewModel measurementElementSelectionViewModel,
             IEventAggregator eventAggregator)
-        //, IConnectionService mockConnectionService/* TODO MOCK CONNECTION */)
         {
             EventAggregator = eventAggregator;
 
@@ -59,8 +58,6 @@ namespace Coordinates.UI.ViewModels
             EventAggregator
                 .GetEvent<ResetMeasurement>()
                 .Subscribe(_ => SelectedTabIndex = 0);
-
-            //MockingDataService = (MockDeviceService)mockConnectionService; // TODO MOCK CONNECTION
         }
 
 

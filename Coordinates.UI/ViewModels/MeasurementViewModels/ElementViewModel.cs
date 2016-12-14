@@ -18,7 +18,6 @@ namespace Coordinates.UI.ViewModels.MeasurementViewModels
         ICalculationResult Calculate { get; }
         IElement Element { get; }
         void Update();
-        bool ViewHack { get; set; }
         
         ObservableList<Position> SelectedPositions { get; }
         ObservableCollection<Position> Positions { get; }
